@@ -32,6 +32,16 @@ namespace MockGen.Tests
         }
 
         [Fact]
+        public void MethodVoid_Should_spy_number_of_calls()
+        {
+            var sources = GetSourceFilesToCompileFromSpecs();
+
+            Action action = () => testRunner.RunTest(sources, nameof(BasicUsageTests), nameof(MethodVoid_Should_spy_number_of_calls));
+
+            action.Should().NotThrow();
+        }
+
+        [Fact]
         public void MethodTReturn_Should_return_default_value_When_not_mocked()
         {
             var sources = GetSourceFilesToCompileFromSpecs();

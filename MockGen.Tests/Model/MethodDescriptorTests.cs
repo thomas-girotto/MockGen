@@ -6,6 +6,13 @@ namespace MockGen.Tests.Model
 {
     public class MethodDescriptorTests
     {
+        private MethodDescriptor GetMethodVoid() => new MethodDescriptor
+        {
+            Name = "MethodVoid",
+            ReturnType = "Void",
+            ReturnsVoid = true,
+        };
+
         private MethodDescriptor GetMethodWithoutParameter() => new MethodDescriptor
         {
             Name = "Method1",
@@ -42,6 +49,21 @@ namespace MockGen.Tests.Model
             
             // Assert
             camelCasedMethod.Should().Be("somePascalCaseName");
+        }
+
+        [Fact]
+        public void Should_build_MethodSetup_with_generic_typed_parameters()
+        {
+            string methodSetupVoid = GetMethodVoid().MethodSetupWithTypedParameters;
+            string methodSetupTReturn = GetMethodWithoutParameter().MethodSetupWithTypedParameters;
+            string methodSetupTReturnTParam = GetMethodWithOneParameter().MethodSetupWithTypedParameters;
+            string methodSetupTReturnTParam1TParam2 = GetMethodWithTwoParameters().MethodSetupWithTypedParameters;
+            
+            // Assert
+            methodSetupVoid.Should().Be("MethodSetup");
+            methodSetupTReturn.Should().Be("MethodSetup<int>");
+            methodSetupTReturnTParam.Should().Be("MethodSetup<int, Type1>");
+            methodSetupTReturnTParam1TParam2.Should().Be("MethodSetup<int, Type1, Type2>");
         }
 
         [Fact]

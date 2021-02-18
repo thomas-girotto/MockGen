@@ -31,8 +31,6 @@ namespace MockGen
                 context.AddSource("MethodSpy.cs", SourceText.From(methodSpyTemplate.TransformText(), Encoding.UTF8));
 
                 // Then classes that depends on the types we found that we should mock
-               
-
                 foreach (var typeSyntax in receiver.TypesToMockSyntax)
                 {
                     var descriptorForTemplate = BuildModelFromTypeSyntax(context, typeSyntax);
@@ -86,6 +84,7 @@ namespace MockGen
                     {
                         Name = m.Name,
                         ReturnType = m.ReturnType.Name,
+                        ReturnsVoid = m.ReturnsVoid,
                         Parameters = m.Parameters.Select(p => new ParameterDescriptor(p.Type.Name, p.Name)).ToList(),
                     })
                     .ToList();

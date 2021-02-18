@@ -9,6 +9,11 @@
             this.dependency = dependency;
         }
 
+        public void ExecuteSomeAction()
+        {
+            dependency.DoSomething();
+        }
+
         public int ReturnDependencyNumber()
         {
             return dependency.GetSomeNumber();

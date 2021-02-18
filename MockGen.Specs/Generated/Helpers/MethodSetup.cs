@@ -2,9 +2,20 @@
 
 namespace MockGen.Specs.Generated.Helpers
 {
-    interface IMethodSetup<TReturn>
+    interface IMethodSetup
     {
         int Calls { get; }
+    }
+
+    internal class MethodSetup : IMethodSetup
+    {
+        public MethodSpy Spy { get; private set; } = new MethodSpy();
+
+        public int Calls => Spy.TotalCalls;
+    }
+
+    interface IMethodSetup<TReturn> : IMethodSetup
+    {
         void WillReturn(TReturn value);
     }
 

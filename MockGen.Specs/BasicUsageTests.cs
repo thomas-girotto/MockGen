@@ -9,6 +9,20 @@ namespace MockGen.Specs
     public class BasicUsageTests
     {
         [Fact]
+        public void MethodVoid_Should_spy_number_of_calls()
+        {
+            // Given
+            var mock = Mock<IDependency>.Create();
+            var service = new Service(mock.Build());
+
+            // When
+            service.ExecuteSomeAction();
+
+            // Then
+            mock.DoSomething().Calls.Should().Be(1);
+        }
+
+        [Fact]
         public void MethodTReturn_Should_return_given_value_When_mocked()
         {
             // Given

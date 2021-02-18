@@ -14,12 +14,18 @@ namespace MockGen.Tests.Model
                 {
                     new MethodDescriptor
                     {
-                        Name = "Method1",
+                        Name = "MethodVoid",
+                        ReturnsVoid = true,
+                        ReturnType = string.Empty,
+                    },
+                    new MethodDescriptor
+                    {
+                        Name = "MethodTReturn",
                         ReturnType = "int",
                     },
                     new MethodDescriptor
                     {
-                        Name = "Method2",
+                        Name = "MethodTReturnTParam",
                         ReturnType = "int",
                         Parameters = new List<ParameterDescriptor>
                         {
@@ -31,24 +37,12 @@ namespace MockGen.Tests.Model
         }
 
         [Fact]
-        public void Should_build_typed_parameters_for_a_given_method()
-        {
-            var model = GetDefaultDescriptor();
-            string method1TypedParameters = model.GetTypedParameters(model.Methods[0]);
-            string method2TypedParameters = model.GetTypedParameters(model.Methods[1]);
-
-            // Assert
-            method1TypedParameters.Should().Be("int");
-            method2TypedParameters.Should().Be("int, Type1");
-        }
-
-        [Fact]
         public void Should_build_Mock_Ctor_parameter_list_definition()
         {
             var model = GetDefaultDescriptor();
             var mockCtorArgumentListDefinition = model.MockCtorArgumentListDefinition;
 
-            mockCtorArgumentListDefinition.Should().Be("MethodSetup<int> method1Setup, MethodSetup<int, Type1> method2Setup");
+            mockCtorArgumentListDefinition.Should().Be("MethodSetup methodVoidSetup, MethodSetup<int> methodTReturnSetup, MethodSetup<int, Type1> methodTReturnTParamSetup");
         }
 
         [Fact]
@@ -57,7 +51,7 @@ namespace MockGen.Tests.Model
             var model = GetDefaultDescriptor();
             var mockCtorParameters = model.MockCtorParameters;
 
-            mockCtorParameters.Should().Be("method1Setup, method2Setup");
+            mockCtorParameters.Should().Be("methodVoidSetup, methodTReturnSetup, methodTReturnTParamSetup");
         }
     }
 }

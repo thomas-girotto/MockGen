@@ -5,7 +5,15 @@ namespace MockGen
 {
     public class MethodDescriptor
     {
-        public string ReturnType { get; set; }
+        private string returnType;
+
+        public string ReturnType 
+        {
+            get => ReturnsVoid ? "void" : returnType;
+            set => returnType = value; 
+        }
+
+        public bool ReturnsVoid { get; set; }
 
         public string Name { get; set; }
 
@@ -25,6 +33,12 @@ namespace MockGen
         /// Give the concatenated list of parameters name, so that we can use them to call a method
         /// </summary>
         public string ParameterNames => string.Join(", ", Parameters.Select(p => p.Name));
+
+        public string TypedParameters => string.Join(", ", string.Join(", ", new List<string> { ReturnType }.Concat(Parameters.Select(p => p.Type)).Where(x => !string.IsNullOrEmpty(x))));
+
+        public string MethodSetupWithTypedParameters => (ReturnsVoid && Parameters.Count == 0)
+            ? "MethodSetup"
+            : $"MethodSetup<{TypedParameters}>";
 
         public string CallForParameterMethod => Parameters.Count == 0
             ? string.Empty

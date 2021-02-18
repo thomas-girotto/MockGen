@@ -13,7 +13,7 @@ namespace MockGen.Specs.Generated.<#=Descriptor.GeneratedNamespace#>
     {
 <# foreach (var method in Descriptor.Methods)
 {#>
-        private readonly MethodSetup<<#=Descriptor.GetTypedParameters(method)#>> <#=method.NameCamelCase#>Setup;
+        private readonly <#=method.MethodSetupWithTypedParameters#> <#=method.NameCamelCase#>Setup;
 <#}
 #>
 
@@ -31,7 +31,11 @@ namespace MockGen.Specs.Generated.<#=Descriptor.GeneratedNamespace#>
         public <#=method.ReturnType#> <#=method.Name#>(<#=method.ParametersDeclaration#>)
         {
             <#=method.NameCamelCase#>Setup.Spy.WasCalled(<#=method.ParameterNames#>);
+<# if (!method.ReturnsVoid || method.Parameters.Count > 0)
+{#>
             return <#=method.NameCamelCase#>Setup.GetValue(<#=method.ParameterNames#>);
+<#}
+#>
         }
 
 <#}

@@ -5,8 +5,14 @@ namespace MockGen.Specs.Generated.IDependencyNs
 {
     internal class IDependencyMockBuilder
     {
+        private readonly MethodSetup doSomethingSetup = new MethodSetup();
         private readonly MethodSetup<int> getSomeNumberSetup = new MethodSetup<int>();
         private readonly MethodSetup<int, int> getSomeNumberWithParameterSetup = new MethodSetup<int, int>();
+
+        public IMethodSetup DoSomething()
+        {
+            return doSomethingSetup;
+        }
 
         public IMethodSetup<int> GetSomeNumber()
         {
@@ -20,7 +26,7 @@ namespace MockGen.Specs.Generated.IDependencyNs
 
         public IDependency Build()
         {
-            return new IDependencyMock(getSomeNumberSetup, getSomeNumberWithParameterSetup);
+            return new IDependencyMock(doSomethingSetup, getSomeNumberSetup, getSomeNumberWithParameterSetup);
         }
     }
 }

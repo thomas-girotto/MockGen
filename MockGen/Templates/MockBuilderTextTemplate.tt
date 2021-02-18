@@ -13,13 +13,13 @@ namespace MockGen.Specs.Generated.<#=Descriptor.GeneratedNamespace#>
     {
 <# foreach (var method in Descriptor.Methods)
 {#>
-        private readonly MethodSetup<<#=Descriptor.GetTypedParameters(method)#>> <#=method.NameCamelCase#>Setup = new MethodSetup<<#=Descriptor.GetTypedParameters(method)#>>();
+        private readonly <#=method.MethodSetupWithTypedParameters#> <#=method.NameCamelCase#>Setup = new <#=method.MethodSetupWithTypedParameters#>();
 <#}
 #>
 
 <# foreach (var method in Descriptor.Methods)
 {#>
-        public IMethodSetup<<#=Descriptor.GetTypedParameters(method)#>> <#=method.Name#>(<#=method.ParametersDeclarationWithArg#>)
+        public I<#=method.MethodSetupWithTypedParameters#> <#=method.Name#>(<#=method.ParametersDeclarationWithArg#>)
         {
             return <#=method.NameCamelCase#>Setup<#=method.CallForParameterMethod#>;
         }

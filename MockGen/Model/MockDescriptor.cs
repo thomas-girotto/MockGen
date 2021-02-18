@@ -13,11 +13,10 @@ namespace MockGen
         public string GeneratedNamespace => $"{TypeToMock}Ns";
         public string MockCtorArgumentListDefinition => string.Join(
             ", ", 
-            Methods.Select(m => @$"MethodSetup<{GetTypedParameters(m)}> {m.NameCamelCase}Setup"));
+            Methods.Select(m => $"{m.MethodSetupWithTypedParameters} {m.NameCamelCase}Setup"));
 
         public string MockCtorParameters => string.Join(", ", Methods.Select(m => $"{m.NameCamelCase}Setup"));
 
-        public string GetTypedParameters(MethodDescriptor m) => string.Join(", ", string.Join(", ", new List<string> { m.ReturnType }.Concat(m?.Parameters.Select(p => p.Type)).Where(x => x != null)));
 
     }
 }
