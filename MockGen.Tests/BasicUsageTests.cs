@@ -60,5 +60,25 @@ namespace MockGen.Tests
 
             action.Should().NotThrow();
         }
+
+        [Fact]
+        public void MethodTReturnTParam_Should_return_given_number_for_given_param()
+        {
+            var sources = GetSourceFilesToCompileFromSpecs();
+
+            Action action = () => testRunner.RunTest(sources, nameof(BasicUsageTests), nameof(MethodTReturnTParam_Should_return_given_number_for_given_param));
+
+            action.Should().NotThrow();
+        }
+
+        [Fact]
+        public void MethodTReturnTParam_Should_return_param_given_for_Any_When_param_doesnt_match_a_specific_one()
+        {
+            var sources = GetSourceFilesToCompileFromSpecs();
+
+            Action action = () => testRunner.RunTest(sources, nameof(BasicUsageTests), nameof(MethodTReturnTParam_Should_return_param_given_for_Any_When_param_doesnt_match_a_specific_one));
+
+            action.Should().NotThrow();
+        }
     }
 }

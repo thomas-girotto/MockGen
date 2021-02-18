@@ -71,20 +71,23 @@ namespace MockGen.Specs
         }
 
         [Fact]
-        public void MethodTReturnTParam_Should_return_AnyParam_number_When_given_param_doesnt_match()
+        public void MethodTReturnTParam_Should_return_param_given_for_Any_When_param_doesnt_match_a_specific_one()
         {
             // Given
             var mock = Mock<IDependency>.Create();
-            mock.GetSomeNumberWithParameter(Arg<int>.Any).WillReturn(1);
+            mock.GetSomeNumberWithParameter(Arg<int>.Any).WillReturn(1); // The default returned value
+            mock.GetSomeNumberWithParameter(10).WillReturn(11); // 11 only if given param is 10
             var service = new Service(mock.Build());
 
             // When
             var result1 = service.ReturnDependencyNumberWithParam(1);
             var result2 = service.ReturnDependencyNumberWithParam(2);
+            var result3 = service.ReturnDependencyNumberWithParam(10);
 
             // Then
             result1.Should().Be(1);
             result2.Should().Be(1);
+            result3.Should().Be(11);
         }
     }
 }
