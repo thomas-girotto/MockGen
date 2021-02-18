@@ -6,22 +6,21 @@ namespace MockGen.Specs.Generated.IDependencyNs
     internal class IDependencyMockBuilder
     {
         private readonly MethodSetup<int> getSomeNumberSetup = new MethodSetup<int>();
-        private readonly MethodSetup<int, string> getSomeNumberSetupOverload1 = new MethodSetup<int, string>();
+        private readonly MethodSetup<int, int> getSomeNumberWithParameterSetup = new MethodSetup<int, int>();
 
         public IMethodSetup<int> GetSomeNumber()
         {
             return getSomeNumberSetup;
         }
 
-        public IMethodSetup<int> GetSomeNumber(Arg<string> paramValue)
+        public IMethodSetup<int, int> GetSomeNumberWithParameter(Arg<int> input)
         {
-            getSomeNumberSetupOverload1.ForParameter(paramValue);
-            return getSomeNumberSetupOverload1;
+            return getSomeNumberWithParameterSetup.ForParameter(input);
         }
 
         public IDependency Build()
         {
-            return new IDependencyMock(getSomeNumberSetup, getSomeNumberSetupOverload1);
+            return new IDependencyMock(getSomeNumberSetup, getSomeNumberWithParameterSetup);
         }
     }
 }

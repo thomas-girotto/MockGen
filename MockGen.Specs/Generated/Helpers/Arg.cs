@@ -6,6 +6,7 @@ namespace MockGen.Specs.Generated.Helpers
     {
         private readonly TParam param;
         internal static Arg<TParam> Any = new Arg<TParam>();
+
         internal TParam Value => param;
 
         public Arg(TParam param)

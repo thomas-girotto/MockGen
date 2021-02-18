@@ -60,7 +60,7 @@ namespace MockGen.Templates
             this.Write("        private readonly MethodSetup<");
             
             #line 16 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.ReturnType));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GetTypedParameters(method)));
             
             #line default
             #line hidden
@@ -74,7 +74,7 @@ namespace MockGen.Templates
             this.Write("Setup = new MethodSetup<");
             
             #line 16 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.ReturnType));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GetTypedParameters(method)));
             
             #line default
             #line hidden
@@ -97,7 +97,7 @@ namespace MockGen.Templates
             this.Write("        public IMethodSetup<");
             
             #line 22 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.ReturnType));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GetTypedParameters(method)));
             
             #line default
             #line hidden
@@ -108,14 +108,28 @@ namespace MockGen.Templates
             
             #line default
             #line hidden
-            this.Write("()\r\n        {\r\n            return ");
+            this.Write("(");
+            
+            #line 22 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.ParametersDeclarationWithArg));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n        {\r\n            return ");
             
             #line 24 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.NameCamelCase));
             
             #line default
             #line hidden
-            this.Write("Setup;\r\n        }\r\n");
+            this.Write("Setup");
+            
+            #line 24 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.CallForParameterMethod));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n        }\r\n");
             
             #line 26 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
 }

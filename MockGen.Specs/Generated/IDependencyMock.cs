@@ -6,12 +6,12 @@ namespace MockGen.Specs.Generated.IDependencyNs
     internal class IDependencyMock : IDependency
     {
         private readonly MethodSetup<int> getSomeNumberSetup;
-        private readonly MethodSetup<int, string> getSomeNumberSetupOverload1;
+        private readonly MethodSetup<int, int> getSomeNumberWithParameterSetup;
 
-        public IDependencyMock(MethodSetup<int> getSomeNumberSetup, MethodSetup<int, string> getSomeNumberSetupOverload1)
+        public IDependencyMock(MethodSetup<int> getSomeNumberSetup, MethodSetup<int, int> getSomeNumberWithParameterSetup)
         {
             this.getSomeNumberSetup = getSomeNumberSetup;
-            this.getSomeNumberSetupOverload1 = getSomeNumberSetupOverload1;
+            this.getSomeNumberWithParameterSetup = getSomeNumberWithParameterSetup;
         }
 
         public int GetSomeNumber()
@@ -20,10 +20,10 @@ namespace MockGen.Specs.Generated.IDependencyNs
             return getSomeNumberSetup.GetValue();
         }
 
-        public int GetSomeNumber(string paramValue)
+        public int GetSomeNumberWithParameter(int input)
         {
-            getSomeNumberSetupOverload1.Spy.WasCalledWithParam(paramValue);
-            return getSomeNumberSetupOverload1.GetValue(paramValue);
+            getSomeNumberWithParameterSetup.Spy.WasCalled(input);
+            return getSomeNumberWithParameterSetup.GetValue(input);
         }
     }
 }

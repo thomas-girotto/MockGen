@@ -27,7 +27,11 @@ namespace MockGen.Specs.Generated.Helpers
         public int Calls => Spy.TotalCalls;
     }
 
-    internal class MethodSetup<TReturn, TParam> : IMethodSetup<TReturn>
+    interface IMethodSetup<TReturn, TParam> : IMethodSetup<TReturn>
+    {
+    }
+
+    internal class MethodSetup<TReturn, TParam> : IMethodSetup<TReturn, TParam>
     {
         private Dictionary<Arg<TParam>, TReturn> valueToReturnByParam = new Dictionary<Arg<TParam>, TReturn>() 
         {
@@ -38,9 +42,10 @@ namespace MockGen.Specs.Generated.Helpers
 
         public MethodSpy<TParam> Spy { get; } = new MethodSpy<TParam>();
 
-        public void ForParameter(Arg<TParam> paramValue)
+        public MethodSetup<TReturn, TParam> ForParameter(Arg<TParam> paramValue)
         {
             parameterValue = paramValue;
+            return this;
         }
 
         public void WillReturn(TReturn value)

@@ -18,7 +18,7 @@ namespace MockGen.Specs.Generated.Helpers
     {
         private Dictionary<TParam, int> callsByParamValue = new Dictionary<TParam, int>();
 
-        internal void WasCalledWithParam(TParam paramValue)
+        internal void WasCalled(TParam paramValue)
         {
             if (callsByParamValue.ContainsKey(paramValue))
             {

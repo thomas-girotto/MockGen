@@ -13,5 +13,10 @@
         {
             return dependency.GetSomeNumber();
         }
+
+        public int ReturnDependencyNumberWithParam(int input)
+        {
+            return dependency.GetSomeNumberWithParameter(input);
+        }
     }
 }

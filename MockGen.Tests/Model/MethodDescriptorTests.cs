@@ -1,0 +1,99 @@
+﻿using FluentAssertions;
+using System.Collections.Generic;
+using Xunit;
+
+namespace MockGen.Tests.Model
+{
+    public class MethodDescriptorTests
+    {
+        private MethodDescriptor GetMethodWithoutParameter() => new MethodDescriptor
+        {
+            Name = "Method1",
+            ReturnType = "int",
+        };
+
+        private MethodDescriptor GetMethodWithOneParameter() => new MethodDescriptor
+        {
+            Name = "Method2",
+            ReturnType = "int",
+            Parameters = new List<ParameterDescriptor> { new ParameterDescriptor("Type1", "param1") }
+        };
+
+        private MethodDescriptor GetMethodWithTwoParameters() => new MethodDescriptor
+        {
+            Name = "Method3",
+            ReturnType = "int",
+            Parameters = new List<ParameterDescriptor> 
+            { 
+                new ParameterDescriptor("Type1", "param1"), 
+                new ParameterDescriptor("Type2", "param2"),
+            }
+        };
+
+        [Fact]
+        public void Should_get_method_name_in_camel_case()
+        {
+            // Arrange
+            var method = GetMethodWithoutParameter();
+            method.Name = "SomePascalCaseName";
+
+            // Act
+            string camelCasedMethod = method.NameCamelCase;
+            
+            // Assert
+            camelCasedMethod.Should().Be("somePascalCaseName");
+        }
+
+        [Fact]
+        public void Should_build_method_parameter_declaration()
+        {
+            string parametersDefinition1 = GetMethodWithoutParameter().ParametersDeclaration;
+            string parametersDefinition2 = GetMethodWithOneParameter().ParametersDeclaration;
+            string parametersDefinition3 = GetMethodWithTwoParameters().ParametersDeclaration;
+
+            // Assert
+            parametersDefinition1.Should().BeEmpty();
+            parametersDefinition2.Should().Be("Type1 param1");
+            parametersDefinition3.Should().Be("Type1 param1, Type2 param2");
+        }
+
+        [Fact]
+        public void Should_build_method_parameter_declaration_with_Arg()
+        {
+            string parametersDefinition1 = GetMethodWithoutParameter().ParametersDeclarationWithArg;
+            string parametersDefinition2 = GetMethodWithOneParameter().ParametersDeclarationWithArg;
+            string parametersDefinition3 = GetMethodWithTwoParameters().ParametersDeclarationWithArg;
+
+            // Assert
+            parametersDefinition1.Should().BeEmpty();
+            parametersDefinition2.Should().Be("Arg<Type1> param1");
+            parametersDefinition3.Should().Be("Arg<Type1> param1, Arg<Type2> param2");
+        }
+
+        [Fact]
+        public void Should_build_method_parameters()
+        {
+            string parameters1 = GetMethodWithoutParameter().ParameterNames;
+            string parameters2 = GetMethodWithOneParameter().ParameterNames;
+            string parameters3 = GetMethodWithTwoParameters().ParameterNames;
+
+            // Assert
+            parameters1.Should().BeEmpty();
+            parameters2.Should().Be("param1");
+            parameters3.Should().Be("param1, param2");
+        }
+
+        [Fact]
+        public void Should_add_ForParameter_method_When_parameter_exists()
+        {
+            string forParameterCall1 = GetMethodWithoutParameter().CallForParameterMethod;
+            string forParameterCall2 = GetMethodWithOneParameter().CallForParameterMethod;
+            string forParameterCall3 = GetMethodWithTwoParameters().CallForParameterMethod;
+
+            // Assert
+            forParameterCall1.Should().BeEmpty();
+            forParameterCall2.Should().Be(".ForParameter(param1)");
+            forParameterCall3.Should().Be(".ForParameter(param1, param2)");
+        }
+    }
+}

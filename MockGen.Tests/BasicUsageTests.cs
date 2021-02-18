@@ -32,31 +32,31 @@ namespace MockGen.Tests
         }
 
         [Fact]
-        public void Should_return_default_value_When_not_mocked()
+        public void MethodTReturn_Should_return_default_value_When_not_mocked()
         {
             var sources = GetSourceFilesToCompileFromSpecs();
 
-            Action action = () => testRunner.RunTest(sources, nameof(BasicUsageTests), nameof(Should_return_default_value_When_not_mocked));
+            Action action = () => testRunner.RunTest(sources, nameof(BasicUsageTests), nameof(MethodTReturn_Should_return_default_value_When_not_mocked));
 
             action.Should().NotThrow();
         }
 
         [Fact]
-        public void Should_return_given_value_When_mocked()
+        public void MethodTReturn_Should_return_given_value_When_mocked()
         {
             var sources = GetSourceFilesToCompileFromSpecs();
 
-            Action action = () => testRunner.RunTest(sources, nameof(BasicUsageTests), nameof(Should_return_given_value_When_mocked));
+            Action action = () => testRunner.RunTest(sources, nameof(BasicUsageTests), nameof(MethodTReturn_Should_return_given_value_When_mocked));
 
             action.Should().NotThrow();
         }
 
         [Fact]
-        public void Should_spy_the_number_of_calls_to_the_mocked_method()
+        public void MethodTReturn_Should_spy_the_number_of_calls_to_the_mocked_method()
         {
             var sources = GetSourceFilesToCompileFromSpecs();
 
-            Action action = () => testRunner.RunTest(sources, nameof(BasicUsageTests), nameof(Should_spy_the_number_of_calls_to_the_mocked_method));
+            Action action = () => testRunner.RunTest(sources, nameof(BasicUsageTests), nameof(MethodTReturn_Should_spy_the_number_of_calls_to_the_mocked_method));
 
             action.Should().NotThrow();
         }

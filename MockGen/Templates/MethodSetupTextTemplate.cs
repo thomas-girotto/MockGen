@@ -36,20 +36,22 @@ namespace MockGen.Templates
                     "\r\n        public TReturn GetValue()\r\n        {\r\n            return value;\r\n     " +
                     "   }\r\n\r\n        public void WillReturn(TReturn value)\r\n        {\r\n            th" +
                     "is.value = value;\r\n        }\r\n\r\n        public int Calls => Spy.TotalCalls;\r\n   " +
-                    " }\r\n\r\n    internal class MethodSetup<TReturn, TParam> : IMethodSetup<TReturn>\r\n " +
-                    "   {\r\n        private Dictionary<Arg<TParam>, TReturn> valueToReturnByParam = ne" +
-                    "w Dictionary<Arg<TParam>, TReturn>() \r\n        {\r\n            { Arg<TParam>.Any," +
-                    " default(TReturn) }\r\n        };\r\n\r\n        private Arg<TParam> parameterValue = " +
-                    "Arg<TParam>.Any;\r\n\r\n        public MethodSpy<TParam> Spy { get; } = new MethodSp" +
-                    "y<TParam>();\r\n\r\n        public void ForParameter(Arg<TParam> paramValue)\r\n      " +
-                    "  {\r\n            parameterValue = paramValue;\r\n        }\r\n\r\n        public void " +
-                    "WillReturn(TReturn value)\r\n        {\r\n            valueToReturnByParam[parameter" +
-                    "Value] = value;\r\n            parameterValue = Arg<TParam>.Any;\r\n        }\r\n\r\n   " +
-                    "     public TReturn GetValue(TParam param)\r\n        {\r\n            var arg = new" +
-                    " Arg<TParam>(param);\r\n            return valueToReturnByParam.ContainsKey(arg)\r\n" +
-                    "                ? valueToReturnByParam[arg]\r\n                : valueToReturnByPa" +
-                    "ram[Arg<TParam>.Any];\r\n        }\r\n\r\n        public int Calls => Spy.GetCallsFor(" +
-                    "parameterValue);\r\n    }\r\n}\r\n");
+                    " }\r\n\r\n    interface IMethodSetup<TReturn, TParam> : IMethodSetup<TReturn>\r\n    {" +
+                    "\r\n    }\r\n\r\n    internal class MethodSetup<TReturn, TParam> : IMethodSetup<TRetur" +
+                    "n,TParam>\r\n    {\r\n        private Dictionary<Arg<TParam>, TReturn> valueToReturn" +
+                    "ByParam = new Dictionary<Arg<TParam>, TReturn>() \r\n        {\r\n            { Arg<" +
+                    "TParam>.Any, default(TReturn) }\r\n        };\r\n\r\n        private Arg<TParam> param" +
+                    "eterValue = Arg<TParam>.Any;\r\n\r\n        public MethodSpy<TParam> Spy { get; } = " +
+                    "new MethodSpy<TParam>();\r\n\r\n        public MethodSetup<TReturn, TParam> ForParam" +
+                    "eter(Arg<TParam> paramValue)\r\n        {\r\n            parameterValue = paramValue" +
+                    ";\r\n            return this;\r\n        }\r\n\r\n        public void WillReturn(TReturn" +
+                    " value)\r\n        {\r\n            valueToReturnByParam[parameterValue] = value;\r\n " +
+                    "           parameterValue = Arg<TParam>.Any;\r\n        }\r\n\r\n        public TRetur" +
+                    "n GetValue(TParam param)\r\n        {\r\n            var arg = new Arg<TParam>(param" +
+                    ");\r\n            return valueToReturnByParam.ContainsKey(arg)\r\n                ? " +
+                    "valueToReturnByParam[arg]\r\n                : valueToReturnByParam[Arg<TParam>.An" +
+                    "y];\r\n        }\r\n\r\n        public int Calls => Spy.GetCallsFor(parameterValue);\r\n" +
+                    "    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

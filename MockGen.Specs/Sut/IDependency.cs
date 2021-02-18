@@ -3,5 +3,6 @@
     public interface IDependency
     {
         int GetSomeNumber();
+        int GetSomeNumberWithParameter(int input);
     }
 }
