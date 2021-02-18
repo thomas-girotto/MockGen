@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MockGen.Templates
+﻿namespace MockGen.Templates
 {
     public partial class MockStaticTextTemplate
     {
-        public MockStaticTextTemplate()
+        public MockStaticTextTemplate(MockDescriptor descriptor)
         {
+            Descriptor = descriptor;
         }
 
-        public MockStaticTextTemplate(List<string> interfaceNames)
-        {
-            InterfaceNames = interfaceNames;
-        }
-
-        public List<string> InterfaceNames { get; set; }
+        public MockDescriptor Descriptor { get; private set; }
     }
 }

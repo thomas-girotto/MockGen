@@ -31,19 +31,19 @@ namespace MockGen
                 context.AddSource("MethodSpy.cs", SourceText.From(methodSpyTemplate.TransformText(), Encoding.UTF8));
 
                 // Then classes that depends on the types we found that we should mock
-                var mockStaticTemplate = new MockStaticTextTemplate(receiver.TypesToMockSyntax.Select(x => x.Identifier.ValueText).ToList());
-                context.AddSource("Mock.cs", SourceText.From(mockStaticTemplate.TransformText(), Encoding.UTF8));
+               
 
                 foreach (var typeSyntax in receiver.TypesToMockSyntax)
                 {
                     var descriptorForTemplate = BuildModelFromTypeSyntax(context, typeSyntax);
-                    
-                    var mockBuilderTemplate = new MockBuilderTextTemplate();
-                    mockBuilderTemplate.Descriptor = descriptorForTemplate;
+
+                    var mockStaticTemplate = new MockStaticTextTemplate(descriptorForTemplate);
+                    context.AddSource("Mock.cs", SourceText.From(mockStaticTemplate.TransformText(), Encoding.UTF8));
+
+                    var mockBuilderTemplate = new MockBuilderTextTemplate(descriptorForTemplate);
                     context.AddSource($"{typeSyntax.Identifier.ValueText}MockBuilder.cs", SourceText.From(mockBuilderTemplate.TransformText(), Encoding.UTF8));
 
-                    var mockTemplate = new MockTextTemplate();
-                    mockTemplate.Descriptor = descriptorForTemplate;
+                    var mockTemplate = new MockTextTemplate(descriptorForTemplate);
                     context.AddSource($"{typeSyntax.Identifier.ValueText}Mock.cs", SourceText.From(mockTemplate.TransformText(), Encoding.UTF8));
                 }
             }
@@ -76,7 +76,7 @@ namespace MockGen
             if (symbol is INamedTypeSymbol namedTypeSymbol)
             {
                 descriptorForTemplate.TypeToMock = typeIdentifierSyntax.Identifier.ValueText;
-                descriptorForTemplate.TypeToMockNamespace = namedTypeSymbol.ContainingNamespace
+                descriptorForTemplate.TypeToMockOriginalNamespace = namedTypeSymbol.ContainingNamespace
                     .ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)
                     .Replace("global::", string.Empty);
 

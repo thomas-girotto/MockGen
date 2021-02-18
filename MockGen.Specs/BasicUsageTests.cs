@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using MockGen.Specs.Generated;
+using MockGen.Specs.Generated.IDependencyNs;
 using MockGen.Specs.Sut;
 using Xunit;
 
@@ -11,7 +11,7 @@ namespace MockGen.Specs
         public void Should_return_given_value_When_mocked()
         {
             // Given
-            var mock = Mock<IDependency>.IDependency();
+            var mock = Mock<IDependency>.Create();
             mock.GetSomeNumber().WillReturn(2);
             var service = new Service(mock.Build());
 
@@ -26,7 +26,7 @@ namespace MockGen.Specs
         public void Should_return_default_value_When_not_mocked()
         {
             // Given
-            var mock = Mock<IDependency>.IDependency();
+            var mock = Mock<IDependency>.Create();
             var service = new Service(mock.Build());
 
             // When
@@ -40,7 +40,7 @@ namespace MockGen.Specs
         public void Should_spy_the_number_of_calls_to_the_mocked_method()
         {
             // Given
-            var mock = Mock<IDependency>.IDependency();
+            var mock = Mock<IDependency>.Create();
             mock.GetSomeNumber().WillReturn(2);
             var service = new Service(mock.Build());
 

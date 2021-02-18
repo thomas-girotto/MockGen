@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MockGen.Templates
+﻿namespace MockGen.Templates
 {
     public partial class MockTextTemplate
     {
-        public MockDescriptor Descriptor { get; set; }
+        public MockTextTemplate(MockDescriptor descriptor)
+        {
+            Descriptor = descriptor;
+        }
+
+        public MockDescriptor Descriptor { get; private set; }
     }
 }

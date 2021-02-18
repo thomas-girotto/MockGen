@@ -1,8 +1,7 @@
 ﻿using MockGen.Specs.Generated.Helpers;
 using MockGen.Specs.Sut;
-using System;
 
-namespace MockGen.Specs.Generated
+namespace MockGen.Specs.Generated.IDependencyNs
 {
     internal class IDependencyMock : IDependency
     {

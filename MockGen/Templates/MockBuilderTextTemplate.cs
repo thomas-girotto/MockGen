@@ -31,11 +31,18 @@ namespace MockGen.Templates
             this.Write("using System;\r\nusing MockGen.Specs.Generated.Helpers;\r\nusing ");
             
             #line 8 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMockNamespace));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMockOriginalNamespace));
             
             #line default
             #line hidden
-            this.Write(";\r\n\r\nnamespace MockGen.Specs.Generated\r\n{\r\n    internal class ");
+            this.Write(";\r\n\r\nnamespace MockGen.Specs.Generated.");
+            
+            #line 10 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GeneratedNamespace));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n{\r\n    internal class ");
             
             #line 12 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMock));

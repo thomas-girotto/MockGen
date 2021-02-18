@@ -1,6 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using FluentAssertions;
-using MockGen.Specs.Generated;
+using MockGen.Specs.Generated.IDependencyNs;
 using MockGen.Specs.Sut;
 using NSubstitute;
 
@@ -11,7 +11,7 @@ namespace MockGen.Benchmark
         [Benchmark]
         public void MockGenMock()
         {
-            var mockGen = Mock<IDependency>.IDependency();
+            var mockGen = Mock<IDependency>.Create();
             mockGen.GetSomeNumber().WillReturn(2);
             var service = new Service(mockGen.Build());
             service.ReturnDependencyNumber();

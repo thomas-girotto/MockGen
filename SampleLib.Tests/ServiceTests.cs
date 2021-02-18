@@ -1,5 +1,5 @@
 using Xunit;
-using MockGen.Specs.Generated;
+using MockGen.Specs.Generated.IExternalDependencyNs;
 using FluentAssertions;
 
 namespace SampleLib.Tests
@@ -9,7 +9,7 @@ namespace SampleLib.Tests
         [Fact]
         public void Should_add_number_from_external_source_to_given_number()
         {
-            IExternalDependencyMockBuilder mock = Mock<IExternalDependency>.IExternalDependency();
+            var mock = Mock<IExternalDependency>.Create();
             mock.GetSomeNumber().WillReturn(2);
 
             var service = new Service(mock.Build());
