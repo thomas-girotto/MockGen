@@ -1,0 +1,82 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>9</LangVersion>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.8.0" />
+    <PackageReference Include="System.CodeDom" Version="5.*" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="Templates\ArgTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ArgTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\MethodSetupTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MethodSetupTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\MethodSpyTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MethodSpyTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\MockBuilderTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MockBuilderTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\MockStaticTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MockStaticTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\MockTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MockTextTemplate.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Templates\ArgTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ArgTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\MethodSetupTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MethodSetupTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\MethodSpyTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MethodSpyTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\MockBuilderTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MockBuilderTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\MockStaticTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MockStaticTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\MockTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MockTextTemplate.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

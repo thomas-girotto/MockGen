@@ -1,0 +1,34 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System;
+using MockGen.Specs.Generated.Helpers;
+using <#=Descriptor.TypeToMockNamespace#>;
+
+namespace MockGen.Specs.Generated
+{
+    internal class <#=Descriptor.TypeToMock#>MockBuilder
+    {
+<# foreach (var method in Descriptor.Methods)
+{#>
+        private readonly MethodSetup<<#=method.ReturnType#>> <#=method.NameCamelCase#>Setup = new MethodSetup<<#=method.ReturnType#>>();
+<#}
+#>
+
+<# foreach (var method in Descriptor.Methods)
+{#>
+        public IMethodSetup<<#=method.ReturnType#>> <#=method.Name#>()
+        {
+            return <#=method.NameCamelCase#>Setup;
+        }
+<#}
+#>
+
+        public <#=Descriptor.TypeToMock#> Build()
+        {
+            return new <#=Descriptor.TypeToMock#>Mock(<#=Descriptor.MockCtorParameters#>);
+        }
+    }
+}

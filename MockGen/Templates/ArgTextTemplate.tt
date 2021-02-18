@@ -1,0 +1,22 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+namespace MockGen.Specs.Generated.Helpers
+{
+    internal struct Arg<TParam>
+    {
+        internal static Arg<TParam> Any = new Arg<TParam>();
+        private readonly TParam param;
+        internal TParam Value => param;
+
+        public Arg(TParam param)
+        {
+            this.param = param;
+        }
+
+        public static implicit operator Arg<TParam>(TParam arg) => new Arg<TParam>(arg);
+    }
+}
