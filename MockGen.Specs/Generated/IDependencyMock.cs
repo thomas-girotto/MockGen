@@ -18,19 +18,17 @@ namespace MockGen.Specs.Generated.IDependencyNs
 
         public void DoSomething()
         {
-            doSomethingSetup.Spy.WasCalled();
+            doSomethingSetup.ExecuteSetup();
         }
 
         public int GetSomeNumber()
         {
-            getSomeNumberSetup.Spy.WasCalled();
-            return getSomeNumberSetup.GetValue();
+            return getSomeNumberSetup.ExecuteSetup();
         }
 
         public int GetSomeNumberWithParameter(int input)
         {
-            getSomeNumberWithParameterSetup.Spy.WasCalled(input);
-            return getSomeNumberWithParameterSetup.GetValue(input);
+            return getSomeNumberWithParameterSetup.ExecuteSetup(input);
         }
     }
 }

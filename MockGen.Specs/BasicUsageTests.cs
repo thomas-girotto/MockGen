@@ -2,6 +2,7 @@
 using MockGen.Specs.Generated.Helpers;
 using MockGen.Specs.Generated.IDependencyNs;
 using MockGen.Specs.Sut;
+using System;
 using Xunit;
 
 namespace MockGen.Specs
@@ -102,6 +103,39 @@ namespace MockGen.Specs
             result1.Should().Be(1);
             result2.Should().Be(1);
             result3.Should().Be(11);
+        }
+
+        [Fact]
+        public void Throw_should_always_throw_When_no_parameter()
+        {
+            // Given
+            var mock = Mock<IDependency>.Create();
+            mock.DoSomething().WillThrow<Exception>();
+            var service = new Service(mock.Build());
+
+            // When
+            Action action = () => service.ExecuteSomeAction();
+
+            // Then
+            action.Should().Throw<Exception>();
+        }
+
+        [Fact]
+        public void Throw_for_parameter_should_only_throws_When_this_parameter_is_given()
+        {
+            // Given
+            var mock = Mock<IDependency>.Create();
+            mock.GetSomeNumberWithParameter(1).WillReturn(2);
+            mock.GetSomeNumberWithParameter(3).WillThrow<Exception>();
+            var service = new Service(mock.Build());
+
+            // When
+            Func<int> actionThatShouldNotThrow = () => service.ReturnDependencyNumberWithParam(1);
+            Func<int> actionThatShouldThrow = () => service.ReturnDependencyNumberWithParam(3);
+
+            // Then
+            actionThatShouldNotThrow.Should().NotThrow();
+            actionThatShouldThrow.Should().Throw<Exception>();
         }
     }
 }

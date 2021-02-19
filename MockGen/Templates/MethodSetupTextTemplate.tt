@@ -3,6 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+using System;
 using System.Collections.Generic;
 
 namespace MockGen.Specs.Generated.Helpers
@@ -10,13 +11,27 @@ namespace MockGen.Specs.Generated.Helpers
     interface IMethodSetup
     {
         int Calls { get; }
+        void WillThrow<TException>() where TException : Exception, new();
     }
 
     internal class MethodSetup : IMethodSetup
     {
-        public MethodSpy Spy { get; private set; } = new MethodSpy();
+        private Action executeSetupAction = () => { };
 
-        public int Calls => Spy.TotalCalls;
+        private MethodSpy spy = new MethodSpy();
+
+        public int Calls => spy.TotalCalls;
+        
+        public void ExecuteSetup()
+        {
+            spy.WasCalled();
+            executeSetupAction();
+        }
+
+        public void WillThrow<TException>() where TException : Exception, new()
+        {
+            executeSetupAction = () => throw new TException();
+        }
     }
 
     internal interface IMethodSetup<TReturn> : IMethodSetup
@@ -26,21 +41,26 @@ namespace MockGen.Specs.Generated.Helpers
 
     internal class MethodSetup<TReturn> : IMethodSetup<TReturn>
     {
-        private TReturn value = default(TReturn);
+        private Func<TReturn> setupAction = () => default(TReturn);
+        private MethodSpy spy = new MethodSpy();
 
-        public MethodSpy Spy { get; private set; } = new MethodSpy();
-
-        public TReturn GetValue()
+        public TReturn ExecuteSetup()
         {
-            return value;
+            spy.WasCalled();
+            return setupAction();
         }
 
         public void WillReturn(TReturn value)
         {
-            this.value = value;
+            setupAction = () => value;
         }
 
-        public int Calls => Spy.TotalCalls;
+        public void WillThrow<TException>() where TException : Exception, new()
+        {
+            setupAction = () => throw new TException();
+        }
+
+        public int Calls => spy.TotalCalls;
     }
 
     interface IMethodSetup<TReturn, TParam> : IMethodSetup<TReturn>
@@ -49,14 +69,12 @@ namespace MockGen.Specs.Generated.Helpers
 
     internal class MethodSetup<TReturn, TParam> : IMethodSetup<TReturn,TParam>
     {
-        private Dictionary<Arg<TParam>, TReturn> valueToReturnByParam = new Dictionary<Arg<TParam>, TReturn>() 
-        {
-            { Arg<TParam>.Any, default(TReturn) }
-        };
-
         private Arg<TParam> parameterValue = Arg<TParam>.Any;
-
-        public MethodSpy<TParam> Spy { get; } = new MethodSpy<TParam>();
+        private MethodSpy<TParam> spy = new MethodSpy<TParam>();
+        Dictionary<Arg<TParam>, Func<TParam, TReturn>> setupActionByParam = new Dictionary<Arg<TParam>, Func<TParam, TReturn>>
+        {
+            { Arg<TParam>.Any, _ => default(TReturn) }
+        };
 
         public MethodSetup<TReturn, TParam> ForParameter(Arg<TParam> paramValue)
         {
@@ -66,18 +84,25 @@ namespace MockGen.Specs.Generated.Helpers
 
         public void WillReturn(TReturn value)
         {
-            valueToReturnByParam[parameterValue] = value;
+            setupActionByParam[parameterValue] = (_) => value;
             parameterValue = Arg<TParam>.Any;
         }
 
-        public TReturn GetValue(TParam param)
+        public TReturn ExecuteSetup(TParam param)
         {
+            spy.WasCalled(param);
             var arg = new Arg<TParam>(param);
-            return valueToReturnByParam.ContainsKey(arg)
-                ? valueToReturnByParam[arg]
-                : valueToReturnByParam[Arg<TParam>.Any];
+            return setupActionByParam.ContainsKey(arg)
+                ? setupActionByParam[arg](param)
+                : setupActionByParam[Arg<TParam>.Any](param);
         }
 
-        public int Calls => Spy.GetCallsFor(parameterValue);
+        public void WillThrow<TException>() where TException : Exception, new()
+        {
+            setupActionByParam[parameterValue] = (_) => throw new TException();
+            parameterValue = Arg<TParam>.Any;
+        }
+
+        public int Calls => spy.GetCallsFor(parameterValue);
     }
 }

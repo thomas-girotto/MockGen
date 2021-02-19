@@ -90,5 +90,25 @@ namespace MockGen.Tests
 
             action.Should().NotThrow();
         }
+
+        [Fact]
+        public void Throw_should_always_throw_When_no_parameter()
+        {
+            var sources = GetSourceFilesToCompileFromSpecs();
+
+            Action action = () => testRunner.RunTest(sources, nameof(BasicUsageTests), nameof(Throw_should_always_throw_When_no_parameter));
+
+            action.Should().NotThrow();
+        }
+
+        [Fact]
+        public void Throw_for_parameter_should_only_throws_When_this_parameter_is_given()
+        {
+            var sources = GetSourceFilesToCompileFromSpecs();
+
+            Action action = () => testRunner.RunTest(sources, nameof(BasicUsageTests), nameof(Throw_for_parameter_should_only_throws_When_this_parameter_is_given));
+
+            action.Should().NotThrow();
+        }
     }
 }

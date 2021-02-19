@@ -30,12 +30,11 @@ namespace MockGen.Specs.Generated.<#=Descriptor.GeneratedNamespace#>
 {#>
         public <#=method.ReturnType#> <#=method.Name#>(<#=method.ParametersDeclaration#>)
         {
-            <#=method.NameCamelCase#>Setup.Spy.WasCalled(<#=method.ParameterNames#>);
-<# if (!method.ReturnsVoid || method.Parameters.Count > 0)
-{#>
-            return <#=method.NameCamelCase#>Setup.GetValue(<#=method.ParameterNames#>);
-<#}
-#>
+<# if (!method.ReturnsVoid) { #>
+            return <#=method.NameCamelCase#>Setup.ExecuteSetup(<#=method.ParameterNames#>);
+<# } else { #>
+            <#=method.NameCamelCase#>Setup.ExecuteSetup(<#=method.ParameterNames#>);
+<# } #>
         }
 
 <#}

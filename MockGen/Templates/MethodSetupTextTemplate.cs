@@ -28,33 +28,44 @@ namespace MockGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System.Collections.Generic;\r\n\r\nnamespace MockGen.Specs.Generated.Helpers\r\n{" +
-                    "\r\n    interface IMethodSetup\r\n    {\r\n        int Calls { get; }\r\n    }\r\n\r\n    in" +
-                    "ternal class MethodSetup : IMethodSetup\r\n    {\r\n        public MethodSpy Spy { g" +
-                    "et; private set; } = new MethodSpy();\r\n\r\n        public int Calls => Spy.TotalCa" +
-                    "lls;\r\n    }\r\n\r\n    internal interface IMethodSetup<TReturn> : IMethodSetup\r\n    " +
-                    "{\r\n        void WillReturn(TReturn value);\r\n    }\r\n\r\n    internal class MethodSe" +
-                    "tup<TReturn> : IMethodSetup<TReturn>\r\n    {\r\n        private TReturn value = def" +
-                    "ault(TReturn);\r\n\r\n        public MethodSpy Spy { get; private set; } = new Metho" +
-                    "dSpy();\r\n\r\n        public TReturn GetValue()\r\n        {\r\n            return valu" +
-                    "e;\r\n        }\r\n\r\n        public void WillReturn(TReturn value)\r\n        {\r\n     " +
-                    "       this.value = value;\r\n        }\r\n\r\n        public int Calls => Spy.TotalCa" +
-                    "lls;\r\n    }\r\n\r\n    interface IMethodSetup<TReturn, TParam> : IMethodSetup<TRetur" +
-                    "n>\r\n    {\r\n    }\r\n\r\n    internal class MethodSetup<TReturn, TParam> : IMethodSet" +
-                    "up<TReturn,TParam>\r\n    {\r\n        private Dictionary<Arg<TParam>, TReturn> valu" +
-                    "eToReturnByParam = new Dictionary<Arg<TParam>, TReturn>() \r\n        {\r\n         " +
-                    "   { Arg<TParam>.Any, default(TReturn) }\r\n        };\r\n\r\n        private Arg<TPar" +
-                    "am> parameterValue = Arg<TParam>.Any;\r\n\r\n        public MethodSpy<TParam> Spy { " +
-                    "get; } = new MethodSpy<TParam>();\r\n\r\n        public MethodSetup<TReturn, TParam>" +
-                    " ForParameter(Arg<TParam> paramValue)\r\n        {\r\n            parameterValue = p" +
-                    "aramValue;\r\n            return this;\r\n        }\r\n\r\n        public void WillRetur" +
-                    "n(TReturn value)\r\n        {\r\n            valueToReturnByParam[parameterValue] = " +
-                    "value;\r\n            parameterValue = Arg<TParam>.Any;\r\n        }\r\n\r\n        publ" +
-                    "ic TReturn GetValue(TParam param)\r\n        {\r\n            var arg = new Arg<TPar" +
-                    "am>(param);\r\n            return valueToReturnByParam.ContainsKey(arg)\r\n         " +
-                    "       ? valueToReturnByParam[arg]\r\n                : valueToReturnByParam[Arg<T" +
-                    "Param>.Any];\r\n        }\r\n\r\n        public int Calls => Spy.GetCallsFor(parameter" +
-                    "Value);\r\n    }\r\n}\r\n");
+            this.Write("using System;\r\nusing System.Collections.Generic;\r\n\r\nnamespace MockGen.Specs.Gener" +
+                    "ated.Helpers\r\n{\r\n    interface IMethodSetup\r\n    {\r\n        int Calls { get; }\r\n" +
+                    "        void WillThrow<TException>() where TException : Exception, new();\r\n    }" +
+                    "\r\n\r\n    internal class MethodSetup : IMethodSetup\r\n    {\r\n        private Action" +
+                    " executeSetupAction = () => { };\r\n\r\n        private MethodSpy spy = new MethodSp" +
+                    "y();\r\n\r\n        public int Calls => spy.TotalCalls;\r\n        \r\n        public vo" +
+                    "id ExecuteSetup()\r\n        {\r\n            spy.WasCalled();\r\n            executeS" +
+                    "etupAction();\r\n        }\r\n\r\n        public void WillThrow<TException>() where TE" +
+                    "xception : Exception, new()\r\n        {\r\n            executeSetupAction = () => t" +
+                    "hrow new TException();\r\n        }\r\n    }\r\n\r\n    internal interface IMethodSetup<" +
+                    "TReturn> : IMethodSetup\r\n    {\r\n        void WillReturn(TReturn value);\r\n    }\r\n" +
+                    "\r\n    internal class MethodSetup<TReturn> : IMethodSetup<TReturn>\r\n    {\r\n      " +
+                    "  private Func<TReturn> setupAction = () => default(TReturn);\r\n        private M" +
+                    "ethodSpy spy = new MethodSpy();\r\n\r\n        public TReturn ExecuteSetup()\r\n      " +
+                    "  {\r\n            spy.WasCalled();\r\n            return setupAction();\r\n        }\r" +
+                    "\n\r\n        public void WillReturn(TReturn value)\r\n        {\r\n            setupAc" +
+                    "tion = () => value;\r\n        }\r\n\r\n        public void WillThrow<TException>() wh" +
+                    "ere TException : Exception, new()\r\n        {\r\n            setupAction = () => th" +
+                    "row new TException();\r\n        }\r\n\r\n        public int Calls => spy.TotalCalls;\r" +
+                    "\n    }\r\n\r\n    interface IMethodSetup<TReturn, TParam> : IMethodSetup<TReturn>\r\n " +
+                    "   {\r\n    }\r\n\r\n    internal class MethodSetup<TReturn, TParam> : IMethodSetup<TR" +
+                    "eturn,TParam>\r\n    {\r\n        private Arg<TParam> parameterValue = Arg<TParam>.A" +
+                    "ny;\r\n        private MethodSpy<TParam> spy = new MethodSpy<TParam>();\r\n        D" +
+                    "ictionary<Arg<TParam>, Func<TParam, TReturn>> setupActionByParam = new Dictionar" +
+                    "y<Arg<TParam>, Func<TParam, TReturn>>\r\n        {\r\n            { Arg<TParam>.Any," +
+                    " _ => default(TReturn) }\r\n        };\r\n\r\n        public MethodSetup<TReturn, TPar" +
+                    "am> ForParameter(Arg<TParam> paramValue)\r\n        {\r\n            parameterValue " +
+                    "= paramValue;\r\n            return this;\r\n        }\r\n\r\n        public void WillRe" +
+                    "turn(TReturn value)\r\n        {\r\n            setupActionByParam[parameterValue] =" +
+                    " (_) => value;\r\n            parameterValue = Arg<TParam>.Any;\r\n        }\r\n\r\n    " +
+                    "    public TReturn ExecuteSetup(TParam param)\r\n        {\r\n            spy.WasCal" +
+                    "led(param);\r\n            var arg = new Arg<TParam>(param);\r\n            return s" +
+                    "etupActionByParam.ContainsKey(arg)\r\n                ? setupActionByParam[arg](pa" +
+                    "ram)\r\n                : setupActionByParam[Arg<TParam>.Any](param);\r\n        }\r\n" +
+                    "\r\n        public void WillThrow<TException>() where TException : Exception, new(" +
+                    ")\r\n        {\r\n            setupActionByParam[parameterValue] = (_) => throw new " +
+                    "TException();\r\n            parameterValue = Arg<TParam>.Any;\r\n        }\r\n\r\n     " +
+                    "   public int Calls => spy.GetCallsFor(parameterValue);\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

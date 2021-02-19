@@ -159,36 +159,42 @@ namespace MockGen.Templates
             
             #line default
             #line hidden
-            this.Write(")\r\n        {\r\n            ");
+            this.Write(")\r\n        {\r\n");
             
             #line 33 "D:\Dev\MockGen\MockGen\Templates\MockTextTemplate.tt"
+ if (!method.ReturnsVoid) { 
+            
+            #line default
+            #line hidden
+            this.Write("            return ");
+            
+            #line 34 "D:\Dev\MockGen\MockGen\Templates\MockTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.NameCamelCase));
             
             #line default
             #line hidden
-            this.Write("Setup.Spy.WasCalled(");
+            this.Write("Setup.ExecuteSetup(");
             
-            #line 33 "D:\Dev\MockGen\MockGen\Templates\MockTextTemplate.tt"
+            #line 34 "D:\Dev\MockGen\MockGen\Templates\MockTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.ParameterNames));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 34 "D:\Dev\MockGen\MockGen\Templates\MockTextTemplate.tt"
- if (!method.ReturnsVoid || method.Parameters.Count > 0)
-{
+            #line 35 "D:\Dev\MockGen\MockGen\Templates\MockTextTemplate.tt"
+ } else { 
             
             #line default
             #line hidden
-            this.Write("            return ");
+            this.Write("            ");
             
             #line 36 "D:\Dev\MockGen\MockGen\Templates\MockTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.NameCamelCase));
             
             #line default
             #line hidden
-            this.Write("Setup.GetValue(");
+            this.Write("Setup.ExecuteSetup(");
             
             #line 36 "D:\Dev\MockGen\MockGen\Templates\MockTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.ParameterNames));
@@ -198,14 +204,13 @@ namespace MockGen.Templates
             this.Write(");\r\n");
             
             #line 37 "D:\Dev\MockGen\MockGen\Templates\MockTextTemplate.tt"
-}
-
+ } 
             
             #line default
             #line hidden
             this.Write("        }\r\n\r\n");
             
-            #line 41 "D:\Dev\MockGen\MockGen\Templates\MockTextTemplate.tt"
+            #line 40 "D:\Dev\MockGen\MockGen\Templates\MockTextTemplate.tt"
 }
 
             
