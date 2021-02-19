@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MockGen.Specs\MockGen.Specs.csproj" />
     <PackageReference Include="NSubstitute" Version="4.*" />
+    <PackageReference Include="Moq" Version="4.*" />
     <PackageReference Include="FluentAssertions" Version="5.*" />
   </ItemGroup>
 
