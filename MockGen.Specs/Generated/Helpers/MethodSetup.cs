@@ -58,11 +58,11 @@ namespace MockGen.Specs.Generated.Helpers
         public int Calls => spy.TotalCalls;
     }
 
-    interface IMethodSetup<TReturn, TParam> : IMethodSetup<TReturn>
+    interface IMethodSetup<TParam, TReturn> : IMethodSetup<TReturn>
     {
     }
 
-    internal class MethodSetup<TReturn, TParam> : IMethodSetup<TReturn, TParam>
+    internal class MethodSetup<TParam, TReturn> : IMethodSetup<TParam, TReturn>
     {
         private Arg<TParam> parameterValue = Arg<TParam>.Any;
         private MethodSpy<TParam> spy = new MethodSpy<TParam>();
@@ -71,7 +71,7 @@ namespace MockGen.Specs.Generated.Helpers
             { Arg<TParam>.Any, _ => default(TReturn) }
         };
 
-        public MethodSetup<TReturn, TParam> ForParameter(Arg<TParam> paramValue)
+        public MethodSetup<TParam, TReturn> ForParameter(Arg<TParam> paramValue)
         {
             parameterValue = paramValue;
             return this;

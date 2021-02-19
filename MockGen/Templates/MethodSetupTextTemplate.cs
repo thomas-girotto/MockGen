@@ -47,25 +47,25 @@ namespace MockGen.Templates
                     "tion = () => value;\r\n        }\r\n\r\n        public void WillThrow<TException>() wh" +
                     "ere TException : Exception, new()\r\n        {\r\n            setupAction = () => th" +
                     "row new TException();\r\n        }\r\n\r\n        public int Calls => spy.TotalCalls;\r" +
-                    "\n    }\r\n\r\n    interface IMethodSetup<TReturn, TParam> : IMethodSetup<TReturn>\r\n " +
-                    "   {\r\n    }\r\n\r\n    internal class MethodSetup<TReturn, TParam> : IMethodSetup<TR" +
-                    "eturn,TParam>\r\n    {\r\n        private Arg<TParam> parameterValue = Arg<TParam>.A" +
-                    "ny;\r\n        private MethodSpy<TParam> spy = new MethodSpy<TParam>();\r\n        D" +
-                    "ictionary<Arg<TParam>, Func<TParam, TReturn>> setupActionByParam = new Dictionar" +
-                    "y<Arg<TParam>, Func<TParam, TReturn>>\r\n        {\r\n            { Arg<TParam>.Any," +
-                    " _ => default(TReturn) }\r\n        };\r\n\r\n        public MethodSetup<TReturn, TPar" +
-                    "am> ForParameter(Arg<TParam> paramValue)\r\n        {\r\n            parameterValue " +
-                    "= paramValue;\r\n            return this;\r\n        }\r\n\r\n        public void WillRe" +
-                    "turn(TReturn value)\r\n        {\r\n            setupActionByParam[parameterValue] =" +
-                    " (_) => value;\r\n            parameterValue = Arg<TParam>.Any;\r\n        }\r\n\r\n    " +
-                    "    public TReturn ExecuteSetup(TParam param)\r\n        {\r\n            spy.WasCal" +
-                    "led(param);\r\n            var arg = new Arg<TParam>(param);\r\n            return s" +
-                    "etupActionByParam.ContainsKey(arg)\r\n                ? setupActionByParam[arg](pa" +
-                    "ram)\r\n                : setupActionByParam[Arg<TParam>.Any](param);\r\n        }\r\n" +
-                    "\r\n        public void WillThrow<TException>() where TException : Exception, new(" +
-                    ")\r\n        {\r\n            setupActionByParam[parameterValue] = (_) => throw new " +
-                    "TException();\r\n            parameterValue = Arg<TParam>.Any;\r\n        }\r\n\r\n     " +
-                    "   public int Calls => spy.GetCallsFor(parameterValue);\r\n    }\r\n}\r\n");
+                    "\n    }\r\n\r\n    interface IMethodSetup<TParam, TReturn> : IMethodSetup<TReturn>\r\n " +
+                    "   {\r\n    }\r\n\r\n    internal class MethodSetup<TParam, TReturn> : IMethodSetup<TP" +
+                    "aram, TReturn>\r\n    {\r\n        private Arg<TParam> parameterValue = Arg<TParam>." +
+                    "Any;\r\n        private MethodSpy<TParam> spy = new MethodSpy<TParam>();\r\n        " +
+                    "Dictionary<Arg<TParam>, Func<TParam, TReturn>> setupActionByParam = new Dictiona" +
+                    "ry<Arg<TParam>, Func<TParam, TReturn>>\r\n        {\r\n            { Arg<TParam>.Any" +
+                    ", _ => default(TReturn) }\r\n        };\r\n\r\n        public MethodSetup<TParam, TRet" +
+                    "urn> ForParameter(Arg<TParam> paramValue)\r\n        {\r\n            parameterValue" +
+                    " = paramValue;\r\n            return this;\r\n        }\r\n\r\n        public void WillR" +
+                    "eturn(TReturn value)\r\n        {\r\n            setupActionByParam[parameterValue] " +
+                    "= (_) => value;\r\n            parameterValue = Arg<TParam>.Any;\r\n        }\r\n\r\n   " +
+                    "     public TReturn ExecuteSetup(TParam param)\r\n        {\r\n            spy.WasCa" +
+                    "lled(param);\r\n            var arg = new Arg<TParam>(param);\r\n            return " +
+                    "setupActionByParam.ContainsKey(arg)\r\n                ? setupActionByParam[arg](p" +
+                    "aram)\r\n                : setupActionByParam[Arg<TParam>.Any](param);\r\n        }\r" +
+                    "\n\r\n        public void WillThrow<TException>() where TException : Exception, new" +
+                    "()\r\n        {\r\n            setupActionByParam[parameterValue] = (_) => throw new" +
+                    " TException();\r\n            parameterValue = Arg<TParam>.Any;\r\n        }\r\n\r\n    " +
+                    "    public int Calls => spy.GetCallsFor(parameterValue);\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }
