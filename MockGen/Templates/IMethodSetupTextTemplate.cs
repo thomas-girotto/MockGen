@@ -18,9 +18,9 @@ namespace MockGen.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
+    #line 1 "D:\Dev\MockGen\MockGen\Templates\IMethodSetupTextTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public partial class MockBuilderTextTemplate : MockBuilderTextTemplateBase
+    public partial class IMethodSetupTextTemplate : IMethodSetupTextTemplateBase
     {
 #line hidden
         /// <summary>
@@ -28,181 +28,9 @@ namespace MockGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\r\nusing MockGen.Specs.Generated.Helpers;\r\nusing ");
-            
-            #line 8 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMockOriginalNamespace));
-            
-            #line default
-            #line hidden
-            this.Write(";\r\n\r\nnamespace MockGen.Specs.Generated.");
-            
-            #line 10 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GeneratedNamespace));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n{\r\n    internal class ");
-            
-            #line 12 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMock));
-            
-            #line default
-            #line hidden
-            this.Write("MockBuilder\r\n    {\r\n");
-            
-            #line 14 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
- foreach (var method in Descriptor.Methods) {
-            
-            #line default
-            #line hidden
-            this.Write("        private readonly ");
-            
-            #line 15 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.MethodSetupWithTypedParameters));
-            
-            #line default
-            #line hidden
-            this.Write(" ");
-            
-            #line 15 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.NameCamelCase));
-            
-            #line default
-            #line hidden
-            this.Write("Setup = new ");
-            
-            #line 15 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.MethodSetupWithTypedParameters));
-            
-            #line default
-            #line hidden
-            this.Write("();\r\n");
-            
-            #line 16 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-}
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 18 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
- foreach (var method in Descriptor.Methods) {
-            
-            #line default
-            #line hidden
-            
-            #line 19 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
- if (method.ReturnsVoid) {
-            
-            #line default
-            #line hidden
-            this.Write("        public IMethodSetupVoid ");
-            
-            #line 20 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
-            
-            #line default
-            #line hidden
-            this.Write("(");
-            
-            #line 20 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.ParametersDeclarationWithArg));
-            
-            #line default
-            #line hidden
-            this.Write(")\r\n        {\r\n            return ");
-            
-            #line 22 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.NameCamelCase));
-            
-            #line default
-            #line hidden
-            this.Write("Setup");
-            
-            #line 22 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.CallForParameterMethod));
-            
-            #line default
-            #line hidden
-            this.Write(";\r\n        }\r\n");
-            
-            #line 24 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-} else { 
-            
-            #line default
-            #line hidden
-            this.Write("        public IMethodSetupReturn<");
-            
-            #line 25 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.ReturnType));
-            
-            #line default
-            #line hidden
-            this.Write("> ");
-            
-            #line 25 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
-            
-            #line default
-            #line hidden
-            this.Write("(");
-            
-            #line 25 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.ParametersDeclarationWithArg));
-            
-            #line default
-            #line hidden
-            this.Write(")\r\n        {\r\n            return ");
-            
-            #line 27 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.NameCamelCase));
-            
-            #line default
-            #line hidden
-            this.Write("Setup");
-            
-            #line 27 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.CallForParameterMethod));
-            
-            #line default
-            #line hidden
-            this.Write(";\r\n        }\r\n");
-            
-            #line 29 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-}
-            
-            #line default
-            #line hidden
-            this.Write("        \r\n");
-            
-            #line 31 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-}
-            
-            #line default
-            #line hidden
-            this.Write("\r\n        public ");
-            
-            #line 33 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMock));
-            
-            #line default
-            #line hidden
-            this.Write(" Build()\r\n        {\r\n            return new ");
-            
-            #line 35 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMock));
-            
-            #line default
-            #line hidden
-            this.Write("Mock(");
-            
-            #line 35 "D:\Dev\MockGen\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.MockCtorParameters));
-            
-            #line default
-            #line hidden
-            this.Write(");\r\n        }\r\n    }\r\n}");
+            this.Write("using System;\r\n\r\nnamespace MockGen.Specs.Generated.Helpers\r\n{\r\n    internal inter" +
+                    "face IMethodSetup\r\n    {\r\n        int Calls { get; }\r\n        void WillThrow<TEx" +
+                    "ception>() where TException : Exception, new();\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -214,7 +42,7 @@ namespace MockGen.Templates
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public class MockBuilderTextTemplateBase
+    public class IMethodSetupTextTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

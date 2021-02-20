@@ -7,10 +7,10 @@ namespace MockGen
     {
         private string returnType;
 
-        public string ReturnType 
+        public string ReturnType
         {
             get => ReturnsVoid ? "void" : returnType;
-            set => returnType = value; 
+            set => returnType = value;
         }
 
         public bool ReturnsVoid { get; set; }
@@ -34,11 +34,16 @@ namespace MockGen
         /// </summary>
         public string ParameterNames => string.Join(", ", Parameters.Select(p => p.Name));
 
-        public string TypedParameters => string.Join(", ", string.Join(", ", new List<string> { ReturnType }.Concat(Parameters.Select(p => p.Type)).Where(x => !string.IsNullOrEmpty(x))));
+        private string TypedParametersWithReturnType => string.Join(", ", string.Join(", ", Parameters.Select(p => p.Type).Concat(new List<string> { ReturnType }).Where(x => !string.IsNullOrEmpty(x))));
+        private string TypedParameters => string.Join(", ", Parameters.Select(p => p.Type).Where(x => !string.IsNullOrEmpty(x)));
 
-        public string MethodSetupWithTypedParameters => (ReturnsVoid && Parameters.Count == 0)
-            ? "MethodSetup"
-            : $"MethodSetup<{TypedParameters}>";
+        public string MethodSetupWithTypedParameters =>
+            (ReturnsVoid, Parameters.Count) switch
+            {
+                (true, 0) => "MethodSetupVoid",
+                (true, > 0) => $"MethodSetupVoid<{TypedParameters}>",
+                (false, _) => $"MethodSetupReturn<{TypedParametersWithReturnType}>",
+            };
 
         public string CallForParameterMethod => Parameters.Count == 0
             ? string.Empty

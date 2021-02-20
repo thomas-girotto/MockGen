@@ -20,9 +20,17 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ArgTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\MethodSetupTextTemplate.tt">
+    <None Update="Templates\IMethodSetupTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>MethodSetupTextTemplate.cs</LastGenOutput>
+      <LastGenOutput>IMethodSetupTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\MethodSetupReturnTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MethodSetupReturnTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\MethodSetupVoidTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MethodSetupVoidTextTemplate.cs</LastGenOutput>
     </None>
     <None Update="Templates\MethodSpyTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
@@ -52,10 +60,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ArgTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\MethodSetupTextTemplate.cs">
+    <Compile Update="Templates\IMethodSetupTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>MethodSetupTextTemplate.tt</DependentUpon>
+      <DependentUpon>IMethodSetupTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\MethodSetupReturnTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MethodSetupReturnTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\MethodSetupVoidTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MethodSetupVoidTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Update="Templates\MethodSpyTextTemplate.cs">
       <DesignTime>True</DesignTime>

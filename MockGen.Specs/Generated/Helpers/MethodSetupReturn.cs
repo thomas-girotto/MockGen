@@ -3,38 +3,13 @@ using System.Collections.Generic;
 
 namespace MockGen.Specs.Generated.Helpers
 {
-    interface IMethodSetup
-    {
-        int Calls { get; }
-        void WillThrow<TException>() where TException : Exception, new();
-    }
-
-    internal class MethodSetup : IMethodSetup
-    {
-        private Action executeSetupAction = () => { };
-
-        private MethodSpy spy = new MethodSpy();
-
-        public int Calls => spy.TotalCalls;
-        
-        public void ExecuteSetup()
-        {
-            spy.WasCalled();
-            executeSetupAction();
-        }
-
-        public void WillThrow<TException>() where TException : Exception, new()
-        {
-            executeSetupAction = () => throw new TException();
-        }
-    }
-
-    interface IMethodSetup<TReturn> : IMethodSetup
+    interface IMethodSetupReturn<TReturn> : IMethodSetup
     {
         void WillReturn(TReturn value);
     }
 
-    internal class MethodSetup<TReturn> : IMethodSetup<TReturn>
+
+    internal class MethodSetupReturn<TReturn> : IMethodSetupReturn<TReturn>
     {
         private Func<TReturn> setupAction = () => default(TReturn);
         private MethodSpy spy = new MethodSpy();
@@ -58,11 +33,7 @@ namespace MockGen.Specs.Generated.Helpers
         public int Calls => spy.TotalCalls;
     }
 
-    interface IMethodSetup<TParam, TReturn> : IMethodSetup<TReturn>
-    {
-    }
-
-    internal class MethodSetup<TParam, TReturn> : IMethodSetup<TParam, TReturn>
+    internal class MethodSetupReturn<TParam, TReturn> : IMethodSetupReturn<TReturn>
     {
         private Arg<TParam> parameterValue = Arg<TParam>.Any;
         private MethodSpy<TParam> spy = new MethodSpy<TParam>();
@@ -71,7 +42,7 @@ namespace MockGen.Specs.Generated.Helpers
             { Arg<TParam>.Any, _ => default(TReturn) }
         };
 
-        public MethodSetup<TParam, TReturn> ForParameter(Arg<TParam> paramValue)
+        public MethodSetupReturn<TParam, TReturn> ForParameter(Arg<TParam> paramValue)
         {
             parameterValue = paramValue;
             return this;

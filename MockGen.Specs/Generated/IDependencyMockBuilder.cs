@@ -5,28 +5,34 @@ namespace MockGen.Specs.Generated.IDependencyNs
 {
     internal class IDependencyMockBuilder
     {
-        private readonly MethodSetup doSomethingSetup = new MethodSetup();
-        private readonly MethodSetup<int> getSomeNumberSetup = new MethodSetup<int>();
-        private readonly MethodSetup<int, int> getSomeNumberWithParameterSetup = new MethodSetup<int, int>();
+        private readonly MethodSetupVoid doSomethingSetup = new MethodSetupVoid();
+        private readonly MethodSetupVoid<int> doSomethingWithParameterSetup = new MethodSetupVoid<int>();
+        private readonly MethodSetupReturn<int> getSomeNumberSetup = new MethodSetupReturn<int>();
+        private readonly MethodSetupReturn<int, int> getSomeNumberWithParameterSetup = new MethodSetupReturn<int, int>();
 
-        public IMethodSetup DoSomething()
+        public IMethodSetupVoid DoSomething()
         {
             return doSomethingSetup;
         }
 
-        public IMethodSetup<int> GetSomeNumber()
+        public IMethodSetupVoid DoSomethingWithParameter(Arg<int> input)
+        {
+            return doSomethingWithParameterSetup.ForParameter(input);
+        }
+
+        public IMethodSetupReturn<int> GetSomeNumber()
         {
             return getSomeNumberSetup;
         }
 
-        public IMethodSetup<int, int> GetSomeNumberWithParameter(Arg<int> input)
+        public IMethodSetupReturn<int> GetSomeNumberWithParameter(Arg<int> input)
         {
             return getSomeNumberWithParameterSetup.ForParameter(input);
         }
 
         public IDependency Build()
         {
-            return new IDependencyMock(doSomethingSetup, getSomeNumberSetup, getSomeNumberWithParameterSetup);
+            return new IDependencyMock(doSomethingSetup, doSomethingWithParameterSetup, getSomeNumberSetup, getSomeNumberWithParameterSetup);
         }
     }
 }

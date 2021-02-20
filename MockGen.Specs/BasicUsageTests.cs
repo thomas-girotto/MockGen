@@ -24,6 +24,23 @@ namespace MockGen.Specs
         }
 
         [Fact]
+        public void MethodVoidWithParam_Should_spy_number_of_calls()
+        {
+            // Given
+            var mock = Mock<IDependency>.Create();
+            var service = new Service(mock.Build());
+
+            // When
+            service.ExecuteSomeActionWithParam(1);
+            service.ExecuteSomeActionWithParam(2);
+
+            // Then
+            mock.DoSomethingWithParameter(Arg<int>.Any).Calls.Should().Be(2);
+            mock.DoSomethingWithParameter(1).Calls.Should().Be(1);
+            mock.DoSomethingWithParameter(2).Calls.Should().Be(1);
+        }
+
+        [Fact]
         public void MethodTReturn_Should_return_given_value_When_mocked()
         {
             // Given

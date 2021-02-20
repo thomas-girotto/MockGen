@@ -24,9 +24,15 @@ namespace MockGen
                 var argTemplate = new ArgTextTemplate();
                 context.AddSource("Arg.cs", SourceText.From(argTemplate.TransformText(), Encoding.UTF8));
 
-                var methodSetupTemplate = new MethodSetupTextTemplate();
-                context.AddSource("MethodSetup.cs", SourceText.From(methodSetupTemplate.TransformText(), Encoding.UTF8));
+                var methodSetupTemplate = new IMethodSetupTextTemplate();
+                context.AddSource("IMethodSetup.cs", SourceText.From(methodSetupTemplate.TransformText(), Encoding.UTF8));
 
+                var methodSetupVoidTemplate = new MethodSetupVoidTextTemplate();
+                context.AddSource("MethodSetupVoid.cs", SourceText.From(methodSetupVoidTemplate.TransformText(), Encoding.UTF8));
+
+                var methodSetupReturnTemplate = new MethodSetupReturnTextTemplate();
+                context.AddSource("MethodSetupReturn.cs", SourceText.From(methodSetupReturnTemplate.TransformText(), Encoding.UTF8));
+                
                 var methodSpyTemplate = new MethodSpyTextTemplate();
                 context.AddSource("MethodSpy.cs", SourceText.From(methodSpyTemplate.TransformText(), Encoding.UTF8));
 

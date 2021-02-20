@@ -25,7 +25,7 @@ namespace MockGen.Tests.Model
                     },
                     new MethodDescriptor
                     {
-                        Name = "MethodTReturnTParam",
+                        Name = "MethodTParamTReturn",
                         ReturnType = "int",
                         Parameters = new List<ParameterDescriptor>
                         {
@@ -42,7 +42,7 @@ namespace MockGen.Tests.Model
             var model = GetDefaultDescriptor();
             var mockCtorArgumentListDefinition = model.MockCtorArgumentListDefinition;
 
-            mockCtorArgumentListDefinition.Should().Be("MethodSetup methodVoidSetup, MethodSetup<int> methodTReturnSetup, MethodSetup<int, Type1> methodTReturnTParamSetup");
+            mockCtorArgumentListDefinition.Should().Be("MethodSetupVoid methodVoidSetup, MethodSetupReturn<int> methodTReturnSetup, MethodSetupReturn<Type1, int> methodTParamTReturnSetup");
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace MockGen.Tests.Model
             var model = GetDefaultDescriptor();
             var mockCtorParameters = model.MockCtorParameters;
 
-            mockCtorParameters.Should().Be("methodVoidSetup, methodTReturnSetup, methodTReturnTParamSetup");
+            mockCtorParameters.Should().Be("methodVoidSetup, methodTReturnSetup, methodTParamTReturnSetup");
         }
     }
 }

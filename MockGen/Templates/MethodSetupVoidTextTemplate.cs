@@ -18,9 +18,9 @@ namespace MockGen.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Dev\MockGen\MockGen\Templates\MethodSetupTextTemplate.tt"
+    #line 1 "D:\Dev\MockGen\MockGen\Templates\MethodSetupVoidTextTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public partial class MethodSetupTextTemplate : MethodSetupTextTemplateBase
+    public partial class MethodSetupVoidTextTemplate : MethodSetupVoidTextTemplateBase
     {
 #line hidden
         /// <summary>
@@ -29,43 +29,29 @@ namespace MockGen.Templates
         public virtual string TransformText()
         {
             this.Write("using System;\r\nusing System.Collections.Generic;\r\n\r\nnamespace MockGen.Specs.Gener" +
-                    "ated.Helpers\r\n{\r\n    interface IMethodSetup\r\n    {\r\n        int Calls { get; }\r\n" +
-                    "        void WillThrow<TException>() where TException : Exception, new();\r\n    }" +
-                    "\r\n\r\n    internal class MethodSetup : IMethodSetup\r\n    {\r\n        private Action" +
-                    " executeSetupAction = () => { };\r\n\r\n        private MethodSpy spy = new MethodSp" +
-                    "y();\r\n\r\n        public int Calls => spy.TotalCalls;\r\n        \r\n        public vo" +
-                    "id ExecuteSetup()\r\n        {\r\n            spy.WasCalled();\r\n            executeS" +
-                    "etupAction();\r\n        }\r\n\r\n        public void WillThrow<TException>() where TE" +
-                    "xception : Exception, new()\r\n        {\r\n            executeSetupAction = () => t" +
-                    "hrow new TException();\r\n        }\r\n    }\r\n\r\n    internal interface IMethodSetup<" +
-                    "TReturn> : IMethodSetup\r\n    {\r\n        void WillReturn(TReturn value);\r\n    }\r\n" +
-                    "\r\n    internal class MethodSetup<TReturn> : IMethodSetup<TReturn>\r\n    {\r\n      " +
-                    "  private Func<TReturn> setupAction = () => default(TReturn);\r\n        private M" +
-                    "ethodSpy spy = new MethodSpy();\r\n\r\n        public TReturn ExecuteSetup()\r\n      " +
-                    "  {\r\n            spy.WasCalled();\r\n            return setupAction();\r\n        }\r" +
-                    "\n\r\n        public void WillReturn(TReturn value)\r\n        {\r\n            setupAc" +
-                    "tion = () => value;\r\n        }\r\n\r\n        public void WillThrow<TException>() wh" +
-                    "ere TException : Exception, new()\r\n        {\r\n            setupAction = () => th" +
-                    "row new TException();\r\n        }\r\n\r\n        public int Calls => spy.TotalCalls;\r" +
-                    "\n    }\r\n\r\n    interface IMethodSetup<TParam, TReturn> : IMethodSetup<TReturn>\r\n " +
-                    "   {\r\n    }\r\n\r\n    internal class MethodSetup<TParam, TReturn> : IMethodSetup<TP" +
-                    "aram, TReturn>\r\n    {\r\n        private Arg<TParam> parameterValue = Arg<TParam>." +
-                    "Any;\r\n        private MethodSpy<TParam> spy = new MethodSpy<TParam>();\r\n        " +
-                    "Dictionary<Arg<TParam>, Func<TParam, TReturn>> setupActionByParam = new Dictiona" +
-                    "ry<Arg<TParam>, Func<TParam, TReturn>>\r\n        {\r\n            { Arg<TParam>.Any" +
-                    ", _ => default(TReturn) }\r\n        };\r\n\r\n        public MethodSetup<TParam, TRet" +
-                    "urn> ForParameter(Arg<TParam> paramValue)\r\n        {\r\n            parameterValue" +
-                    " = paramValue;\r\n            return this;\r\n        }\r\n\r\n        public void WillR" +
-                    "eturn(TReturn value)\r\n        {\r\n            setupActionByParam[parameterValue] " +
-                    "= (_) => value;\r\n            parameterValue = Arg<TParam>.Any;\r\n        }\r\n\r\n   " +
-                    "     public TReturn ExecuteSetup(TParam param)\r\n        {\r\n            spy.WasCa" +
-                    "lled(param);\r\n            var arg = new Arg<TParam>(param);\r\n            return " +
-                    "setupActionByParam.ContainsKey(arg)\r\n                ? setupActionByParam[arg](p" +
-                    "aram)\r\n                : setupActionByParam[Arg<TParam>.Any](param);\r\n        }\r" +
-                    "\n\r\n        public void WillThrow<TException>() where TException : Exception, new" +
-                    "()\r\n        {\r\n            setupActionByParam[parameterValue] = (_) => throw new" +
-                    " TException();\r\n            parameterValue = Arg<TParam>.Any;\r\n        }\r\n\r\n    " +
-                    "    public int Calls => spy.GetCallsFor(parameterValue);\r\n    }\r\n}\r\n");
+                    "ated.Helpers\r\n{\r\n    interface IMethodSetupVoid : IMethodSetup { }\r\n\r\n    intern" +
+                    "al class MethodSetupVoid : IMethodSetupVoid\r\n    {\r\n        private Action execu" +
+                    "teSetupAction = () => { };\r\n\r\n        private MethodSpy spy = new MethodSpy();\r\n" +
+                    "\r\n        public int Calls => spy.TotalCalls;\r\n        \r\n        public void Exe" +
+                    "cuteSetup()\r\n        {\r\n            spy.WasCalled();\r\n            executeSetupAc" +
+                    "tion();\r\n        }\r\n\r\n        public void WillThrow<TException>() where TExcepti" +
+                    "on : Exception, new()\r\n        {\r\n            executeSetupAction = () => throw n" +
+                    "ew TException();\r\n        }\r\n    }\r\n\r\n    internal class MethodSetupVoid<TParam>" +
+                    " : IMethodSetupVoid\r\n    {\r\n        private Arg<TParam> parameterValue = Arg<TPa" +
+                    "ram>.Any;\r\n        Dictionary<Arg<TParam>, Action<TParam>> setupActionByParam = " +
+                    "new Dictionary<Arg<TParam>, Action<TParam>>\r\n        {\r\n            { Arg<TParam" +
+                    ">.Any, (_) => { } }\r\n        };\r\n\r\n        private MethodSpy<TParam> spy = new M" +
+                    "ethodSpy<TParam>();\r\n\r\n        public int Calls => spy.GetCallsFor(parameterValu" +
+                    "e);\r\n\r\n        public void ExecuteSetup(TParam param)\r\n        {\r\n            sp" +
+                    "y.WasCalled(param);\r\n            var arg = new Arg<TParam>(param);\r\n            " +
+                    "if (setupActionByParam.ContainsKey(arg))\r\n            {\r\n                setupAc" +
+                    "tionByParam[arg](param);\r\n            }\r\n            else\r\n            {\r\n      " +
+                    "          setupActionByParam[Arg<TParam>.Any](param);\r\n            }\r\n        }\r" +
+                    "\n\r\n        public IMethodSetupVoid ForParameter(Arg<TParam> paramValue)\r\n       " +
+                    " {\r\n            parameterValue = paramValue;\r\n            return this;\r\n        " +
+                    "}\r\n\r\n        public void WillThrow<TException>() where TException : Exception, n" +
+                    "ew()\r\n        {\r\n            setupActionByParam[parameterValue] = (_) => throw n" +
+                    "ew TException();\r\n        }\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -77,7 +63,7 @@ namespace MockGen.Templates
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public class MethodSetupTextTemplateBase
+    public class MethodSetupVoidTextTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

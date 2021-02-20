@@ -14,6 +14,11 @@
             dependency.DoSomething();
         }
 
+        public void ExecuteSomeActionWithParam(int input)
+        {
+            dependency.DoSomethingWithParameter(input);
+        }
+
         public int ReturnDependencyNumber()
         {
             return dependency.GetSomeNumber();

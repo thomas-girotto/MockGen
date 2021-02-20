@@ -11,20 +11,24 @@ namespace MockGen.Specs.Generated.<#=Descriptor.GeneratedNamespace#>
 {
     internal class <#=Descriptor.TypeToMock#>MockBuilder
     {
-<# foreach (var method in Descriptor.Methods)
-{#>
+<# foreach (var method in Descriptor.Methods) {#>
         private readonly <#=method.MethodSetupWithTypedParameters#> <#=method.NameCamelCase#>Setup = new <#=method.MethodSetupWithTypedParameters#>();
-<#}
-#>
+<#}#>
 
-<# foreach (var method in Descriptor.Methods)
-{#>
-        public I<#=method.MethodSetupWithTypedParameters#> <#=method.Name#>(<#=method.ParametersDeclarationWithArg#>)
+<# foreach (var method in Descriptor.Methods) {#>
+<# if (method.ReturnsVoid) {#>
+        public IMethodSetupVoid <#=method.Name#>(<#=method.ParametersDeclarationWithArg#>)
         {
             return <#=method.NameCamelCase#>Setup<#=method.CallForParameterMethod#>;
         }
-<#}
-#>
+<#} else { #>
+        public IMethodSetupReturn<<#=method.ReturnType#>> <#=method.Name#>(<#=method.ParametersDeclarationWithArg#>)
+        {
+            return <#=method.NameCamelCase#>Setup<#=method.CallForParameterMethod#>;
+        }
+<#}#>
+        
+<#}#>
 
         public <#=Descriptor.TypeToMock#> Build()
         {

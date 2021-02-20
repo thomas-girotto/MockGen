@@ -13,6 +13,14 @@ namespace MockGen.Tests.Model
             ReturnsVoid = true,
         };
 
+        private MethodDescriptor GetMethodVoidWithParam() => new MethodDescriptor
+        {
+            Name = "MethodVoidWithParam",
+            ReturnsVoid = true,
+            ReturnType = "Void",
+            Parameters = new List<ParameterDescriptor> { new ParameterDescriptor("Type1", "param1") },
+        };
+
         private MethodDescriptor GetMethodWithoutParameter() => new MethodDescriptor
         {
             Name = "Method1",
@@ -55,15 +63,17 @@ namespace MockGen.Tests.Model
         public void Should_build_MethodSetup_with_generic_typed_parameters()
         {
             string methodSetupVoid = GetMethodVoid().MethodSetupWithTypedParameters;
+            string methodSetupVoidWithParam = GetMethodVoidWithParam().MethodSetupWithTypedParameters;
             string methodSetupTReturn = GetMethodWithoutParameter().MethodSetupWithTypedParameters;
             string methodSetupTReturnTParam = GetMethodWithOneParameter().MethodSetupWithTypedParameters;
             string methodSetupTReturnTParam1TParam2 = GetMethodWithTwoParameters().MethodSetupWithTypedParameters;
             
             // Assert
-            methodSetupVoid.Should().Be("MethodSetup");
-            methodSetupTReturn.Should().Be("MethodSetup<int>");
-            methodSetupTReturnTParam.Should().Be("MethodSetup<int, Type1>");
-            methodSetupTReturnTParam1TParam2.Should().Be("MethodSetup<int, Type1, Type2>");
+            methodSetupVoid.Should().Be("MethodSetupVoid");
+            methodSetupVoidWithParam.Should().Be("MethodSetupVoid<Type1>");
+            methodSetupTReturn.Should().Be("MethodSetupReturn<int>");
+            methodSetupTReturnTParam.Should().Be("MethodSetupReturn<Type1, int>");
+            methodSetupTReturnTParam1TParam2.Should().Be("MethodSetupReturn<Type1, Type2, int>");
         }
 
         [Fact]
