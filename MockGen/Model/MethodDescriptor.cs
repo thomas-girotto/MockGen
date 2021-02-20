@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MockGen
@@ -34,7 +35,7 @@ namespace MockGen
         /// </summary>
         public string ParameterNames => string.Join(", ", Parameters.Select(p => p.Name));
 
-        private string TypedParametersWithReturnType => string.Join(", ", string.Join(", ", Parameters.Select(p => p.Type).Concat(new List<string> { ReturnType }).Where(x => !string.IsNullOrEmpty(x))));
+        private string TypedParametersWithReturnType => string.Join(", ", Parameters.Select(p => p.Type).Concat(new List<string> { ReturnType }).Where(x => !string.IsNullOrEmpty(x)));
         private string TypedParameters => string.Join(", ", Parameters.Select(p => p.Type).Where(x => !string.IsNullOrEmpty(x)));
 
         public string MethodSetupWithTypedParameters =>
@@ -43,6 +44,7 @@ namespace MockGen
                 (true, 0) => "MethodSetupVoid",
                 (true, > 0) => $"MethodSetupVoid<{TypedParameters}>",
                 (false, _) => $"MethodSetupReturn<{TypedParametersWithReturnType}>",
+                (_, _) => throw new NotImplementedException($"Case not implemented for values: {nameof(ReturnsVoid)}: {ReturnsVoid} and {nameof(Parameters.Count)}: {Parameters.Count}"),
             };
 
         public string CallForParameterMethod => Parameters.Count == 0
