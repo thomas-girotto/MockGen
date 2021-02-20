@@ -32,11 +32,12 @@ namespace MockGen.Specs
 
             // When
             service.ExecuteSomeActionWithParam(1);
+            service.ExecuteSomeActionWithParam(1);
             service.ExecuteSomeActionWithParam(2);
 
             // Then
-            mock.DoSomethingWithParameter(Arg<int>.Any).Calls.Should().Be(2);
-            mock.DoSomethingWithParameter(1).Calls.Should().Be(1);
+            mock.DoSomethingWithParameter(Arg<int>.Any).Calls.Should().Be(3);
+            mock.DoSomethingWithParameter(1).Calls.Should().Be(2);
             mock.DoSomethingWithParameter(2).Calls.Should().Be(1);
         }
 

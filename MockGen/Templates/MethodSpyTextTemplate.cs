@@ -29,6 +29,7 @@ namespace MockGen.Templates
         public virtual string TransformText()
         {
             this.Write(@"using System.Collections.Generic;
+using System.Linq;
 
 namespace MockGen.Specs.Generated.Helpers
 {
@@ -64,7 +65,7 @@ namespace MockGen.Specs.Generated.Helpers
         {
             if (param.Equals(Arg<TParam>.Any))
             {
-                return callsByParamValue.Count;
+                return callsByParamValue.Values.Sum();
             }
             if (callsByParamValue.ContainsKey(param.Value))
             {
