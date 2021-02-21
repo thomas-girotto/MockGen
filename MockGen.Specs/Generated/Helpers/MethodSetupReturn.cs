@@ -56,8 +56,8 @@ namespace MockGen.Specs.Generated.Helpers
 
         public TReturn ExecuteSetup(TParam param)
         {
-            spy.WasCalled(param);
-            var arg = new Arg<TParam>(param);
+            var arg = Arg<TParam>.Create(param);
+            spy.WasCalled(arg);
             return setupActionByParam.ContainsKey(arg)
                 ? setupActionByParam[arg](param)
                 : setupActionByParam[Arg<TParam>.Any](param);

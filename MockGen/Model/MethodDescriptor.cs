@@ -35,21 +35,21 @@ namespace MockGen
         /// </summary>
         public string ParameterNames => string.Join(", ", Parameters.Select(p => p.Name));
 
-        private string TypedParametersWithReturnType => string.Join(", ", Parameters.Select(p => p.Type).Concat(new List<string> { ReturnType }).Where(x => !string.IsNullOrEmpty(x)));
-        private string TypedParameters => string.Join(", ", Parameters.Select(p => p.Type).Where(x => !string.IsNullOrEmpty(x)));
+        private string ParameterTypes => string.Join(", ", Parameters.Select(p => p.Type));
 
         public string MethodSetupWithTypedParameters =>
             (ReturnsVoid, Parameters.Count) switch
             {
                 (true, 0) => "MethodSetupVoid",
-                (true, > 0) => $"MethodSetupVoid<{TypedParameters}>",
-                (false, _) => $"MethodSetupReturn<{TypedParametersWithReturnType}>",
+                (true, > 0) => $"MethodSetupVoid<{ParameterTypes}>",
+                (false, 0) => $"MethodSetupReturn<{ReturnType}>",
+                (false, > 0) => $"MethodSetupReturn<{ParameterTypes}, {ReturnType}>",
                 (_, _) => throw new NotImplementedException($"Case not implemented for values: {nameof(ReturnsVoid)}: {ReturnsVoid} and {nameof(Parameters.Count)}: {Parameters.Count}"),
             };
 
         public string CallForParameterMethod => Parameters.Count == 0
             ? string.Empty
-            : $".ForParameter({ParameterNames})";
+            : $".ForParameter({ParameterNames} ?? Arg<{Parameters[0].Type}>.Null)";
 
     }
 }

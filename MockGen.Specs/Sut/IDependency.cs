@@ -4,6 +4,7 @@
     {
         void DoSomething();
         void DoSomethingWithParameter(int input);
+        void DoSomethingWithReferenceTypeParameter(Model model);
         int GetSomeNumber();
         int GetSomeNumberWithParameter(int input);
     }

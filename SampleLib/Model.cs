@@ -4,9 +4,8 @@ using System.Text;
 
 namespace SampleLib
 {
-    public interface IExternalDependency
+    public class Model
     {
-        int GetSomeNumber();
-        void DoSomething(Model model);
+        public int Id { get; set; }
     }
 }

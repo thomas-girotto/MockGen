@@ -27,6 +27,7 @@ namespace MockGen.Tests
             {
                 loadSourceFilesFixture.IDependencySourceFile,
                 loadSourceFilesFixture.ServiceSourceFile,
+                loadSourceFilesFixture.ModelSourceFile,
                 loadSourceFilesFixture.LoadThisFile($"{nameof(BasicUsageTests)}.cs"),
             };
         }
@@ -37,6 +38,26 @@ namespace MockGen.Tests
             var sources = GetSourceFilesToCompileFromSpecs();
 
             Action action = () => testRunner.RunTest(sources, nameof(BasicUsageTests), nameof(MethodVoid_Should_spy_number_of_calls));
+
+            action.Should().NotThrow();
+        }
+
+        [Fact]
+        public void MethodVoidWithParam_Should_spy_number_of_calls()
+        {
+            var sources = GetSourceFilesToCompileFromSpecs();
+
+            Action action = () => testRunner.RunTest(sources, nameof(BasicUsageTests), nameof(MethodVoidWithParam_Should_spy_number_of_calls));
+
+            action.Should().NotThrow();
+        }
+
+        [Fact]
+        public void MethodVoidWithReferenceTypeParam_Should_handle_null_values()
+        {
+            var sources = GetSourceFilesToCompileFromSpecs();
+
+            Action action = () => testRunner.RunTest(sources, nameof(BasicUsageTests), nameof(MethodVoidWithReferenceTypeParam_Should_handle_null_values));
 
             action.Should().NotThrow();
         }

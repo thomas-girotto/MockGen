@@ -49,14 +49,14 @@ namespace MockGen.Templates
                     "ue;\r\n            return this;\r\n        }\r\n\r\n        public void WillReturn(TRetu" +
                     "rn value)\r\n        {\r\n            setupActionByParam[parameterValue] = (_) => va" +
                     "lue;\r\n            parameterValue = Arg<TParam>.Any;\r\n        }\r\n\r\n        public" +
-                    " TReturn ExecuteSetup(TParam param)\r\n        {\r\n            spy.WasCalled(param)" +
-                    ";\r\n            var arg = new Arg<TParam>(param);\r\n            return setupAction" +
-                    "ByParam.ContainsKey(arg)\r\n                ? setupActionByParam[arg](param)\r\n    " +
-                    "            : setupActionByParam[Arg<TParam>.Any](param);\r\n        }\r\n\r\n        " +
-                    "public void WillThrow<TException>() where TException : Exception, new()\r\n       " +
-                    " {\r\n            setupActionByParam[parameterValue] = (_) => throw new TException" +
-                    "();\r\n            parameterValue = Arg<TParam>.Any;\r\n        }\r\n\r\n        public " +
-                    "int Calls => spy.GetCallsFor(parameterValue);\r\n    }\r\n}\r\n");
+                    " TReturn ExecuteSetup(TParam param)\r\n        {\r\n            var arg = Arg<TParam" +
+                    ">.Create(param);\r\n            spy.WasCalled(arg);\r\n            return setupActio" +
+                    "nByParam.ContainsKey(arg)\r\n                ? setupActionByParam[arg](param)\r\n   " +
+                    "             : setupActionByParam[Arg<TParam>.Any](param);\r\n        }\r\n\r\n       " +
+                    " public void WillThrow<TException>() where TException : Exception, new()\r\n      " +
+                    "  {\r\n            setupActionByParam[parameterValue] = (_) => throw new TExceptio" +
+                    "n();\r\n            parameterValue = Arg<TParam>.Any;\r\n        }\r\n\r\n        public" +
+                    " int Calls => spy.GetCallsFor(parameterValue);\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

@@ -42,6 +42,24 @@ namespace MockGen.Specs
         }
 
         [Fact]
+        public void MethodVoidWithReferenceTypeParam_Should_handle_null_values()
+        {
+            // Given
+            var mock = Mock<IDependency>.Create();
+            var service = new Service(mock.Build());
+
+            // When
+            Model model = new Model { Id = 1 };
+            service.ExecuteSomeActionWithReferenceTypeParameter(null);
+            service.ExecuteSomeActionWithReferenceTypeParameter(model);
+
+            // Then
+            mock.DoSomethingWithReferenceTypeParameter(Arg<Model>.Any).Calls.Should().Be(2);
+            mock.DoSomethingWithReferenceTypeParameter(null).Calls.Should().Be(1);
+            mock.DoSomethingWithReferenceTypeParameter(model).Calls.Should().Be(1);
+        }
+
+        [Fact]
         public void MethodTReturn_Should_return_given_value_When_mocked()
         {
             // Given

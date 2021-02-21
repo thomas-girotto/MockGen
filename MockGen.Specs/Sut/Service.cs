@@ -19,6 +19,11 @@
             dependency.DoSomethingWithParameter(input);
         }
 
+        public void ExecuteSomeActionWithReferenceTypeParameter(Model model)
+        {
+            dependency.DoSomethingWithReferenceTypeParameter(model);
+        }
+
         public int ReturnDependencyNumber()
         {
             return dependency.GetSomeNumber();

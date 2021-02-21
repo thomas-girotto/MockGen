@@ -17,6 +17,7 @@
   
   <ItemGroup>
     <None Update="Templates\ArgTextTemplate.tt">
+      <CustomToolNamespace></CustomToolNamespace>
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ArgTextTemplate.cs</LastGenOutput>
     </None>

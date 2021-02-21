@@ -44,8 +44,8 @@ namespace MockGen.Specs.Generated.Helpers
 
         public void ExecuteSetup(TParam param)
         {
-            spy.WasCalled(param);
-            var arg = new Arg<TParam>(param);
+            var arg = Arg<TParam>.Create(param);
+            spy.WasCalled(arg);
             if (setupActionByParam.ContainsKey(arg))
             {
                 setupActionByParam[arg](param);

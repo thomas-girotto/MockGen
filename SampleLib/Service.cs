@@ -15,5 +15,10 @@ namespace SampleLib
         {
             return dependency.GetSomeNumber();
         }
+
+        public void DoSomething(Model model)
+        {
+            dependency.DoSomething(model);
+        }
     }
 }

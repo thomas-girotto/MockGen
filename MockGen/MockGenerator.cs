@@ -23,7 +23,7 @@ namespace MockGen
                 // First inject helper classes that doesn't depend on user's code
                 var argTemplate = new ArgTextTemplate();
                 context.AddSource("Arg.cs", SourceText.From(argTemplate.TransformText(), Encoding.UTF8));
-
+                
                 var methodSetupTemplate = new IMethodSetupTextTemplate();
                 context.AddSource("IMethodSetup.cs", SourceText.From(methodSetupTemplate.TransformText(), Encoding.UTF8));
 

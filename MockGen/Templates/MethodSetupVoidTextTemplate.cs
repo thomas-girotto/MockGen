@@ -42,16 +42,16 @@ namespace MockGen.Templates
                     "new Dictionary<Arg<TParam>, Action<TParam>>\r\n        {\r\n            { Arg<TParam" +
                     ">.Any, (_) => { } }\r\n        };\r\n\r\n        private MethodSpy<TParam> spy = new M" +
                     "ethodSpy<TParam>();\r\n\r\n        public int Calls => spy.GetCallsFor(parameterValu" +
-                    "e);\r\n\r\n        public void ExecuteSetup(TParam param)\r\n        {\r\n            sp" +
-                    "y.WasCalled(param);\r\n            var arg = new Arg<TParam>(param);\r\n            " +
-                    "if (setupActionByParam.ContainsKey(arg))\r\n            {\r\n                setupAc" +
-                    "tionByParam[arg](param);\r\n            }\r\n            else\r\n            {\r\n      " +
-                    "          setupActionByParam[Arg<TParam>.Any](param);\r\n            }\r\n        }\r" +
-                    "\n\r\n        public IMethodSetupVoid ForParameter(Arg<TParam> paramValue)\r\n       " +
-                    " {\r\n            parameterValue = paramValue;\r\n            return this;\r\n        " +
-                    "}\r\n\r\n        public void WillThrow<TException>() where TException : Exception, n" +
-                    "ew()\r\n        {\r\n            setupActionByParam[parameterValue] = (_) => throw n" +
-                    "ew TException();\r\n        }\r\n    }\r\n}\r\n");
+                    "e);\r\n\r\n        public void ExecuteSetup(TParam param)\r\n        {\r\n            va" +
+                    "r arg = Arg<TParam>.Create(param);\r\n            spy.WasCalled(arg);\r\n           " +
+                    " if (setupActionByParam.ContainsKey(arg))\r\n            {\r\n                setupA" +
+                    "ctionByParam[arg](param);\r\n            }\r\n            else\r\n            {\r\n     " +
+                    "           setupActionByParam[Arg<TParam>.Any](param);\r\n            }\r\n        }" +
+                    "\r\n\r\n        public IMethodSetupVoid ForParameter(Arg<TParam> paramValue)\r\n      " +
+                    "  {\r\n            parameterValue = paramValue;\r\n            return this;\r\n       " +
+                    " }\r\n\r\n        public void WillThrow<TException>() where TException : Exception, " +
+                    "new()\r\n        {\r\n            setupActionByParam[parameterValue] = (_) => throw " +
+                    "new TException();\r\n        }\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }
