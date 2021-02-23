@@ -49,12 +49,12 @@ namespace MockGen.Specs
             var service = new Service(mock.Build());
 
             // When
-            Model model = new Model { Id = 1 };
+            Model1 model = new Model1 { Id = 1 };
             service.ExecuteSomeActionWithReferenceTypeParameter(null);
             service.ExecuteSomeActionWithReferenceTypeParameter(model);
 
             // Then
-            mock.DoSomethingWithReferenceTypeParameter(Arg<Model>.Any).Calls.Should().Be(2);
+            mock.DoSomethingWithReferenceTypeParameter(Arg<Model1>.Any).Calls.Should().Be(2);
             mock.DoSomethingWithReferenceTypeParameter(null).Calls.Should().Be(1);
             mock.DoSomethingWithReferenceTypeParameter(model).Calls.Should().Be(1);
         }
@@ -64,20 +64,46 @@ namespace MockGen.Specs
         {
             // Given
             var mock = Mock<IDependency>.Create();
-            mock.DoSomethingWithReferenceTypeParameter(Arg<Model>.When(m => m.Id == 1)).Throws<Exception>();
+            mock.DoSomethingWithReferenceTypeParameter(Arg<Model1>.When(m => m.Id == 1)).Throws<Exception>();
             var service = new Service(mock.Build());
 
             // When
-            Model model = new Model { Id = 1 };
-            Action actionThatShouldThrow = () => service.ExecuteSomeActionWithReferenceTypeParameter(new Model { Id = 1 });
-            Action actionThatShouldNotThrow = () => service.ExecuteSomeActionWithReferenceTypeParameter(new Model { Id = 2 });
+            Model1 model = new Model1 { Id = 1 };
+            Action actionThatShouldThrow = () => service.ExecuteSomeActionWithReferenceTypeParameter(new Model1 { Id = 1 });
+            Action actionThatShouldNotThrow = () => service.ExecuteSomeActionWithReferenceTypeParameter(new Model1 { Id = 2 });
 
             // Then
             actionThatShouldThrow.Should().Throw<Exception>();
             actionThatShouldNotThrow.Should().NotThrow();
-            mock.DoSomethingWithReferenceTypeParameter(Arg<Model>.Any).Calls.Should().Be(2);
-            mock.DoSomethingWithReferenceTypeParameter(Arg<Model>.When(m => m.Id == 1)).Calls.Should().Be(1);
-            mock.DoSomethingWithReferenceTypeParameter(Arg<Model>.When(m => m.Id == 2)).Calls.Should().Be(1);
+            mock.DoSomethingWithReferenceTypeParameter(Arg<Model1>.Any).Calls.Should().Be(2);
+            mock.DoSomethingWithReferenceTypeParameter(Arg<Model1>.When(m => m.Id == 1)).Calls.Should().Be(1);
+            mock.DoSomethingWithReferenceTypeParameter(Arg<Model1>.When(m => m.Id == 2)).Calls.Should().Be(1);
+        }
+
+        [Fact]
+        public void MethodVoidWithTwoParameters_Should_throw_dependening_on_both_args_predicate()
+        {
+            // Given
+            var mock = Mock<IDependency>.Create();
+            mock.DoSomethingWithTwoParameters(Arg<Model1>.When(m => m.Id == 1), Arg<Model2>.When(m => m.Name == "Throw")).Throws<Exception>();
+            var service = new Service(mock.Build());
+
+            // When
+            Action action1 = () => service.ExecuteSomeActionWithTwoParameters(new Model1 { Id = 1 }, new Model2 { Name = "DontThrow" });
+            Action action2 = () => service.ExecuteSomeActionWithTwoParameters(new Model1 { Id = 2 }, new Model2 { Name = "Throw" });
+            Action action3 = () => service.ExecuteSomeActionWithTwoParameters(new Model1 { Id = 1 }, new Model2 { Name = "Throw" });
+
+            // Then
+            action1.Should().NotThrow();
+            action2.Should().NotThrow();
+            action3.Should().Throw<Exception>();
+            mock.DoSomethingWithTwoParameters(Arg<Model1>.Any, Arg<Model2>.Any).Calls.Should().Be(3);
+            mock.DoSomethingWithTwoParameters(Arg<Model1>.When(m => m.Id == 1), Arg<Model2>.Any).Calls.Should().Be(2);
+            mock.DoSomethingWithTwoParameters(Arg<Model1>.Any, Arg<Model2>.When(m => m.Name == "Throw")).Calls.Should().Be(2);
+            mock.DoSomethingWithTwoParameters(Arg<Model1>.When(m => m.Id == 1), Arg<Model2>.When(m => m.Name == "DontThrow")).Calls.Should().Be(1);
+            mock.DoSomethingWithTwoParameters(Arg<Model1>.When(m => m.Id == 2), Arg<Model2>.When(m => m.Name == "Throw")).Calls.Should().Be(1);
+            mock.DoSomethingWithTwoParameters(Arg<Model1>.When(m => m.Id == 1), Arg<Model2>.When(m => m.Name == "Throw")).Calls.Should().Be(1);
+            mock.DoSomethingWithTwoParameters(Arg<Model1>.When(m => m.Id == 999), Arg<Model2>.When(m => m.Name == "Throw")).Calls.Should().Be(0);
         }
 
         [Fact]

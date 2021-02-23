@@ -5,7 +5,7 @@ namespace MockGen.Specs.Generated.Helpers
     internal class Arg<TParam>
     {
         private readonly TParam param;
-        private readonly Predicate<TParam> predicate;
+        private readonly Predicate<TParam>? predicate;
         internal static Arg<TParam> Any = new Arg<TParam>();
         internal static Arg<TParam> Null = new Arg<TParam>();
 
