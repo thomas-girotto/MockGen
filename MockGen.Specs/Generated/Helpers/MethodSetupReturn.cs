@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MockGen.Specs.Generated.Helpers
 {
     interface IMethodSetupReturn<TReturn> : IMethodSetup
     {
-        void WillReturn(TReturn value);
+        void Returns(TReturn value);
     }
 
 
@@ -20,12 +21,12 @@ namespace MockGen.Specs.Generated.Helpers
             return setupAction();
         }
 
-        public void WillReturn(TReturn value)
+        public void Returns(TReturn value)
         {
             setupAction = () => value;
         }
 
-        public void WillThrow<TException>() where TException : Exception, new()
+        public void Throws<TException>() where TException : Exception, new()
         {
             setupAction = () => throw new TException();
         }
@@ -56,7 +57,7 @@ namespace MockGen.Specs.Generated.Helpers
             return this;
         }
 
-        public void WillReturn(TReturn value)
+        public void Returns(TReturn value)
         {
             if (matchParameter == null)
             {
@@ -67,7 +68,7 @@ namespace MockGen.Specs.Generated.Helpers
 
         public TReturn ExecuteSetup(TParam param)
         {
-            spy.WasCalled(param);
+            spy.RegisterCallParameters(param);
             foreach (var setupAction in actionByMatchingCriteria)
             {
                 if (setupAction.Matcher.Match(param))
@@ -79,11 +80,11 @@ namespace MockGen.Specs.Generated.Helpers
             return FuncSpecification<TParam, TReturn>.Default.Action(param);
         }
 
-        public void WillThrow<TException>() where TException : Exception, new()
+        public void Throws<TException>() where TException : Exception, new()
         {
             actionByMatchingCriteria.Push(new FuncSpecification<TParam, TReturn>(matchParameter, (_) => throw new TException()));
         }
 
-        public int Calls => spy.GetCallsFor(matchParameter);
+        public int Calls => spy.GetMatchingCalls(matchParameter).Count();
     }
 }

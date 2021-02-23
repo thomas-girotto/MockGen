@@ -28,31 +28,32 @@ namespace MockGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\r\nusing System.Collections.Generic;\r\n\r\nnamespace MockGen.Specs.Gener" +
-                    "ated.Helpers\r\n{\r\n    interface IMethodSetupVoid : IMethodSetup { }\r\n\r\n    intern" +
-                    "al class MethodSetupVoid : IMethodSetupVoid\r\n    {\r\n        private Action execu" +
-                    "teSetupAction = () => { };\r\n\r\n        private MethodSpy spy = new MethodSpy();\r\n" +
-                    "\r\n        public int Calls => spy.TotalCalls;\r\n        \r\n        public void Exe" +
-                    "cuteSetup()\r\n        {\r\n            spy.WasCalled();\r\n            executeSetupAc" +
-                    "tion();\r\n        }\r\n\r\n        public void WillThrow<TException>() where TExcepti" +
-                    "on : Exception, new()\r\n        {\r\n            executeSetupAction = () => throw n" +
-                    "ew TException();\r\n        }\r\n    }\r\n\r\n    internal class MethodSetupVoid<TParam>" +
-                    " : IMethodSetupVoid\r\n    {\r\n        private Stack<ActionSpecification<TParam>> a" +
-                    "ctionByMatchingCriteria = new Stack<ActionSpecification<TParam>>();\r\n        pri" +
-                    "vate ArgMatcher<TParam> matchParameter;\r\n        \r\n        private MethodSpy<TPa" +
-                    "ram> spy = new MethodSpy<TParam>();\r\n\r\n        internal MethodSetupVoid()\r\n     " +
-                    "   {\r\n            actionByMatchingCriteria.Push(ActionSpecification<TParam>.Defa" +
-                    "ult);\r\n        }\r\n\r\n        public int Calls => spy.GetCallsFor(matchParameter);" +
-                    "\r\n\r\n        public void ExecuteSetup(TParam param)\r\n        {\r\n            spy.W" +
-                    "asCalled(param);\r\n            foreach (var setupAction in actionByMatchingCriter" +
-                    "ia)\r\n            {\r\n                if (setupAction.Matcher.Match(param))\r\n     " +
-                    "           {\r\n                    setupAction.Action(param);\r\n                }\r" +
-                    "\n            }\r\n        }\r\n\r\n        public IMethodSetupVoid ForParameter(Arg<TP" +
-                    "aram> paramValue)\r\n        {\r\n            matchParameter = ArgMatcher<TParam>.Cr" +
-                    "eate(paramValue);\r\n            return this;\r\n        }\r\n\r\n\r\n        public void " +
-                    "WillThrow<TException>() where TException : Exception, new()\r\n        {\r\n        " +
-                    "    actionByMatchingCriteria.Push(new ActionSpecification<TParam>(matchParameter" +
-                    ", (_) => throw new TException()));\r\n        }\r\n    }\r\n}");
+            this.Write("using System;\r\nusing System.Collections.Generic;\r\nusing System.Linq;\r\n\r\nnamespace" +
+                    " MockGen.Specs.Generated.Helpers\r\n{\r\n    interface IMethodSetupVoid : IMethodSet" +
+                    "up { }\r\n\r\n    internal class MethodSetupVoid : IMethodSetupVoid\r\n    {\r\n        " +
+                    "private Action executeSetupAction = () => { };\r\n\r\n        private MethodSpy spy " +
+                    "= new MethodSpy();\r\n\r\n        public int Calls => spy.TotalCalls;\r\n        \r\n   " +
+                    "     public void ExecuteSetup()\r\n        {\r\n            spy.WasCalled();\r\n      " +
+                    "      executeSetupAction();\r\n        }\r\n\r\n        public void Throws<TException>" +
+                    "() where TException : Exception, new()\r\n        {\r\n            executeSetupActio" +
+                    "n = () => throw new TException();\r\n        }\r\n    }\r\n\r\n    internal class Method" +
+                    "SetupVoid<TParam> : IMethodSetupVoid\r\n    {\r\n        private Stack<ActionSpecifi" +
+                    "cation<TParam>> actionByMatchingCriteria = new Stack<ActionSpecification<TParam>" +
+                    ">();\r\n        private ArgMatcher<TParam> matchParameter;\r\n        \r\n        priv" +
+                    "ate MethodSpy<TParam> spy = new MethodSpy<TParam>();\r\n\r\n        internal MethodS" +
+                    "etupVoid()\r\n        {\r\n            actionByMatchingCriteria.Push(ActionSpecifica" +
+                    "tion<TParam>.Default);\r\n        }\r\n\r\n        public int Calls => spy.GetMatching" +
+                    "Calls(matchParameter).Count();\r\n\r\n        public void ExecuteSetup(TParam param)" +
+                    "\r\n        {\r\n            spy.RegisterCallParameters(param);\r\n            foreach" +
+                    " (var setupAction in actionByMatchingCriteria)\r\n            {\r\n                i" +
+                    "f (setupAction.Matcher.Match(param))\r\n                {\r\n                    set" +
+                    "upAction.Action(param);\r\n                }\r\n            }\r\n        }\r\n\r\n        " +
+                    "public IMethodSetupVoid ForParameter(Arg<TParam> paramValue)\r\n        {\r\n       " +
+                    "     matchParameter = ArgMatcher<TParam>.Create(paramValue);\r\n            return" +
+                    " this;\r\n        }\r\n\r\n\r\n        public void Throws<TException>() where TException" +
+                    " : Exception, new()\r\n        {\r\n            actionByMatchingCriteria.Push(new Ac" +
+                    "tionSpecification<TParam>(matchParameter, (_) => throw new TException()));\r\n    " +
+                    "    }\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

@@ -49,14 +49,14 @@ namespace MockGen.Specs.Generated.Helpers
     {
         private List<TParam> calls = new List<TParam>();
 
-        internal void WasCalled(TParam paramValue)
+        internal void RegisterCallParameters(TParam paramValue)
         {
             calls.Add(paramValue);
         }
 
-        internal int GetCallsFor(ArgMatcher<TParam> matcher) 
+        internal IEnumerable<TParam> GetMatchingCalls(ArgMatcher<TParam> matcher) 
         {
-            return calls.Where(arg => matcher.Match(arg)).Count();
+            return calls.Where(arg => matcher.Match(arg));
         }
     }
 }

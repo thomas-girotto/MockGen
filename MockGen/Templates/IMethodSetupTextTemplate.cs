@@ -29,8 +29,8 @@ namespace MockGen.Templates
         public virtual string TransformText()
         {
             this.Write("using System;\r\n\r\nnamespace MockGen.Specs.Generated.Helpers\r\n{\r\n    internal inter" +
-                    "face IMethodSetup\r\n    {\r\n        int Calls { get; }\r\n        void WillThrow<TEx" +
-                    "ception>() where TException : Exception, new();\r\n    }\r\n}\r\n");
+                    "face IMethodSetup\r\n    {\r\n        int Calls { get; }\r\n        void Throws<TExcep" +
+                    "tion>() where TException : Exception, new();\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

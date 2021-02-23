@@ -64,7 +64,7 @@ namespace MockGen.Specs
         {
             // Given
             var mock = Mock<IDependency>.Create();
-            mock.DoSomethingWithReferenceTypeParameter(Arg<Model>.When(m => m.Id == 1)).WillThrow<Exception>();
+            mock.DoSomethingWithReferenceTypeParameter(Arg<Model>.When(m => m.Id == 1)).Throws<Exception>();
             var service = new Service(mock.Build());
 
             // When
@@ -85,7 +85,7 @@ namespace MockGen.Specs
         {
             // Given
             var mock = Mock<IDependency>.Create();
-            mock.GetSomeNumber().WillReturn(2);
+            mock.GetSomeNumber().Returns(2);
             var service = new Service(mock.Build());
 
             // When
@@ -114,7 +114,7 @@ namespace MockGen.Specs
         {
             // Given
             var mock = Mock<IDependency>.Create();
-            mock.GetSomeNumber().WillReturn(2);
+            mock.GetSomeNumber().Returns(2);
             var service = new Service(mock.Build());
 
             // When
@@ -129,8 +129,8 @@ namespace MockGen.Specs
         {
             // Given
             var mock = Mock<IDependency>.Create();
-            mock.GetSomeNumberWithParameter(1).WillReturn(2);
-            mock.GetSomeNumberWithParameter(3).WillReturn(4);
+            mock.GetSomeNumberWithParameter(1).Returns(2);
+            mock.GetSomeNumberWithParameter(3).Returns(4);
             var service = new Service(mock.Build());
 
             // When
@@ -147,8 +147,8 @@ namespace MockGen.Specs
         {
             // Given
             var mock = Mock<IDependency>.Create();
-            mock.GetSomeNumberWithParameter(Arg<int>.Any).WillReturn(1); // The default returned value
-            mock.GetSomeNumberWithParameter(10).WillReturn(11); // 11 only if given param is 10
+            mock.GetSomeNumberWithParameter(Arg<int>.Any).Returns(1); // The default returned value
+            mock.GetSomeNumberWithParameter(10).Returns(11); // 11 only if given param is 10
             var service = new Service(mock.Build());
 
             // When
@@ -167,7 +167,7 @@ namespace MockGen.Specs
         {
             // Given
             var mock = Mock<IDependency>.Create();
-            mock.DoSomething().WillThrow<Exception>();
+            mock.DoSomething().Throws<Exception>();
             var service = new Service(mock.Build());
 
             // When
@@ -182,8 +182,8 @@ namespace MockGen.Specs
         {
             // Given
             var mock = Mock<IDependency>.Create();
-            mock.GetSomeNumberWithParameter(1).WillReturn(2);
-            mock.GetSomeNumberWithParameter(3).WillThrow<Exception>();
+            mock.GetSomeNumberWithParameter(1).Returns(2);
+            mock.GetSomeNumberWithParameter(3).Throws<Exception>();
             var service = new Service(mock.Build());
 
             // When

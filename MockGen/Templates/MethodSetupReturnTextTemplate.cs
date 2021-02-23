@@ -28,43 +28,43 @@ namespace MockGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\r\nusing System.Collections.Generic;\r\n\r\nnamespace MockGen.Specs.Gener" +
-                    "ated.Helpers\r\n{\r\n    interface IMethodSetupReturn<TReturn> : IMethodSetup\r\n    {" +
-                    "\r\n        void WillReturn(TReturn value);\r\n    }\r\n\r\n\r\n    internal class MethodS" +
-                    "etupReturn<TReturn> : IMethodSetupReturn<TReturn>\r\n    {\r\n        private Func<T" +
-                    "Return> setupAction = () => default(TReturn);\r\n        private MethodSpy spy = n" +
-                    "ew MethodSpy();\r\n\r\n        public TReturn ExecuteSetup()\r\n        {\r\n           " +
-                    " spy.WasCalled();\r\n            return setupAction();\r\n        }\r\n\r\n        publi" +
-                    "c void WillReturn(TReturn value)\r\n        {\r\n            setupAction = () => val" +
-                    "ue;\r\n        }\r\n\r\n        public void WillThrow<TException>() where TException :" +
-                    " Exception, new()\r\n        {\r\n            setupAction = () => throw new TExcepti" +
-                    "on();\r\n        }\r\n\r\n        public int Calls => spy.TotalCalls;\r\n    }\r\n\r\n    in" +
-                    "ternal class MethodSetupReturn<TParam, TReturn> : IMethodSetupReturn<TReturn>\r\n " +
-                    "   {\r\n        private Stack<FuncSpecification<TParam, TReturn>> actionByMatching" +
-                    "Criteria = new Stack<FuncSpecification<TParam, TReturn>>();\r\n        private Arg" +
-                    "Matcher<TParam> matchParameter;\r\n        private MethodSpy<TParam> spy = new Met" +
-                    "hodSpy<TParam>();\r\n\r\n        public MethodSetupReturn()\r\n        {\r\n            " +
-                    "actionByMatchingCriteria.Push(FuncSpecification<TParam, TReturn>.Default);\r\n    " +
-                    "    }\r\n\r\n        public IMethodSetupReturn<TReturn> ForParameter(Arg<TParam> par" +
-                    "amValue)\r\n        {\r\n            matchParameter = ArgMatcher<TParam>.Create(para" +
-                    "mValue);\r\n            return this;\r\n        }\r\n\r\n        public IMethodSetupRetu" +
-                    "rn<TReturn> ForParameter(Predicate<TParam> matchingPredicate)\r\n        {\r\n      " +
-                    "      matchParameter = ArgMatcher<TParam>.Create(matchingPredicate);\r\n          " +
-                    "  return this;\r\n        }\r\n\r\n        public void WillReturn(TReturn value)\r\n    " +
-                    "    {\r\n            if (matchParameter == null)\r\n            {\r\n                t" +
-                    "hrow new InvalidOperationException($\"You need to setup in which condition the va" +
-                    "lue will be returned\");\r\n            }\r\n            actionByMatchingCriteria.Pus" +
-                    "h(new FuncSpecification<TParam, TReturn>(matchParameter, (_) => value));\r\n      " +
-                    "  }\r\n\r\n        public TReturn ExecuteSetup(TParam param)\r\n        {\r\n           " +
-                    " spy.WasCalled(param);\r\n            foreach (var setupAction in actionByMatching" +
-                    "Criteria)\r\n            {\r\n                if (setupAction.Matcher.Match(param))\r" +
-                    "\n                {\r\n                    return setupAction.Action(param);\r\n     " +
-                    "           }\r\n            }\r\n\r\n            return FuncSpecification<TParam, TRet" +
-                    "urn>.Default.Action(param);\r\n        }\r\n\r\n        public void WillThrow<TExcepti" +
-                    "on>() where TException : Exception, new()\r\n        {\r\n            actionByMatchi" +
-                    "ngCriteria.Push(new FuncSpecification<TParam, TReturn>(matchParameter, (_) => th" +
-                    "row new TException()));\r\n        }\r\n\r\n        public int Calls => spy.GetCallsFo" +
-                    "r(matchParameter);\r\n    }\r\n}\r\n");
+            this.Write("using System;\r\nusing System.Collections.Generic;\r\nusing System.Linq;\r\n\r\nnamespace" +
+                    " MockGen.Specs.Generated.Helpers\r\n{\r\n    interface IMethodSetupReturn<TReturn> :" +
+                    " IMethodSetup\r\n    {\r\n        void Returns(TReturn value);\r\n    }\r\n\r\n\r\n    inter" +
+                    "nal class MethodSetupReturn<TReturn> : IMethodSetupReturn<TReturn>\r\n    {\r\n     " +
+                    "   private Func<TReturn> setupAction = () => default(TReturn);\r\n        private " +
+                    "MethodSpy spy = new MethodSpy();\r\n\r\n        public TReturn ExecuteSetup()\r\n     " +
+                    "   {\r\n            spy.WasCalled();\r\n            return setupAction();\r\n        }" +
+                    "\r\n\r\n        public void Returns(TReturn value)\r\n        {\r\n            setupActi" +
+                    "on = () => value;\r\n        }\r\n\r\n        public void Throws<TException>() where T" +
+                    "Exception : Exception, new()\r\n        {\r\n            setupAction = () => throw n" +
+                    "ew TException();\r\n        }\r\n\r\n        public int Calls => spy.TotalCalls;\r\n    " +
+                    "}\r\n\r\n    internal class MethodSetupReturn<TParam, TReturn> : IMethodSetupReturn<" +
+                    "TReturn>\r\n    {\r\n        private Stack<FuncSpecification<TParam, TReturn>> actio" +
+                    "nByMatchingCriteria = new Stack<FuncSpecification<TParam, TReturn>>();\r\n        " +
+                    "private ArgMatcher<TParam> matchParameter;\r\n        private MethodSpy<TParam> sp" +
+                    "y = new MethodSpy<TParam>();\r\n\r\n        public MethodSetupReturn()\r\n        {\r\n " +
+                    "           actionByMatchingCriteria.Push(FuncSpecification<TParam, TReturn>.Defa" +
+                    "ult);\r\n        }\r\n\r\n        public IMethodSetupReturn<TReturn> ForParameter(Arg<" +
+                    "TParam> paramValue)\r\n        {\r\n            matchParameter = ArgMatcher<TParam>." +
+                    "Create(paramValue);\r\n            return this;\r\n        }\r\n\r\n        public IMeth" +
+                    "odSetupReturn<TReturn> ForParameter(Predicate<TParam> matchingPredicate)\r\n      " +
+                    "  {\r\n            matchParameter = ArgMatcher<TParam>.Create(matchingPredicate);\r" +
+                    "\n            return this;\r\n        }\r\n\r\n        public void Returns(TReturn valu" +
+                    "e)\r\n        {\r\n            if (matchParameter == null)\r\n            {\r\n         " +
+                    "       throw new InvalidOperationException($\"You need to setup in which conditio" +
+                    "n the value will be returned\");\r\n            }\r\n            actionByMatchingCrit" +
+                    "eria.Push(new FuncSpecification<TParam, TReturn>(matchParameter, (_) => value));" +
+                    "\r\n        }\r\n\r\n        public TReturn ExecuteSetup(TParam param)\r\n        {\r\n   " +
+                    "         spy.RegisterCallParameters(param);\r\n            foreach (var setupActio" +
+                    "n in actionByMatchingCriteria)\r\n            {\r\n                if (setupAction.M" +
+                    "atcher.Match(param))\r\n                {\r\n                    return setupAction." +
+                    "Action(param);\r\n                }\r\n            }\r\n\r\n            return FuncSpeci" +
+                    "fication<TParam, TReturn>.Default.Action(param);\r\n        }\r\n\r\n        public vo" +
+                    "id Throws<TException>() where TException : Exception, new()\r\n        {\r\n        " +
+                    "    actionByMatchingCriteria.Push(new FuncSpecification<TParam, TReturn>(matchPa" +
+                    "rameter, (_) => throw new TException()));\r\n        }\r\n\r\n        public int Calls" +
+                    " => spy.GetMatchingCalls(matchParameter).Count();\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

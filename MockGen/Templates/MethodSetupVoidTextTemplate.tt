@@ -5,6 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MockGen.Specs.Generated.Helpers
 {
@@ -24,7 +25,7 @@ namespace MockGen.Specs.Generated.Helpers
             executeSetupAction();
         }
 
-        public void WillThrow<TException>() where TException : Exception, new()
+        public void Throws<TException>() where TException : Exception, new()
         {
             executeSetupAction = () => throw new TException();
         }
@@ -42,11 +43,11 @@ namespace MockGen.Specs.Generated.Helpers
             actionByMatchingCriteria.Push(ActionSpecification<TParam>.Default);
         }
 
-        public int Calls => spy.GetCallsFor(matchParameter);
+        public int Calls => spy.GetMatchingCalls(matchParameter).Count();
 
         public void ExecuteSetup(TParam param)
         {
-            spy.WasCalled(param);
+            spy.RegisterCallParameters(param);
             foreach (var setupAction in actionByMatchingCriteria)
             {
                 if (setupAction.Matcher.Match(param))
@@ -63,7 +64,7 @@ namespace MockGen.Specs.Generated.Helpers
         }
 
 
-        public void WillThrow<TException>() where TException : Exception, new()
+        public void Throws<TException>() where TException : Exception, new()
         {
             actionByMatchingCriteria.Push(new ActionSpecification<TParam>(matchParameter, (_) => throw new TException()));
         }

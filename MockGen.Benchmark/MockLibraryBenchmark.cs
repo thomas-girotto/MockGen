@@ -12,7 +12,7 @@ namespace MockGen.Benchmark
         public void MockGenBench()
         {
             var mockGen = Mock<IDependency>.Create();
-            mockGen.GetSomeNumber().WillReturn(2);
+            mockGen.GetSomeNumber().Returns(2);
             var service = new Service(mockGen.Build());
             service.ReturnDependencyNumber();
             mockGen.GetSomeNumber().Calls.Should().Be(1);
