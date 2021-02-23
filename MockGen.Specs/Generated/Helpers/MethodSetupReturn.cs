@@ -35,40 +35,55 @@ namespace MockGen.Specs.Generated.Helpers
 
     internal class MethodSetupReturn<TParam, TReturn> : IMethodSetupReturn<TReturn>
     {
-        private Arg<TParam> parameterValue = Arg<TParam>.Any;
+        private Stack<FuncSpecification<TParam, TReturn>> actionByMatchingCriteria = new Stack<FuncSpecification<TParam, TReturn>>();
+        private ArgMatcher<TParam> matchParameter;
         private MethodSpy<TParam> spy = new MethodSpy<TParam>();
-        Dictionary<Arg<TParam>, Func<TParam, TReturn>> setupActionByParam = new Dictionary<Arg<TParam>, Func<TParam, TReturn>>
-        {
-            { Arg<TParam>.Any, _ => default(TReturn) }
-        };
 
-        public MethodSetupReturn<TParam, TReturn> ForParameter(Arg<TParam> paramValue)
+        public MethodSetupReturn()
         {
-            parameterValue = paramValue;
+            actionByMatchingCriteria.Push(FuncSpecification<TParam, TReturn>.Default);
+        }
+
+        public IMethodSetupReturn<TReturn> ForParameter(Arg<TParam> paramValue)
+        {
+            matchParameter = ArgMatcher<TParam>.Create(paramValue);
+            return this;
+        }
+
+        public IMethodSetupReturn<TReturn> ForParameter(Predicate<TParam> matchingPredicate)
+        {
+            matchParameter = ArgMatcher<TParam>.Create(matchingPredicate);
             return this;
         }
 
         public void WillReturn(TReturn value)
         {
-            setupActionByParam[parameterValue] = (_) => value;
-            parameterValue = Arg<TParam>.Any;
+            if (matchParameter == null)
+            {
+                throw new InvalidOperationException($"You need to setup in which condition the value will be returned");
+            }
+            actionByMatchingCriteria.Push(new FuncSpecification<TParam, TReturn>(matchParameter, (_) => value));
         }
 
         public TReturn ExecuteSetup(TParam param)
         {
-            var arg = Arg<TParam>.Create(param);
-            spy.WasCalled(arg);
-            return setupActionByParam.ContainsKey(arg)
-                ? setupActionByParam[arg](param)
-                : setupActionByParam[Arg<TParam>.Any](param);
+            spy.WasCalled(param);
+            foreach (var setupAction in actionByMatchingCriteria)
+            {
+                if (setupAction.Matcher.Match(param))
+                {
+                    return setupAction.Action(param);
+                }
+            }
+
+            return FuncSpecification<TParam, TReturn>.Default.Action(param);
         }
 
         public void WillThrow<TException>() where TException : Exception, new()
         {
-            setupActionByParam[parameterValue] = (_) => throw new TException();
-            parameterValue = Arg<TParam>.Any;
+            actionByMatchingCriteria.Push(new FuncSpecification<TParam, TReturn>(matchParameter, (_) => throw new TException()));
         }
 
-        public int Calls => spy.GetCallsFor(parameterValue);
+        public int Calls => spy.GetCallsFor(matchParameter);
     }
 }

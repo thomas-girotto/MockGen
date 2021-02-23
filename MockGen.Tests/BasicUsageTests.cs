@@ -63,6 +63,16 @@ namespace MockGen.Tests
         }
 
         [Fact]
+        public void MethodVoidWithReferenceTypeParam_Should_throw_depending_on_arg_predicate()
+        {
+            var sources = GetSourceFilesToCompileFromSpecs();
+
+            Action action = () => testRunner.RunTest(sources, nameof(BasicUsageTests), nameof(MethodVoidWithReferenceTypeParam_Should_throw_depending_on_arg_predicate));
+
+            action.Should().NotThrow();
+        }
+
+        [Fact]
         public void MethodTReturn_Should_return_default_value_When_not_mocked()
         {
             var sources = GetSourceFilesToCompileFromSpecs();

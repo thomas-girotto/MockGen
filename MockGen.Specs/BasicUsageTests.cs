@@ -60,6 +60,27 @@ namespace MockGen.Specs
         }
 
         [Fact]
+        public void MethodVoidWithReferenceTypeParam_Should_throw_depending_on_arg_predicate()
+        {
+            // Given
+            var mock = Mock<IDependency>.Create();
+            mock.DoSomethingWithReferenceTypeParameter(Arg<Model>.When(m => m.Id == 1)).WillThrow<Exception>();
+            var service = new Service(mock.Build());
+
+            // When
+            Model model = new Model { Id = 1 };
+            Action actionThatShouldThrow = () => service.ExecuteSomeActionWithReferenceTypeParameter(new Model { Id = 1 });
+            Action actionThatShouldNotThrow = () => service.ExecuteSomeActionWithReferenceTypeParameter(new Model { Id = 2 });
+
+            // Then
+            actionThatShouldThrow.Should().Throw<Exception>();
+            actionThatShouldNotThrow.Should().NotThrow();
+            mock.DoSomethingWithReferenceTypeParameter(Arg<Model>.Any).Calls.Should().Be(2);
+            mock.DoSomethingWithReferenceTypeParameter(Arg<Model>.When(m => m.Id == 1)).Calls.Should().Be(1);
+            mock.DoSomethingWithReferenceTypeParameter(Arg<Model>.When(m => m.Id == 2)).Calls.Should().Be(1);
+        }
+
+        [Fact]
         public void MethodTReturn_Should_return_given_value_When_mocked()
         {
             // Given

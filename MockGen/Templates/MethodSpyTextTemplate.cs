@@ -47,31 +47,16 @@ namespace MockGen.Specs.Generated.Helpers
 
     internal class MethodSpy<TParam>
     {
-        private Dictionary<Arg<TParam>, int> callsByParamValue = new Dictionary<Arg<TParam>, int>();
- 
-        internal void WasCalled(Arg<TParam> paramValue)
+        private List<TParam> calls = new List<TParam>();
+
+        internal void WasCalled(TParam paramValue)
         {
-            if (callsByParamValue.ContainsKey(paramValue))
-            {
-                callsByParamValue[paramValue] = ++callsByParamValue[paramValue];
-            }
-            else
-            {
-                callsByParamValue.Add(paramValue, 1);
-            }
+            calls.Add(paramValue);
         }
- 
-        internal int GetCallsFor(Arg<TParam> param) 
+
+        internal int GetCallsFor(ArgMatcher<TParam> matcher) 
         {
-            if (ReferenceEquals(param, Arg<TParam>.Any))
-            {
-                return callsByParamValue.Values.Sum();
-            }
-            if (callsByParamValue.ContainsKey(param))
-            {
-                return callsByParamValue[param];
-            }
-            return 0;
+            return calls.Where(arg => matcher.Match(arg)).Count();
         }
     }
 }

@@ -16,14 +16,38 @@
   </ItemGroup>
   
   <ItemGroup>
+    <None Update="Templates\ActionSpecificationTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ActionSpecificationTextTemplate.cs</LastGenOutput>
+    </None>
     <None Update="Templates\ArgTextTemplate.tt">
       <CustomToolNamespace></CustomToolNamespace>
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ArgTextTemplate.cs</LastGenOutput>
     </None>
+    <None Update="Templates\FuncSpecificationTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>FuncSpecificationTextTemplate.cs</LastGenOutput>
+    </None>
     <None Update="Templates\IMethodSetupTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>IMethodSetupTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\Matchers\AnyArgMatcherTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>AnyArgMatcherTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\Matchers\ArgMatcherTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ArgMatcherTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\Matchers\EqualityArgMatcherTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>EqualityArgMatcherTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\Matchers\PredicateArgMatcherTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>PredicateArgMatcherTextTemplate.cs</LastGenOutput>
     </None>
     <None Update="Templates\MethodSetupReturnTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
@@ -56,15 +80,45 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Templates\ActionSpecificationTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ActionSpecificationTextTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Update="Templates\ArgTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ArgTextTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Update="Templates\FuncSpecificationTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FuncSpecificationTextTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Update="Templates\IMethodSetupTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>IMethodSetupTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\Matchers\AnyArgMatcherTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AnyArgMatcherTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\Matchers\ArgMatcherTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ArgMatcherTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\Matchers\EqualityArgMatcherTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EqualityArgMatcherTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\Matchers\PredicateArgMatcherTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PredicateArgMatcherTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Update="Templates\MethodSetupReturnTextTemplate.cs">
       <DesignTime>True</DesignTime>

@@ -40,23 +40,31 @@ namespace MockGen.Templates
                     " Exception, new()\r\n        {\r\n            setupAction = () => throw new TExcepti" +
                     "on();\r\n        }\r\n\r\n        public int Calls => spy.TotalCalls;\r\n    }\r\n\r\n    in" +
                     "ternal class MethodSetupReturn<TParam, TReturn> : IMethodSetupReturn<TReturn>\r\n " +
-                    "   {\r\n        private Arg<TParam> parameterValue = Arg<TParam>.Any;\r\n        pri" +
-                    "vate MethodSpy<TParam> spy = new MethodSpy<TParam>();\r\n        Dictionary<Arg<TP" +
-                    "aram>, Func<TParam, TReturn>> setupActionByParam = new Dictionary<Arg<TParam>, F" +
-                    "unc<TParam, TReturn>>\r\n        {\r\n            { Arg<TParam>.Any, _ => default(TR" +
-                    "eturn) }\r\n        };\r\n\r\n        public MethodSetupReturn<TParam, TReturn> ForPar" +
-                    "ameter(Arg<TParam> paramValue)\r\n        {\r\n            parameterValue = paramVal" +
-                    "ue;\r\n            return this;\r\n        }\r\n\r\n        public void WillReturn(TRetu" +
-                    "rn value)\r\n        {\r\n            setupActionByParam[parameterValue] = (_) => va" +
-                    "lue;\r\n            parameterValue = Arg<TParam>.Any;\r\n        }\r\n\r\n        public" +
-                    " TReturn ExecuteSetup(TParam param)\r\n        {\r\n            var arg = Arg<TParam" +
-                    ">.Create(param);\r\n            spy.WasCalled(arg);\r\n            return setupActio" +
-                    "nByParam.ContainsKey(arg)\r\n                ? setupActionByParam[arg](param)\r\n   " +
-                    "             : setupActionByParam[Arg<TParam>.Any](param);\r\n        }\r\n\r\n       " +
-                    " public void WillThrow<TException>() where TException : Exception, new()\r\n      " +
-                    "  {\r\n            setupActionByParam[parameterValue] = (_) => throw new TExceptio" +
-                    "n();\r\n            parameterValue = Arg<TParam>.Any;\r\n        }\r\n\r\n        public" +
-                    " int Calls => spy.GetCallsFor(parameterValue);\r\n    }\r\n}\r\n");
+                    "   {\r\n        private Stack<FuncSpecification<TParam, TReturn>> actionByMatching" +
+                    "Criteria = new Stack<FuncSpecification<TParam, TReturn>>();\r\n        private Arg" +
+                    "Matcher<TParam> matchParameter;\r\n        private MethodSpy<TParam> spy = new Met" +
+                    "hodSpy<TParam>();\r\n\r\n        public MethodSetupReturn()\r\n        {\r\n            " +
+                    "actionByMatchingCriteria.Push(FuncSpecification<TParam, TReturn>.Default);\r\n    " +
+                    "    }\r\n\r\n        public IMethodSetupReturn<TReturn> ForParameter(Arg<TParam> par" +
+                    "amValue)\r\n        {\r\n            matchParameter = ArgMatcher<TParam>.Create(para" +
+                    "mValue);\r\n            return this;\r\n        }\r\n\r\n        public IMethodSetupRetu" +
+                    "rn<TReturn> ForParameter(Predicate<TParam> matchingPredicate)\r\n        {\r\n      " +
+                    "      matchParameter = ArgMatcher<TParam>.Create(matchingPredicate);\r\n          " +
+                    "  return this;\r\n        }\r\n\r\n        public void WillReturn(TReturn value)\r\n    " +
+                    "    {\r\n            if (matchParameter == null)\r\n            {\r\n                t" +
+                    "hrow new InvalidOperationException($\"You need to setup in which condition the va" +
+                    "lue will be returned\");\r\n            }\r\n            actionByMatchingCriteria.Pus" +
+                    "h(new FuncSpecification<TParam, TReturn>(matchParameter, (_) => value));\r\n      " +
+                    "  }\r\n\r\n        public TReturn ExecuteSetup(TParam param)\r\n        {\r\n           " +
+                    " spy.WasCalled(param);\r\n            foreach (var setupAction in actionByMatching" +
+                    "Criteria)\r\n            {\r\n                if (setupAction.Matcher.Match(param))\r" +
+                    "\n                {\r\n                    return setupAction.Action(param);\r\n     " +
+                    "           }\r\n            }\r\n\r\n            return FuncSpecification<TParam, TRet" +
+                    "urn>.Default.Action(param);\r\n        }\r\n\r\n        public void WillThrow<TExcepti" +
+                    "on>() where TException : Exception, new()\r\n        {\r\n            actionByMatchi" +
+                    "ngCriteria.Push(new FuncSpecification<TParam, TReturn>(matchParameter, (_) => th" +
+                    "row new TException()));\r\n        }\r\n\r\n        public int Calls => spy.GetCallsFo" +
+                    "r(matchParameter);\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

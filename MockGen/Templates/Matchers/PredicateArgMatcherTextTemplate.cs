@@ -7,7 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace MockGen.Templates
+namespace MockGen.Templates.Matchers
 {
     using System.Linq;
     using System.Text;
@@ -18,9 +18,9 @@ namespace MockGen.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Dev\MockGen\MockGen\Templates\MethodSetupVoidTextTemplate.tt"
+    #line 1 "D:\Dev\MockGen\MockGen\Templates\Matchers\PredicateArgMatcherTextTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public partial class MethodSetupVoidTextTemplate : MethodSetupVoidTextTemplateBase
+    public partial class PredicateArgMatcherTextTemplate : PredicateArgMatcherTextTemplateBase
     {
 #line hidden
         /// <summary>
@@ -28,31 +28,25 @@ namespace MockGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\r\nusing System.Collections.Generic;\r\n\r\nnamespace MockGen.Specs.Gener" +
-                    "ated.Helpers\r\n{\r\n    interface IMethodSetupVoid : IMethodSetup { }\r\n\r\n    intern" +
-                    "al class MethodSetupVoid : IMethodSetupVoid\r\n    {\r\n        private Action execu" +
-                    "teSetupAction = () => { };\r\n\r\n        private MethodSpy spy = new MethodSpy();\r\n" +
-                    "\r\n        public int Calls => spy.TotalCalls;\r\n        \r\n        public void Exe" +
-                    "cuteSetup()\r\n        {\r\n            spy.WasCalled();\r\n            executeSetupAc" +
-                    "tion();\r\n        }\r\n\r\n        public void WillThrow<TException>() where TExcepti" +
-                    "on : Exception, new()\r\n        {\r\n            executeSetupAction = () => throw n" +
-                    "ew TException();\r\n        }\r\n    }\r\n\r\n    internal class MethodSetupVoid<TParam>" +
-                    " : IMethodSetupVoid\r\n    {\r\n        private Stack<ActionSpecification<TParam>> a" +
-                    "ctionByMatchingCriteria = new Stack<ActionSpecification<TParam>>();\r\n        pri" +
-                    "vate ArgMatcher<TParam> matchParameter;\r\n        \r\n        private MethodSpy<TPa" +
-                    "ram> spy = new MethodSpy<TParam>();\r\n\r\n        internal MethodSetupVoid()\r\n     " +
-                    "   {\r\n            actionByMatchingCriteria.Push(ActionSpecification<TParam>.Defa" +
-                    "ult);\r\n        }\r\n\r\n        public int Calls => spy.GetCallsFor(matchParameter);" +
-                    "\r\n\r\n        public void ExecuteSetup(TParam param)\r\n        {\r\n            spy.W" +
-                    "asCalled(param);\r\n            foreach (var setupAction in actionByMatchingCriter" +
-                    "ia)\r\n            {\r\n                if (setupAction.Matcher.Match(param))\r\n     " +
-                    "           {\r\n                    setupAction.Action(param);\r\n                }\r" +
-                    "\n            }\r\n        }\r\n\r\n        public IMethodSetupVoid ForParameter(Arg<TP" +
-                    "aram> paramValue)\r\n        {\r\n            matchParameter = ArgMatcher<TParam>.Cr" +
-                    "eate(paramValue);\r\n            return this;\r\n        }\r\n\r\n\r\n        public void " +
-                    "WillThrow<TException>() where TException : Exception, new()\r\n        {\r\n        " +
-                    "    actionByMatchingCriteria.Push(new ActionSpecification<TParam>(matchParameter" +
-                    ", (_) => throw new TException()));\r\n        }\r\n    }\r\n}");
+            this.Write(@"using System;
+
+namespace MockGen.Specs.Generated.Helpers.Matchers
+{
+    internal class PredicateArgMatcher<TParam> : ArgMatcher<TParam>
+    {
+        private readonly Predicate<TParam> predicate;
+
+        public PredicateArgMatcher(Predicate<TParam> predicate)
+        {
+            this.predicate = predicate;
+        }
+
+        internal override bool Match(TParam param)
+        {
+            return predicate(param);
+        }
+    }
+}");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -64,7 +58,7 @@ namespace MockGen.Templates
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public class MethodSetupVoidTextTemplateBase
+    public class PredicateArgMatcherTextTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

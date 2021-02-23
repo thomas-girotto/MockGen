@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using MockGen.Templates;
+using MockGen.Templates.Matchers;
 using System;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,24 @@ namespace MockGen
                 }
 
                 // First inject helper classes that doesn't depend on user's code
+                var actionSpecificationTemplate = new ActionSpecificationTextTemplate();
+                context.AddSource("ActionSpecification.cs", SourceText.From(actionSpecificationTemplate.TransformText(), Encoding.UTF8));
+
+                var funcSpecificationTemplate = new FuncSpecificationTextTemplate();
+                context.AddSource("FuncSpecification.cs", SourceText.From(funcSpecificationTemplate.TransformText(), Encoding.UTF8));
+
+                var argMatcherTemplate = new ArgMatcherTextTemplate();
+                context.AddSource("ArgMatcher.cs", SourceText.From(argMatcherTemplate.TransformText(), Encoding.UTF8));
+
+                var anyArgMatcherTemplate = new AnyArgMatcherTextTemplate();
+                context.AddSource("AnyArgMatcher.cs", SourceText.From(anyArgMatcherTemplate.TransformText(), Encoding.UTF8));
+
+                var equalityArgMatcherTemplate = new EqualityArgMatcherTextTemplate();
+                context.AddSource("EqualityArgMatcher.cs", SourceText.From(equalityArgMatcherTemplate.TransformText(), Encoding.UTF8));
+
+                var predicateArgMatcherTemplate = new PredicateArgMatcherTextTemplate();
+                context.AddSource("PredicateArgMatcher.cs", SourceText.From(predicateArgMatcherTemplate.TransformText(), Encoding.UTF8));
+
                 var argTemplate = new ArgTextTemplate();
                 context.AddSource("Arg.cs", SourceText.From(argTemplate.TransformText(), Encoding.UTF8));
                 

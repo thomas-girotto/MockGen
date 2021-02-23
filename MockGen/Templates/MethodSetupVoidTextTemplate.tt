@@ -32,39 +32,40 @@ namespace MockGen.Specs.Generated.Helpers
 
     internal class MethodSetupVoid<TParam> : IMethodSetupVoid
     {
-        private Arg<TParam> parameterValue = Arg<TParam>.Any;
-        Dictionary<Arg<TParam>, Action<TParam>> setupActionByParam = new Dictionary<Arg<TParam>, Action<TParam>>
-        {
-            { Arg<TParam>.Any, (_) => { } }
-        };
-
+        private Stack<ActionSpecification<TParam>> actionByMatchingCriteria = new Stack<ActionSpecification<TParam>>();
+        private ArgMatcher<TParam> matchParameter;
+        
         private MethodSpy<TParam> spy = new MethodSpy<TParam>();
 
-        public int Calls => spy.GetCallsFor(parameterValue);
+        internal MethodSetupVoid()
+        {
+            actionByMatchingCriteria.Push(ActionSpecification<TParam>.Default);
+        }
+
+        public int Calls => spy.GetCallsFor(matchParameter);
 
         public void ExecuteSetup(TParam param)
         {
-            var arg = Arg<TParam>.Create(param);
-            spy.WasCalled(arg);
-            if (setupActionByParam.ContainsKey(arg))
+            spy.WasCalled(param);
+            foreach (var setupAction in actionByMatchingCriteria)
             {
-                setupActionByParam[arg](param);
-            }
-            else
-            {
-                setupActionByParam[Arg<TParam>.Any](param);
+                if (setupAction.Matcher.Match(param))
+                {
+                    setupAction.Action(param);
+                }
             }
         }
 
         public IMethodSetupVoid ForParameter(Arg<TParam> paramValue)
         {
-            parameterValue = paramValue;
+            matchParameter = ArgMatcher<TParam>.Create(paramValue);
             return this;
         }
 
+
         public void WillThrow<TException>() where TException : Exception, new()
         {
-            setupActionByParam[parameterValue] = (_) => throw new TException();
+            actionByMatchingCriteria.Push(new ActionSpecification<TParam>(matchParameter, (_) => throw new TException()));
         }
     }
 }
