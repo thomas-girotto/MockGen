@@ -9,16 +9,16 @@ using System.Linq;
 
 namespace MockGen.Specs.Generated.Helpers
 {
-    internal class MethodSetupReturn<<#=Descriptor.GenericTypes#>> : IMethodSetupVoid
+    internal class MethodSetupVoid<<#=Descriptor.GenericTypes#>> : IMethodSetupVoid
     {
         private Stack<ActionSpecification<<#=Descriptor.GenericTypes#>>> actionByMatchingCriteria = new Stack<ActionSpecification<<#=Descriptor.GenericTypes#>>>();
 <# foreach (var n in Descriptor.EnumerateNumbers) { #>
-        private readonly ArgMatcher<TParam<#=n#>> match<#=n#>;
+        private ArgMatcher<TParam<#=n#>> match<#=n#>;
 <# } #>
 
         private MethodSpy<<#=Descriptor.GenericTypes#>> spy = new MethodSpy<<#=Descriptor.GenericTypes#>>();
 
-        internal MethodSetupReturn()
+        internal MethodSetupVoid()
         {
             actionByMatchingCriteria.Push(ActionSpecification<<#=Descriptor.GenericTypes#>>.Default);
         }
@@ -40,14 +40,9 @@ namespace MockGen.Specs.Generated.Helpers
         public IMethodSetupVoid ForParameter(<#=Descriptor.ConcatClassParameterByParameterType("Arg", "param")#>)
         {
 <# foreach (var n in Descriptor.EnumerateNumbers) { #>
-            match<#=n#> ArgMatcher<TParam<#=n#>>.Create(param<#=n#>);
+            match<#=n#> = ArgMatcher<TParam<#=n#>>.Create(param<#=n#>);
 <# } #>
             return this;
-        }
-
-        public void Returns(TReturn value)
-        {
-            actionByMatchingCriteria.Push(new ActionSpecification<<#=Descriptor.GenericTypes#>>(<#=Descriptor.ConcatParameters("match")#>, <#=Descriptor.DiscardParameters#> => value));
         }
 
         public void Throws<TException>() where TException : Exception, new()

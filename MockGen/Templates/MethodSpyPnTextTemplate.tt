@@ -1,0 +1,25 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System.Collections.Generic;
+using System.Linq;
+
+namespace MockGen.Specs.Generated.Helpers
+{
+    internal class MethodSpy<<#=Descriptor.GenericTypes#>>
+    {
+        private List<(<#=Descriptor.ParametersTypesWithName#>)> calls = new List<(<#=Descriptor.GenericTypes#>)>();
+
+        internal void RegisterCallParameters(<#=Descriptor.ParametersTypesWithName#>)
+        {
+            calls.Add((<#=Descriptor.ConcatParameters("param")#>));
+        }
+
+        internal IEnumerable<(<#=Descriptor.GenericTypes#>)> GetMatchingCalls(<#=Descriptor.ConcatClassParameterByParameterType("ArgMatcher", "matcher")#>)
+        {
+            return calls.Where(arg => <#=Descriptor.ConcatMatcherCalls("matcher", "arg.param")#>);
+        }
+    }
+}

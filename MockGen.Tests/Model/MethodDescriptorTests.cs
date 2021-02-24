@@ -121,10 +121,12 @@ namespace MockGen.Tests.Model
         {
             string forParameterCall1 = GetMethodWithoutParameter().CallForParameterMethod;
             string forParameterCall2 = GetMethodWithOneParameter().CallForParameterMethod;
+            string forParameterCall3 = GetMethodWithTwoParameters().CallForParameterMethod;
 
             // Assert
             forParameterCall1.Should().BeEmpty();
-            forParameterCall2.Should().Be(".ForParameter(param1 ?? Arg<Type1>.Null)");
+            forParameterCall2.Should().Be("param1 ?? Arg<Type1>.Null");
+            forParameterCall3.Should().Be("param1 ?? Arg<Type1>.Null, param2 ?? Arg<Type2>.Null");
         }
     }
 }

@@ -13,7 +13,7 @@ namespace MockGen.Specs.Generated.Helpers
     {
         private Stack<FuncSpecification<<#=Descriptor.GenericTypes#>, TReturn>> actionByMatchingCriteria = new Stack<FuncSpecification<<#=Descriptor.GenericTypes#>, TReturn>>();
 <# foreach (var n in Descriptor.EnumerateNumbers) { #>
-        private readonly ArgMatcher<TParam<#=n#>> match<#=n#>;
+        private ArgMatcher<TParam<#=n#>> match<#=n#>;
 <# } #>
 
         private MethodSpy<<#=Descriptor.GenericTypes#>> spy = new MethodSpy<<#=Descriptor.GenericTypes#>>();
@@ -41,7 +41,7 @@ namespace MockGen.Specs.Generated.Helpers
         public IMethodSetupReturn<TReturn> ForParameter(<#=Descriptor.ConcatClassParameterByParameterType("Arg", "param")#>)
         {
 <# foreach (var n in Descriptor.EnumerateNumbers) { #>
-            match<#=n#> ArgMatcher<TParam<#=n#>>.Create(param<#=n#>);
+            match<#=n#> = ArgMatcher<TParam<#=n#>>.Create(param<#=n#>);
 <# } #>
             return this;
         }

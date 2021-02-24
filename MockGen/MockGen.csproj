@@ -73,6 +73,14 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSetupVoidTextTemplate.cs</LastGenOutput>
     </None>
+    <None Update="Templates\MethodSpyP1TextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MethodSpyP1TextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\MethodSpyPnTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MethodSpyPnTextTemplate.cs</LastGenOutput>
+    </None>
     <None Update="Templates\MethodSpyTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSpyTextTemplate.cs</LastGenOutput>
@@ -161,10 +169,35 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>MethodSetupVoidTextTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Update="Templates\MethodSpyP1TextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MethodSpyP1TextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\MethodSpyPnTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MethodSpyPnTextTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Update="Templates\MethodSpyTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MethodSpyTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\MockBuilderTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MockBuilderTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\MockStaticTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MockStaticTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\MockTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MockTextTemplate.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

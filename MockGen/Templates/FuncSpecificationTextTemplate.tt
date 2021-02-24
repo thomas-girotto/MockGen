@@ -10,7 +10,7 @@ namespace MockGen.Specs.Generated.Helpers
 {
     internal class FuncSpecification<<#=Descriptor.GenericTypes#>, TReturn>
     {
-        internal static FuncSpecification<<#=Descriptor.GenericTypes#>, TReturn> Default = new FuncSpecification<#=Descriptor.GenericTypes#>, TReturn>(<#=Descriptor.ConcatNewClassByParameterType("AnyArgMatcher")#>, <#=Descriptor.DiscardParameters#> => default(TResult));
+        internal static FuncSpecification<<#=Descriptor.GenericTypes#>, TReturn> Default = new FuncSpecification<<#=Descriptor.GenericTypes#>, TReturn>(<#=Descriptor.ConcatNewClassByParameterType("AnyArgMatcher")#>, <#=Descriptor.DiscardParameters#> => default(TReturn));
 <# foreach (var n in Descriptor.EnumerateNumbers) { #>
         private readonly ArgMatcher<TParam<#=n#>> matcher<#=n#>;
 <# } #>
@@ -25,7 +25,7 @@ namespace MockGen.Specs.Generated.Helpers
 
         internal bool Match(<#=Descriptor.ParametersTypesWithName#>)
         {
-            return <#=Descriptor.ConcatMatcherCalls("matcher", "param")#>
+            return <#=Descriptor.ConcatMatcherCalls("matcher", "param")#>;
         }
 
         internal Func<<#=Descriptor.GenericTypes#>, TReturn> Action { get; private set; }

@@ -29,9 +29,7 @@ namespace MockGen.Specs.Generated.IDependencyNs
 
         public IMethodSetupVoid DoSomethingWithTwoParameters(Arg<Model1>? model1, Arg<Model2>? model2)
         {
-            return doSomethingWithTwoParametersSetup.ForParameter(
-                model1 ?? Arg<Model1>.Null, 
-                model2 ?? Arg<Model2>.Null);
+            return doSomethingWithTwoParametersSetup.ForParameter(model1 ?? Arg<Model1>.Null, model2 ?? Arg<Model2>.Null);
         }
 
         public IMethodSetupReturn<int> GetSomeNumber()
