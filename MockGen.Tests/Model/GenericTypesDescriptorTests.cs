@@ -16,7 +16,6 @@ namespace MockGen.Tests.Model
         }
 
         [Theory]
-        [InlineData(0, "")]
         [InlineData(1, "P1")]
         [InlineData(2, "P1P2")]
         [InlineData(3, "P1P2P3")]
@@ -30,9 +29,8 @@ namespace MockGen.Tests.Model
         }
         
         [Theory]
-        [InlineData(0, "")]
-        [InlineData(1, "<TParam1>")]
-        [InlineData(2, "<TParam1, TParam2>")]
+        [InlineData(1, "TParam1")]
+        [InlineData(2, "TParam1, TParam2")]
         public void Should_build_types(int numberOfParameters, string expectedGenerics)
         {
             var descriptor = new GenericTypesDescriptor { NumberOfTypes = numberOfParameters };
@@ -43,7 +41,6 @@ namespace MockGen.Tests.Model
         }
 
         [Theory]
-        [InlineData(0, "")]
         [InlineData(1, "ArgMatcher<TParam1>")]
         [InlineData(2, "ArgMatcher<TParam1>, ArgMatcher<TParam2>")]
         public void Should_concat_class_name_for_each_parameter_type(int numberOfParameters, string expectedGenerics)
@@ -56,7 +53,6 @@ namespace MockGen.Tests.Model
         }
 
         [Theory]
-        [InlineData(0, "")]
         [InlineData(1, "new ArgMatcher<TParam1>()")]
         [InlineData(2, "new ArgMatcher<TParam1>(), new ArgMatcher<TParam2>()")]
         public void Should_concat_instance_creation_for_each_parameter_type(int numberOfParameters, string expectedGenerics)
@@ -69,7 +65,6 @@ namespace MockGen.Tests.Model
         }
 
         [Theory]
-        [InlineData(0, "")]
         [InlineData(1, "TParam1 param1")]
         [InlineData(2, "TParam1 param1, TParam2 param2")]
         public void Should_concat_parameter_types_with_name(int numberOfParameters, string expectedParameters)
@@ -79,7 +74,6 @@ namespace MockGen.Tests.Model
         }
 
         [Theory]
-        [InlineData(0, "")]
         [InlineData(1, "param1")]
         [InlineData(2, "param1, param2")]
         public void Should_concat_parameter_names(int numberOfParameters, string expectedParameterNames)
@@ -89,7 +83,6 @@ namespace MockGen.Tests.Model
         }
 
         [Theory]
-        [InlineData(0, "")]
         [InlineData(1, "ArgMatcher<TParam1> matcher1")]
         [InlineData(2, "ArgMatcher<TParam1> matcher1, ArgMatcher<TParam2> matcher2")]
         public void Should_concat_types_and_parameter_names(int numberOfParameters, string expectedParameterNames)
@@ -99,7 +92,6 @@ namespace MockGen.Tests.Model
         }
 
         [Theory]
-        [InlineData(0, "")]
         [InlineData(1, "matcher1.Match(param1)")]
         [InlineData(2, "matcher1.Match(param1) && matcher2.Match(param2)")]
         public void Should_concat_matcher_calls(int numberOfParameters, string expectedParameterNames)

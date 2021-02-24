@@ -3,22 +3,22 @@ using MockGen.Specs.Generated.Helpers.Matchers;
 
 namespace MockGen.Specs.Generated.Helpers
 {
-    internal class ActionSpecification<TParam>
+    internal class ActionSpecification<TParam1>
     {
-        internal static ActionSpecification<TParam> Default = new ActionSpecification<TParam>(new AnyArgMatcher<TParam>(), _ => { });
-        private readonly ArgMatcher<TParam> matcher;
+        internal static ActionSpecification<TParam1> Default = new ActionSpecification<TParam1>(new AnyArgMatcher<TParam1>(), (_) => { });
+        private readonly ArgMatcher<TParam1> matcher1;
 
-        internal ActionSpecification(ArgMatcher<TParam> matcher, Action<TParam> action)
+        internal ActionSpecification(ArgMatcher<TParam1> matcher1, Action<TParam1> action)
         {
-            this.matcher = matcher;
+            this.matcher1 = matcher1;
             Action = action;
         }
 
-        internal bool Match(TParam param)
+        internal bool Match(TParam1 param1)
         {
-            return matcher.Match(param);
+            return matcher1.Match(param1);
         }
 
-        internal Action<TParam> Action { get; private set; }
+        internal Action<TParam1> Action { get; private set; }
     }
 }

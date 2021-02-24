@@ -14,7 +14,7 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.8.0" />
     <PackageReference Include="System.CodeDom" Version="5.*" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Update="Templates\ActionSpecificationTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
@@ -84,71 +84,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ActionSpecificationTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\ArgTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ArgTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\FuncSpecificationTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>FuncSpecificationTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\IMethodSetupTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>IMethodSetupTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\Matchers\AnyArgMatcherTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AnyArgMatcherTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\Matchers\ArgMatcherTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ArgMatcherTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\Matchers\EqualityArgMatcherTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EqualityArgMatcherTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\Matchers\PredicateArgMatcherTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PredicateArgMatcherTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\MethodSetupReturnTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MethodSetupReturnTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\MethodSetupVoidTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MethodSetupVoidTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\MethodSpyTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MethodSpyTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\MockBuilderTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MockBuilderTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\MockStaticTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MockStaticTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\MockTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MockTextTemplate.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

@@ -7,7 +7,19 @@ namespace MockGen.Model
     public struct GenericTypesDescriptor
     {
         private int numberOfTypes;
-        public List<int> EnumerateNumbers { get; private set; }
+        private List<int> enumerateNumbers;
+
+        public List<int> EnumerateNumbers 
+        { 
+            get 
+            {
+                if (NumberOfTypes == 0)
+                {
+                    throw new InvalidOperationException("You cannot use this descriptor with zero type parameter");
+                }
+                return enumerateNumbers;
+            }
+        }
 
         public int NumberOfTypes 
         {
@@ -15,24 +27,16 @@ namespace MockGen.Model
             set
             {
                 numberOfTypes = value;
-                EnumerateNumbers = Enumerable.Range(1, value).ToList();
+                enumerateNumbers = Enumerable.Range(1, value).ToList();
             }
         }
         public bool HasMethodThatReturnsVoid { get; set; }
         public bool HasMethodThatReturns { get; set; }
-        public string FileSuffix => NumberOfTypes switch
-        {
-            0 => string.Empty,
-            _ => EnumerateNumbers
+        public string FileSuffix => EnumerateNumbers
                     .Select(n => $"P{n}")
-                    .Aggregate(string.Empty, (suffix, next) => suffix + next)
-        };
+                    .Aggregate(string.Empty, (suffix, next) => suffix + next);
 
-        public string GenericTypes => NumberOfTypes switch
-        {
-            0 => string.Empty,
-            _ => $"<{string.Join(", ", EnumerateNumbers.Select(n => $"TParam{n}"))}>",
-        };
+        public string GenericTypes => $"{string.Join(", ", EnumerateNumbers.Select(n => $"TParam{n}"))}";
 
         public string DiscardParameters => $"({string.Join(", ", EnumerateNumbers.Select(_ => "_"))})";
 
@@ -41,11 +45,7 @@ namespace MockGen.Model
         public string ParametersTypesWithName(string parameterName) => string.Join(", ", EnumerateNumbers.Select(n => $"TParam{n} {parameterName + n}"));
         public string ParametersNames => string.Join(", ", EnumerateNumbers.Select(n => $"param{n}"));
 
-        public string ConcatClassByParameterType(string className) => NumberOfTypes switch
-        {
-            0 => string.Empty,
-            _ => string.Join(", ", ClassByParameterType(className)),
-        };
+        public string ConcatClassByParameterType(string className) => string.Join(", ", ClassByParameterType(className));
 
         public string ConcatNewClassByParameterType(string className) => string.Join(", ", ClassByParameterType(className).Select(x => $"new {x}()"));
         public string ConcatClassParameterByParameterType(string className, string instanceName) => string.Join(", ", ClassByParameterType(className).Select((x, i) => $"{x} {instanceName + (i + 1)}"));

@@ -8,15 +8,14 @@ using MockGen.Specs.Generated.Helpers.Matchers;
 
 namespace MockGen.Specs.Generated.Helpers
 {
-    internal class ActionSpecification<#=Descriptor.GenericTypes#>
+    internal class ActionSpecification<<#=Descriptor.GenericTypes#>>
     {
-        internal static ActionSpecification<#=Descriptor.GenericTypes#> Default = new ActionSpecification<#=Descriptor.GenericTypes#>(<#=Descriptor.ConcatNewClassByParameterType("AnyArgMatcher")#>, <#=Descriptor.DiscardParameters#> => { });
-
+        internal static ActionSpecification<<#=Descriptor.GenericTypes#>> Default = new ActionSpecification<<#=Descriptor.GenericTypes#>>(<#=Descriptor.ConcatNewClassByParameterType("AnyArgMatcher")#>, <#=Descriptor.DiscardParameters#> => { });
 <# foreach (var n in Descriptor.EnumerateNumbers) { #>
         private readonly ArgMatcher<TParam<#=n#>> matcher<#=n#>;
 <# } #>
 
-        internal ActionSpecification(<#=Descriptor.ConcatClassParameterByParameterType("ArgMatcher", "matcher")#>, Action<#=Descriptor.GenericTypes#> action)
+        internal ActionSpecification(<#=Descriptor.ConcatClassParameterByParameterType("ArgMatcher", "matcher")#>, Action<<#=Descriptor.GenericTypes#>> action)
         {
 <# foreach (var n in Descriptor.EnumerateNumbers) { #>
             this.matcher<#=n#> = matcher<#=n#>;
@@ -29,6 +28,6 @@ namespace MockGen.Specs.Generated.Helpers
             return <#=Descriptor.ConcatMatcherCalls("matcher", "param")#>
         }
 
-        internal Action<#=Descriptor.GenericTypes#> Action { get; private set; }
+        internal Action<<#=Descriptor.GenericTypes#>> Action { get; private set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using Xunit;
 
@@ -11,31 +10,19 @@ namespace MockGen.Tests.Utils
     [CollectionDefinition("Load common specs files")]
     public class LoadCommonSpecsFilesFixture : ICollectionFixture<LoadMetadataReferenceFixture>
     {
-        private string basePathToSpecsSources;
         public string IDependencySourceFile { get; private set; }
         public string ServiceSourceFile { get; private set; }
         public string Model1SourceFile { get; private set; }
         public string Model2SourceFile { get; private set; }
+        public string BasicUsageTestFile { get; private set; }
         
         public LoadCommonSpecsFilesFixture()
         {
-            // Prepare the common source files that we always need
-            var solutionDirectoryPath = Directory
-                .GetParent(Environment.CurrentDirectory.Split($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}")[0])
-                .FullName;
-
-            basePathToSpecsSources = Path.Combine(solutionDirectoryPath, "MockGen.Specs");
-            IDependencySourceFile = File.ReadAllText(Path.Combine(Path.Combine(basePathToSpecsSources, "Sut"), "IDependency.cs"), Encoding.UTF8);
-            ServiceSourceFile = File.ReadAllText(Path.Combine(Path.Combine(basePathToSpecsSources, "Sut"), "Service.cs"), Encoding.UTF8);
-            Model1SourceFile = File.ReadAllText(Path.Combine(Path.Combine(basePathToSpecsSources, "Sut"), "Model1.cs"), Encoding.UTF8);
-            Model2SourceFile = File.ReadAllText(Path.Combine(Path.Combine(basePathToSpecsSources, "Sut"), "Model2.cs"), Encoding.UTF8);
+            IDependencySourceFile = SourceFileReader.ReadFile(Path.Combine("Sut", "IDependency.cs"));
+            ServiceSourceFile = SourceFileReader.ReadFile(Path.Combine("Sut", "Service.cs"));
+            Model1SourceFile = SourceFileReader.ReadFile(Path.Combine("Sut", "Model1.cs"));
+            Model2SourceFile = SourceFileReader.ReadFile(Path.Combine("Sut", "Model2.cs"));
+            BasicUsageTestFile = SourceFileReader.ReadFile("BasicUsageTests.cs");
         }
-
-        /// <summary>
-        /// Helper method that reads the file (this one read it every time)
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
-        public string LoadThisFile(string fileName) => File.ReadAllText(Path.Combine(Path.Combine(basePathToSpecsSources), fileName), Encoding.UTF8);
     }
 }
