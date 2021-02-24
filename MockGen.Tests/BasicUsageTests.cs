@@ -27,7 +27,7 @@ namespace MockGen.Tests
             {
                 loadSourceFilesFixture.IDependencySourceFile,
                 loadSourceFilesFixture.ServiceSourceFile,
-                loadSourceFilesFixture.ModelSourceFile,
+                loadSourceFilesFixture.Model1SourceFile,
                 loadSourceFilesFixture.LoadThisFile($"{nameof(BasicUsageTests)}.cs"),
             };
         }

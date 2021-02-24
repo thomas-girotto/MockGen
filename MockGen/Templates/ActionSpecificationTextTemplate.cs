@@ -28,24 +28,134 @@ namespace MockGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write(@"using System;
-using MockGen.Specs.Generated.Helpers.Matchers;
-
-namespace MockGen.Specs.Generated.Helpers
-{
-    internal class ActionSpecification<TParam>
-    {
-        internal static ActionSpecification<TParam> Default = new ActionSpecification<TParam>(new AnyArgMatcher<TParam>(), _ => { });
-        internal ActionSpecification(ArgMatcher<TParam> matcher, Action<TParam> action)
-        {
-            Matcher = matcher;
-            Action = action;
-        }
-
-        internal ArgMatcher<TParam> Matcher { get; private set; }
-        internal Action<TParam> Action { get; private set; }
-    }
-}");
+            this.Write("using System;\r\nusing MockGen.Specs.Generated.Helpers.Matchers;\r\n\r\nnamespace MockG" +
+                    "en.Specs.Generated.Helpers\r\n{\r\n    internal class ActionSpecification");
+            
+            #line 11 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n    {\r\n        internal static ActionSpecification");
+            
+            #line 13 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            
+            #line default
+            #line hidden
+            this.Write(" Default = new ActionSpecification");
+            
+            #line 13 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            
+            #line default
+            #line hidden
+            this.Write("(");
+            
+            #line 13 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatNewClassByParameterType("AnyArgMatcher")));
+            
+            #line default
+            #line hidden
+            this.Write(", ");
+            
+            #line 13 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.DiscardParameters));
+            
+            #line default
+            #line hidden
+            this.Write(" => { });\r\n\r\n");
+            
+            #line 15 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+ foreach (var n in Descriptor.EnumerateNumbers) { 
+            
+            #line default
+            #line hidden
+            this.Write("        private readonly ArgMatcher<TParam");
+            
+            #line 16 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(n));
+            
+            #line default
+            #line hidden
+            this.Write("> matcher");
+            
+            #line 16 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(n));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n");
+            
+            #line 17 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        internal ActionSpecification(");
+            
+            #line 19 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatClassParameterByParameterType("ArgMatcher", "matcher")));
+            
+            #line default
+            #line hidden
+            this.Write(", Action");
+            
+            #line 19 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            
+            #line default
+            #line hidden
+            this.Write(" action)\r\n        {\r\n");
+            
+            #line 21 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+ foreach (var n in Descriptor.EnumerateNumbers) { 
+            
+            #line default
+            #line hidden
+            this.Write("            this.matcher");
+            
+            #line 22 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(n));
+            
+            #line default
+            #line hidden
+            this.Write(" = matcher");
+            
+            #line 22 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(n));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n");
+            
+            #line 23 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("            Action = action;\r\n        }\r\n\r\n        internal bool Match(");
+            
+            #line 27 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ParametersTypesWithName("param")));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n        {\r\n            return ");
+            
+            #line 29 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatMatcherCalls("matcher", "param")));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        }\r\n\r\n        internal Action");
+            
+            #line 32 "D:\Dev\MockGen\MockGen\Templates\ActionSpecificationTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            
+            #line default
+            #line hidden
+            this.Write(" Action { get; private set; }\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

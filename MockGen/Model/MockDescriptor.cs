@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace MockGen
+namespace MockGen.Model
 {
     public class MockDescriptor
     {
@@ -17,6 +15,14 @@ namespace MockGen
 
         public string MockCtorParameters => string.Join(", ", Methods.Select(m => $"{m.NameCamelCase}Setup"));
 
-
+        public IEnumerable<GenericTypesDescriptor> NumberOfParametersInMethods => 
+            Methods.GroupBy(
+                m => m.Parameters.Count,
+                (n, methodsInGroup) => new GenericTypesDescriptor
+                {
+                    NumberOfTypes = n,
+                    HasMethodThatReturnsVoid = methodsInGroup.Any(m => m.ReturnsVoid),
+                    HasMethodThatReturns = methodsInGroup.Any(m => !m.ReturnsVoid),
+                });
     }
 }

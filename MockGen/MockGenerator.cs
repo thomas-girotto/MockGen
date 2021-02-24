@@ -1,9 +1,11 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
+using MockGen.Model;
 using MockGen.Templates;
 using MockGen.Templates.Matchers;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -22,11 +24,8 @@ namespace MockGen
                 }
 
                 // First inject helper classes that doesn't depend on user's code
-                var actionSpecificationTemplate = new ActionSpecificationTextTemplate();
-                context.AddSource("ActionSpecification.cs", SourceText.From(actionSpecificationTemplate.TransformText(), Encoding.UTF8));
-
-                var funcSpecificationTemplate = new FuncSpecificationTextTemplate();
-                context.AddSource("FuncSpecification.cs", SourceText.From(funcSpecificationTemplate.TransformText(), Encoding.UTF8));
+                var argTemplate = new ArgTextTemplate();
+                context.AddSource("Arg.cs", SourceText.From(argTemplate.TransformText(), Encoding.UTF8));
 
                 var argMatcherTemplate = new ArgMatcherTextTemplate();
                 context.AddSource("ArgMatcher.cs", SourceText.From(argMatcherTemplate.TransformText(), Encoding.UTF8));
@@ -40,25 +39,14 @@ namespace MockGen
                 var predicateArgMatcherTemplate = new PredicateArgMatcherTextTemplate();
                 context.AddSource("PredicateArgMatcher.cs", SourceText.From(predicateArgMatcherTemplate.TransformText(), Encoding.UTF8));
 
-                var argTemplate = new ArgTextTemplate();
-                context.AddSource("Arg.cs", SourceText.From(argTemplate.TransformText(), Encoding.UTF8));
                 
-                var methodSetupTemplate = new IMethodSetupTextTemplate();
-                context.AddSource("IMethodSetup.cs", SourceText.From(methodSetupTemplate.TransformText(), Encoding.UTF8));
-
-                var methodSetupVoidTemplate = new MethodSetupVoidTextTemplate();
-                context.AddSource("MethodSetupVoid.cs", SourceText.From(methodSetupVoidTemplate.TransformText(), Encoding.UTF8));
-
-                var methodSetupReturnTemplate = new MethodSetupReturnTextTemplate();
-                context.AddSource("MethodSetupReturn.cs", SourceText.From(methodSetupReturnTemplate.TransformText(), Encoding.UTF8));
-                
-                var methodSpyTemplate = new MethodSpyTextTemplate();
-                context.AddSource("MethodSpy.cs", SourceText.From(methodSpyTemplate.TransformText(), Encoding.UTF8));
-
                 // Then classes that depends on the types we found that we should mock
+                var allTypesDescriptor = new List<MockDescriptor>();
+
                 foreach (var typeSyntax in receiver.TypesToMockSyntax)
                 {
                     var descriptorForTemplate = BuildModelFromTypeSyntax(context, typeSyntax);
+                    allTypesDescriptor.Add(descriptorForTemplate);
 
                     var mockStaticTemplate = new MockStaticTextTemplate(descriptorForTemplate);
                     context.AddSource("Mock.cs", SourceText.From(mockStaticTemplate.TransformText(), Encoding.UTF8));
@@ -69,6 +57,43 @@ namespace MockGen
                     var mockTemplate = new MockTextTemplate(descriptorForTemplate);
                     context.AddSource($"{typeSyntax.Identifier.ValueText}Mock.cs", SourceText.From(mockTemplate.TransformText(), Encoding.UTF8));
                 }
+
+                // Finally classes that only depends on the number of generic types in methods
+                var actionSpecificationTemplate = new ActionSpecificationTextTemplate();
+                var funcSpecificationTemplate = new FuncSpecificationTextTemplate();
+
+                foreach (var genericTypeDescriptor in allTypesDescriptor.SelectMany(mock => mock.NumberOfParametersInMethods).Distinct())
+                {
+                    if (genericTypeDescriptor.NumberOfTypes > 0)
+                    {
+                        if (genericTypeDescriptor.HasMethodThatReturnsVoid)
+                        {
+                            actionSpecificationTemplate.Descriptor = genericTypeDescriptor;
+                            context.AddSource($"ActionSpecification{genericTypeDescriptor.FileSuffix}.cs", SourceText.From(actionSpecificationTemplate.TransformText(), Encoding.UTF8));
+                        }
+                        if (genericTypeDescriptor.HasMethodThatReturns)
+                        {
+                            funcSpecificationTemplate.Descriptor = genericTypeDescriptor;
+                            context.AddSource($"FuncSpecification{genericTypeDescriptor.FileSuffix}.cs", SourceText.From(funcSpecificationTemplate.TransformText(), Encoding.UTF8));
+                        }
+                    }
+                    
+
+                    
+                }
+
+                var methodSetupTemplate = new IMethodSetupTextTemplate();
+                context.AddSource("IMethodSetup.cs", SourceText.From(methodSetupTemplate.TransformText(), Encoding.UTF8));
+
+                var methodSetupVoidTemplate = new MethodSetupVoidTextTemplate();
+                context.AddSource("MethodSetupVoid.cs", SourceText.From(methodSetupVoidTemplate.TransformText(), Encoding.UTF8));
+
+                var methodSetupReturnTemplate = new MethodSetupReturnTextTemplate();
+                context.AddSource("MethodSetupReturn.cs", SourceText.From(methodSetupReturnTemplate.TransformText(), Encoding.UTF8));
+
+                var methodSpyTemplate = new MethodSpyTextTemplate();
+                context.AddSource("MethodSpy.cs", SourceText.From(methodSpyTemplate.TransformText(), Encoding.UTF8));
+
             }
             catch (Exception ex)
             {

@@ -1,4 +1,4 @@
-﻿namespace MockGen
+﻿namespace MockGen.Model
 {
     public class ParameterDescriptor
     {

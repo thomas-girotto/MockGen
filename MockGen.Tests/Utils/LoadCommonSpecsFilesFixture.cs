@@ -14,7 +14,8 @@ namespace MockGen.Tests.Utils
         private string basePathToSpecsSources;
         public string IDependencySourceFile { get; private set; }
         public string ServiceSourceFile { get; private set; }
-        public string ModelSourceFile { get; private set; }
+        public string Model1SourceFile { get; private set; }
+        public string Model2SourceFile { get; private set; }
         
         public LoadCommonSpecsFilesFixture()
         {
@@ -26,7 +27,8 @@ namespace MockGen.Tests.Utils
             basePathToSpecsSources = Path.Combine(solutionDirectoryPath, "MockGen.Specs");
             IDependencySourceFile = File.ReadAllText(Path.Combine(Path.Combine(basePathToSpecsSources, "Sut"), "IDependency.cs"), Encoding.UTF8);
             ServiceSourceFile = File.ReadAllText(Path.Combine(Path.Combine(basePathToSpecsSources, "Sut"), "Service.cs"), Encoding.UTF8);
-            ModelSourceFile = File.ReadAllText(Path.Combine(Path.Combine(basePathToSpecsSources, "Sut"), "Model.cs"), Encoding.UTF8);
+            Model1SourceFile = File.ReadAllText(Path.Combine(Path.Combine(basePathToSpecsSources, "Sut"), "Model1.cs"), Encoding.UTF8);
+            Model2SourceFile = File.ReadAllText(Path.Combine(Path.Combine(basePathToSpecsSources, "Sut"), "Model2.cs"), Encoding.UTF8);
         }
 
         /// <summary>

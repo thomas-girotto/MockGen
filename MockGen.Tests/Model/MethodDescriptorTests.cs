@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using MockGen.Model;
 using System.Collections.Generic;
 using Xunit;
 

@@ -1,4 +1,6 @@
-﻿namespace MockGen.Templates
+﻿using MockGen.Model;
+
+namespace MockGen.Templates
 {
     public partial class MockStaticTextTemplate
     {
