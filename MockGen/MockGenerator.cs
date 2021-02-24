@@ -39,7 +39,21 @@ namespace MockGen
                 var predicateArgMatcherTemplate = new PredicateArgMatcherTextTemplate();
                 context.AddSource("PredicateArgMatcher.cs", SourceText.From(predicateArgMatcherTemplate.TransformText(), Encoding.UTF8));
 
-                
+                var methodSetupTemplate = new IMethodSetupTextTemplate();
+                context.AddSource("IMethodSetup.cs", SourceText.From(methodSetupTemplate.TransformText(), Encoding.UTF8));
+
+                var iMethodSetupVoidTextTemplate = new IMethodSetupVoidTextTemplate();
+                context.AddSource("IMethodSetupVoid.cs", SourceText.From(iMethodSetupVoidTextTemplate.TransformText(), Encoding.UTF8));
+
+                var iMethodSetupReturnTextTemplate = new IMethodSetupReturnTextTemplate();
+                context.AddSource("IMethodSetupReturn.cs", SourceText.From(iMethodSetupReturnTextTemplate.TransformText(), Encoding.UTF8));
+
+                var methodSetupReturnTemplate = new MethodSetupReturnTextTemplate();
+                context.AddSource("MethodSetupReturn.cs", SourceText.From(methodSetupReturnTemplate.TransformText(), Encoding.UTF8));
+
+                var methodSetupVoidTemplate = new MethodSetupVoidTextTemplate();
+                context.AddSource("MethodSetupVoid.cs", SourceText.From(methodSetupVoidTemplate.TransformText(), Encoding.UTF8));
+
                 // Then classes that depends on the types we found that we should mock
                 var allTypesDescriptor = new List<MockDescriptor>();
 
@@ -61,6 +75,8 @@ namespace MockGen
                 // Finally classes that only depends on the number of generic types in methods
                 var actionSpecificationTemplate = new ActionSpecificationTextTemplate();
                 var funcSpecificationTemplate = new FuncSpecificationTextTemplate();
+                var methodSetupReturnPTemplate = new MethodSetupReturnPTextTemplate();
+                var methodSetupVoidPTemplate = new MethodSetupVoidPTextTemplate();
 
                 foreach (var genericTypeDescriptor in allTypesDescriptor.SelectMany(mock => mock.NumberOfParametersInMethods).Distinct())
                 {
@@ -70,11 +86,17 @@ namespace MockGen
                         {
                             actionSpecificationTemplate.Descriptor = genericTypeDescriptor;
                             context.AddSource($"ActionSpecification{genericTypeDescriptor.FileSuffix}.cs", SourceText.From(actionSpecificationTemplate.TransformText(), Encoding.UTF8));
+
+                            methodSetupVoidPTemplate.Descriptor = genericTypeDescriptor;
+                            context.AddSource($"MethodSetupVoid{genericTypeDescriptor.FileSuffix}.cs", SourceText.From(methodSetupVoidPTemplate.TransformText(), Encoding.UTF8));
                         }
                         if (genericTypeDescriptor.HasMethodThatReturns)
                         {
                             funcSpecificationTemplate.Descriptor = genericTypeDescriptor;
                             context.AddSource($"FuncSpecification{genericTypeDescriptor.FileSuffix}.cs", SourceText.From(funcSpecificationTemplate.TransformText(), Encoding.UTF8));
+
+                            methodSetupReturnPTemplate.Descriptor = genericTypeDescriptor;
+                            context.AddSource($"MethodSetupReturn{genericTypeDescriptor.FileSuffix}.cs", SourceText.From(methodSetupReturnPTemplate.TransformText(), Encoding.UTF8));
                         }
                     }
                     
@@ -82,15 +104,9 @@ namespace MockGen
                     
                 }
 
-                var methodSetupTemplate = new IMethodSetupTextTemplate();
-                context.AddSource("IMethodSetup.cs", SourceText.From(methodSetupTemplate.TransformText(), Encoding.UTF8));
-
-                var methodSetupVoidTemplate = new MethodSetupVoidTextTemplate();
-                context.AddSource("MethodSetupVoid.cs", SourceText.From(methodSetupVoidTemplate.TransformText(), Encoding.UTF8));
-
-                var methodSetupReturnTemplate = new MethodSetupReturnTextTemplate();
-                context.AddSource("MethodSetupReturn.cs", SourceText.From(methodSetupReturnTemplate.TransformText(), Encoding.UTF8));
-
+                
+                
+                
                 var methodSpyTemplate = new MethodSpyTextTemplate();
                 context.AddSource("MethodSpy.cs", SourceText.From(methodSpyTemplate.TransformText(), Encoding.UTF8));
 

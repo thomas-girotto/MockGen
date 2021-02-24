@@ -70,7 +70,7 @@ namespace MockGen.Tests.Model
         public void Should_concat_parameter_types_with_name(int numberOfParameters, string expectedParameters)
         {
             var descriptor = new GenericTypesDescriptor { NumberOfTypes = numberOfParameters };
-            descriptor.ParametersTypesWithName("param").Should().Be(expectedParameters);
+            descriptor.ParametersTypesWithName.Should().Be(expectedParameters);
         }
 
         [Theory]
@@ -79,7 +79,7 @@ namespace MockGen.Tests.Model
         public void Should_concat_parameter_names(int numberOfParameters, string expectedParameterNames)
         {
             var descriptor = new GenericTypesDescriptor { NumberOfTypes = numberOfParameters };
-            descriptor.ParametersNames.Should().Be(expectedParameterNames);
+            descriptor.ConcatParameters("param").Should().Be(expectedParameterNames);
         }
 
         [Theory]

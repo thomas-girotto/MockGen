@@ -23,7 +23,7 @@ namespace MockGen.Specs.Generated.Helpers
             Action = action;
         }
 
-        internal bool Match(<#=Descriptor.ParametersTypesWithName("param")#>)
+        internal bool Match(<#=Descriptor.ParametersTypesWithName#>)
         {
             return <#=Descriptor.ConcatMatcherCalls("matcher", "param")#>
         }

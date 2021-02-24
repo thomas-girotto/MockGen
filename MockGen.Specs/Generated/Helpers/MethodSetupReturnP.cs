@@ -4,35 +4,35 @@ using System.Linq;
 
 namespace MockGen.Specs.Generated.Helpers
 {
-    internal class MethodSetupReturn<TParam, TReturn> : IMethodSetupReturn<TReturn>
+    internal class MethodSetupReturn<TParam1, TReturn> : IMethodSetupReturn<TReturn>
     {
-        private Stack<FuncSpecification<TParam, TReturn>> actionByMatchingCriteria = new Stack<FuncSpecification<TParam, TReturn>>();
-        private ArgMatcher<TParam> matchParameter;
-        private MethodSpy<TParam> spy = new MethodSpy<TParam>();
+        private Stack<FuncSpecification<TParam1, TReturn>> actionByMatchingCriteria = new Stack<FuncSpecification<TParam1, TReturn>>();
+        private ArgMatcher<TParam1> match1;
+        private MethodSpy<TParam1> spy = new MethodSpy<TParam1>();
 
         public MethodSetupReturn()
         {
-            actionByMatchingCriteria.Push(FuncSpecification<TParam, TReturn>.Default);
+            actionByMatchingCriteria.Push(FuncSpecification<TParam1, TReturn>.Default);
         }
 
-        public IMethodSetupReturn<TReturn> ForParameter(Arg<TParam> paramValue)
+        public IMethodSetupReturn<TReturn> ForParameter(Arg<TParam1> paramValue)
         {
-            matchParameter = ArgMatcher<TParam>.Create(paramValue);
+            match1 = ArgMatcher<TParam1>.Create(paramValue);
             return this;
         }
 
-        public IMethodSetupReturn<TReturn> ForParameter(Predicate<TParam> matchingPredicate)
+        public IMethodSetupReturn<TReturn> ForParameter(Predicate<TParam1> matchingPredicate)
         {
-            matchParameter = ArgMatcher<TParam>.Create(matchingPredicate);
+            match1 = ArgMatcher<TParam1>.Create(matchingPredicate);
             return this;
         }
 
         public void Returns(TReturn value)
         {
-            actionByMatchingCriteria.Push(new FuncSpecification<TParam, TReturn>(matchParameter, (_) => value));
+            actionByMatchingCriteria.Push(new FuncSpecification<TParam1, TReturn>(match1, (_) => value));
         }
 
-        public TReturn ExecuteSetup(TParam param)
+        public TReturn ExecuteSetup(TParam1 param)
         {
             spy.RegisterCallParameters(param);
             foreach (var setupAction in actionByMatchingCriteria)
@@ -43,14 +43,14 @@ namespace MockGen.Specs.Generated.Helpers
                 }
             }
 
-            return FuncSpecification<TParam, TReturn>.Default.Action(param);
+            return FuncSpecification<TParam1, TReturn>.Default.Action(param);
         }
 
         public void Throws<TException>() where TException : Exception, new()
         {
-            actionByMatchingCriteria.Push(new FuncSpecification<TParam, TReturn>(matchParameter, (_) => throw new TException()));
+            actionByMatchingCriteria.Push(new FuncSpecification<TParam1, TReturn>(match1, (_) => throw new TException()));
         }
 
-        public int Calls => spy.GetMatchingCalls(matchParameter).Count();
+        public int Calls => spy.GetMatchingCalls(match1).Count();
     }
 }
