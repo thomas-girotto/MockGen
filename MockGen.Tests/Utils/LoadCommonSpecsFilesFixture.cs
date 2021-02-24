@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Text;
 using Xunit;
 
 namespace MockGen.Tests.Utils
@@ -11,18 +10,20 @@ namespace MockGen.Tests.Utils
     public class LoadCommonSpecsFilesFixture : ICollectionFixture<LoadMetadataReferenceFixture>
     {
         public string IDependencySourceFile { get; private set; }
-        public string ServiceSourceFile { get; private set; }
         public string Model1SourceFile { get; private set; }
         public string Model2SourceFile { get; private set; }
-        public string BasicUsageTestFile { get; private set; }
-        
+        public string ReturnsTestFile { get; private set; }
+        public string ThrowsTestFile { get; private set; }
+        public string SpyTestFile { get; private set; }
+
         public LoadCommonSpecsFilesFixture()
         {
             IDependencySourceFile = SourceFileReader.ReadFile(Path.Combine("Sut", "IDependency.cs"));
-            ServiceSourceFile = SourceFileReader.ReadFile(Path.Combine("Sut", "Service.cs"));
             Model1SourceFile = SourceFileReader.ReadFile(Path.Combine("Sut", "Model1.cs"));
             Model2SourceFile = SourceFileReader.ReadFile(Path.Combine("Sut", "Model2.cs"));
-            BasicUsageTestFile = SourceFileReader.ReadFile("BasicUsageTests.cs");
+            ReturnsTestFile = SourceFileReader.ReadFile("ReturnsTests.cs");
+            ThrowsTestFile = SourceFileReader.ReadFile("ThrowsTests.cs");
+            SpyTestFile = SourceFileReader.ReadFile("SpyTests.cs");
         }
     }
 }

@@ -11,6 +11,8 @@ namespace MockGen.Specs.Generated.IDependencyNs
         private readonly MethodSetupVoid<Model1, Model2> doSomethingWithTwoParametersSetup;
         private readonly MethodSetupReturn<int> getSomeNumberSetup;
         private readonly MethodSetupReturn<int, int> getSomeNumberWithParameterSetup;
+        private readonly MethodSetupReturn<Model1, int> getSomeNumberWithReferenceTypeParameterSetup;
+        private readonly MethodSetupReturn<Model1,Model2, int> getSomeNumberWithTwoParametersSetup;
 
         public IDependencyMock(
             MethodSetupVoid doSomethingSetup, 
@@ -18,7 +20,9 @@ namespace MockGen.Specs.Generated.IDependencyNs
             MethodSetupVoid<Model1> doSomethingWithReferenceTypeParameterSetup,
             MethodSetupVoid<Model1, Model2> doSomethingWithTwoParametersSetup, 
             MethodSetupReturn<int> getSomeNumberSetup, 
-            MethodSetupReturn<int, int> getSomeNumberWithParameterSetup)
+            MethodSetupReturn<int, int> getSomeNumberWithParameterSetup,
+            MethodSetupReturn<Model1, int> getSomeNumberWithReferenceTypeParameterSetup,
+            MethodSetupReturn<Model1, Model2, int> getSomeNumberWithTwoParametersSetup)
         {
             this.doSomethingSetup = doSomethingSetup;
             this.doSomethingWithParameterSetup = doSomethingWithParameterSetup;
@@ -26,6 +30,8 @@ namespace MockGen.Specs.Generated.IDependencyNs
             this.doSomethingWithTwoParametersSetup = doSomethingWithTwoParametersSetup;
             this.getSomeNumberSetup = getSomeNumberSetup;
             this.getSomeNumberWithParameterSetup = getSomeNumberWithParameterSetup;
+            this.getSomeNumberWithReferenceTypeParameterSetup = getSomeNumberWithReferenceTypeParameterSetup;
+            this.getSomeNumberWithTwoParametersSetup = getSomeNumberWithTwoParametersSetup;
         }
 
         public void DoSomething()
@@ -56,6 +62,16 @@ namespace MockGen.Specs.Generated.IDependencyNs
         public int GetSomeNumberWithParameter(int input)
         {
             return getSomeNumberWithParameterSetup.ExecuteSetup(input);
+        }
+
+        public int GetSomeNumberWithReferenceTypeParameter(Model1 model1)
+        {
+            return getSomeNumberWithReferenceTypeParameterSetup.ExecuteSetup(model1);
+        }
+
+        public int GetSomeNumberWithTwoParameters(Model1 model1, Model2 model2)
+        {
+            return getSomeNumberWithTwoParametersSetup.ExecuteSetup(model1, model2);
         }
     }
 }

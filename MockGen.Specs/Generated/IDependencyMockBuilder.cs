@@ -11,6 +11,8 @@ namespace MockGen.Specs.Generated.IDependencyNs
         private readonly MethodSetupVoid<Model1, Model2> doSomethingWithTwoParametersSetup = new MethodSetupVoid<Model1, Model2>();
         private readonly MethodSetupReturn<int> getSomeNumberSetup = new MethodSetupReturn<int>();
         private readonly MethodSetupReturn<int, int> getSomeNumberWithParameterSetup = new MethodSetupReturn<int, int>();
+        private readonly MethodSetupReturn<Model1, int> getSomeNumberWithReferenceTypeParameterSetup = new MethodSetupReturn<Model1, int>();
+        private readonly MethodSetupReturn<Model1, Model2, int> getSomeNumberWithTwoParametersSetup = new MethodSetupReturn<Model1, Model2, int>();
 
         public IMethodSetupVoid DoSomething()
         {
@@ -42,6 +44,16 @@ namespace MockGen.Specs.Generated.IDependencyNs
             return getSomeNumberWithParameterSetup.ForParameter(input);
         }
 
+        public IMethodSetupReturn<int> GetSomeNumberWithReferenceTypeParameter(Arg<Model1> model1)
+        {
+            return getSomeNumberWithReferenceTypeParameterSetup.ForParameter(model1 ?? Arg<Model1>.Null);
+        }
+
+        public IMethodSetupReturn<int> GetSomeNumberWithTwoParameters(Arg<Model1> model1, Arg<Model2> model2)
+        {
+            return getSomeNumberWithTwoParametersSetup.ForParameter(model1 ?? Arg<Model1>.Null, model2 ?? Arg<Model2>.Null);
+        }
+
         public IDependency Build()
         {
             return new IDependencyMock(doSomethingSetup, 
@@ -49,7 +61,9 @@ namespace MockGen.Specs.Generated.IDependencyNs
                 doSomethingWithReferenceTypeParameterSetup,
                 doSomethingWithTwoParametersSetup, 
                 getSomeNumberSetup, 
-                getSomeNumberWithParameterSetup);
+                getSomeNumberWithParameterSetup,
+                getSomeNumberWithReferenceTypeParameterSetup,
+                getSomeNumberWithTwoParametersSetup);
         }
     }
 }

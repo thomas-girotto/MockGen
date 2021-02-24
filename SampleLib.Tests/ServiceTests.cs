@@ -11,7 +11,7 @@ namespace SampleLib.Tests
         public void Should_add_number_from_external_source_to_given_number()
         {
             var mock = Mock<IExternalDependency>.Create();
-            mock.GetSomeNumber().WillReturn(2);
+            mock.GetSomeNumber().Returns(2);
 
             var service = new Service(mock.Build());
             var number = service.ReturnDependencyNumber();

@@ -13,8 +13,8 @@ namespace MockGen.Benchmark
         {
             var mockGen = Mock<IDependency>.Create();
             mockGen.GetSomeNumber().Returns(2);
-            var service = new Service(mockGen.Build());
-            service.ReturnDependencyNumber();
+            var mock = mockGen.Build();
+            mock.GetSomeNumber();
             mockGen.GetSomeNumber().Calls.Should().Be(1);
         }
 
@@ -23,8 +23,7 @@ namespace MockGen.Benchmark
         {
             var substitute = Substitute.For<IDependency>();
             substitute.GetSomeNumber().Returns(2);
-            var service = new Service(substitute);
-            service.ReturnDependencyNumber();
+            substitute.GetSomeNumber();
             substitute.Received(1).GetSomeNumber();
         }
 
@@ -33,8 +32,7 @@ namespace MockGen.Benchmark
         {
             var moq = new Moq.Mock<IDependency>();
             moq.Setup(d => d.GetSomeNumber()).Returns(2);
-            var service = new Service(moq.Object);
-            service.ReturnDependencyNumber();
+            moq.Object.GetSomeNumber();
             moq.Verify(d => d.GetSomeNumber(), Moq.Times.Once);
         }
     }
