@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Templates\ActionSpecificationTextTemplate.tt">
+    <None Update="Templates\Setup\ActionSpecificationTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ActionSpecificationTextTemplate.cs</LastGenOutput>
     </None>
@@ -25,63 +25,63 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ArgTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\FuncSpecificationTextTemplate.tt">
+    <None Update="Templates\Setup\FuncSpecificationTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>FuncSpecificationTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\IMethodSetupReturnTextTemplate.tt">
+    <None Update="Templates\Setup\IMethodSetupReturnTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>IMethodSetupReturnTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\IMethodSetupTextTemplate.tt">
+    <None Update="Templates\Setup\IMethodSetupTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>IMethodSetupTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\IMethodSetupVoidTextTemplate.tt">
+    <None Update="Templates\Setup\IMethodSetupVoidTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>IMethodSetupVoidTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\Matchers\AnyArgMatcherTextTemplate.tt">
+    <None Update="Templates\Matcher\AnyArgMatcherTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>AnyArgMatcherTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\Matchers\ArgMatcherTextTemplate.tt">
+    <None Update="Templates\Matcher\ArgMatcherTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ArgMatcherTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\Matchers\EqualityArgMatcherTextTemplate.tt">
+    <None Update="Templates\Matcher\EqualityArgMatcherTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>EqualityArgMatcherTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\Matchers\PredicateArgMatcherTextTemplate.tt">
+    <None Update="Templates\Matcher\PredicateArgMatcherTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>PredicateArgMatcherTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\MethodSetupReturnPTextTemplate.tt">
+    <None Update="Templates\Setup\MethodSetupReturnPTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSetupReturnPTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\MethodSetupReturnTextTemplate.tt">
+    <None Update="Templates\Setup\MethodSetupReturnTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSetupReturnTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\MethodSetupVoidPTextTemplate.tt">
+    <None Update="Templates\Setup\MethodSetupVoidPTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSetupVoidPTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\MethodSetupVoidTextTemplate.tt">
+    <None Update="Templates\Setup\MethodSetupVoidTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSetupVoidTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\MethodSpyP1TextTemplate.tt">
+    <None Update="Templates\Spy\MethodSpyP1TextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSpyP1TextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\MethodSpyPnTextTemplate.tt">
+    <None Update="Templates\Spy\MethodSpyPnTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSpyPnTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\MethodSpyTextTemplate.tt">
+    <None Update="Templates\Spy\MethodSpyTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSpyTextTemplate.cs</LastGenOutput>
     </None>
@@ -104,82 +104,87 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Templates\ActionSpecificationTextTemplate.cs">
+    <Compile Update="Templates\Setup\ActionSpecificationTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ActionSpecificationTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\FuncSpecificationTextTemplate.cs">
+    <Compile Update="Templates\ArgTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ArgTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\Setup\FuncSpecificationTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>FuncSpecificationTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\IMethodSetupReturnTextTemplate.cs">
+    <Compile Update="Templates\Setup\IMethodSetupReturnTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>IMethodSetupReturnTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\IMethodSetupTextTemplate.cs">
+    <Compile Update="Templates\Setup\IMethodSetupTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>IMethodSetupTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\IMethodSetupVoidTextTemplate.cs">
+    <Compile Update="Templates\Setup\IMethodSetupVoidTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>IMethodSetupVoidTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\Matchers\AnyArgMatcherTextTemplate.cs">
+    <Compile Update="Templates\Matcher\AnyArgMatcherTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>AnyArgMatcherTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\Matchers\ArgMatcherTextTemplate.cs">
+    <Compile Update="Templates\Matcher\ArgMatcherTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ArgMatcherTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\Matchers\EqualityArgMatcherTextTemplate.cs">
+    <Compile Update="Templates\Matcher\EqualityArgMatcherTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>EqualityArgMatcherTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\Matchers\PredicateArgMatcherTextTemplate.cs">
+    <Compile Update="Templates\Matcher\PredicateArgMatcherTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>PredicateArgMatcherTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\MethodSetupReturnPTextTemplate.cs">
+    <Compile Update="Templates\Setup\MethodSetupReturnPTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MethodSetupReturnPTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\MethodSetupReturnTextTemplate.cs">
+    <Compile Update="Templates\Setup\MethodSetupReturnTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MethodSetupReturnTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\MethodSetupVoidPTextTemplate.cs">
+    <Compile Update="Templates\Setup\MethodSetupVoidPTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MethodSetupVoidPTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\MethodSetupVoidTextTemplate.cs">
+    <Compile Update="Templates\Setup\MethodSetupVoidTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MethodSetupVoidTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\MethodSpyP1TextTemplate.cs">
+    <Compile Update="Templates\Spy\MethodSpyP1TextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MethodSpyP1TextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\MethodSpyPnTextTemplate.cs">
+    <Compile Update="Templates\Spy\MethodSpyPnTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MethodSpyPnTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\MethodSpyTextTemplate.cs">
+    <Compile Update="Templates\Spy\MethodSpyTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MethodSpyTextTemplate.tt</DependentUpon>

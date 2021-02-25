@@ -4,7 +4,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 using System;
-using MockGen.Specs.Generated.Helpers;
+using MockGen.Specs.Generated.Setup;
 using <#=Descriptor.TypeToMockOriginalNamespace#>;
 
 namespace MockGen.Specs.Generated.<#=Descriptor.GeneratedNamespace#>

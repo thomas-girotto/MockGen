@@ -1,4 +1,4 @@
-﻿using MockGen.Specs.Generated.Helpers;
+﻿using MockGen.Specs.Generated.Setup;
 using MockGen.Specs.Sut;
 
 namespace MockGen.Specs.Generated.IDependencyNs

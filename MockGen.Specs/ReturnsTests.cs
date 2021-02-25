@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using MockGen.Specs.Generated.Helpers;
+using MockGen.Specs.Generated;
 using MockGen.Specs.Generated.IDependencyNs;
 using MockGen.Specs.Sut;
 using Xunit;

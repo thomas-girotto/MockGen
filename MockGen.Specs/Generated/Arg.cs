@@ -1,16 +1,11 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ assembly name="System.Core" #>
-<#@ import namespace="System.Linq" #>
-<#@ import namespace="System.Text" #>
-<#@ import namespace="System.Collections.Generic" #>
-using System;
+﻿using System;
 
 namespace MockGen.Specs.Generated
 {
     internal class Arg<TParam>
     {
         private readonly TParam param;
-        private readonly Predicate<TParam> predicate;
+        private readonly Predicate<TParam>? predicate;
         internal static Arg<TParam> Any = new Arg<TParam>();
         internal static Arg<TParam> Null = new Arg<TParam>();
 
