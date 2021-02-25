@@ -25,6 +25,22 @@ namespace MockGen.Specs
         }
 
         [Fact]
+        public void Should_throw_a_specific_exception_instance()
+        {
+            // Given
+            var mockBuilder = Mock<IDependency>.Create();
+            var exception = new Exception();
+            mockBuilder.DoSomething().Throws(exception);
+            var mock = mockBuilder.Build();
+
+            // When
+            Action action = () => mock.DoSomething();
+
+            // Then
+            action.Should().Throw<Exception>().Which.Should().Be(exception);
+        }
+
+        [Fact]
         public void Should_only_throw_for_matching_parameter_When_configured_for_a_specific_parameter()
         {
             // Given

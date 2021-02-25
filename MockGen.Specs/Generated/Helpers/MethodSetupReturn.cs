@@ -23,6 +23,11 @@ namespace MockGen.Specs.Generated.Helpers
             setupAction = () => throw new TException();
         }
 
+        public void Throws<TException>(TException exception) where TException : Exception
+        {
+            setupAction = () => throw exception;
+        }
+
         public int Calls => spy.TotalCalls;
     }
 }

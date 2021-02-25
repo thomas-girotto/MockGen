@@ -20,5 +20,10 @@ namespace MockGen.Specs.Generated.Helpers
         {
             executeSetupAction = () => throw new TException();
         }
+
+        public void Throws<TException>(TException exception) where TException : Exception
+        {
+            executeSetupAction = () => throw exception;
+        }
     }
 }

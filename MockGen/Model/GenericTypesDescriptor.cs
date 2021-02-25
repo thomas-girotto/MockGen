@@ -47,8 +47,11 @@ namespace MockGen.Model
         public string ConcatClassByParameterType(string className) => string.Join(", ", ClassByParameterType(className));
 
         public string ConcatNewClassByParameterType(string className) => string.Join(", ", ClassByParameterType(className).Select(x => $"new {x}()"));
+        
         public string ConcatClassParameterByParameterType(string className, string instanceName) => string.Join(", ", ClassByParameterType(className).Select((x, i) => $"{x} {instanceName + (i + 1)}"));
+        
         public string ConcatMatcherCalls(string matcherName, string parameterName) => string.Join(" && ", EnumerateNumbers.Select(n => $"{matcherName + n}.Match({parameterName + n})"));
+        
         public string ConcatParameters(string paramName) => string.Join(", ", EnumerateNumbers.Select(n => $"{paramName + n}"));
     }
 }

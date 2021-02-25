@@ -48,5 +48,10 @@ namespace MockGen.Specs.Generated.Helpers
         {
             actionByMatchingCriteria.Push(new FuncSpecification<TParam1, TParam2, TReturn>(match1, match2, (_, _) => throw new TException()));
         }
+
+        public void Throws<TException>(TException exception) where TException : Exception
+        {
+            actionByMatchingCriteria.Push(new FuncSpecification<TParam1, TParam2, TReturn>(match1, match2, (_, _) => throw exception));
+        }
     }
 }

@@ -49,5 +49,10 @@ namespace MockGen.Specs.Generated.Helpers
         {
             actionByMatchingCriteria.Push(new ActionSpecification<<#=Descriptor.GenericTypes#>>(<#=Descriptor.ConcatParameters("match")#>, <#=Descriptor.DiscardParameters#> => throw new TException()));
         }
+
+        public void Throws<TException>(TException exception) where TException : Exception
+        {
+            actionByMatchingCriteria.Push(new ActionSpecification<<#=Descriptor.GenericTypes#>>(<#=Descriptor.ConcatParameters("match")#>, <#=Descriptor.DiscardParameters#> => throw exception));
+        }
     }
 }

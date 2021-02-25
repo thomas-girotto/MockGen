@@ -43,6 +43,16 @@ namespace MockGen.Tests
         }
 
         [Fact]
+        public void Should_throw_a_specific_exception_instance()
+        {
+            var sources = GetSourceFilesToCompileFromSpecs();
+
+            Action action = () => testRunner.RunTest(sources, nameof(ThrowsTests), nameof(Should_throw_a_specific_exception_instance));
+
+            action.Should().NotThrow();
+        }
+
+        [Fact]
         public void Should_only_throw_for_matching_parameter_When_configured_for_a_specific_parameter()
         {
             var sources = GetSourceFilesToCompileFromSpecs();
