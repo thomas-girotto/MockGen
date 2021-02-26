@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MockGen.Specs.Generated.Matcher
+namespace MockGen.Matcher
 {
     internal abstract class ArgMatcher<TParam>
     {

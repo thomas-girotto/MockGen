@@ -1,7 +1,7 @@
-﻿using MockGen.Specs.Generated.Spy;
+﻿using MockGen.Spy;
 using System;
 
-namespace MockGen.Specs.Generated.Setup
+namespace MockGen.Setup
 {
     internal class MethodSetupReturn<TReturn> : IMethodSetupReturn<TReturn>
     {

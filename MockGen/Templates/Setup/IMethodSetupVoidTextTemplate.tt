@@ -3,7 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-namespace MockGen.Specs.Generated.Setup
+namespace MockGen.Setup
 {
     interface IMethodSetupVoid : IMethodSetup { }
 }

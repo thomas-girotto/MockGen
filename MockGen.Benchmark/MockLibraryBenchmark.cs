@@ -1,6 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using FluentAssertions;
-using MockGen.Specs.Generated.IDependencyNs;
+using MockGen.IDependencyNs;
 using MockGen.Specs.Sut;
 using NSubstitute;
 

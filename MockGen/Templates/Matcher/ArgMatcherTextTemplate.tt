@@ -4,9 +4,9 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 using System;
-using MockGen.Specs.Generated;
+using MockGen;
 
-namespace MockGen.Specs.Generated.Matcher
+namespace MockGen.Matcher
 {
     internal abstract class ArgMatcher<TParam>
     {

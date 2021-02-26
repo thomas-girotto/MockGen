@@ -1,4 +1,4 @@
-﻿namespace MockGen.Specs.Generated.Matcher
+﻿namespace MockGen.Matcher
 {
     internal class EqualityArgMatcher<TParam> : ArgMatcher<TParam>
     {

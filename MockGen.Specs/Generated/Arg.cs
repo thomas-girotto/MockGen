@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MockGen.Specs.Generated
+namespace MockGen
 {
     internal class Arg<TParam>
     {

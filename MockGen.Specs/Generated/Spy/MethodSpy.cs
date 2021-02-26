@@ -1,4 +1,4 @@
-﻿namespace MockGen.Specs.Generated.Spy
+﻿namespace MockGen.Spy
 {
     internal class MethodSpy
     {

@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleToAttribute("MockGen.Benchmark")]
-namespace MockGen.Specs.Generated.IDependencyNs
+namespace MockGen.IDependencyNs
 {
     internal class Mock<T>
     {

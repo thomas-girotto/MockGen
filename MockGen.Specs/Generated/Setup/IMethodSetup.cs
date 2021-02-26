@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MockGen.Specs.Generated.Setup
+namespace MockGen.Setup
 {
     internal interface IMethodSetup
     {

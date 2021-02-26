@@ -1,7 +1,7 @@
 ﻿using System;
-using MockGen.Specs.Generated.Matcher;
+using MockGen.Matcher;
 
-namespace MockGen.Specs.Generated.Setup
+namespace MockGen.Setup
 {
     internal class FuncSpecification<TParam1, TParam2, TReturn>
     {

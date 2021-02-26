@@ -3,9 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-using MockGen.Specs.Generated;
-
-namespace MockGen.Specs.Generated.Matcher
+namespace MockGen.Matcher
 {
     internal class AnyArgMatcher<TParam> : ArgMatcher<TParam>
     {

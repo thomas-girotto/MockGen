@@ -1,4 +1,4 @@
-﻿namespace MockGen.Specs.Generated.Setup
+﻿namespace MockGen.Setup
 {
     interface IMethodSetupVoid : IMethodSetup { }
 }

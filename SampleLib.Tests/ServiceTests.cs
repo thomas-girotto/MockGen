@@ -1,6 +1,6 @@
 using Xunit;
-using MockGen.Specs.Generated.IExternalDependencyNs;
-using MockGen.Specs.Generated.Helpers;
+using MockGen;
+using MockGen.IExternalDependencyNs;
 using FluentAssertions;
 
 namespace SampleLib.Tests

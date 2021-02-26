@@ -1,10 +1,10 @@
-﻿using MockGen.Specs.Generated.Matcher;
-using MockGen.Specs.Generated.Spy;
+﻿using MockGen.Matcher;
+using MockGen.Spy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MockGen.Specs.Generated.Setup
+namespace MockGen.Setup
 {
     internal class MethodSetupVoid<TParam> : IMethodSetupVoid
     {

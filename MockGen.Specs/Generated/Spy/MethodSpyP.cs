@@ -1,8 +1,8 @@
-﻿using MockGen.Specs.Generated.Matcher;
+﻿using MockGen.Matcher;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MockGen.Specs.Generated.Spy
+namespace MockGen.Spy
 {
     internal class MethodSpy<TParam>
     {
