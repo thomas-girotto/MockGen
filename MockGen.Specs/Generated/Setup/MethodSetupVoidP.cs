@@ -18,7 +18,7 @@ namespace MockGen.Setup
             actionByMatchingCriteria.Push(ActionSpecification<TParam>.Default);
         }
 
-        public int Calls => spy.GetMatchingCalls(matchParameter).Count();
+        public int NumberOfCalls => spy.GetMatchingCalls(matchParameter).Count();
 
         public void ExecuteSetup(TParam param)
         {

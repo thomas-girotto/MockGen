@@ -29,6 +29,6 @@ namespace MockGen.Setup
             setupAction = () => throw exception;
         }
 
-        public int Calls => spy.TotalCalls;
+        public int NumberOfCalls => spy.NumberOfCalls;
     }
 }

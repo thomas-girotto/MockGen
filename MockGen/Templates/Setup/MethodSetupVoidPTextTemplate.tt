@@ -25,7 +25,7 @@ namespace MockGen.Setup
             actionByMatchingCriteria.Push(ActionSpecification<<#=Descriptor.GenericTypes#>>.Default);
         }
 
-        public int Calls => spy.GetMatchingCalls(<#=Descriptor.ConcatParameters("match")#>).Count();
+        public int NumberOfCalls => spy.GetMatchingCalls(<#=Descriptor.ConcatParameters("match")#>).Count();
 
         public void ExecuteSetup(<#=Descriptor.ParametersTypesWithName#>)
         {

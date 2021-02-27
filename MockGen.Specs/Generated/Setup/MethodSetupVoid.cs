@@ -9,7 +9,7 @@ namespace MockGen.Setup
 
         private MethodSpy spy = new MethodSpy();
 
-        public int Calls => spy.TotalCalls;
+        public int NumberOfCalls => spy.NumberOfCalls;
         
         public void ExecuteSetup()
         {

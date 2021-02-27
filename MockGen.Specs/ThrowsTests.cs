@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using MockGen;
 using MockGen.Specs.Sut;
 using System;
 using Xunit;

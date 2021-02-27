@@ -2,13 +2,13 @@
 {
     internal class MethodSpy
     {
-        private int totalCalls;
+        private int numberOfCalls;
 
         internal void WasCalled()
         {
-            totalCalls++;
+            numberOfCalls++;
         }
 
-        internal int TotalCalls => totalCalls;
+        internal int NumberOfCalls => numberOfCalls;
     }
 }

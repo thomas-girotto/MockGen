@@ -14,7 +14,7 @@ namespace MockGen.Benchmark
             mockGen.GetSomeNumber().Returns(2);
             var mock = mockGen.Build();
             mock.GetSomeNumber();
-            mockGen.GetSomeNumber().Calls.Should().Be(1);
+            mockGen.GetSomeNumber().NumberOfCalls.Should().Be(1);
         }
 
         [Benchmark(Description = "NSubstitute")]

@@ -19,7 +19,7 @@ namespace MockGen.Setup
             actionByMatchingCriteria.Push(FuncSpecification<TParam1, TParam2, TReturn>.Default);
         }
 
-        public int Calls => spy.GetMatchingCalls(match1, match2).Count();
+        public int NumberOfCalls => spy.GetMatchingCalls(match1, match2).Count();
 
         public TReturn ExecuteSetup(TParam1 param1, TParam2 param2)
         {

@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using MockGen;
 using Xunit;
 
 namespace MockGen.Specs
@@ -17,7 +16,7 @@ namespace MockGen.Specs
             mock.DoSomething();
 
             // Then
-            mockBuilder.DoSomething().Calls.Should().Be(1);
+            mockBuilder.DoSomething().NumberOfCalls.Should().Be(1);
         }
 
         [Fact]
@@ -33,9 +32,9 @@ namespace MockGen.Specs
             mock.DoSomethingWithParameter(2);
 
             // Then
-            mockBuilder.DoSomethingWithParameter(Arg<int>.Any).Calls.Should().Be(3);
-            mockBuilder.DoSomethingWithParameter(1).Calls.Should().Be(2);
-            mockBuilder.DoSomethingWithParameter(2).Calls.Should().Be(1);
+            mockBuilder.DoSomethingWithParameter(Arg<int>.Any).NumberOfCalls.Should().Be(3);
+            mockBuilder.DoSomethingWithParameter(1).NumberOfCalls.Should().Be(2);
+            mockBuilder.DoSomethingWithParameter(2).NumberOfCalls.Should().Be(1);
         }
     }
 }

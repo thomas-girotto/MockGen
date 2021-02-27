@@ -58,6 +58,6 @@ namespace MockGen.Setup
             actionByMatchingCriteria.Push(new FuncSpecification<TParam1, TReturn>(match1, (_) => throw exception));
         }
 
-        public int Calls => spy.GetMatchingCalls(match1).Count();
+        public int NumberOfCalls => spy.GetMatchingCalls(match1).Count();
     }
 }
