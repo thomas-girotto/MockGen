@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using MockGen.Specs.Sut;
+using MockGen;
 using Xunit;
 
 namespace MockGen.Specs
@@ -10,7 +10,7 @@ namespace MockGen.Specs
         public void Should_spy_number_of_calls()
         {
             // Given
-            var mockBuilder = IDependencyNs.Mock<IDependency>.Create();
+            var mockBuilder = Mock.IDependency();
             var mock = mockBuilder.Build();
             
             // When
@@ -24,7 +24,7 @@ namespace MockGen.Specs
         public void Should_spy_number_of_calls_depending_on_parameter()
         {
             // Given
-            var mockBuilder = IDependencyNs.Mock<IDependency>.Create();
+            var mockBuilder = Mock.IDependency();
             var mock = mockBuilder.Build();
 
             // When

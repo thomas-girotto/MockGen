@@ -16,6 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Templates\MockGeneratorTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MockGeneratorTextTemplate.cs</LastGenOutput>
+    </None>
     <None Update="Templates\Setup\ActionSpecificationTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ActionSpecificationTextTemplate.cs</LastGenOutput>
@@ -104,6 +108,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Templates\MockGeneratorTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MockGeneratorTextTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Update="Templates\Setup\ActionSpecificationTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

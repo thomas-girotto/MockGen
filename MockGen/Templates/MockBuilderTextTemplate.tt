@@ -7,7 +7,7 @@ using System;
 using MockGen.Setup;
 using <#=Descriptor.TypeToMockOriginalNamespace#>;
 
-namespace MockGen.<#=Descriptor.GeneratedNamespace#>
+namespace MockGen
 {
     internal class <#=Descriptor.TypeToMock#>MockBuilder
     {

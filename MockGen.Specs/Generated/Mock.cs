@@ -1,11 +1,11 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleToAttribute("MockGen.Benchmark")]
-namespace MockGen.IDependencyNs
+[assembly: InternalsVisibleTo("MockGen.Benchmark")]
+namespace MockGen
 {
-    internal class Mock<T>
+    internal class Mock
     {
-        internal static IDependencyMockBuilder Create()
+        internal static IDependencyMockBuilder IDependency()
         {
             return new IDependencyMockBuilder();
         }

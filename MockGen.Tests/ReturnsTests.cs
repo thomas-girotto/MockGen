@@ -28,6 +28,7 @@ namespace MockGen.Tests
                 loadSourceFilesFixture.IDependencySourceFile,
                 loadSourceFilesFixture.Model1SourceFile,
                 loadSourceFilesFixture.Model2SourceFile,
+                loadSourceFilesFixture.GeneratorsSourceFile,
                 loadSourceFilesFixture.ReturnsTestFile,
             };
         }

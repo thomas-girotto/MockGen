@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using MockGen.IDependencyNs;
+using MockGen;
 using MockGen.Specs.Sut;
 using System;
 using Xunit;
@@ -12,7 +12,7 @@ namespace MockGen.Specs
         public void Should_always_throw_When_no_parameter()
         {
             // Given
-            var mockBuilder = Mock<IDependency>.Create();
+            var mockBuilder = Mock.IDependency();
             mockBuilder.DoSomething().Throws<Exception>();
             var mock = mockBuilder.Build();
 
@@ -27,7 +27,7 @@ namespace MockGen.Specs
         public void Should_throw_a_specific_exception_instance()
         {
             // Given
-            var mockBuilder = Mock<IDependency>.Create();
+            var mockBuilder = Mock.IDependency();
             var exception = new Exception();
             mockBuilder.DoSomething().Throws(exception);
             var mock = mockBuilder.Build();
@@ -43,7 +43,7 @@ namespace MockGen.Specs
         public void Should_only_throw_for_matching_parameter_When_configured_for_a_specific_parameter()
         {
             // Given
-            var mockBuilder = Mock<IDependency>.Create();
+            var mockBuilder = Mock.IDependency();
             mockBuilder.GetSomeNumberWithParameter(1).Returns(2);
             mockBuilder.GetSomeNumberWithParameter(3).Throws<Exception>();
             var mock = mockBuilder.Build();
@@ -61,7 +61,7 @@ namespace MockGen.Specs
         public void Should_only_throw_for_matching_parameter_When_configured_with_parameter_predicate()
         {
             // Given
-            var mockBuilder = Mock<IDependency>.Create();
+            var mockBuilder = Mock.IDependency();
             mockBuilder.DoSomethingWithTwoParameters(Arg<Model1>.When(m => m.Id == 1), Arg<Model2>.When(m => m.Name == "Throw")).Throws<Exception>();
             var mock = mockBuilder.Build();
 

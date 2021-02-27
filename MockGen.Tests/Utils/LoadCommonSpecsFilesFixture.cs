@@ -12,6 +12,7 @@ namespace MockGen.Tests.Utils
         public string IDependencySourceFile { get; private set; }
         public string Model1SourceFile { get; private set; }
         public string Model2SourceFile { get; private set; }
+        public string GeneratorsSourceFile { get; private set; }
         public string ReturnsTestFile { get; private set; }
         public string ThrowsTestFile { get; private set; }
         public string SpyTestFile { get; private set; }
@@ -21,6 +22,7 @@ namespace MockGen.Tests.Utils
             IDependencySourceFile = SourceFileReader.ReadFile(Path.Combine("Sut", "IDependency.cs"));
             Model1SourceFile = SourceFileReader.ReadFile(Path.Combine("Sut", "Model1.cs"));
             Model2SourceFile = SourceFileReader.ReadFile(Path.Combine("Sut", "Model2.cs"));
+            GeneratorsSourceFile = SourceFileReader.ReadFile("Generators.cs");
             ReturnsTestFile = SourceFileReader.ReadFile("ReturnsTests.cs");
             ThrowsTestFile = SourceFileReader.ReadFile("ThrowsTests.cs");
             SpyTestFile = SourceFileReader.ReadFile("SpyTests.cs");

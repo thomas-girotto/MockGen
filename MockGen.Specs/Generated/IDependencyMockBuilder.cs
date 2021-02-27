@@ -1,7 +1,7 @@
 ﻿using MockGen.Setup;
 using MockGen.Specs.Sut;
 
-namespace MockGen.IDependencyNs
+namespace MockGen
 {
     internal class IDependencyMockBuilder
     {

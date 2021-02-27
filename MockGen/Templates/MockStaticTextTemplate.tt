@@ -3,11 +3,11 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-namespace MockGen.<#=Descriptor.GeneratedNamespace#>
+namespace MockGen
 {
-    internal class Mock<T>
+    internal class Mock
     {
-        internal static <#=Descriptor.TypeToMock#>MockBuilder Create()
+        internal static <#=Descriptor.TypeToMock#>MockBuilder <#=Descriptor.TypeToMock#>()
         {
             return new <#=Descriptor.TypeToMock#>MockBuilder();
         }

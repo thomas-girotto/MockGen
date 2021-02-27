@@ -18,17 +18,19 @@ namespace MockGen
         /// </summary>
         public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
         {
-            if (syntaxNode is GenericNameSyntax genericNameSyntax && genericNameSyntax.Identifier.ValueText == "Mock")
+            if (syntaxNode is MemberAccessExpressionSyntax memberAccessSyntax
+                && memberAccessSyntax.Parent is InvocationExpressionSyntax invocationSyntax
+                && invocationSyntax.ArgumentList.Arguments.Count == 0
+                && memberAccessSyntax.Expression is IdentifierNameSyntax maybeMockGenerator
+                && maybeMockGenerator.Identifier.ValueText == "MockGenerator"
+                && memberAccessSyntax.Name is GenericNameSyntax genericNameSyntax
+                && memberAccessSyntax.Name.Identifier.ValueText == "Generate"
+                && genericNameSyntax.TypeArgumentList.Arguments.Count == 1
+                && genericNameSyntax.TypeArgumentList.Arguments[0] is IdentifierNameSyntax typeToMockInGeneric)
             {
-                if (genericNameSyntax.TypeArgumentList.Arguments.Count == 1)
+                if (!typesToMock.ContainsKey(typeToMockInGeneric.Identifier.ValueText))
                 {
-                    if (genericNameSyntax.TypeArgumentList.Arguments[0] is IdentifierNameSyntax typeToMockInGeneric)
-                    {
-                        if (!typesToMock.ContainsKey(typeToMockInGeneric.Identifier.ValueText))
-                        {
-                            typesToMock.Add(typeToMockInGeneric.Identifier.ValueText, typeToMockInGeneric);
-                        }
-                    }
+                    typesToMock.Add(typeToMockInGeneric.Identifier.ValueText, typeToMockInGeneric);
                 }
             }
         }
