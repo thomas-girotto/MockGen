@@ -35,7 +35,7 @@ namespace MockGen.Setup
             calls.Add(param);
             foreach (var setupAction in actionByMatchingCriteria)
             {
-                if (setupAction.Matcher.Match(param))
+                if (setupAction.Match(param))
                 {
                     return setupAction.Action(param);
                 }
