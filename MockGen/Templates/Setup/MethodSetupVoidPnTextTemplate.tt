@@ -1,0 +1,55 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using MockGen.Matcher;
+
+namespace MockGen.Setup
+{
+    internal class MethodSetupVoid<<#=Descriptor.GenericTypes#>> : MethodSetup<<#=Descriptor.GenericTypes#>>
+    {
+        private Stack<ActionSpecification<<#=Descriptor.GenericTypes#>>> actionByMatchingCriteria = new Stack<ActionSpecification<<#=Descriptor.GenericTypes#>>>();
+
+        internal MethodSetupVoid()
+        {
+            actionByMatchingCriteria.Push(ActionSpecification<<#=Descriptor.GenericTypes#>>.Default);
+        }
+
+        public void ExecuteSetup(<#=Descriptor.ParametersTypesWithName#>)
+        {
+            // Register call with given parameter for future assertions on calls
+            calls.Add(<# if (Descriptor.NumberOfTypes > 1) {#>(<#}#><#=Descriptor.ConcatParameters("param")#><# if (Descriptor.NumberOfTypes > 1) {#>)<#}#>);
+            // Execute the configured action according to given parameters
+            foreach (var setupAction in actionByMatchingCriteria)
+            {
+                if (setupAction.Match(<#=Descriptor.ConcatParameters("param")#>))
+                {
+                    setupAction.Action(<#=Descriptor.ConcatParameters("param")#>);
+                    return;
+                }
+            }
+        }
+
+        public IMethodSetup<<#=Descriptor.GenericTypes#>> ForParameter(<#=Descriptor.ConcatClassParameterByParameterType("Arg", "param")#>)
+        {
+<# foreach (var n in Descriptor.EnumerateNumbers) { #>
+            matcher<#=n#> = ArgMatcher<TParam<#=n#>>.Create(param<#=n#>);
+<# } #>
+            return this;
+        }
+
+        public override void Throws<TException>()
+        {
+            actionByMatchingCriteria.Push(new ActionSpecification<<#=Descriptor.GenericTypes#>>(<#=Descriptor.ConcatParameters("matcher")#>, <#=Descriptor.DiscardParameters#> => throw new TException()));
+        }
+
+        public override void Throws<TException>(TException exception)
+        {
+            actionByMatchingCriteria.Push(new ActionSpecification<<#=Descriptor.GenericTypes#>>(<#=Descriptor.ConcatParameters("matcher")#>, <#=Descriptor.DiscardParameters#> => throw exception));
+        }
+    }
+}

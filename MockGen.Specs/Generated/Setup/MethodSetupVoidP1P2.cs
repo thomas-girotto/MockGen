@@ -1,53 +1,47 @@
 ﻿using MockGen.Matcher;
-using MockGen.Spy;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MockGen.Setup
 {
-    internal class MethodSetupVoid<TParam1, TParam2> : IMethodSetupVoid
+    internal class MethodSetupVoid<TParam1, TParam2> : MethodSetup<TParam1, TParam2>
     {
         private Stack<ActionSpecification<TParam1, TParam2>> actionByMatchingCriteria = new Stack<ActionSpecification<TParam1, TParam2>>();
-        private ArgMatcher<TParam1> matchParameter1;
-        private ArgMatcher<TParam2> matchParameter2;
-
-        private MethodSpy<TParam1, TParam2> spy = new MethodSpy<TParam1, TParam2>();
 
         internal MethodSetupVoid()
         {
             actionByMatchingCriteria.Push(ActionSpecification<TParam1, TParam2>.Default);
         }
 
-        public int NumberOfCalls => spy.GetMatchingCalls(matchParameter1, matchParameter2).Count();
-
         public void ExecuteSetup(TParam1 param1, TParam2 param2)
         {
-            spy.RegisterCallParameters(param1, param2);
+            // Register call with given parameter for future assertions on calls
+            calls.Add((param1, param2));
+            // Execute the configured action according to given parameters
             foreach (var setupAction in actionByMatchingCriteria)
             {
                 if (setupAction.Match(param1, param2))
                 {
                     setupAction.Action(param1, param2);
+                    return;
                 }
             }
         }
 
-        public IMethodSetupVoid ForParameter(Arg<TParam1> param1, Arg<TParam2> param2)
+        public IMethodSetup<TParam1, TParam2> ForParameter(Arg<TParam1> param1, Arg<TParam2> param2)
         {
-            matchParameter1 = ArgMatcher<TParam1>.Create(param1);
-            matchParameter2 = ArgMatcher<TParam2>.Create(param2);
+            matcher1 = ArgMatcher<TParam1>.Create(param1);
+            matcher2 = ArgMatcher<TParam2>.Create(param2);
             return this;
         }
 
-        public void Throws<TException>() where TException : Exception, new()
+        public override void Throws<TException>()
         {
-            actionByMatchingCriteria.Push(new ActionSpecification<TParam1, TParam2>(matchParameter1, matchParameter2, (_, _) => throw new TException()));
+            actionByMatchingCriteria.Push(new ActionSpecification<TParam1, TParam2>(matcher1, matcher2, (_, _) => throw new TException()));
         }
 
-        public void Throws<TException>(TException exception) where TException : Exception
+        public override void Throws<TException>(TException exception)
         {
-            actionByMatchingCriteria.Push(new ActionSpecification<TParam1, TParam2>(matchParameter1, matchParameter2, (_, _) => throw exception));
+            actionByMatchingCriteria.Push(new ActionSpecification<TParam1, TParam2>(matcher1, matcher2, (_, _) => throw exception));
         }
     }
 }

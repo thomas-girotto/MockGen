@@ -4,21 +4,19 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 using System;
-using MockGen.Spy;
 
 namespace MockGen.Setup
 {
     internal class MethodSetupVoid : IMethodSetupVoid
     {
+        private int numberOfCalls;
         private Action executeSetupAction = () => { };
 
-        private MethodSpy spy = new MethodSpy();
-
-        public int NumberOfCalls => spy.NumberOfCalls;
+        public int NumberOfCalls => numberOfCalls;
         
         public void ExecuteSetup()
         {
-            spy.WasCalled();
+            numberOfCalls++;
             executeSetupAction();
         }
 

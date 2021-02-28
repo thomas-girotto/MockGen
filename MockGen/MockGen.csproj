@@ -33,6 +33,14 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>FuncSpecificationTextTemplate.cs</LastGenOutput>
     </None>
+    <None Update="Templates\Setup\IMethodSetupPnTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>IMethodSetupPnTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\Setup\IMethodSetupReturnPnTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>IMethodSetupReturnPnTextTemplate.cs</LastGenOutput>
+    </None>
     <None Update="Templates\Setup\IMethodSetupReturnTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>IMethodSetupReturnTextTemplate.cs</LastGenOutput>
@@ -61,33 +69,25 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>PredicateArgMatcherTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\Setup\MethodSetupReturnPTextTemplate.tt">
+    <None Update="Templates\Setup\MethodSetupPnTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>MethodSetupReturnPTextTemplate.cs</LastGenOutput>
+      <LastGenOutput>MethodSetupPnTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\Setup\MethodSetupReturnPnTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MethodSetupReturnPnTextTemplate.cs</LastGenOutput>
     </None>
     <None Update="Templates\Setup\MethodSetupReturnTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSetupReturnTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\Setup\MethodSetupVoidPTextTemplate.tt">
+    <None Update="Templates\Setup\MethodSetupVoidPnTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>MethodSetupVoidPTextTemplate.cs</LastGenOutput>
+      <LastGenOutput>MethodSetupVoidPnTextTemplate.cs</LastGenOutput>
     </None>
     <None Update="Templates\Setup\MethodSetupVoidTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSetupVoidTextTemplate.cs</LastGenOutput>
-    </None>
-    <None Update="Templates\Spy\MethodSpyP1TextTemplate.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>MethodSpyP1TextTemplate.cs</LastGenOutput>
-    </None>
-    <None Update="Templates\Spy\MethodSpyPnTextTemplate.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>MethodSpyPnTextTemplate.cs</LastGenOutput>
-    </None>
-    <None Update="Templates\Spy\MethodSpyTextTemplate.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>MethodSpyTextTemplate.cs</LastGenOutput>
     </None>
     <None Update="Templates\MockBuilderTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
@@ -128,6 +128,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>FuncSpecificationTextTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Update="Templates\Setup\IMethodSetupPnTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IMethodSetupPnTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\Setup\IMethodSetupReturnPnTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IMethodSetupReturnPnTextTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Update="Templates\Setup\IMethodSetupReturnTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -163,40 +173,30 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PredicateArgMatcherTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\Setup\MethodSetupReturnPTextTemplate.cs">
+    <Compile Update="Templates\Setup\MethodSetupPnTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>MethodSetupReturnPTextTemplate.tt</DependentUpon>
+      <DependentUpon>MethodSetupPnTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\Setup\MethodSetupReturnPnTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MethodSetupReturnPnTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Update="Templates\Setup\MethodSetupReturnTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MethodSetupReturnTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\Setup\MethodSetupVoidPTextTemplate.cs">
+    <Compile Update="Templates\Setup\MethodSetupVoidPnTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>MethodSetupVoidPTextTemplate.tt</DependentUpon>
+      <DependentUpon>MethodSetupVoidPnTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Update="Templates\Setup\MethodSetupVoidTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MethodSetupVoidTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\Spy\MethodSpyP1TextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MethodSpyP1TextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\Spy\MethodSpyPnTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MethodSpyPnTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\Spy\MethodSpyTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MethodSpyTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Update="Templates\MockBuilderTextTemplate.cs">
       <DesignTime>True</DesignTime>

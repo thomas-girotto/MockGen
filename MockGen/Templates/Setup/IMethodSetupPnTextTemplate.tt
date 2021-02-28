@@ -1,0 +1,18 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System.Collections.Generic;
+
+namespace MockGen.Setup
+{
+    internal interface IMethodSetup<<#=Descriptor.GenericTypes#>> : IMethodSetup
+    {
+<# if (Descriptor.NumberOfTypes == 1) {#>
+        IEnumerable<TParam1> MatchingCalls { get; }
+<# } else { #>
+        IEnumerable<(<#=Descriptor.ParametersTypesWithName#>)> MatchingCalls { get; }
+<# } #>
+    }
+}

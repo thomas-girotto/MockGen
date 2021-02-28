@@ -47,6 +47,15 @@ namespace MockGen.Model
                 (_, _) => throw new NotImplementedException($"Case not implemented for values: {nameof(ReturnsVoid)}: {ReturnsVoid} and {nameof(Parameters.Count)}: {Parameters.Count}"),
             };
 
+        public string IMethodSetupWithTypedParameters =>
+            (ReturnsVoid, Parameters.Count) switch
+            {
+                (true, 0) => "IMethodSetup",
+                (true, > 0) => $"IMethodSetup<{ParameterTypes}>",
+                (false, _) => $"IMethodSetupReturn<{ReturnType}>",
+                (_, _) => throw new NotImplementedException($"Case not implemented for values: {nameof(ReturnsVoid)}: {ReturnsVoid} and {nameof(Parameters.Count)}: {Parameters.Count}"),
+            };
+
         public string CallForParameterMethod => string.Join(", ", Parameters.Select(p => $"{p.Name} ?? Arg<{p.Type}>.Null"));
     }
 }

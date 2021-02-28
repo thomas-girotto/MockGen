@@ -1,6 +1,6 @@
 ﻿namespace MockGen.Setup
 {
-    interface IMethodSetupReturn<TReturn> : IMethodSetup
+    internal interface IMethodSetupReturn<TReturn> : IMethodSetup
     {
         void Returns(TReturn value);
     }

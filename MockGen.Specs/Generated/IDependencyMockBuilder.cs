@@ -14,22 +14,22 @@ namespace MockGen
         private readonly MethodSetupReturn<Model1, int> getSomeNumberWithReferenceTypeParameterSetup = new MethodSetupReturn<Model1, int>();
         private readonly MethodSetupReturn<Model1, Model2, int> getSomeNumberWithTwoParametersSetup = new MethodSetupReturn<Model1, Model2, int>();
 
-        public IMethodSetupVoid DoSomething()
+        public IMethodSetup DoSomething()
         {
             return doSomethingSetup;
         }
 
-        public IMethodSetupVoid DoSomethingWithParameter(Arg<int> input)
+        public IMethodSetup<int> DoSomethingWithParameter(Arg<int> input)
         {
             return doSomethingWithParameterSetup.ForParameter(input);
         }
 
-        public IMethodSetupVoid DoSomethingWithReferenceTypeParameter(Arg<Model1>? model)
+        public IMethodSetup<Model1> DoSomethingWithReferenceTypeParameter(Arg<Model1>? model)
         {
             return doSomethingWithReferenceTypeParameterSetup.ForParameter(model ?? Arg<Model1>.Null);
         }
 
-        public IMethodSetupVoid DoSomethingWithTwoParameters(Arg<Model1>? model1, Arg<Model2>? model2)
+        public IMethodSetup<Model1, Model2> DoSomethingWithTwoParameters(Arg<Model1>? model1, Arg<Model2>? model2)
         {
             return doSomethingWithTwoParametersSetup.ForParameter(model1 ?? Arg<Model1>.Null, model2 ?? Arg<Model2>.Null);
         }

@@ -1,19 +1,18 @@
-﻿using MockGen.Spy;
-using System;
+﻿using System;
 
 namespace MockGen.Setup
 {
-    internal class MethodSetupVoid : IMethodSetupVoid
+    internal class MethodSetupVoid : IMethodSetup
     {
+        private int numberOfCalls;
         private Action executeSetupAction = () => { };
 
-        private MethodSpy spy = new MethodSpy();
 
-        public int NumberOfCalls => spy.NumberOfCalls;
+        public int NumberOfCalls => numberOfCalls;
         
         public void ExecuteSetup()
         {
-            spy.WasCalled();
+            numberOfCalls++;
             executeSetupAction();
         }
 

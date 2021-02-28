@@ -1,16 +1,12 @@
 ﻿using MockGen.Matcher;
-using MockGen.Spy;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MockGen.Setup
 {
-    internal class MethodSetupReturn<TParam1, TReturn> : IMethodSetupReturn<TReturn>
+    internal class MethodSetupReturn<TParam1, TReturn> : MethodSetup<TParam1>, IMethodSetupReturn<TReturn>
     {
         private Stack<FuncSpecification<TParam1, TReturn>> actionByMatchingCriteria = new Stack<FuncSpecification<TParam1, TReturn>>();
-        private ArgMatcher<TParam1> match1;
-        private MethodSpy<TParam1> spy = new MethodSpy<TParam1>();
 
         public MethodSetupReturn()
         {
@@ -19,24 +15,24 @@ namespace MockGen.Setup
 
         public IMethodSetupReturn<TReturn> ForParameter(Arg<TParam1> paramValue)
         {
-            match1 = ArgMatcher<TParam1>.Create(paramValue);
+            matcher = ArgMatcher<TParam1>.Create(paramValue);
             return this;
         }
 
         public IMethodSetupReturn<TReturn> ForParameter(Predicate<TParam1> matchingPredicate)
         {
-            match1 = ArgMatcher<TParam1>.Create(matchingPredicate);
+            matcher = ArgMatcher<TParam1>.Create(matchingPredicate);
             return this;
         }
 
         public void Returns(TReturn value)
         {
-            actionByMatchingCriteria.Push(new FuncSpecification<TParam1, TReturn>(match1, (_) => value));
+            actionByMatchingCriteria.Push(new FuncSpecification<TParam1, TReturn>(matcher, (_) => value));
         }
 
         public TReturn ExecuteSetup(TParam1 param)
         {
-            spy.RegisterCallParameters(param);
+            calls.Add(param);
             foreach (var setupAction in actionByMatchingCriteria)
             {
                 if (setupAction.Matcher.Match(param))
@@ -48,16 +44,14 @@ namespace MockGen.Setup
             return FuncSpecification<TParam1, TReturn>.Default.Action(param);
         }
 
-        public void Throws<TException>() where TException : Exception, new()
+        public override void Throws<TException>()
         {
-            actionByMatchingCriteria.Push(new FuncSpecification<TParam1, TReturn>(match1, (_) => throw new TException()));
+            actionByMatchingCriteria.Push(new FuncSpecification<TParam1, TReturn>(matcher, (_) => throw new TException()));
         }
 
-        public void Throws<TException>(TException exception) where TException : Exception
+        public override void Throws<TException>(TException exception)
         {
-            actionByMatchingCriteria.Push(new FuncSpecification<TParam1, TReturn>(match1, (_) => throw exception));
+            actionByMatchingCriteria.Push(new FuncSpecification<TParam1, TReturn>(matcher, (_) => throw exception));
         }
-
-        public int NumberOfCalls => spy.GetMatchingCalls(match1).Count();
     }
 }

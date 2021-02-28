@@ -2,7 +2,7 @@
 
 namespace MockGen.Templates.Setup
 {
-    public partial class MethodSetupReturnPTextTemplate
+    public partial class MethodSetupVoidPnTextTemplate
     {
         public GenericTypesDescriptor Descriptor { get; set; }
     }

@@ -16,11 +16,7 @@ namespace MockGen
 <#}#>
 
 <# foreach (var method in Descriptor.Methods) {#>
-<# if (method.ReturnsVoid) {#>
-        public IMethodSetupVoid <#=method.Name#>(<#=method.ParametersDeclarationWithArg#>)
-<#} else {#>
-        public IMethodSetupReturn<<#=method.ReturnType#>> <#=method.Name#>(<#=method.ParametersDeclarationWithArg#>)
-<#} #>
+        public <#=method.IMethodSetupWithTypedParameters#> <#=method.Name#>(<#=method.ParametersDeclarationWithArg#>)
         {
 <# if (method.Parameters.Count > 0) {#>
             return <#=method.NameCamelCase#>Setup.ForParameter(<#=method.CallForParameterMethod#>);

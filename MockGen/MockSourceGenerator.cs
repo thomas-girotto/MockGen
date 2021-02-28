@@ -5,7 +5,6 @@ using MockGen.Model;
 using MockGen.Templates;
 using MockGen.Templates.Matcher;
 using MockGen.Templates.Setup;
-using MockGen.Templates.Spy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +13,7 @@ using System.Text;
 namespace MockGen
 {
     [Generator]
-    public class MockGenerator : ISourceGenerator
+    public class MockSourceGenerator : ISourceGenerator
     {
         public void Execute(GeneratorExecutionContext context)
         {
@@ -59,14 +58,6 @@ namespace MockGen
                 var methodSetupVoidTemplate = new MethodSetupVoidTextTemplate();
                 context.AddSource("MethodSetupVoid.cs", SourceText.From(methodSetupVoidTemplate.TransformText(), Encoding.UTF8));
 
-                var methodSpyTemplate = new MethodSpyTextTemplate();
-                context.AddSource("MethodSpy.cs", SourceText.From(methodSpyTemplate.TransformText(), Encoding.UTF8));
-
-                // This one is particular, even though we have one type parameter, it cannot be generalized
-                // because we use tuples and tuples must have at least two members
-                var methodSpyP1Template = new MethodSpyP1TextTemplate();
-                context.AddSource("MethodSpyP1.cs", SourceText.From(methodSpyP1Template.TransformText(), Encoding.UTF8));
-
                 // Then classes that depends on the types we found that we should mock
                 var allTypesDescriptor = new List<MockDescriptor>();
 
@@ -86,19 +77,29 @@ namespace MockGen
                 }
 
                 // Finally classes that only depends on the number of generic types in methods
-                foreach (var genericTypeDescriptor in allTypesDescriptor.SelectMany(mock => mock.NumberOfParametersInMethods).Distinct())
+                foreach (var genericTypeDescriptor in allTypesDescriptor
+                    .SelectMany(mock => mock.NumberOfParametersInMethods)
+                    .Distinct())
                 {
                     if (genericTypeDescriptor.NumberOfTypes > 0)
                     {
+                        var iMethodSetupPn = new IMethodSetupPnTextTemplate();
+                        iMethodSetupPn.Descriptor = genericTypeDescriptor;
+                        context.AddSource($"IMethodSetup{genericTypeDescriptor.FileSuffix}.cs", SourceText.From(iMethodSetupPn.TransformText(), Encoding.UTF8));
+
+                        var methodSetupPnTemplate = new MethodSetupPnTextTemplate();
+                        methodSetupPnTemplate.Descriptor = genericTypeDescriptor;
+                        context.AddSource($"MethodSetup{genericTypeDescriptor.FileSuffix}.cs", SourceText.From(methodSetupPnTemplate.TransformText(), Encoding.UTF8));
+
                         if (genericTypeDescriptor.HasMethodThatReturnsVoid)
                         {
                             var actionSpecificationTemplate = new ActionSpecificationTextTemplate();
                             actionSpecificationTemplate.Descriptor = genericTypeDescriptor;
                             context.AddSource($"ActionSpecification{genericTypeDescriptor.FileSuffix}.cs", SourceText.From(actionSpecificationTemplate.TransformText(), Encoding.UTF8));
 
-                            var methodSetupVoidPTemplate = new MethodSetupVoidPTextTemplate();
-                            methodSetupVoidPTemplate.Descriptor = genericTypeDescriptor;
-                            context.AddSource($"MethodSetupVoid{genericTypeDescriptor.FileSuffix}.cs", SourceText.From(methodSetupVoidPTemplate.TransformText(), Encoding.UTF8));
+                            var methodSetupVoidPnTemplate = new MethodSetupVoidPnTextTemplate();
+                            methodSetupVoidPnTemplate.Descriptor = genericTypeDescriptor;
+                            context.AddSource($"MethodSetupVoid{genericTypeDescriptor.FileSuffix}.cs", SourceText.From(methodSetupVoidPnTemplate.TransformText(), Encoding.UTF8));
                         }
                         if (genericTypeDescriptor.HasMethodThatReturns)
                         {
@@ -106,16 +107,14 @@ namespace MockGen
                             funcSpecificationTemplate.Descriptor = genericTypeDescriptor;
                             context.AddSource($"FuncSpecification{genericTypeDescriptor.FileSuffix}.cs", SourceText.From(funcSpecificationTemplate.TransformText(), Encoding.UTF8));
 
-                            var methodSetupReturnPTemplate = new MethodSetupReturnPTextTemplate();
-                            methodSetupReturnPTemplate.Descriptor = genericTypeDescriptor;
-                            context.AddSource($"MethodSetupReturn{genericTypeDescriptor.FileSuffix}.cs", SourceText.From(methodSetupReturnPTemplate.TransformText(), Encoding.UTF8));
+                            var iMethodSetupReturnPn = new IMethodSetupReturnPnTextTemplate();
+                            iMethodSetupReturnPn.Descriptor = genericTypeDescriptor;
+                            context.AddSource($"IMethodSetupReturn{genericTypeDescriptor.FileSuffix}.cs", SourceText.From(iMethodSetupReturnPn.TransformText(), Encoding.UTF8));
+                            
+                            var methodSetupReturnPnTemplate = new MethodSetupReturnPnTextTemplate();
+                            methodSetupReturnPnTemplate.Descriptor = genericTypeDescriptor;
+                            context.AddSource($"MethodSetupReturn{genericTypeDescriptor.FileSuffix}.cs", SourceText.From(methodSetupReturnPnTemplate.TransformText(), Encoding.UTF8));
                         }
-                    }
-                    if (genericTypeDescriptor.NumberOfTypes > 1)
-                    {
-                        var methodSpyPnTemplate = new MethodSpyPnTextTemplate();
-                        methodSpyPnTemplate.Descriptor = genericTypeDescriptor;
-                        context.AddSource($"MethodSpy{genericTypeDescriptor.FileSuffix}.cs", SourceText.From(methodSpyPnTemplate.TransformText(), Encoding.UTF8));
                     }
                 }
             }

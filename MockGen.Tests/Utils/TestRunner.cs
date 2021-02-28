@@ -46,7 +46,7 @@ namespace MockGen.Tests
 
         private Compilation AddGeneratedSourcesToCompilation(Compilation sourceCompilation)
         {
-            ISourceGenerator generator = new MockGenerator();
+            ISourceGenerator generator = new MockSourceGenerator();
 
             var driver = CSharpGeneratorDriver.Create(generator);
             driver.RunGeneratorsAndUpdateCompilation(sourceCompilation, out var sourceAndGeneratedCodeCompilation, out var generatedDiagnostics);

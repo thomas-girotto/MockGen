@@ -1,16 +1,15 @@
-﻿using MockGen.Spy;
-using System;
+﻿using System;
 
 namespace MockGen.Setup
 {
     internal class MethodSetupReturn<TReturn> : IMethodSetupReturn<TReturn>
     {
         private Func<TReturn> setupAction = () => default(TReturn);
-        private MethodSpy spy = new MethodSpy();
+        private int numberOfCalls;
 
         public TReturn ExecuteSetup()
         {
-            spy.WasCalled();
+            numberOfCalls++;
             return setupAction();
         }
 
@@ -29,6 +28,6 @@ namespace MockGen.Setup
             setupAction = () => throw exception;
         }
 
-        public int NumberOfCalls => spy.NumberOfCalls;
+        public int NumberOfCalls => numberOfCalls;
     }
 }
