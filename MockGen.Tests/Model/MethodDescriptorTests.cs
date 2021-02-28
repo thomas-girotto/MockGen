@@ -78,6 +78,23 @@ namespace MockGen.Tests.Model
         }
 
         [Fact]
+        public void Should_build_IMethodSetup_with_generic_typed_parameters()
+        {
+            string methodSetupVoid = GetMethodVoid().IMethodSetupWithTypedParameters;
+            string methodSetupVoidWithParam = GetMethodVoidWithParam().IMethodSetupWithTypedParameters;
+            string methodSetupTReturn = GetMethodWithoutParameter().IMethodSetupWithTypedParameters;
+            string methodSetupTReturnTParam = GetMethodWithOneParameter().IMethodSetupWithTypedParameters;
+            string methodSetupTReturnTParam1TParam2 = GetMethodWithTwoParameters().IMethodSetupWithTypedParameters;
+
+            // Assert
+            methodSetupVoid.Should().Be("IMethodSetup");
+            methodSetupVoidWithParam.Should().Be("IMethodSetup<Type1>");
+            methodSetupTReturn.Should().Be("IMethodSetupReturn<int>");
+            methodSetupTReturnTParam.Should().Be("IMethodSetupReturn<int>");
+            methodSetupTReturnTParam1TParam2.Should().Be("IMethodSetupReturn<int>");
+        }
+
+        [Fact]
         public void Should_build_method_parameter_declaration()
         {
             string parametersDefinition1 = GetMethodWithoutParameter().ParametersDeclaration;
