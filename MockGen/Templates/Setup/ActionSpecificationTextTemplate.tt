@@ -10,24 +10,29 @@ namespace MockGen.Setup
 {
     internal class ActionSpecification<<#=Descriptor.GenericTypes#>>
     {
-        internal static ActionSpecification<<#=Descriptor.GenericTypes#>> Default = new ActionSpecification<<#=Descriptor.GenericTypes#>>(<#=Descriptor.ConcatNewClassByParameterType("AnyArgMatcher")#>, <#=Descriptor.DiscardParameters#> => { });
-<# foreach (var n in Descriptor.EnumerateNumbers) { #>
-        private readonly ArgMatcher<TParam<#=n#>> matcher<#=n#>;
-<# } #>
-
-        internal ActionSpecification(<#=Descriptor.ConcatClassParameterByParameterType("ArgMatcher", "matcher")#>, Action<<#=Descriptor.GenericTypes#>> action)
+        internal static ActionSpecification<<#=Descriptor.GenericTypes#>> CreateNew()
         {
-<# foreach (var n in Descriptor.EnumerateNumbers) { #>
-            this.matcher<#=n#> = matcher<#=n#>;
-<# } #>
-            Action = action;
+            return new ActionSpecification<<#=Descriptor.GenericTypes#>>();
         }
+
+        private ActionSpecification() { }
+
+<# foreach (var n in Descriptor.EnumerateNumbers) { #>
+        internal ArgMatcher<TParam<#=n#>> Matcher<#=n#> { get; set; } = new AnyArgMatcher<TParam<#=n#>>();
+<# } #>
+        
+        internal Action<<#=Descriptor.GenericTypes#>> MockingAction { get; set; } = <#=Descriptor.DiscardParameters#> => { };
+        internal Action<<#=Descriptor.GenericTypes#>> AdditionalCallback { get; set; } = <#=Descriptor.DiscardParameters#> => { };
 
         internal bool Match(<#=Descriptor.ParametersTypesWithName#>)
         {
-            return <#=Descriptor.ConcatMatcherCalls("matcher", "param")#>;
+            return <#=Descriptor.ConcatMatcherCalls("Matcher", "param")#>;
         }
 
-        internal Action<<#=Descriptor.GenericTypes#>> Action { get; private set; }
+        internal void ExecuteActions(<#=Descriptor.ParametersTypesWithName#>)
+        {
+            AdditionalCallback(<#=Descriptor.ConcatParameters("param")#>);
+            MockingAction(<#=Descriptor.ConcatParameters("param")#>);
+        }
     }
 }

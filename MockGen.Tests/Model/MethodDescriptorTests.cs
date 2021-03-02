@@ -22,6 +22,18 @@ namespace MockGen.Tests.Model
             Parameters = new List<ParameterDescriptor> { new ParameterDescriptor("Type1", "param1") },
         };
 
+        private MethodDescriptor GetMethodVoidWithTwoParam() => new MethodDescriptor
+        {
+            Name = "MethodVoidWithTwoParam",
+            ReturnsVoid = true,
+            ReturnType = "Void",
+            Parameters = new List<ParameterDescriptor> 
+            { 
+                new ParameterDescriptor("Type1", "param1"),
+                new ParameterDescriptor("Type2", "param2"),
+            },
+        };
+
         private MethodDescriptor GetMethodWithoutParameter() => new MethodDescriptor
         {
             Name = "Method1",
@@ -82,6 +94,7 @@ namespace MockGen.Tests.Model
         {
             string methodSetupVoid = GetMethodVoid().IMethodSetupWithTypedParameters;
             string methodSetupVoidWithParam = GetMethodVoidWithParam().IMethodSetupWithTypedParameters;
+            string methodSetupVoidWithTwoParam = GetMethodVoidWithTwoParam().IMethodSetupWithTypedParameters;
             string methodSetupTReturn = GetMethodWithoutParameter().IMethodSetupWithTypedParameters;
             string methodSetupTReturnTParam = GetMethodWithOneParameter().IMethodSetupWithTypedParameters;
             string methodSetupTReturnTParam1TParam2 = GetMethodWithTwoParameters().IMethodSetupWithTypedParameters;
@@ -89,9 +102,10 @@ namespace MockGen.Tests.Model
             // Assert
             methodSetupVoid.Should().Be("IMethodSetup");
             methodSetupVoidWithParam.Should().Be("IMethodSetup<Type1>");
+            methodSetupVoidWithTwoParam.Should().Be("IMethodSetup<Type1, Type2>");
             methodSetupTReturn.Should().Be("IMethodSetupReturn<int>");
-            methodSetupTReturnTParam.Should().Be("IMethodSetupReturn<int>");
-            methodSetupTReturnTParam1TParam2.Should().Be("IMethodSetupReturn<int>");
+            methodSetupTReturnTParam.Should().Be("IMethodSetupReturn<Type1, int>");
+            methodSetupTReturnTParam1TParam2.Should().Be("IMethodSetupReturn<Type1, Type2, int>");
         }
 
         [Fact]

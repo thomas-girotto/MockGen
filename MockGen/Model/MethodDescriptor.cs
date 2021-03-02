@@ -52,7 +52,8 @@ namespace MockGen.Model
             {
                 (true, 0) => "IMethodSetup",
                 (true, > 0) => $"IMethodSetup<{ParameterTypes}>",
-                (false, _) => $"IMethodSetupReturn<{ReturnType}>",
+                (false, 0) => $"IMethodSetupReturn<{ReturnType}>",
+                (false, > 0) => $"IMethodSetupReturn<{ParameterTypes}, {ReturnType}>",
                 (_, _) => throw new NotImplementedException($"Case not implemented for values: {nameof(ReturnsVoid)}: {ReturnsVoid} and {nameof(Parameters.Count)}: {Parameters.Count}"),
             };
 

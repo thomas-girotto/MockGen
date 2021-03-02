@@ -28,6 +28,10 @@ namespace MockGen
 <#}#>
         public <#=Descriptor.TypeToMock#> Build()
         {
+<# foreach (var method in Descriptor.Methods) {#>
+            <#=method.NameCamelCase#>Setup.SetupDone();
+<# } #>
+
             return new <#=Descriptor.TypeToMock#>Mock(<#=Descriptor.MockCtorParameters#>);
         }
     }

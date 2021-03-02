@@ -41,6 +41,10 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>IMethodSetupReturnPnTextTemplate.cs</LastGenOutput>
     </None>
+    <None Update="Templates\Setup\IMethodSetupBaseTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>IMethodSetupBaseTextTemplate.cs</LastGenOutput>
+    </None>
     <None Update="Templates\Setup\IMethodSetupReturnTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>IMethodSetupReturnTextTemplate.cs</LastGenOutput>
@@ -69,6 +73,10 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>PredicateArgMatcherTextTemplate.cs</LastGenOutput>
     </None>
+    <None Update="Templates\Setup\MethodSetupBaseTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MethodSetupBaseTextTemplate.cs</LastGenOutput>
+    </None>
     <None Update="Templates\Setup\MethodSetupPnTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSetupPnTextTemplate.cs</LastGenOutput>
@@ -80,6 +88,10 @@
     <None Update="Templates\Setup\MethodSetupReturnTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSetupReturnTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\Setup\MethodSetupTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MethodSetupTextTemplate.cs</LastGenOutput>
     </None>
     <None Update="Templates\Setup\MethodSetupVoidPnTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
@@ -138,6 +150,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>IMethodSetupReturnPnTextTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Update="Templates\Setup\IMethodSetupBaseTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IMethodSetupBaseTextTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Update="Templates\Setup\IMethodSetupReturnTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -173,6 +190,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PredicateArgMatcherTextTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Update="Templates\Setup\MethodSetupBaseTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MethodSetupBaseTextTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Update="Templates\Setup\MethodSetupPnTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -187,6 +209,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MethodSetupReturnTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\Setup\MethodSetupTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MethodSetupTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Update="Templates\Setup\MethodSetupVoidPnTextTemplate.cs">
       <DesignTime>True</DesignTime>

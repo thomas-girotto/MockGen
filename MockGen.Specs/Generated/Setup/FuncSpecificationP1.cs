@@ -3,23 +3,28 @@ using MockGen.Matcher;
 
 namespace MockGen.Setup
 {
-    internal class FuncSpecification<TParam, TResult>
+    internal class FuncSpecification<TParam1, TReturn>
     {
-        private readonly ArgMatcher<TParam> matcher1;
-        
-        internal static FuncSpecification<TParam, TResult> Default = new FuncSpecification<TParam, TResult>(new AnyArgMatcher<TParam>(), _ => default(TResult));
-
-        internal FuncSpecification(ArgMatcher<TParam> matcher, Func<TParam, TResult> action)
+        internal static FuncSpecification<TParam1, TReturn> CreateNew()
         {
-            matcher1 = matcher;
-            Action = action;
+            return new FuncSpecification<TParam1, TReturn>();
         }
 
-        internal bool Match(TParam param1)
+        private FuncSpecification() { }
+
+        internal ArgMatcher<TParam1> Matcher1 { get; set; } = new AnyArgMatcher<TParam1>();
+        internal Func<TParam1, TReturn> MockingAction { get; set; } = (_) => default(TReturn);
+        internal Action<TParam1> AdditionalCallback { get; set; } = (_) => { };
+
+        internal bool Match(TParam1 param1)
         {
-            return matcher1.Match(param1);
+            return Matcher1.Match(param1);
         }
 
-        internal Func<TParam, TResult> Action { get; private set; }
+        internal TReturn ExecuteActions(TParam1 param1)
+        {
+            AdditionalCallback(param1);
+            return MockingAction(param1);
+        }
     }
 }

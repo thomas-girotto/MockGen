@@ -2,10 +2,8 @@
 
 namespace MockGen.Setup
 {
-    internal interface IMethodSetup
+    internal interface IMethodSetup : IMethodSetupBase
     {
-        int NumberOfCalls { get; }
-        void Throws<TException>() where TException : Exception, new();
-        void Throws<TException>(TException exception) where TException : Exception;
+        void Execute(Action callback);
     }
 }

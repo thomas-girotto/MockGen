@@ -5,5 +5,8 @@
 <#@ import namespace="System.Collections.Generic" #>
 namespace MockGen.Setup
 {
-    internal interface IMethodSetupReturn<<#=Descriptor.GenericTypes#>, TReturn> : IMethodSetupReturn<TReturn>, IMethodSetup<<#=Descriptor.GenericTypes#>> { }
+    internal interface IMethodSetupReturn<<#=Descriptor.GenericTypes#>, TReturn> : IMethodSetup<<#=Descriptor.GenericTypes#>> 
+    {
+        IMethodSetup<<#=Descriptor.GenericTypes#>> Returns(TReturn value);
+    }
 }

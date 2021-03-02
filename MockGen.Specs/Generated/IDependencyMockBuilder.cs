@@ -39,23 +39,32 @@ namespace MockGen
             return getSomeNumberSetup;
         }
 
-        public IMethodSetupReturn<int> GetSomeNumberWithParameter(Arg<int> input)
+        public IMethodSetupReturn<int, int> GetSomeNumberWithParameter(Arg<int> input)
         {
             return getSomeNumberWithParameterSetup.ForParameter(input);
         }
 
-        public IMethodSetupReturn<int> GetSomeNumberWithReferenceTypeParameter(Arg<Model1> model1)
+        public IMethodSetupReturn<Model1, int> GetSomeNumberWithReferenceTypeParameter(Arg<Model1> model1)
         {
             return getSomeNumberWithReferenceTypeParameterSetup.ForParameter(model1 ?? Arg<Model1>.Null);
         }
 
-        public IMethodSetupReturn<int> GetSomeNumberWithTwoParameters(Arg<Model1> model1, Arg<Model2> model2)
+        public IMethodSetupReturn<Model1, Model2, int> GetSomeNumberWithTwoParameters(Arg<Model1> model1, Arg<Model2> model2)
         {
             return getSomeNumberWithTwoParametersSetup.ForParameter(model1 ?? Arg<Model1>.Null, model2 ?? Arg<Model2>.Null);
         }
 
         public IDependency Build()
         {
+            doSomethingSetup.SetupDone();
+            doSomethingWithParameterSetup.SetupDone();
+            doSomethingWithReferenceTypeParameterSetup.SetupDone();
+            doSomethingWithTwoParametersSetup.SetupDone();
+            getSomeNumberSetup.SetupDone();
+            getSomeNumberWithParameterSetup.SetupDone();
+            getSomeNumberWithReferenceTypeParameterSetup.SetupDone();
+            getSomeNumberWithTwoParametersSetup.SetupDone();
+
             return new IDependencyMock(doSomethingSetup, 
                 doSomethingWithParameterSetup, 
                 doSomethingWithReferenceTypeParameterSetup,

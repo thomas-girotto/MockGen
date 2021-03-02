@@ -8,13 +8,13 @@ using Xunit.Abstractions;
 namespace MockGen.Tests
 {
     [Collection("Load both metadata and sources")]
-    public class SpyTests
+    public class ExecuteTests
     {
         private readonly LoadMetadataReferenceFixture loadDependenciesfixture;
         private readonly LoadCommonSpecsFilesFixture loadSourceFilesFixture;
         private readonly TestRunner testRunner;
 
-        public SpyTests(ITestOutputHelper output, LoadMetadataReferenceFixture loadDependenciesfixture, LoadCommonSpecsFilesFixture loadSourceFilesFixture)
+        public ExecuteTests(ITestOutputHelper output, LoadMetadataReferenceFixture loadDependenciesfixture, LoadCommonSpecsFilesFixture loadSourceFilesFixture)
         {
             this.loadDependenciesfixture = loadDependenciesfixture;
             this.loadSourceFilesFixture = loadSourceFilesFixture;
@@ -29,36 +29,26 @@ namespace MockGen.Tests
                 loadSourceFilesFixture.Model1SourceFile,
                 loadSourceFilesFixture.Model2SourceFile,
                 loadSourceFilesFixture.GeneratorsSourceFile,
-                loadSourceFilesFixture.SpyTestFile,
+                loadSourceFilesFixture.ExecuteTestFile,
             };
         }
 
         [Fact]
-        public void Should_spy_number_of_calls()
+        public void Should_execute_callback()
         {
             var sources = GetSourceFilesToCompileFromSpecs();
 
-            Action action = () => testRunner.RunTest(sources, nameof(SpyTests), nameof(Should_spy_number_of_calls));
+            Action action = () => testRunner.RunTest(sources, nameof(ExecuteTests), nameof(Should_execute_callback));
 
             action.Should().NotThrow();
         }
 
         [Fact]
-        public void Should_spy_number_of_calls_depending_on_parameter()
+        public void Should_throw_When_called_after_mock_has_been_built()
         {
             var sources = GetSourceFilesToCompileFromSpecs();
 
-            Action action = () => testRunner.RunTest(sources, nameof(SpyTests), nameof(Should_spy_number_of_calls_depending_on_parameter));
-
-            action.Should().NotThrow();
-        }
-
-        [Fact]
-        public void Should_throw_When_mock_has_not_been_built()
-        {
-            var sources = GetSourceFilesToCompileFromSpecs();
-
-            Action action = () => testRunner.RunTest(sources, nameof(SpyTests), nameof(Should_throw_When_mock_has_not_been_built));
+            Action action = () => testRunner.RunTest(sources, nameof(ExecuteTests), nameof(Should_throw_When_called_after_mock_has_been_built));
 
             action.Should().NotThrow();
         }

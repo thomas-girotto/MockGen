@@ -4,30 +4,57 @@ using System.Collections.Generic;
 
 namespace MockGen.Setup
 {
-    internal class MethodSetupReturn<TParam1, TReturn> : MethodSetup<TParam1>, IMethodSetupReturn<TReturn>
+    internal class MethodSetupReturn<TParam1, TReturn> : MethodSetup<TParam1>, IMethodSetupReturn<TParam1, TReturn>
     {
         private Stack<FuncSpecification<TParam1, TReturn>> actionByMatchingCriteria = new Stack<FuncSpecification<TParam1, TReturn>>();
+        private FuncSpecification<TParam1, TReturn> currentlyConfiguredAction = FuncSpecification<TParam1, TReturn>.CreateNew();
 
-        public MethodSetupReturn()
+        public IMethodSetupReturn<TParam1, TReturn> ForParameter(Arg<TParam1> paramValue)
         {
-            actionByMatchingCriteria.Push(FuncSpecification<TParam1, TReturn>.Default);
-        }
+            if (!setupDone)
+            {
+                actionByMatchingCriteria.Push(currentlyConfiguredAction);
+                currentlyConfiguredAction = FuncSpecification<TParam1, TReturn>.CreateNew();
+                currentlyConfiguredAction.Matcher1 = ArgMatcher<TParam1>.Create(paramValue);
+            }
+            else
+            {
+                matcher = ArgMatcher<TParam1>.Create(paramValue);
+            }
 
-        public IMethodSetupReturn<TReturn> ForParameter(Arg<TParam1> paramValue)
-        {
-            matcher = ArgMatcher<TParam1>.Create(paramValue);
             return this;
         }
 
-        public IMethodSetupReturn<TReturn> ForParameter(Predicate<TParam1> matchingPredicate)
+        public IMethodSetup<TParam1> Returns(TReturn value)
         {
-            matcher = ArgMatcher<TParam1>.Create(matchingPredicate);
+            EnsureConfigurationMethodsAreAllowed(nameof(Returns));
+            currentlyConfiguredAction.MockingAction = (_) => value;
             return this;
         }
 
-        public void Returns(TReturn value)
+        public override void Throws<TException>()
         {
-            actionByMatchingCriteria.Push(new FuncSpecification<TParam1, TReturn>(matcher, (_) => value));
+            EnsureConfigurationMethodsAreAllowed(nameof(Throws));
+            currentlyConfiguredAction.MockingAction = (_) => throw new TException();
+        }
+
+        public override void Throws<TException>(TException exception)
+        {
+            EnsureConfigurationMethodsAreAllowed(nameof(Throws));
+            currentlyConfiguredAction.MockingAction = (_) => throw exception;
+        }
+
+        public override void Execute(Action<TParam1> callback)
+        {
+            EnsureConfigurationMethodsAreAllowed(nameof(Execute));
+            currentlyConfiguredAction.AdditionalCallback = callback;
+        }
+
+        internal override void SetupDone()
+        {
+            base.SetupDone();
+            actionByMatchingCriteria.Push(currentlyConfiguredAction);
+            currentlyConfiguredAction = FuncSpecification<TParam1, TReturn>.CreateNew();
         }
 
         public TReturn ExecuteSetup(TParam1 param)
@@ -37,21 +64,11 @@ namespace MockGen.Setup
             {
                 if (setupAction.Match(param))
                 {
-                    return setupAction.Action(param);
+                    return setupAction.ExecuteActions(param);
                 }
             }
 
-            return FuncSpecification<TParam1, TReturn>.Default.Action(param);
-        }
-
-        public override void Throws<TException>()
-        {
-            actionByMatchingCriteria.Push(new FuncSpecification<TParam1, TReturn>(matcher, (_) => throw new TException()));
-        }
-
-        public override void Throws<TException>(TException exception)
-        {
-            actionByMatchingCriteria.Push(new FuncSpecification<TParam1, TReturn>(matcher, (_) => throw exception));
+            return default(TReturn);
         }
     }
 }

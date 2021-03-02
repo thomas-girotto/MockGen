@@ -5,20 +5,26 @@ namespace MockGen.Setup
 {
     internal class ActionSpecification<TParam1>
     {
-        internal static ActionSpecification<TParam1> Default = new ActionSpecification<TParam1>(new AnyArgMatcher<TParam1>(), (_) => { });
-        private readonly ArgMatcher<TParam1> matcher1;
-
-        internal ActionSpecification(ArgMatcher<TParam1> matcher1, Action<TParam1> action)
+        internal static ActionSpecification<TParam1> CreateNew()
         {
-            this.matcher1 = matcher1;
-            Action = action;
+            return new ActionSpecification<TParam1>();
         }
+
+        private ActionSpecification() { }
+
+        internal ArgMatcher<TParam1> Matcher1 { get; set; } = new AnyArgMatcher<TParam1>();
+        internal Action<TParam1> MockingAction { get; set; } = (_) => { };
+        internal Action<TParam1> AdditionalCallback { get; set; } = (_) => { };
 
         internal bool Match(TParam1 param1)
         {
-            return matcher1.Match(param1);
+            return Matcher1.Match(param1);
         }
 
-        internal Action<TParam1> Action { get; private set; }
+        internal void ExecuteActions(TParam1 param1)
+        {
+            AdditionalCallback(param1);
+            MockingAction(param1);
+        }
     }
 }

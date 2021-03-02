@@ -48,12 +48,20 @@ namespace MockGen
                 var iMethodSetupBaseTemplate = new IMethodSetupBaseTextTemplate();
                 AddSourceToBuildContext(context, "IMethodSetupBase.cs", iMethodSetupBaseTemplate.TransformText());
 
+                var iMethodSetupTemplate = new IMethodSetupTextTemplate();
+                AddSourceToBuildContext(context, "IMethodSetup.cs", iMethodSetupTemplate.TransformText());
 
                 var iMethodSetupVoidTextTemplate = new IMethodSetupVoidTextTemplate();
                 AddSourceToBuildContext(context, "IMethodSetupVoid.cs", iMethodSetupVoidTextTemplate.TransformText());
 
                 var iMethodSetupReturnTextTemplate = new IMethodSetupReturnTextTemplate();
                 AddSourceToBuildContext(context, "IMethodSetupReturn.cs", iMethodSetupReturnTextTemplate.TransformText());
+
+                var methodSetupBaseTemplate = new MethodSetupBaseTextTemplate();
+                AddSourceToBuildContext(context, "MethodSetupBase.cs", methodSetupBaseTemplate.TransformText());
+
+                var methodSetupTemplate = new MethodSetupTextTemplate();
+                AddSourceToBuildContext(context, "MethodSetup.cs", methodSetupTemplate.TransformText());
 
                 var methodSetupReturnTemplate = new MethodSetupReturnTextTemplate();
                 AddSourceToBuildContext(context, "MethodSetupReturn.cs", methodSetupReturnTemplate.TransformText());

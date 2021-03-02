@@ -10,24 +10,29 @@ namespace MockGen.Setup
 {
     internal class FuncSpecification<<#=Descriptor.GenericTypes#>, TReturn>
     {
-        internal static FuncSpecification<<#=Descriptor.GenericTypes#>, TReturn> Default = new FuncSpecification<<#=Descriptor.GenericTypes#>, TReturn>(<#=Descriptor.ConcatNewClassByParameterType("AnyArgMatcher")#>, <#=Descriptor.DiscardParameters#> => default(TReturn));
-<# foreach (var n in Descriptor.EnumerateNumbers) { #>
-        private readonly ArgMatcher<TParam<#=n#>> matcher<#=n#>;
-<# } #>
-
-        internal FuncSpecification(<#=Descriptor.ConcatClassParameterByParameterType("ArgMatcher", "matcher")#>, Func<<#=Descriptor.GenericTypes#>, TReturn> action)
+        internal static FuncSpecification<<#=Descriptor.GenericTypes#>, TReturn> CreateNew()
         {
-<# foreach (var n in Descriptor.EnumerateNumbers) { #>
-            this.matcher<#=n#> = matcher<#=n#>;
-<# } #>
-            Action = action;
+            return new FuncSpecification<<#=Descriptor.GenericTypes#>, TReturn>();
         }
+
+        private FuncSpecification() { }
+
+<# foreach (var n in Descriptor.EnumerateNumbers) { #>
+        internal ArgMatcher<TParam<#=n#>> Matcher<#=n#> { get; set; } = new AnyArgMatcher<TParam<#=n#>>();
+<# } #>
+        
+        internal Func<<#=Descriptor.GenericTypes#>, TReturn> MockingAction { get; set; } = <#=Descriptor.DiscardParameters#> => default(TReturn);
+        internal Action<<#=Descriptor.GenericTypes#>> AdditionalCallback { get; set; } = <#=Descriptor.DiscardParameters#> => { };
 
         internal bool Match(<#=Descriptor.ParametersTypesWithName#>)
         {
-            return <#=Descriptor.ConcatMatcherCalls("matcher", "param")#>;
+            return <#=Descriptor.ConcatMatcherCalls("Matcher", "param")#>;
         }
 
-        internal Func<<#=Descriptor.GenericTypes#>, TReturn> Action { get; private set; }
+        internal TReturn ExecuteActions(<#=Descriptor.ParametersTypesWithName#>)
+        {
+            AdditionalCallback(<#=Descriptor.ConcatParameters("param")#>);
+            return MockingAction(<#=Descriptor.ConcatParameters("param")#>);
+        }
     }
 }

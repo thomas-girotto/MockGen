@@ -2,32 +2,33 @@
 
 namespace MockGen.Setup
 {
-    internal class MethodSetupReturn<TReturn> : IMethodSetupReturn<TReturn>
+    internal class MethodSetupReturn<TReturn> : MethodSetup, IMethodSetupReturn<TReturn>
     {
         private Func<TReturn> setupAction = () => default(TReturn);
-        private int numberOfCalls;
+
+        public void Returns(TReturn value)
+        {
+            EnsureConfigurationMethodsAreAllowed(nameof(Returns));
+            setupAction = () => value;
+        }
+
+        public override void Throws<TException>()
+        {
+            EnsureConfigurationMethodsAreAllowed(nameof(Throws));
+            setupAction = () => throw new TException();
+        }
+
+        public override void Throws<TException>(TException exception)
+        {
+            EnsureConfigurationMethodsAreAllowed(nameof(Throws));
+            setupAction = () => throw exception;
+        }
 
         public TReturn ExecuteSetup()
         {
             numberOfCalls++;
+            additionalCallback();
             return setupAction();
         }
-
-        public void Returns(TReturn value)
-        {
-            setupAction = () => value;
-        }
-
-        public void Throws<TException>() where TException : Exception, new()
-        {
-            setupAction = () => throw new TException();
-        }
-
-        public void Throws<TException>(TException exception) where TException : Exception
-        {
-            setupAction = () => throw exception;
-        }
-
-        public int NumberOfCalls => numberOfCalls;
     }
 }

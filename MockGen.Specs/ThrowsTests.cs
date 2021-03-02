@@ -74,5 +74,29 @@ namespace MockGen.Specs
             action2.Should().NotThrow();
             action3.Should().Throw<Exception>();
         }
+
+        [Fact]
+        public void Should_throw_When_called_after_mock_has_been_built()
+        {
+            // Given
+            var mockBuilder = Mock.IDependency();
+            var mock = mockBuilder.Build();
+
+            // When
+            Action action1 = () => mockBuilder.DoSomething().Throws<Exception>();
+            Action action2 = () => mockBuilder.DoSomethingWithParameter(1).Throws<Exception>();
+            Action action3 = () => mockBuilder.DoSomethingWithTwoParameters(null, null).Throws<Exception>();
+            Action action4 = () => mockBuilder.GetSomeNumber().Throws<Exception>();
+            Action action5 = () => mockBuilder.GetSomeNumberWithParameter(1).Throws<Exception>();
+            Action action6 = () => mockBuilder.GetSomeNumberWithTwoParameters(null, null).Throws<Exception>();
+
+            // Then
+            action1.Should().Throw<InvalidOperationException>();
+            action2.Should().Throw<InvalidOperationException>();
+            action3.Should().Throw<InvalidOperationException>();
+            action4.Should().Throw<InvalidOperationException>();
+            action5.Should().Throw<InvalidOperationException>();
+            action6.Should().Throw<InvalidOperationException>();
+        }
     }
 }

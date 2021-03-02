@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace MockGen.Setup
 {
-    internal abstract class MethodSetup<<#=Descriptor.GenericTypes#>> : IMethodSetup<<#=Descriptor.GenericTypes#>>
+    internal abstract class MethodSetup<<#=Descriptor.GenericTypes#>> : MethodSetupBase, IMethodSetup<<#=Descriptor.GenericTypes#>>
     {
 <# if (Descriptor.NumberOfTypes == 1) { #>
         protected List<TParam1> calls = new List<TParam1>();
@@ -21,16 +21,36 @@ namespace MockGen.Setup
         protected ArgMatcher<TParam<#=n#>> matcher<#=n#>;
 <# } #>
 
-<# if (Descriptor.NumberOfTypes == 1) { #>
-        public IEnumerable<TParam1> MatchingCalls => calls.Where(param => matcher1.Match(param));
-<# } else { #>
-        public IEnumerable<(<#=Descriptor.ParametersTypesWithName#>)> MatchingCalls => calls.Where(args => <#=Descriptor.ConcatMatcherCalls("matcher", "args.param")#>);
-<# } #>
+        public int NumberOfCalls
+        {
+            get
+            {
+                EnsureSpyingMethodsAreAllowed(nameof(NumberOfCalls));
+                return MatchingCalls.Count();
+            }
+        }
 
-        public int NumberOfCalls => MatchingCalls.Count();
+<# if (Descriptor.NumberOfTypes == 1) { #>
+        public IEnumerable<TParam1> MatchingCalls
+<# } else { #>
+        public IEnumerable<(<#=Descriptor.ParametersTypesWithName#>)> MatchingCalls
+<# } #>
+        {
+            get
+            {
+                EnsureSpyingMethodsAreAllowed(nameof(MatchingCalls));
+<# if (Descriptor.NumberOfTypes == 1) { #>
+                return calls.Where(param1 => matcher1.Match(param1));
+<# } else { #>
+                return calls.Where(args => <#=Descriptor.ConcatMatcherCalls("matcher", "args.param")#>);
+<# } #>
+            }
+        }
 
         public abstract void Throws<TException>() where TException : Exception, new();
 
         public abstract void Throws<TException>(TException exception) where TException : Exception;
+
+        public abstract void Execute(Action<<#=Descriptor.GenericTypes#>> callback);
     }
 }

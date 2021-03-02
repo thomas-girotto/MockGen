@@ -72,5 +72,15 @@ namespace MockGen.Tests
 
             action.Should().NotThrow();
         }
+
+        [Fact]
+        public void Should_throw_When_called_after_mock_has_been_built()
+        {
+            var sources = GetSourceFilesToCompileFromSpecs();
+
+            Action action = () => testRunner.RunTest(sources, nameof(ThrowsTests), nameof(Should_throw_When_called_after_mock_has_been_built));
+
+            action.Should().NotThrow();
+        }
     }
 }

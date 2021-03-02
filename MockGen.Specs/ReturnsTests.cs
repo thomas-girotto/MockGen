@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using MockGen.Specs.Sut;
+using System;
 using Xunit;
 
 namespace MockGen.Specs
@@ -168,6 +169,24 @@ namespace MockGen.Specs
             result2.Should().Be(11);
             result3.Should().Be(12);
             result4.Should().Be(0);
+        }
+
+        [Fact]
+        public void Should_throw_When_called_after_mock_has_been_built()
+        {
+            // Given
+            var mockBuilder = Mock.IDependency();
+            var mock = mockBuilder.Build();
+
+            // When
+            Action action1 = () => mockBuilder.GetSomeNumber().Returns(1);
+            Action action2 = () => mockBuilder.GetSomeNumberWithParameter(1).Returns(1);
+            Action action3 = () => mockBuilder.GetSomeNumberWithTwoParameters(null, null).Returns(1);
+
+            // Then
+            action1.Should().Throw<InvalidOperationException>();
+            action2.Should().Throw<InvalidOperationException>();
+            action3.Should().Throw<InvalidOperationException>();
         }
     }
 }

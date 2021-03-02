@@ -13,10 +13,52 @@ namespace MockGen.Setup
     internal class MethodSetupVoid<<#=Descriptor.GenericTypes#>> : MethodSetup<<#=Descriptor.GenericTypes#>>
     {
         private Stack<ActionSpecification<<#=Descriptor.GenericTypes#>>> actionByMatchingCriteria = new Stack<ActionSpecification<<#=Descriptor.GenericTypes#>>>();
+        private ActionSpecification<<#=Descriptor.GenericTypes#>> currentlyConfiguredAction = ActionSpecification<<#=Descriptor.GenericTypes#>>.CreateNew();
 
-        internal MethodSetupVoid()
+        public IMethodSetup<<#=Descriptor.GenericTypes#>> ForParameter(<#=Descriptor.ConcatClassParameterByParameterType("Arg", "param")#>)
         {
-            actionByMatchingCriteria.Push(ActionSpecification<<#=Descriptor.GenericTypes#>>.Default);
+            if (!setupDone)
+            {
+                actionByMatchingCriteria.Push(currentlyConfiguredAction);
+                currentlyConfiguredAction = ActionSpecification<<#=Descriptor.GenericTypes#>>.CreateNew();
+
+<# foreach (var n in Descriptor.EnumerateNumbers) { #>
+                currentlyConfiguredAction.Matcher<#=n#> = ArgMatcher<TParam<#=n#>>.Create(param<#=n#>);
+<# } #>
+            }
+            else
+            {
+<# foreach (var n in Descriptor.EnumerateNumbers) { #>
+                matcher<#=n#> = ArgMatcher<TParam<#=n#>>.Create(param<#=n#>);
+<# } #>
+            }
+
+            return this;
+        }
+
+        public override void Throws<TException>()
+        {
+            EnsureConfigurationMethodsAreAllowed(nameof(Throws));
+            currentlyConfiguredAction.MockingAction = <#=Descriptor.DiscardParameters#> => throw new TException();
+        }
+
+        public override void Throws<TException>(TException exception)
+        {
+            EnsureConfigurationMethodsAreAllowed(nameof(Throws));
+            currentlyConfiguredAction.MockingAction = <#=Descriptor.DiscardParameters#> => throw exception;
+        }
+
+        public override void Execute(Action<<#=Descriptor.GenericTypes#>> callback)
+        {
+            EnsureConfigurationMethodsAreAllowed(nameof(Execute));
+            currentlyConfiguredAction.AdditionalCallback = callback;
+        }
+
+        internal override void SetupDone()
+        {
+            base.SetupDone();
+            actionByMatchingCriteria.Push(currentlyConfiguredAction);
+            currentlyConfiguredAction = ActionSpecification<<#=Descriptor.GenericTypes#>>.CreateNew();
         }
 
         public void ExecuteSetup(<#=Descriptor.ParametersTypesWithName#>)
@@ -28,28 +70,10 @@ namespace MockGen.Setup
             {
                 if (setupAction.Match(<#=Descriptor.ConcatParameters("param")#>))
                 {
-                    setupAction.Action(<#=Descriptor.ConcatParameters("param")#>);
+                    setupAction.ExecuteActions(<#=Descriptor.ConcatParameters("param")#>);
                     return;
                 }
             }
-        }
-
-        public IMethodSetup<<#=Descriptor.GenericTypes#>> ForParameter(<#=Descriptor.ConcatClassParameterByParameterType("Arg", "param")#>)
-        {
-<# foreach (var n in Descriptor.EnumerateNumbers) { #>
-            matcher<#=n#> = ArgMatcher<TParam<#=n#>>.Create(param<#=n#>);
-<# } #>
-            return this;
-        }
-
-        public override void Throws<TException>()
-        {
-            actionByMatchingCriteria.Push(new ActionSpecification<<#=Descriptor.GenericTypes#>>(<#=Descriptor.ConcatParameters("matcher")#>, <#=Descriptor.DiscardParameters#> => throw new TException()));
-        }
-
-        public override void Throws<TException>(TException exception)
-        {
-            actionByMatchingCriteria.Push(new ActionSpecification<<#=Descriptor.GenericTypes#>>(<#=Descriptor.ConcatParameters("matcher")#>, <#=Descriptor.DiscardParameters#> => throw exception));
         }
     }
 }

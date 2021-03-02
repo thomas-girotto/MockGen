@@ -7,8 +7,10 @@ using System;
 
 namespace MockGen.Setup
 {
-    internal interface IMethodSetup : IMethodSetupBase
+    internal interface IMethodSetupBase
     {
-        void Execute(Action callback);
+        int NumberOfCalls { get; }
+        void Throws<TException>() where TException : Exception, new();
+        void Throws<TException>(TException exception) where TException : Exception;
     }
 }
