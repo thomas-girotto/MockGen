@@ -34,21 +34,41 @@ namespace MockGen.Tests
         }
 
         [Fact]
-        public void Should_spy_number_of_calls()
+        public void Should_support_Any_parameter_filter()
         {
             var sources = GetSourceFilesToCompileFromSpecs();
 
-            Action action = () => testRunner.RunTest(sources, nameof(SpyTests), nameof(Should_spy_number_of_calls));
+            Action action = () => testRunner.RunTest(sources, nameof(SpyTests), nameof(Should_support_Any_parameter_filter));
 
             action.Should().NotThrow();
         }
 
         [Fact]
-        public void Should_spy_number_of_calls_depending_on_parameter()
+        public void Should_support_Equality_parameter_filter()
         {
             var sources = GetSourceFilesToCompileFromSpecs();
 
-            Action action = () => testRunner.RunTest(sources, nameof(SpyTests), nameof(Should_spy_number_of_calls_depending_on_parameter));
+            Action action = () => testRunner.RunTest(sources, nameof(SpyTests), nameof(Should_support_Equality_parameter_filter));
+
+            action.Should().NotThrow();
+        }
+
+        [Fact]
+        public void Should_support_Predicate_parameter_filter()
+        {
+            var sources = GetSourceFilesToCompileFromSpecs();
+
+            Action action = () => testRunner.RunTest(sources, nameof(SpyTests), nameof(Should_support_Predicate_parameter_filter));
+
+            action.Should().NotThrow();
+        }
+
+        [Fact]
+        public void Should_intersect_all_parameters_criteria()
+        {
+            var sources = GetSourceFilesToCompileFromSpecs();
+
+            Action action = () => testRunner.RunTest(sources, nameof(SpyTests), nameof(Should_intersect_all_parameters_criteria));
 
             action.Should().NotThrow();
         }
