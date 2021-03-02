@@ -445,3 +445,4 @@ $RECYCLE.BIN/
 ## T4 Generated Code
 ##
 MockGen/Templates/**/*TextTemplate.cs
+MockGen.Generated/*.cs
