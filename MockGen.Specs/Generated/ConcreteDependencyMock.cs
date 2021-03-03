@@ -1,23 +1,20 @@
 ﻿using MockGen.Setup;
 using MockGen.Specs.Sut;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MockGen
 {
     internal class ConcreteDependencyMock : ConcreteDependency
     {
-        private MethodSetupReturn<int> iCanBeMockedSetup;
+        private readonly ConcreteDependencyMethodsSetup methods;
 
-        public ConcreteDependencyMock(MethodSetupReturn<int> iCanBeMockedSetup)
+        public ConcreteDependencyMock(ConcreteDependencyMethodsSetup methods)
         {
-            this.iCanBeMockedSetup = iCanBeMockedSetup;
+            this.methods = methods;
         }
 
         public override int ICanBeMocked()
         {
-            return iCanBeMockedSetup.ExecuteSetup();
+            return methods.ICanBeMockedSetup.ExecuteSetup();
         }
     }
 }

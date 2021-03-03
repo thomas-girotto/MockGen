@@ -24,10 +24,6 @@ namespace MockGen.Model
 
         public string AddOverrideKeywordIfNeeded => ShouldBeOverriden ? "override " : string.Empty;
 
-        public string NameCamelCase => string.IsNullOrEmpty(Name)
-           ? string.Empty
-           : char.ToLower(Name[0]) + Name.Substring(1);
-
         public string ParametersDeclaration =>
             string.Join(", ", Parameters.Select(p => $"{p.Type} {p.Name}"));
 

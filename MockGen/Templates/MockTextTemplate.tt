@@ -11,33 +11,23 @@ namespace MockGen
 {
     internal class <#=Descriptor.TypeToMock#>Mock : <#=Descriptor.TypeToMock#>
     {
-<# foreach (var method in Descriptor.Methods)
-{#>
-        private readonly <#=method.MethodSetupWithTypedParameters#> <#=method.NameCamelCase#>Setup;
-<#}
-#>
+        private readonly <#=Descriptor.TypeToMock#>MethodsSetup methods;
 
-        public <#=Descriptor.TypeToMock#>Mock(<#=Descriptor.MockCtorArgumentListDefinition#>)
+        public <#=Descriptor.TypeToMock#>Mock(<#=Descriptor.TypeToMock#>MethodsSetup methods)
         {
-<# foreach (var method in Descriptor.Methods)
-{#>
-            this.<#=method.NameCamelCase#>Setup = <#=method.NameCamelCase#>Setup;
-<#}
-#>
+            this.methods = methods;
         }
 
-<# foreach (var method in Descriptor.Methods)
-{#>
+<# foreach (var method in Descriptor.Methods) { #>
         public <#=method.AddOverrideKeywordIfNeeded#><#=method.ReturnType#> <#=method.Name#>(<#=method.ParametersDeclaration#>)
         {
 <# if (!method.ReturnsVoid) { #>
-            return <#=method.NameCamelCase#>Setup.ExecuteSetup(<#=method.ParameterNames#>);
+            return methods.<#=method.Name#>Setup.ExecuteSetup(<#=method.ParameterNames#>);
 <# } else { #>
-            <#=method.NameCamelCase#>Setup.ExecuteSetup(<#=method.ParameterNames#>);
+            methods.<#=method.Name#>Setup.ExecuteSetup(<#=method.ParameterNames#>);
 <# } #>
         }
 
-<#}
-#>
+<# } #>
     }
 }

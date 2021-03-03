@@ -2,8 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>9</LangVersion>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Templates\MethodsSetupTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MethodsSetupTextTemplate.tt</DependentUpon>
+    </None>
+  </ItemGroup>
 
 
   <ItemGroup>
@@ -16,6 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Templates\MethodsSetupTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MethodsSetupTextTemplate.cs</LastGenOutput>
+    </None>
     <None Update="Templates\MockGeneratorTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MockGeneratorTextTemplate.cs</LastGenOutput>
@@ -120,6 +132,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Templates\MethodsSetupTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MethodsSetupTextTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Update="Templates\MockGeneratorTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

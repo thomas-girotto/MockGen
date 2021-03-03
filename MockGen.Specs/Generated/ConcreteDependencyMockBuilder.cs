@@ -4,16 +4,17 @@ namespace MockGen
 {
     internal class ConcreteDependencyMockBuilder
     {
-        private readonly MethodSetupReturn<int> iCanBeMockedSetup = new MethodSetupReturn<int>();
-        
+        private readonly ConcreteDependencyMethodsSetup methods = new ConcreteDependencyMethodsSetup();
+
         internal IMethodSetupReturn<int> ICanBeMocked()
         {
-            return iCanBeMockedSetup;
+            return methods.ICanBeMockedSetup;
         }
 
         internal ConcreteDependencyMock Build()
         {
-            return new ConcreteDependencyMock(iCanBeMockedSetup);
+            methods.SetupDone();
+            return new ConcreteDependencyMock(methods);
         }
     }
 }

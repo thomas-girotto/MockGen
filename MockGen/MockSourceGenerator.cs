@@ -86,6 +86,9 @@ namespace MockGen
                     {
                         allTypesDescriptor.Add(descriptorForTemplate);
 
+                        var methodsSetupTemplate = new MethodsSetupTextTemplate(descriptorForTemplate);
+                        AddSourceToBuildContext(context, $"{typeSyntax.Identifier.ValueText}MethodsSetup.cs", methodsSetupTemplate.TransformText());
+
                         var mockBuilderTemplate = new MockBuilderTextTemplate(descriptorForTemplate);
                         AddSourceToBuildContext(context, $"{typeSyntax.Identifier.ValueText}MockBuilder.cs", mockBuilderTemplate.TransformText());
 

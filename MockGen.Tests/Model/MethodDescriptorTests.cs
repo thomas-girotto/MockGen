@@ -59,20 +59,6 @@ namespace MockGen.Tests.Model
         };
 
         [Fact]
-        public void Should_get_method_name_in_camel_case()
-        {
-            // Arrange
-            var method = GetMethodWithoutParameter();
-            method.Name = "SomePascalCaseName";
-
-            // Act
-            string camelCasedMethod = method.NameCamelCase;
-            
-            // Assert
-            camelCasedMethod.Should().Be("somePascalCaseName");
-        }
-
-        [Fact]
         public void Should_build_MethodSetup_with_generic_typed_parameters()
         {
             string methodSetupVoid = GetMethodVoid().MethodSetupWithTypedParameters;

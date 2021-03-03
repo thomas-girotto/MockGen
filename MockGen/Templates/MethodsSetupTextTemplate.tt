@@ -1,0 +1,26 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".txt" #>
+using System;
+using MockGen.Setup;
+using MockGen.Specs.Sut;
+
+namespace MockGen
+{
+	internal class <#=Descriptor.TypeToMock#>MethodsSetup
+	{
+<# foreach (var method in Descriptor.Methods) {#>
+        internal <#=method.MethodSetupWithTypedParameters#> <#=method.Name#>Setup { get; } = new <#=method.MethodSetupWithTypedParameters#>();
+<#}#>
+
+		internal void SetupDone()
+		{
+<# foreach (var method in Descriptor.Methods) {#>
+            <#=method.Name#>Setup.SetupDone();
+<# } #>
+		}
+	}
+}

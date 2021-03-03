@@ -11,28 +11,23 @@ namespace MockGen
 {
     internal class <#=Descriptor.TypeToMock#>MockBuilder
     {
-<# foreach (var method in Descriptor.Methods) {#>
-        private readonly <#=method.MethodSetupWithTypedParameters#> <#=method.NameCamelCase#>Setup = new <#=method.MethodSetupWithTypedParameters#>();
-<#}#>
+        private readonly <#=Descriptor.TypeToMock#>MethodsSetup methods = new <#=Descriptor.TypeToMock#>MethodsSetup();
 
 <# foreach (var method in Descriptor.Methods) {#>
         public <#=method.IMethodSetupWithTypedParameters#> <#=method.Name#>(<#=method.ParametersDeclarationWithArg#>)
         {
 <# if (method.Parameters.Count > 0) {#>
-            return <#=method.NameCamelCase#>Setup.ForParameter(<#=method.CallForParameterMethod#>);
+            return methods.<#=method.Name#>Setup.ForParameter(<#=method.CallForParameterMethod#>);
 <#} else { #>
-            return <#=method.NameCamelCase#>Setup;
+            return methods.<#=method.Name#>Setup;
 <#}#>
         }
 
 <#}#>
         public <#=Descriptor.TypeToMock#> Build()
         {
-<# foreach (var method in Descriptor.Methods) {#>
-            <#=method.NameCamelCase#>Setup.SetupDone();
-<# } #>
-
-            return new <#=Descriptor.TypeToMock#>Mock(<#=Descriptor.MockCtorParameters#>);
+            methods.SetupDone();
+            return new <#=Descriptor.TypeToMock#>Mock(methods);
         }
     }
 }

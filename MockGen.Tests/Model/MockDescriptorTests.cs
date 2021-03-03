@@ -39,24 +39,6 @@ namespace MockGen.Tests.Model
         }
 
         [Fact]
-        public void Should_build_Mock_Ctor_parameter_list_definition()
-        {
-            var model = GetDefaultDescriptor();
-            var mockCtorArgumentListDefinition = model.MockCtorArgumentListDefinition;
-
-            mockCtorArgumentListDefinition.Should().Be("MethodSetupVoid methodVoidSetup, MethodSetupReturn<int> methodTReturnSetup, MethodSetupReturn<Type1, int> methodTParamTReturnSetup");
-        }
-
-        [Fact]
-        public void Should_build_Mock_Ctor_parameters_to_pass()
-        {
-            var model = GetDefaultDescriptor();
-            var mockCtorParameters = model.MockCtorParameters;
-
-            mockCtorParameters.Should().Be("methodVoidSetup, methodTReturnSetup, methodTParamTReturnSetup");
-        }
-
-        [Fact]
         public void Should_group_methods_by_number_of_parameters_and_returns_void()
         {
             var model = GetDefaultDescriptor();
