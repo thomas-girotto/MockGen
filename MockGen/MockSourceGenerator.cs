@@ -90,42 +90,40 @@ namespace MockGen
                 // Finally classes that only depends on the number of generic types in methods
                 foreach (var genericTypeDescriptor in allTypesDescriptor
                     .SelectMany(mock => mock.NumberOfParametersInMethods)
+                    .Where(mock => mock.NumberOfTypes > 0)
                     .Distinct())
                 {
-                    if (genericTypeDescriptor.NumberOfTypes > 0)
+                    var iMethodSetupPn = new IMethodSetupPnTextTemplate();
+                    iMethodSetupPn.Descriptor = genericTypeDescriptor;
+                    AddSourceToBuildContext(context, $"IMethodSetup{genericTypeDescriptor.FileSuffix}.cs", iMethodSetupPn.TransformText());
+
+                    var methodSetupPnTemplate = new MethodSetupPnTextTemplate();
+                    methodSetupPnTemplate.Descriptor = genericTypeDescriptor;
+                    AddSourceToBuildContext(context, $"MethodSetup{genericTypeDescriptor.FileSuffix}.cs", methodSetupPnTemplate.TransformText());
+
+                    if (genericTypeDescriptor.HasMethodThatReturnsVoid)
                     {
-                        var iMethodSetupPn = new IMethodSetupPnTextTemplate();
-                        iMethodSetupPn.Descriptor = genericTypeDescriptor;
-                        AddSourceToBuildContext(context, $"IMethodSetup{genericTypeDescriptor.FileSuffix}.cs", iMethodSetupPn.TransformText());
+                        var actionSpecificationTemplate = new ActionSpecificationTextTemplate();
+                        actionSpecificationTemplate.Descriptor = genericTypeDescriptor;
+                        AddSourceToBuildContext(context, $"ActionSpecification{genericTypeDescriptor.FileSuffix}.cs", actionSpecificationTemplate.TransformText());
 
-                        var methodSetupPnTemplate = new MethodSetupPnTextTemplate();
-                        methodSetupPnTemplate.Descriptor = genericTypeDescriptor;
-                        AddSourceToBuildContext(context, $"MethodSetup{genericTypeDescriptor.FileSuffix}.cs", methodSetupPnTemplate.TransformText());
+                        var methodSetupVoidPnTemplate = new MethodSetupVoidPnTextTemplate();
+                        methodSetupVoidPnTemplate.Descriptor = genericTypeDescriptor;
+                        AddSourceToBuildContext(context, $"MethodSetupVoid{genericTypeDescriptor.FileSuffix}.cs", methodSetupVoidPnTemplate.TransformText());
+                    }
+                    if (genericTypeDescriptor.HasMethodThatReturns)
+                    {
+                        var funcSpecificationTemplate = new FuncSpecificationTextTemplate();
+                        funcSpecificationTemplate.Descriptor = genericTypeDescriptor;
+                        AddSourceToBuildContext(context, $"FuncSpecification{genericTypeDescriptor.FileSuffix}.cs", funcSpecificationTemplate.TransformText());
 
-                        if (genericTypeDescriptor.HasMethodThatReturnsVoid)
-                        {
-                            var actionSpecificationTemplate = new ActionSpecificationTextTemplate();
-                            actionSpecificationTemplate.Descriptor = genericTypeDescriptor;
-                            AddSourceToBuildContext(context, $"ActionSpecification{genericTypeDescriptor.FileSuffix}.cs", actionSpecificationTemplate.TransformText());
-
-                            var methodSetupVoidPnTemplate = new MethodSetupVoidPnTextTemplate();
-                            methodSetupVoidPnTemplate.Descriptor = genericTypeDescriptor;
-                            AddSourceToBuildContext(context, $"MethodSetupVoid{genericTypeDescriptor.FileSuffix}.cs", methodSetupVoidPnTemplate.TransformText());
-                        }
-                        if (genericTypeDescriptor.HasMethodThatReturns)
-                        {
-                            var funcSpecificationTemplate = new FuncSpecificationTextTemplate();
-                            funcSpecificationTemplate.Descriptor = genericTypeDescriptor;
-                            AddSourceToBuildContext(context, $"FuncSpecification{genericTypeDescriptor.FileSuffix}.cs", funcSpecificationTemplate.TransformText());
-
-                            var iMethodSetupReturnPn = new IMethodSetupReturnPnTextTemplate();
-                            iMethodSetupReturnPn.Descriptor = genericTypeDescriptor;
-                            AddSourceToBuildContext(context, $"IMethodSetupReturn{genericTypeDescriptor.FileSuffix}.cs", iMethodSetupReturnPn.TransformText());
+                        var iMethodSetupReturnPn = new IMethodSetupReturnPnTextTemplate();
+                        iMethodSetupReturnPn.Descriptor = genericTypeDescriptor;
+                        AddSourceToBuildContext(context, $"IMethodSetupReturn{genericTypeDescriptor.FileSuffix}.cs", iMethodSetupReturnPn.TransformText());
                             
-                            var methodSetupReturnPnTemplate = new MethodSetupReturnPnTextTemplate();
-                            methodSetupReturnPnTemplate.Descriptor = genericTypeDescriptor;
-                            AddSourceToBuildContext(context, $"MethodSetupReturn{genericTypeDescriptor.FileSuffix}.cs", methodSetupReturnPnTemplate.TransformText());
-                        }
+                        var methodSetupReturnPnTemplate = new MethodSetupReturnPnTextTemplate();
+                        methodSetupReturnPnTemplate.Descriptor = genericTypeDescriptor;
+                        AddSourceToBuildContext(context, $"MethodSetupReturn{genericTypeDescriptor.FileSuffix}.cs", methodSetupReturnPnTemplate.TransformText());
                     }
                 }
             }
@@ -164,12 +162,14 @@ namespace MockGen
 
                 descriptorForTemplate.Methods = namedTypeSymbol.GetMembers()
                     .OfType<IMethodSymbol>()
+                    .Where(m => m.IsAbstract || m.IsVirtual)
                     .Select(m => new MethodDescriptor
                     {
                         Name = m.Name,
                         ReturnType = m.ReturnType.Name,
                         ReturnsVoid = m.ReturnsVoid,
                         Parameters = m.Parameters.Select(p => new ParameterDescriptor(p.Type.Name, p.Name)).ToList(),
+                        ShouldBeOverriden = namedTypeSymbol.TypeKind == TypeKind.Class && (m.IsVirtual || m.IsAbstract)
                     })
                     .ToList();
             }

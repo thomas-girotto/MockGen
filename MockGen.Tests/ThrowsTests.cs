@@ -25,6 +25,7 @@ namespace MockGen.Tests
         {
             return new List<string>
             {
+                loadSourceFilesFixture.ConcreteDependencySourceFile,
                 loadSourceFilesFixture.IDependencySourceFile,
                 loadSourceFilesFixture.Model1SourceFile,
                 loadSourceFilesFixture.Model2SourceFile,

@@ -9,6 +9,7 @@ namespace MockGen.Tests.Utils
     [CollectionDefinition("Load common specs files")]
     public class LoadCommonSpecsFilesFixture : ICollectionFixture<LoadMetadataReferenceFixture>
     {
+        public string ConcreteDependencySourceFile { get; private set; }
         public string IDependencySourceFile { get; private set; }
         public string Model1SourceFile { get; private set; }
         public string Model2SourceFile { get; private set; }
@@ -20,6 +21,7 @@ namespace MockGen.Tests.Utils
 
         public LoadCommonSpecsFilesFixture()
         {
+            ConcreteDependencySourceFile = SourceFileReader.ReadFile(Path.Combine("Sut", "ConcreteDependency.cs"));
             IDependencySourceFile = SourceFileReader.ReadFile(Path.Combine("Sut", "IDependency.cs"));
             Model1SourceFile = SourceFileReader.ReadFile(Path.Combine("Sut", "Model1.cs"));
             Model2SourceFile = SourceFileReader.ReadFile(Path.Combine("Sut", "Model2.cs"));

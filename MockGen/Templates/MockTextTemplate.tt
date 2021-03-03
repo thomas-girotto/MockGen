@@ -28,7 +28,7 @@ namespace MockGen
 
 <# foreach (var method in Descriptor.Methods)
 {#>
-        public <#=method.ReturnType#> <#=method.Name#>(<#=method.ParametersDeclaration#>)
+        public <#=method.AddOverrideKeywordIfNeeded#><#=method.ReturnType#> <#=method.Name#>(<#=method.ParametersDeclaration#>)
         {
 <# if (!method.ReturnsVoid) { #>
             return <#=method.NameCamelCase#>Setup.ExecuteSetup(<#=method.ParameterNames#>);

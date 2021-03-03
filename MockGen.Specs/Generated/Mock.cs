@@ -9,5 +9,10 @@ namespace MockGen
         {
             return new IDependencyMockBuilder();
         }
+
+        internal static ConcreteDependencyMockBuilder ConcreteDependency()
+        {
+            return new ConcreteDependencyMockBuilder();
+        }
     }
 }

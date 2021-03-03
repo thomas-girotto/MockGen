@@ -25,6 +25,7 @@ namespace MockGen.Tests
         {
             return new List<string>
             {
+                loadSourceFilesFixture.ConcreteDependencySourceFile,
                 loadSourceFilesFixture.IDependencySourceFile,
                 loadSourceFilesFixture.Model1SourceFile,
                 loadSourceFilesFixture.Model2SourceFile,
@@ -119,6 +120,16 @@ namespace MockGen.Tests
             var sources = GetSourceFilesToCompileFromSpecs();
 
             Action action = () => testRunner.RunTest(sources, nameof(ReturnsTests), nameof(Should_return_per_parameters_mocked_value_When_parameters_match_both_criterias));
+
+            action.Should().NotThrow();
+        }
+
+        [Fact]
+        public void Should_mock_virtual_method_from_concrete_class()
+        {
+            var sources = GetSourceFilesToCompileFromSpecs();
+
+            Action action = () => testRunner.RunTest(sources, nameof(ReturnsTests), nameof(Should_mock_virtual_method_from_concrete_class));
 
             action.Should().NotThrow();
         }

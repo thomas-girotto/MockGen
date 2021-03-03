@@ -14,11 +14,15 @@ namespace MockGen.Model
             set => returnType = value;
         }
 
+        public bool ShouldBeOverriden { get; set; }
+
         public bool ReturnsVoid { get; set; }
 
         public string Name { get; set; }
 
         public List<ParameterDescriptor> Parameters { get; set; } = new List<ParameterDescriptor>();
+
+        public string AddOverrideKeywordIfNeeded => ShouldBeOverriden ? "override " : string.Empty;
 
         public string NameCamelCase => string.IsNullOrEmpty(Name)
            ? string.Empty
