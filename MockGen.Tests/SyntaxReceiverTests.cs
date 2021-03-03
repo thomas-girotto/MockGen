@@ -66,6 +66,7 @@ MockGenerator.Generate<IDependency2>();
         [InlineData("MockGenerator.Generate<IDependency>(1)")]
         [InlineData("MockGenerator.WrongName<IDependency>()")]
         [InlineData("WrongClass.Generate<IDependency>()")]
+        [InlineData("// MockGenerator.Generate<IDependency>()")]
         public void Should_not_find_type_to_mock_When_syntax_is_wrong(string source)
         {
             // Given
