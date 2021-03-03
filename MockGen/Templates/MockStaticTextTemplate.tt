@@ -7,9 +7,12 @@ namespace MockGen
 {
     internal class Mock
     {
-        internal static <#=Descriptor.TypeToMock#>MockBuilder <#=Descriptor.TypeToMock#>()
+<# foreach(var type in Descriptor) { #>
+        internal static <#=type.TypeToMock#>MockBuilder <#=type.TypeToMock#>()
         {
-            return new <#=Descriptor.TypeToMock#>MockBuilder();
+            return new <#=type.TypeToMock#>MockBuilder();
         }
+
+<#}#>
     }
 }

@@ -77,15 +77,15 @@ namespace MockGen
                     var descriptorForTemplate = BuildModelFromTypeSyntax(context, typeSyntax);
                     allTypesDescriptor.Add(descriptorForTemplate);
 
-                    var mockStaticTemplate = new MockStaticTextTemplate(descriptorForTemplate);
-                    AddSourceToBuildContext(context, "Mock.cs", mockStaticTemplate.TransformText());
-
                     var mockBuilderTemplate = new MockBuilderTextTemplate(descriptorForTemplate);
                     AddSourceToBuildContext(context, $"{typeSyntax.Identifier.ValueText}MockBuilder.cs", mockBuilderTemplate.TransformText());
 
                     var mockTemplate = new MockTextTemplate(descriptorForTemplate);
                     AddSourceToBuildContext(context, $"{typeSyntax.Identifier.ValueText}Mock.cs", mockTemplate.TransformText());
                 }
+
+                var mockStaticTemplate = new MockStaticTextTemplate(allTypesDescriptor);
+                AddSourceToBuildContext(context, "Mock.cs", mockStaticTemplate.TransformText());
 
                 // Finally classes that only depends on the number of generic types in methods
                 foreach (var genericTypeDescriptor in allTypesDescriptor

@@ -1,14 +1,15 @@
 ﻿using MockGen.Model;
+using System.Collections.Generic;
 
 namespace MockGen.Templates
 {
     public partial class MockStaticTextTemplate
     {
-        public MockStaticTextTemplate(MockDescriptor descriptor)
+        public MockStaticTextTemplate(List<MockDescriptor> descriptor)
         {
             Descriptor = descriptor;
         }
 
-        public MockDescriptor Descriptor { get; private set; }
+        public List<MockDescriptor> Descriptor { get; private set; }
     }
 }
