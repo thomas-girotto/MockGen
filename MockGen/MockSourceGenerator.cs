@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
+using MockGen.Diagnostics;
 using MockGen.Model;
 using MockGen.Templates;
 using MockGen.Templates.Matcher;
@@ -26,10 +27,15 @@ namespace MockGen
                     return;
                 }
 
+                if (!receiver.TypesToMockSyntax.Any())
+                {
+                    return;
+                }
+
                 // First inject helper classes that doesn't depend on user's code
                 var mockGeneratorTemplate = new MockGeneratorTextTemplate();
                 AddSourceToBuildContext(context, "MockGenerator.cs", mockGeneratorTemplate.TransformText());
-
+                
                 var argTemplate = new ArgTextTemplate();
                 AddSourceToBuildContext(context, "Arg.cs", argTemplate.TransformText());
 
@@ -69,25 +75,29 @@ namespace MockGen
                 var methodSetupVoidTemplate = new MethodSetupVoidTextTemplate();
                 AddSourceToBuildContext(context, "MethodSetupVoid.cs", methodSetupVoidTemplate.TransformText());
 
-                // Then classes that depends on the types we found that we should mock
+                // Then classes that depends on types to mock declared by the user
                 var allTypesDescriptor = new List<MockDescriptor>();
 
                 foreach (var typeSyntax in receiver.TypesToMockSyntax)
                 {
                     var descriptorForTemplate = BuildModelFromTypeSyntax(context, typeSyntax);
-                    allTypesDescriptor.Add(descriptorForTemplate);
 
-                    var mockBuilderTemplate = new MockBuilderTextTemplate(descriptorForTemplate);
-                    AddSourceToBuildContext(context, $"{typeSyntax.Identifier.ValueText}MockBuilder.cs", mockBuilderTemplate.TransformText());
+                    if (descriptorForTemplate != null)
+                    {
+                        allTypesDescriptor.Add(descriptorForTemplate);
 
-                    var mockTemplate = new MockTextTemplate(descriptorForTemplate);
-                    AddSourceToBuildContext(context, $"{typeSyntax.Identifier.ValueText}Mock.cs", mockTemplate.TransformText());
+                        var mockBuilderTemplate = new MockBuilderTextTemplate(descriptorForTemplate);
+                        AddSourceToBuildContext(context, $"{typeSyntax.Identifier.ValueText}MockBuilder.cs", mockBuilderTemplate.TransformText());
+
+                        var mockTemplate = new MockTextTemplate(descriptorForTemplate);
+                        AddSourceToBuildContext(context, $"{typeSyntax.Identifier.ValueText}Mock.cs", mockTemplate.TransformText());
+                    }
                 }
 
                 var mockStaticTemplate = new MockStaticTextTemplate(allTypesDescriptor);
                 AddSourceToBuildContext(context, "Mock.cs", mockStaticTemplate.TransformText());
 
-                // Finally classes that only depends on the number of generic types in methods
+                // Finally classes that only depend on the number of generic types in methods that we would mock
                 foreach (var genericTypeDescriptor in allTypesDescriptor
                     .SelectMany(mock => mock.NumberOfParametersInMethods)
                     .Where(mock => mock.NumberOfTypes > 0)
@@ -129,15 +139,7 @@ namespace MockGen
             }
             catch (Exception ex)
             {
-                context.ReportDiagnostic(Diagnostic.Create(
-                    new DiagnosticDescriptor(
-                        "MG0001",
-                        "Technical exception while trying to generate code",
-                        $"Code generation failed with the following exception: {ex}",
-                        "MocksSourceGenerator",
-                        DiagnosticSeverity.Error,
-                        isEnabledByDefault: true),
-                    Location.None));
+                context.ReportDiagnostic(Diagnostic.Create(DiagnosticResources.TechnicalError(ex), Location.None));
             }
         }
 
@@ -153,6 +155,16 @@ namespace MockGen
             var model = context.Compilation.GetSemanticModel(typeIdentifierSyntax.SyntaxTree);
 
             var symbol = model.GetSymbolInfo(typeIdentifierSyntax).Symbol;
+
+            if (symbol.IsSealed)
+            {
+                context.ReportDiagnostic(Diagnostic.Create(
+                    DiagnosticResources.ErrorMockSealedClass(symbol.Name),
+                    symbol.Locations.Length > 0 ? symbol.Locations[0] : Location.None));
+
+                return null;
+            }
+
             if (symbol is INamedTypeSymbol namedTypeSymbol)
             {
                 descriptorForTemplate.TypeToMock = typeIdentifierSyntax.Identifier.ValueText;
