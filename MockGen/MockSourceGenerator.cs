@@ -9,6 +9,7 @@ using MockGen.Templates.Setup;
 using MockGen.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -199,7 +200,9 @@ namespace MockGen
 
         private static string GetNamespace(ISymbol namedTypeSymbol)
         {
-            return namedTypeSymbol.ContainingNamespace
+            return namedTypeSymbol.ContainingNamespace.IsGlobalNamespace
+                ? string.Empty
+                : namedTypeSymbol.ContainingNamespace
                                 .ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)
                                 .Replace("global::", string.Empty);
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MockGen.Model
@@ -25,6 +26,7 @@ namespace MockGen.Model
         public IEnumerable<string> Namespaces => new List<string> { TypeToMockOriginalNamespace }
             .Concat(Methods.SelectMany(m => m.Parameters.Select(p => p.Namespace)))
             .Concat(Ctors.SelectMany(c => c.Parameters.Select(p => p.Namespace)))
+            .Where(ns => !string.IsNullOrEmpty(ns))
             .Distinct();
 
         public string CallBaseCtorIfNeeded => IsInterface ? "" : " : base({0})";

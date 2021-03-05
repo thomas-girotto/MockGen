@@ -13,6 +13,9 @@ namespace MockGen.Templates
 
         public List<MockDescriptor> Mocks { get; private set; }
 
-        public IEnumerable<string> Namespaces => Mocks.SelectMany(m => m.Namespaces).Distinct();
+        public IEnumerable<string> Namespaces => Mocks
+            .SelectMany(m => m.Namespaces)
+            .Distinct()
+            .Where(ns => !string.IsNullOrEmpty(ns));
     }
 }

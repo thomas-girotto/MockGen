@@ -3,10 +3,10 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ output extension=".txt" #>
-using System;
 using MockGen.Setup;
-using MockGen.Specs.Sut;
+<#foreach (var ns in Descriptor.Namespaces) { #>
+using <#=ns#>;
+<#}#>
 
 namespace MockGen
 {
