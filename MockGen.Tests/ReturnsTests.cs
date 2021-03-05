@@ -125,16 +125,6 @@ namespace MockGen.Tests
         }
 
         [Fact]
-        public void Should_mock_virtual_method_from_concrete_class()
-        {
-            var sources = GetSourceFilesToCompileFromSpecs();
-
-            Action action = () => testRunner.RunTest(sources, nameof(ReturnsTests), nameof(Should_mock_virtual_method_from_concrete_class));
-
-            action.Should().NotThrow();
-        }
-
-        [Fact]
         public void Should_throw_When_called_after_mock_has_been_built()
         {
             var sources = GetSourceFilesToCompileFromSpecs();

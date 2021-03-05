@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using MockGen.Specs.Sut;
+using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MockGen.Benchmark")]
 namespace MockGen
@@ -13,6 +14,16 @@ namespace MockGen
         internal static ConcreteDependencyMockBuilder ConcreteDependency()
         {
             return new ConcreteDependencyMockBuilder();
+        }
+
+        internal static ConcreteDependencyMockBuilder ConcreteDependency(Model1 model1)
+        {
+            return new ConcreteDependencyMockBuilder(model1);
+        }
+
+        internal static ConcreteDependencyMockBuilder ConcreteDependency(Model1 model1, Model2 model2)
+        {
+            return new ConcreteDependencyMockBuilder(model1, model2);
         }
     }
 }

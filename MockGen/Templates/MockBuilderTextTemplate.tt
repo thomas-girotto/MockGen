@@ -5,13 +5,23 @@
 <#@ import namespace="System.Collections.Generic" #>
 using System;
 using MockGen.Setup;
-using <#=Descriptor.TypeToMockOriginalNamespace#>;
+<# foreach (var ns in Descriptor.Namespaces) { #> 
+using <#=ns#>;
+<# } #>
 
 namespace MockGen
 {
     internal class <#=Descriptor.TypeToMock#>MockBuilder
     {
         private readonly <#=Descriptor.TypeToMock#>MethodsSetup methods = new <#=Descriptor.TypeToMock#>MethodsSetup();
+        private readonly Func<<#=Descriptor.TypeToMock#>Mock> ctor;
+
+<# foreach (var ctor in Descriptor.Ctors) {#>
+        internal <#=Descriptor.TypeToMock#>MockBuilder(<#=ctor.ParametersDeclaration#>)
+        {
+            ctor = () => new <#=Descriptor.TypeToMock#>Mock(<#=ctor.ConcatParametersNameWith("methods")#>);
+        }
+<#}#>
 
 <# foreach (var method in Descriptor.Methods) {#>
         public <#=method.IMethodSetupWithTypedParameters#> <#=method.Name#>(<#=method.ParametersDeclarationWithArg#>)
@@ -27,7 +37,7 @@ namespace MockGen
         public <#=Descriptor.TypeToMock#> Build()
         {
             methods.SetupDone();
-            return new <#=Descriptor.TypeToMock#>Mock(methods);
+            return ctor();
         }
     }
 }

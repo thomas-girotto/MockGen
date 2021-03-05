@@ -1,4 +1,5 @@
-﻿using MockGen.Setup;
+﻿using System;
+using MockGen.Setup;
 using MockGen.Specs.Sut;
 
 namespace MockGen
@@ -6,7 +7,13 @@ namespace MockGen
     internal class IDependencyMockBuilder
     {
         private readonly IDependencyMethodsSetup methods = new IDependencyMethodsSetup();
-        
+        private readonly Func<IDependencyMock> ctor;
+
+        public IDependencyMockBuilder()
+        {
+            ctor = () => new IDependencyMock(methods);
+        }
+
         public IMethodSetup DoSomething()
         {
             return methods.DoSomethingSetup;
@@ -50,7 +57,7 @@ namespace MockGen
         public IDependency Build()
         {
             methods.SetupDone();
-            return new IDependencyMock(methods);
+            return ctor();
         }
     }
 }

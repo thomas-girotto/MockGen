@@ -1,5 +1,6 @@
 ﻿using MockGen.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MockGen.Templates
 {
@@ -7,9 +8,11 @@ namespace MockGen.Templates
     {
         public MockStaticTextTemplate(List<MockDescriptor> descriptor)
         {
-            Descriptor = descriptor;
+            Mocks = descriptor;
         }
 
-        public List<MockDescriptor> Descriptor { get; private set; }
+        public List<MockDescriptor> Mocks { get; private set; }
+
+        public IEnumerable<string> Namespaces => Mocks.SelectMany(m => m.Namespaces).Distinct();
     }
 }

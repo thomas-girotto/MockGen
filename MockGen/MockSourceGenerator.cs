@@ -170,10 +170,15 @@ namespace MockGen
 
             if (symbol is INamedTypeSymbol namedTypeSymbol)
             {
+                descriptorForTemplate.IsInterface = namedTypeSymbol.TypeKind == TypeKind.Interface;
                 descriptorForTemplate.TypeToMock = typeIdentifierSyntax.Identifier.ValueText;
-                descriptorForTemplate.TypeToMockOriginalNamespace = namedTypeSymbol.ContainingNamespace
-                    .ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)
-                    .Replace("global::", string.Empty);
+                descriptorForTemplate.TypeToMockOriginalNamespace = GetNamespace(namedTypeSymbol);
+
+                descriptorForTemplate.Ctors = namedTypeSymbol.InstanceConstructors
+                    .Select(c => new CtorDescriptor
+                    {
+                        Parameters = c.Parameters.Select(p => new ParameterDescriptor(p.Type.Name, p.Name, GetNamespace(p.ContainingNamespace))).ToList()
+                    }).ToList();
 
                 descriptorForTemplate.Methods = namedTypeSymbol.GetMembers()
                     .OfType<IMethodSymbol>()
@@ -183,13 +188,20 @@ namespace MockGen
                         Name = m.Name,
                         ReturnType = m.ReturnType.Name,
                         ReturnsVoid = m.ReturnsVoid,
-                        Parameters = m.Parameters.Select(p => new ParameterDescriptor(p.Type.Name, p.Name)).ToList(),
+                        Parameters = m.Parameters.Select(p => new ParameterDescriptor(p.Type.Name, p.Name, GetNamespace(p.ContainingNamespace))).ToList(),
                         ShouldBeOverriden = namedTypeSymbol.TypeKind == TypeKind.Class && (m.IsVirtual || m.IsAbstract)
                     })
                     .ToList();
             }
 
             return descriptorForTemplate;
+        }
+
+        private static string GetNamespace(ISymbol namedTypeSymbol)
+        {
+            return namedTypeSymbol.ContainingNamespace
+                                .ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)
+                                .Replace("global::", string.Empty);
         }
 
         private void AddSourceToBuildContext(GeneratorExecutionContext context, string fileName, string source)

@@ -13,10 +13,12 @@ namespace MockGen
     {
         private readonly <#=Descriptor.TypeToMock#>MethodsSetup methods;
 
-        public <#=Descriptor.TypeToMock#>Mock(<#=Descriptor.TypeToMock#>MethodsSetup methods)
+<# foreach (var ctor in Descriptor.Ctors) { #>
+        public <#=Descriptor.TypeToMock#>Mock(<#=ctor.ConcatParametersDeclarationWith(Descriptor.TypeToMock + "MethodsSetup methods")#>)<#=string.Format(Descriptor.CallBaseCtorIfNeeded, ctor.ParameterNames)#>
         {
             this.methods = methods;
         }
+<# } #>
 
 <# foreach (var method in Descriptor.Methods) { #>
         public <#=method.AddOverrideKeywordIfNeeded#><#=method.ReturnType#> <#=method.Name#>(<#=method.ParametersDeclaration#>)

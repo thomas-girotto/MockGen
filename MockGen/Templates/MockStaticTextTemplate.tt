@@ -3,16 +3,30 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+<# foreach (var ns in Namespaces) { #> 
+using <#=ns#>;
+<# } #>
+
 namespace MockGen
 {
     internal class Mock
     {
-<# foreach(var type in Descriptor) { #>
-        internal static <#=type.TypeToMock#>MockBuilder <#=type.TypeToMock#>()
+<# foreach(var mock in Mocks) { #>
+<# if (mock.IsInterface) { #>
+        internal static <#=mock.TypeToMock#>MockBuilder <#=mock.TypeToMock#>()
         {
-            return new <#=type.TypeToMock#>MockBuilder();
+            return new <#=mock.TypeToMock#>MockBuilder();
         }
 
-<#}#>
+<# } else { #>
+<# foreach(var ctor in mock.Ctors) { #>
+        internal static <#=mock.TypeToMock#>MockBuilder <#=mock.TypeToMock#>(<#=ctor.ParametersDeclaration#>)
+        {
+            return new <#=mock.TypeToMock#>MockBuilder(<#=ctor.ParameterNames#>);
+        }
+
+<# } #>
+<# } #>
+<# } #>
     }
 }

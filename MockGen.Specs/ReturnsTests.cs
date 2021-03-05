@@ -172,22 +172,6 @@ namespace MockGen.Specs
         }
 
         [Fact]
-        public void Should_mock_virtual_method_from_concrete_class()
-        {
-            // Given
-            var mockBuilder = Mock.ConcreteDependency();
-            mockBuilder.ICanBeMocked().Returns(2);
-            var mock = mockBuilder.Build();
-
-            // When
-            var result = mock.ICanBeMocked();
-
-            // Then
-            mock.Should().BeAssignableTo<ConcreteDependency>();
-            result.Should().Be(2);
-        }
-
-        [Fact]
         public void Should_throw_When_called_after_mock_has_been_built()
         {
             // Given

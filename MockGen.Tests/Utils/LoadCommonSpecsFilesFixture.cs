@@ -18,6 +18,7 @@ namespace MockGen.Tests.Utils
         public string ThrowsTestFile { get; private set; }
         public string SpyTestFile { get; private set; }
         public string ExecuteTestFile { get; private set; }
+        public string ConcreteClassTestFile { get; private set; }
 
         public LoadCommonSpecsFilesFixture()
         {
@@ -30,6 +31,7 @@ namespace MockGen.Tests.Utils
             ThrowsTestFile = SourceFileReader.ReadFile("ThrowsTests.cs");
             SpyTestFile = SourceFileReader.ReadFile("SpyTests.cs");
             ExecuteTestFile = SourceFileReader.ReadFile("ExecuteTests.cs");
+            ConcreteClassTestFile = SourceFileReader.ReadFile("ConcreteClassTests.cs");
         }
     }
 }

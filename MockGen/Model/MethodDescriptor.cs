@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MockGen.Model
 {
-    public class MethodDescriptor
+    public class MethodDescriptor : CtorDescriptor
     {
         private string returnType;
 
@@ -14,28 +14,13 @@ namespace MockGen.Model
             set => returnType = value;
         }
 
+        public string Name { get; set; }
+
         public bool ShouldBeOverriden { get; set; }
 
         public bool ReturnsVoid { get; set; }
 
-        public string Name { get; set; }
-
-        public List<ParameterDescriptor> Parameters { get; set; } = new List<ParameterDescriptor>();
-
         public string AddOverrideKeywordIfNeeded => ShouldBeOverriden ? "override " : string.Empty;
-
-        public string ParametersDeclaration =>
-            string.Join(", ", Parameters.Select(p => $"{p.Type} {p.Name}"));
-
-        public string ParametersDeclarationWithArg =>
-            string.Join(", ", Parameters.Select(p => $"Arg<{p.Type}> {p.Name}"));
-
-        /// <summary>
-        /// Give the concatenated list of parameters name, so that we can use them to call a method
-        /// </summary>
-        public string ParameterNames => string.Join(", ", Parameters.Select(p => p.Name));
-
-        private string ParameterTypes => string.Join(", ", Parameters.Select(p => p.Type));
 
         public string MethodSetupWithTypedParameters =>
             (ReturnsVoid, Parameters.Count) switch

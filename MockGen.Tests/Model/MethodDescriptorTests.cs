@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using MockGen.Model;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace MockGen.Tests.Model
@@ -19,7 +20,7 @@ namespace MockGen.Tests.Model
             Name = "MethodVoidWithParam",
             ReturnsVoid = true,
             ReturnType = "Void",
-            Parameters = new List<ParameterDescriptor> { new ParameterDescriptor("Type1", "param1") },
+            Parameters = new List<ParameterDescriptor> { new ParameterDescriptor("Type1", "param1", "SomeLib.Namespace") },
         };
 
         private MethodDescriptor GetMethodVoidWithTwoParam() => new MethodDescriptor
@@ -29,8 +30,8 @@ namespace MockGen.Tests.Model
             ReturnType = "Void",
             Parameters = new List<ParameterDescriptor> 
             { 
-                new ParameterDescriptor("Type1", "param1"),
-                new ParameterDescriptor("Type2", "param2"),
+                new ParameterDescriptor("Type1", "param1", "SomeLib.Namespace"),
+                new ParameterDescriptor("Type2", "param2", "SomeLib.Namespace"),
             },
         };
 
@@ -44,7 +45,7 @@ namespace MockGen.Tests.Model
         {
             Name = "Method2",
             ReturnType = "int",
-            Parameters = new List<ParameterDescriptor> { new ParameterDescriptor("Type1", "param1") }
+            Parameters = new List<ParameterDescriptor> { new ParameterDescriptor("Type1", "param1", "SomeLib.Namespace") }
         };
 
         private MethodDescriptor GetMethodWithTwoParameters() => new MethodDescriptor
@@ -53,8 +54,8 @@ namespace MockGen.Tests.Model
             ReturnType = "int",
             Parameters = new List<ParameterDescriptor> 
             { 
-                new ParameterDescriptor("Type1", "param1"), 
-                new ParameterDescriptor("Type2", "param2"),
+                new ParameterDescriptor("Type1", "param1", "SomeLib.Namespace"), 
+                new ParameterDescriptor("Type2", "param2", "SomeLib.Namespace"),
             }
         };
 
@@ -100,7 +101,7 @@ namespace MockGen.Tests.Model
             string parametersDefinition1 = GetMethodWithoutParameter().ParametersDeclaration;
             string parametersDefinition2 = GetMethodWithOneParameter().ParametersDeclaration;
             string parametersDefinition3 = GetMethodWithTwoParameters().ParametersDeclaration;
-
+            var test = string.Join(", ", "methods", null);
             // Assert
             parametersDefinition1.Should().BeEmpty();
             parametersDefinition2.Should().Be("Type1 param1");
