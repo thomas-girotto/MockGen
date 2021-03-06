@@ -61,6 +61,22 @@ MockGenerator.Generate<IDependency2>();
             syntaxReceiver.TypesToMockSyntax.Should().HaveCount(2);
         }
 
+        [Fact]
+        public void Should_recognize_usage_with_full_type()
+        {
+            // Given
+            var source = "MockGen.MockGenerator.Generate<IDependency1>();";
+            var rootNode = CSharpSyntaxTree.ParseText(source).GetRoot();
+            var syntaxReceiver = new SyntaxReceiver();
+            var syntaxTreeVisitor = new MockGeneratorSyntaxWalker(syntaxReceiver);
+
+            // When
+            syntaxTreeVisitor.Visit(rootNode);
+
+            // Then
+            syntaxReceiver.TypesToMockSyntax.Should().HaveCount(1);
+        }
+
         [Theory]
         [InlineData("MockGenerator.Generate<IDependency>")]
         [InlineData("MockGenerator.Generate<IDependency>(1)")]
