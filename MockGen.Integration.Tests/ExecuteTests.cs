@@ -1,20 +1,20 @@
 ﻿using FluentAssertions;
-using MockGen.Tests.Utils;
+using MockGen.Integration.Tests.Utils;
 using System;
 using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace MockGen.Tests
+namespace MockGen.Integration.Tests
 {
     [Collection("Load both metadata and sources")]
-    public class ConcreteClassTests
+    public class ExecuteTests
     {
         private readonly LoadMetadataReferenceFixture loadDependenciesfixture;
         private readonly LoadCommonSpecsFilesFixture loadSourceFilesFixture;
         private readonly TestRunner testRunner;
 
-        public ConcreteClassTests(ITestOutputHelper output, LoadMetadataReferenceFixture loadDependenciesfixture, LoadCommonSpecsFilesFixture loadSourceFilesFixture)
+        public ExecuteTests(ITestOutputHelper output, LoadMetadataReferenceFixture loadDependenciesfixture, LoadCommonSpecsFilesFixture loadSourceFilesFixture)
         {
             this.loadDependenciesfixture = loadDependenciesfixture;
             this.loadSourceFilesFixture = loadSourceFilesFixture;
@@ -30,26 +30,26 @@ namespace MockGen.Tests
                 loadSourceFilesFixture.Model1SourceFile,
                 loadSourceFilesFixture.Model2SourceFile,
                 loadSourceFilesFixture.GeneratorsSourceFile,
-                loadSourceFilesFixture.ConcreteClassTestFile,
+                loadSourceFilesFixture.ExecuteTestFile,
             };
         }
 
         [Fact]
-        public void Should_mock_virtual_method_from_concrete_class()
+        public void Should_execute_callback()
         {
             var sources = GetSourceFilesToCompileFromSpecs();
 
-            Action action = () => testRunner.RunTest(sources, nameof(ConcreteClassTests), nameof(Should_mock_virtual_method_from_concrete_class));
+            Action action = () => testRunner.RunTest(sources, nameof(ExecuteTests), nameof(Should_execute_callback));
 
             action.Should().NotThrow();
         }
 
         [Fact]
-        public void Should_pass_parameters_in_the_right_mock_ctor_overload()
+        public void Should_throw_When_called_after_mock_has_been_built()
         {
             var sources = GetSourceFilesToCompileFromSpecs();
 
-            Action action = () => testRunner.RunTest(sources, nameof(ConcreteClassTests), nameof(Should_pass_parameters_in_the_right_mock_ctor_overload));
+            Action action = () => testRunner.RunTest(sources, nameof(ExecuteTests), nameof(Should_throw_When_called_after_mock_has_been_built));
 
             action.Should().NotThrow();
         }

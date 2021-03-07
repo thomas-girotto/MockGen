@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Xunit;
 
-namespace MockGen.Tests.Utils
+namespace MockGen.Integration.Tests.Utils
 {
     /// <summary>
     /// Load only once the common source files we're using accross all tests

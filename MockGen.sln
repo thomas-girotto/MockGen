@@ -23,7 +23,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{95F977
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generated", "Generated", "{A427E69A-84DA-4FC3-86AF-7224BC865F19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockGen.Generated", "MockGen.Generated\MockGen.Generated.csproj", "{09541923-2FB6-49A9-A671-8FA4B55650CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockGen.Generated", "MockGen.Generated\MockGen.Generated.csproj", "{09541923-2FB6-49A9-A671-8FA4B55650CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockGen.Integration.Tests", "MockGen.Integration.Tests\MockGen.Integration.Tests.csproj", "{EBF4157F-A91F-460C-B21E-A0080365EE69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{09541923-2FB6-49A9-A671-8FA4B55650CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09541923-2FB6-49A9-A671-8FA4B55650CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09541923-2FB6-49A9-A671-8FA4B55650CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBF4157F-A91F-460C-B21E-A0080365EE69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBF4157F-A91F-460C-B21E-A0080365EE69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBF4157F-A91F-460C-B21E-A0080365EE69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBF4157F-A91F-460C-B21E-A0080365EE69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

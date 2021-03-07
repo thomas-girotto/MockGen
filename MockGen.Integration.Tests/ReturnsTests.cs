@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
-using MockGen.Tests.Utils;
+using MockGen.Integration.Tests.Utils;
 using System;
 using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace MockGen.Tests
+namespace MockGen.Integration.Tests
 {
     [Collection("Load both metadata and sources")]
     public class ReturnsTests

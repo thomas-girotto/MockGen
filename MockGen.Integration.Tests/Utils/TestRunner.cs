@@ -9,7 +9,7 @@ using System.Reflection;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace MockGen.Tests
+namespace MockGen.Integration.Tests
 {
     public class TestRunner
     {

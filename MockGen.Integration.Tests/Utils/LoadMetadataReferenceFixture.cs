@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Xunit;
 
-namespace MockGen.Tests
+namespace MockGen.Integration.Tests
 {
 
     [CollectionDefinition("Load Metadata References")]

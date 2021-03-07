@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace MockGen.Tests.Utils
+namespace MockGen.Integration.Tests.Utils
 {
     public static class SourceFileReader
     {
