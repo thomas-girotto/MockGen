@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleLib.Tests", "sample\S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockGen.Tests", "tests\MockGen.Tests\MockGen.Tests.csproj", "{F5C46B1D-0B2B-41D4-B9FD-4209B79ABED6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockGen.Specs", "MockGen.Specs\MockGen.Specs.csproj", "{429FDF4F-011D-42C1-B46B-0FD6287626CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockGen.Specs", "specs\MockGen.Specs\MockGen.Specs.csproj", "{429FDF4F-011D-42C1-B46B-0FD6287626CB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmark", "benchmark", "{B8E99487-157C-4253-9AF9-75ED3257AC90}"
 EndProject

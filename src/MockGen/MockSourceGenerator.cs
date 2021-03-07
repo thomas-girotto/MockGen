@@ -1,16 +1,12 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using MockGen.Diagnostics;
 using MockGen.Model;
 using MockGen.Templates;
 using MockGen.Templates.Matcher;
 using MockGen.Templates.Setup;
-using MockGen.Utils;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Text;
 

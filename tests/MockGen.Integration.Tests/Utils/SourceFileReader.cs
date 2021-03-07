@@ -1,5 +1,4 @@
-﻿using MockGen.Utils;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 
 namespace MockGen.Integration.Tests.Utils

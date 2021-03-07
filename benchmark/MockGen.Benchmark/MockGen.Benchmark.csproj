@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\MockGen.Specs\MockGen.Specs.csproj" />
+    <ProjectReference Include="..\..\specs\MockGen.Specs\MockGen.Specs.csproj" />
   </ItemGroup>
 
 </Project>
