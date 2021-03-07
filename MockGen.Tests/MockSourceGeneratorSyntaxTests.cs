@@ -134,6 +134,29 @@ namespace MyLib.Tests
             generator.TypesToMock[0].Namespaces.Should().Contain(new string[] { "ExternalDependency.Model", "MyLib.Tests" });
         }
 
+        [Fact]
+        public void Should_generate_a_diagnostic_error_When_trying_to_generate_a_mock_for_a_sealed_class()
+        {
+            // Given
+            string source = @"
+namespace MockGen.Tests
+{
+    public sealed class SealedClass { }
+    public class Generators
+    {
+        public void GenerateMocks()
+        {
+            MockGenerator.Generate<SealedClass>();
+        }
+    }
+}";
+            // When
+            var (_, diagnostics) = CompileSource(source);
+
+            // Then
+            diagnostics.Should().HaveCount(1).And.ContainSingle(d => d.Severity == DiagnosticSeverity.Error && d.Id == "MG0002");
+        }
+
         private (MockSourceGenerator generator, IEnumerable<Diagnostic> diagnostics) CompileSource(string source)
         {
             var rootNode = CSharpSyntaxTree.ParseText(source).GetRoot();
