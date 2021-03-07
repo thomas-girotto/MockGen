@@ -14,6 +14,8 @@ namespace MockGen.Model
             set => returnType = value;
         }
 
+        public string ReturnTypeNamespace { get; set; }
+
         public string Name { get; set; }
 
         public bool ShouldBeOverriden { get; set; }

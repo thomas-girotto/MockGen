@@ -19,6 +19,9 @@ namespace MockGen
     [Generator]
     public class MockSourceGenerator : ISourceGenerator
     {
+        // public member for test purpose only
+        public List<MockDescriptor> TypesToMock { get; private set; } = new List<MockDescriptor>();
+
         public void Execute(GeneratorExecutionContext context)
         {
             try
@@ -77,15 +80,13 @@ namespace MockGen
                 AddSourceToBuildContext(context, "MethodSetupVoid.cs", methodSetupVoidTemplate.TransformText());
 
                 // Then classes that depends on types to mock declared by the user
-                var allTypesDescriptor = new List<MockDescriptor>();
-
                 foreach (var typeSyntax in receiver.TypesToMockSyntax)
                 {
-                    var descriptorForTemplate = BuildModelFromTypeSyntax(context, typeSyntax);
+                    var descriptorForTemplate = MockDescriptorBuilder.FromSemanticModel(context, context.Compilation, typeSyntax);
 
                     if (descriptorForTemplate != null)
                     {
-                        allTypesDescriptor.Add(descriptorForTemplate);
+                        TypesToMock.Add(descriptorForTemplate);
 
                         var methodsSetupTemplate = new MethodsSetupTextTemplate(descriptorForTemplate);
                         AddSourceToBuildContext(context, $"{typeSyntax.Identifier.ValueText}MethodsSetup.cs", methodsSetupTemplate.TransformText());
@@ -98,11 +99,11 @@ namespace MockGen
                     }
                 }
 
-                var mockStaticTemplate = new MockStaticTextTemplate(allTypesDescriptor);
+                var mockStaticTemplate = new MockStaticTextTemplate(TypesToMock);
                 AddSourceToBuildContext(context, "Mock.cs", mockStaticTemplate.TransformText());
 
                 // Finally classes that only depend on the number of generic types in methods that we would mock
-                foreach (var genericTypeDescriptor in allTypesDescriptor
+                foreach (var genericTypeDescriptor in TypesToMock
                     .SelectMany(mock => mock.NumberOfParametersInMethods)
                     .Where(mock => mock.NumberOfTypes > 0)
                     .Distinct())
@@ -151,60 +152,6 @@ namespace MockGen
         {
             // Register a syntax receiver that will be created for each generation pass
             context.RegisterForSyntaxNotifications(() => new SyntaxReceiver());
-        }
-
-        private MockDescriptor BuildModelFromTypeSyntax(GeneratorExecutionContext context, IdentifierNameSyntax typeIdentifierSyntax)
-        {
-            var descriptorForTemplate = new MockDescriptor();
-            var model = context.Compilation.GetSemanticModel(typeIdentifierSyntax.SyntaxTree);
-
-            var symbol = model.GetSymbolInfo(typeIdentifierSyntax).Symbol;
-
-            if (symbol.IsSealed)
-            {
-                context.ReportDiagnostic(Diagnostic.Create(
-                    DiagnosticResources.ErrorMockSealedClass(symbol.Name),
-                    symbol.Locations.Length > 0 ? symbol.Locations[0] : Location.None));
-
-                return null;
-            }
-
-            if (symbol is INamedTypeSymbol namedTypeSymbol)
-            {
-                descriptorForTemplate.IsInterface = namedTypeSymbol.TypeKind == TypeKind.Interface;
-                descriptorForTemplate.TypeToMock = typeIdentifierSyntax.Identifier.ValueText;
-                descriptorForTemplate.TypeToMockOriginalNamespace = GetNamespace(namedTypeSymbol);
-
-                descriptorForTemplate.Ctors = namedTypeSymbol.InstanceConstructors
-                    .Select(c => new CtorDescriptor
-                    {
-                        Parameters = c.Parameters.Select(p => new ParameterDescriptor(p.Type.Name, p.Name, GetNamespace(p.ContainingNamespace))).ToList()
-                    }).ToList();
-
-                descriptorForTemplate.Methods = namedTypeSymbol.GetMembers()
-                    .OfType<IMethodSymbol>()
-                    .Where(m => m.IsAbstract || m.IsVirtual)
-                    .Select(m => new MethodDescriptor
-                    {
-                        Name = m.Name,
-                        ReturnType = m.ReturnType.Name,
-                        ReturnsVoid = m.ReturnsVoid,
-                        Parameters = m.Parameters.Select(p => new ParameterDescriptor(p.Type.Name, p.Name, GetNamespace(p.ContainingNamespace))).ToList(),
-                        ShouldBeOverriden = namedTypeSymbol.TypeKind == TypeKind.Class && (m.IsVirtual || m.IsAbstract)
-                    })
-                    .ToList();
-            }
-
-            return descriptorForTemplate;
-        }
-
-        private static string GetNamespace(ISymbol namedTypeSymbol)
-        {
-            return namedTypeSymbol.ContainingNamespace.IsGlobalNamespace
-                ? string.Empty
-                : namedTypeSymbol.ContainingNamespace
-                                .ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)
-                                .Replace("global::", string.Empty);
         }
 
         private void AddSourceToBuildContext(GeneratorExecutionContext context, string fileName, string source)

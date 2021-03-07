@@ -25,6 +25,7 @@ namespace MockGen.Model
 
         public IEnumerable<string> Namespaces => new List<string> { TypeToMockOriginalNamespace }
             .Concat(Methods.SelectMany(m => m.Parameters.Select(p => p.Namespace)))
+            .Concat(Methods.Select(m => m.ReturnTypeNamespace))
             .Concat(Ctors.SelectMany(c => c.Parameters.Select(p => p.Namespace)))
             .Where(ns => !string.IsNullOrEmpty(ns))
             .Distinct();
