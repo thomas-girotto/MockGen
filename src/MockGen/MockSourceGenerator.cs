@@ -156,8 +156,6 @@ namespace MockGen
 
         private void AddSourceToBuildContext(GeneratorExecutionContext context, string fileName, string source)
         {
-            // For Debug purpose, it helps to write classes in the MockGen.Generated project and compile from there
-            //File.WriteAllText(Path.Combine(CsprojLocator.GeneratedProjectPath, fileName), source);
             context.AddSource(fileName, SourceText.From(source, Encoding.UTF8));
         }
     }
