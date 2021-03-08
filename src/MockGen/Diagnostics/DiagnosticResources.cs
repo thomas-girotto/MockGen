@@ -23,5 +23,13 @@ namespace MockGen.Diagnostics
             DiagnosticCategory,
             DiagnosticSeverity.Error,
             isEnabledByDefault: true);
+
+        public static DiagnosticDescriptor UnableToAddSourceToContext(Exception ex, string fileName) => new DiagnosticDescriptor(
+            "MG0003",
+            $"{DiagnosticPrefix}: Technical exception while trying to generate code",
+            $"{DiagnosticPrefix}: An exception happened while trying to add file '{fileName}' to the build context: {ex}",
+            DiagnosticCategory,
+            DiagnosticSeverity.Error,
+            isEnabledByDefault: true);
     }
 }

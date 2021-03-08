@@ -7,6 +7,7 @@ using MockGen.Templates.Matcher;
 using MockGen.Templates.Setup;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -136,6 +137,10 @@ namespace MockGen
                     }
                 }
             }
+            catch(AddSourceToBuildContextException ex)
+            {
+                context.ReportDiagnostic(Diagnostic.Create(DiagnosticResources.UnableToAddSourceToContext(ex.InnerException, ex.FileName), Location.None));
+            }
             catch (Exception ex)
             {
                 context.ReportDiagnostic(Diagnostic.Create(DiagnosticResources.TechnicalError(ex), Location.None));
@@ -150,7 +155,14 @@ namespace MockGen
 
         private void AddSourceToBuildContext(GeneratorExecutionContext context, string fileName, string source)
         {
-            context.AddSource(fileName, SourceText.From(source, Encoding.UTF8));
+            try
+            {
+                context.AddSource(fileName, SourceText.From(source, Encoding.UTF8));
+            }
+            catch (Exception ex)
+            {
+                throw new AddSourceToBuildContextException(fileName, ex);
+            }
         }
     }
 }
