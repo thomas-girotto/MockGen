@@ -31,7 +31,7 @@ namespace MockGen.Templates
             this.Write("using System;\r\nusing MockGen.Setup;\r\nusing ");
             
             #line 8 "D:\Dev\MockGen\MockGen\Templates\MockTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMockOriginalNamespace));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMockNamespace));
             
             #line default
             #line hidden

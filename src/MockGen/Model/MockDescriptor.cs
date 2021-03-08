@@ -7,10 +7,11 @@ namespace MockGen.Model
     public class MockDescriptor
     {
         private List<CtorDescriptor> _ctors = new List<CtorDescriptor>();
-
+        
         public string TypeToMock { get; set; }
-        public string TypeToMockOriginalNamespace { get; set; }
+        public string TypeToMockNamespace { get; set; }
         public List<MethodDescriptor> Methods { get; set; }
+
         public List<CtorDescriptor> Ctors
         {
             get => _ctors;
@@ -23,7 +24,7 @@ namespace MockGen.Model
         }
         public bool IsInterface { get; set; }
 
-        public IEnumerable<string> Namespaces => new List<string> { TypeToMockOriginalNamespace }
+        public IEnumerable<string> Namespaces => new List<string> { TypeToMockNamespace }
             .Concat(Methods.SelectMany(m => m.Parameters.Select(p => p.Namespace)))
             .Concat(Methods.Select(m => m.ReturnTypeNamespace))
             .Concat(Ctors.SelectMany(c => c.Parameters.Select(p => p.Namespace)))
