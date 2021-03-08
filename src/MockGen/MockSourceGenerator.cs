@@ -99,42 +99,40 @@ namespace MockGen
                 AddSourceToBuildContext(context, "Mock.cs", mockStaticTemplate.TransformText());
 
                 // Finally classes that only depend on the number of generic types in methods that we would mock
-                foreach (var genericTypeDescriptor in TypesToMock
-                    .SelectMany(mock => mock.NumberOfParametersInMethods)
-                    .Where(mock => mock.NumberOfTypes > 0)
-                    .Distinct())
+                foreach (var genericTypeDescriptor in TypesToMock.GetAllMethodsGroupedByTypeParameter())
                 {
+                    var template = new GenericTypesDescriptor(genericTypeDescriptor);
                     var iMethodSetupPn = new IMethodSetupPnTextTemplate();
-                    iMethodSetupPn.Descriptor = genericTypeDescriptor;
-                    AddSourceToBuildContext(context, $"IMethodSetup{genericTypeDescriptor.FileSuffix}.cs", iMethodSetupPn.TransformText());
+                    iMethodSetupPn.Descriptor = template;
+                    AddSourceToBuildContext(context, $"IMethodSetup{template.FileSuffix}.cs", iMethodSetupPn.TransformText());
 
                     var methodSetupPnTemplate = new MethodSetupPnTextTemplate();
-                    methodSetupPnTemplate.Descriptor = genericTypeDescriptor;
-                    AddSourceToBuildContext(context, $"MethodSetup{genericTypeDescriptor.FileSuffix}.cs", methodSetupPnTemplate.TransformText());
+                    methodSetupPnTemplate.Descriptor = template;
+                    AddSourceToBuildContext(context, $"MethodSetup{template.FileSuffix}.cs", methodSetupPnTemplate.TransformText());
 
                     if (genericTypeDescriptor.HasMethodThatReturnsVoid)
                     {
                         var actionSpecificationTemplate = new ActionSpecificationTextTemplate();
-                        actionSpecificationTemplate.Descriptor = genericTypeDescriptor;
-                        AddSourceToBuildContext(context, $"ActionSpecification{genericTypeDescriptor.FileSuffix}.cs", actionSpecificationTemplate.TransformText());
+                        actionSpecificationTemplate.Descriptor = template;
+                        AddSourceToBuildContext(context, $"ActionSpecification{template.FileSuffix}.cs", actionSpecificationTemplate.TransformText());
 
                         var methodSetupVoidPnTemplate = new MethodSetupVoidPnTextTemplate();
-                        methodSetupVoidPnTemplate.Descriptor = genericTypeDescriptor;
-                        AddSourceToBuildContext(context, $"MethodSetupVoid{genericTypeDescriptor.FileSuffix}.cs", methodSetupVoidPnTemplate.TransformText());
+                        methodSetupVoidPnTemplate.Descriptor = template;
+                        AddSourceToBuildContext(context, $"MethodSetupVoid{template.FileSuffix}.cs", methodSetupVoidPnTemplate.TransformText());
                     }
                     if (genericTypeDescriptor.HasMethodThatReturns)
                     {
                         var funcSpecificationTemplate = new FuncSpecificationTextTemplate();
-                        funcSpecificationTemplate.Descriptor = genericTypeDescriptor;
-                        AddSourceToBuildContext(context, $"FuncSpecification{genericTypeDescriptor.FileSuffix}.cs", funcSpecificationTemplate.TransformText());
+                        funcSpecificationTemplate.Descriptor = template;
+                        AddSourceToBuildContext(context, $"FuncSpecification{template.FileSuffix}.cs", funcSpecificationTemplate.TransformText());
 
                         var iMethodSetupReturnPn = new IMethodSetupReturnPnTextTemplate();
-                        iMethodSetupReturnPn.Descriptor = genericTypeDescriptor;
-                        AddSourceToBuildContext(context, $"IMethodSetupReturn{genericTypeDescriptor.FileSuffix}.cs", iMethodSetupReturnPn.TransformText());
+                        iMethodSetupReturnPn.Descriptor = template;
+                        AddSourceToBuildContext(context, $"IMethodSetupReturn{template.FileSuffix}.cs", iMethodSetupReturnPn.TransformText());
                             
                         var methodSetupReturnPnTemplate = new MethodSetupReturnPnTextTemplate();
-                        methodSetupReturnPnTemplate.Descriptor = genericTypeDescriptor;
-                        AddSourceToBuildContext(context, $"MethodSetupReturn{genericTypeDescriptor.FileSuffix}.cs", methodSetupReturnPnTemplate.TransformText());
+                        methodSetupReturnPnTemplate.Descriptor = template;
+                        AddSourceToBuildContext(context, $"MethodSetupReturn{template.FileSuffix}.cs", methodSetupReturnPnTemplate.TransformText());
                     }
                 }
             }

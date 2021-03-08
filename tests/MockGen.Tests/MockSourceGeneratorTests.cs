@@ -9,7 +9,7 @@ using Xunit.Sdk;
 
 namespace MockGen.Tests
 {
-    public class MockSourceGeneratorSyntaxTests
+    public class MockSourceGeneratorTests
     {
         [Fact]
         public void Should_find_method_parameters_namespaces()

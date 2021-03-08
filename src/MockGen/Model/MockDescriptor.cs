@@ -31,16 +31,5 @@ namespace MockGen.Model
             .Distinct();
 
         public string CallBaseCtorIfNeeded => IsInterface ? "" : " : base({0})";
-
-        public IEnumerable<GenericTypesDescriptor> NumberOfParametersInMethods => 
-            Methods.GroupBy(
-                m => m.Parameters.Count,
-                (n, methodsInGroup) => new GenericTypesDescriptor
-                {
-                    NumberOfTypes = n,
-                    HasMethodThatReturnsVoid = methodsInGroup.Any(m => m.ReturnsVoid),
-                    HasMethodThatReturns = methodsInGroup.Any(m => !m.ReturnsVoid),
-                });
-
     }
 }

@@ -8,37 +8,6 @@ namespace MockGen.Tests.Model
 {
     public class MockDescriptorTests
     {
-        public MockDescriptor GetDefaultDescriptor()
-        {
-            return new MockDescriptor
-            {
-                TypeToMockOriginalNamespace = "SomeLib.TypeNamespace",
-                Methods = new List<MethodDescriptor>
-                {
-                    new MethodDescriptor
-                    {
-                        Name = "MethodVoid",
-                        ReturnsVoid = true,
-                        ReturnType = string.Empty,
-                    },
-                    new MethodDescriptor
-                    {
-                        Name = "MethodTReturn",
-                        ReturnType = "int",
-                    },
-                    new MethodDescriptor
-                    {
-                        Name = "MethodTParamTReturn",
-                        ReturnType = "int",
-                        Parameters = new List<ParameterDescriptor>
-                        {
-                            new ParameterDescriptor("Type1", "param1", "SomeLib.Namespace1"),
-                        },
-                    }
-                }
-            };
-        }
-
         [Fact]
         public void Should_create_a_default_empty_constructor_When_null_constructors_given()
         {
@@ -64,33 +33,63 @@ namespace MockGen.Tests.Model
         [Fact]
         public void Should_give_all_namespaces_from_all_types()
         {
-            var mock = GetDefaultDescriptor();
-            mock.Ctors.Add(new CtorDescriptor
+            // Given
+            var typeToMockNamespace = "SomeLib.TypeNamespace";
+            var returnedTypeNamespace = "SomeLib.Namespace.For.ReturnedType";
+            var parameterTypeNamespace = "SomeLib.Namespace.For.ParameterType";
+            var mock = new MockDescriptor
             {
-                Parameters = new List<ParameterDescriptor>
+                TypeToMockNamespace = typeToMockNamespace,
+                Methods = new List<MethodDescriptor>
                 {
-                    new ParameterDescriptor("Type2", "param2", "SomeLib.OtherNamespace"),
+                    new MethodDescriptor
+                    {
+                        Name = "MethodTParamTReturn",
+                        ReturnType = "Type1",
+                        ReturnTypeNamespace = returnedTypeNamespace,
+                        Parameters = new List<ParameterDescriptor>
+                        {
+                            new ParameterDescriptor("Type2", "param1", parameterTypeNamespace),
+                        },
+                    }
                 }
-            });
+            };
 
+            // When
             var namespaces = mock.Namespaces;
 
-            namespaces.Should().HaveCount(3);
+            // Then
+            namespaces.Should().HaveCount(3).And.Contain(typeToMockNamespace, returnedTypeNamespace, parameterTypeNamespace);
         }
 
         [Fact]
-        public void Should_group_methods_by_number_of_parameters_and_returns_void()
+        public void Should_only_return_same_namespace_once()
         {
-            var model = GetDefaultDescriptor();
-            var numberOfParameters = model.NumberOfParametersInMethods.ToList();
+            // Given
+            var typeToMockNamespace = "SomeLib.TypeNamespace";
+            var mock = new MockDescriptor
+            {
+                TypeToMockNamespace = typeToMockNamespace,
+                Methods = new List<MethodDescriptor>
+                {
+                    new MethodDescriptor
+                    {
+                        Name = "MethodTParamTReturn",
+                        ReturnType = "Type1",
+                        ReturnTypeNamespace = typeToMockNamespace,
+                        Parameters = new List<ParameterDescriptor>
+                        {
+                            new ParameterDescriptor("Type1", "param1", typeToMockNamespace),
+                        },
+                    }
+                }
+            };
 
-            numberOfParameters.Should().HaveCount(2);
-            numberOfParameters[0].NumberOfTypes.Should().Be(0);
-            numberOfParameters[0].HasMethodThatReturnsVoid.Should().BeTrue();
-            numberOfParameters[0].HasMethodThatReturnsVoid.Should().BeTrue();
-            numberOfParameters[1].NumberOfTypes.Should().Be(1);
-            numberOfParameters[1].HasMethodThatReturnsVoid.Should().BeFalse();
-            numberOfParameters[1].HasMethodThatReturns.Should().BeTrue();
+            // When
+            var namespaces = mock.Namespaces;
+
+            // Then
+            namespaces.Should().HaveCount(1).And.Contain(typeToMockNamespace);
         }
     }
 }
