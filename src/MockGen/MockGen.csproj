@@ -4,15 +4,21 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
+  
+  <PropertyGroup>
+    <PackageId>MockGen</PackageId>
+    <Version>0.1.0</Version>
+    <Description>MockGen is a .NET mock library based on source generators. It aims to give developpers the best mocking API by using source generators to overcome runtime IL weaving inherent limitations.</Description>
+    <Authors>Thomas Girotto</Authors>
+    <PackageTags>mocking;mocks;testing;unit-testing;TDD</PackageTags>
+    <PackageProjectUrl>https://github.com/thomas-girotto/MockGen</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+  </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Templates\MethodsSetupTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MethodsSetupTextTemplate.tt</DependentUpon>
-    </None>
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.1">
