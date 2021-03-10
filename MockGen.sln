@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleLib", "sample\SampleLib\SampleLib.csproj", "{5E9A8498-B2EE-4CDC-86E9-2277F0E0AA45}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockGen", "src\MockGen\MockGen.csproj", "{CF6E429B-499F-482B-BE62-8AC0D0A0C5B2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleLib.Tests", "sample\SampleLib.Tests\SampleLib.Tests.csproj", "{20A97143-983D-4EE8-84DE-0678BAEF1366}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockGen.Sample", "sample\MockGen.Sample\MockGen.Sample.csproj", "{20A97143-983D-4EE8-84DE-0678BAEF1366}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockGen.Tests", "tests\MockGen.Tests\MockGen.Tests.csproj", "{F5C46B1D-0B2B-41D4-B9FD-4209B79ABED6}"
 EndProject
@@ -38,10 +36,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5E9A8498-B2EE-4CDC-86E9-2277F0E0AA45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E9A8498-B2EE-4CDC-86E9-2277F0E0AA45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E9A8498-B2EE-4CDC-86E9-2277F0E0AA45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E9A8498-B2EE-4CDC-86E9-2277F0E0AA45}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CF6E429B-499F-482B-BE62-8AC0D0A0C5B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CF6E429B-499F-482B-BE62-8AC0D0A0C5B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF6E429B-499F-482B-BE62-8AC0D0A0C5B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -71,7 +65,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{5E9A8498-B2EE-4CDC-86E9-2277F0E0AA45} = {95F977E0-B203-4562-8482-5E74113C1FF5}
 		{CF6E429B-499F-482B-BE62-8AC0D0A0C5B2} = {DBB803F9-E54D-4C67-9998-6BF86B1F4F01}
 		{20A97143-983D-4EE8-84DE-0678BAEF1366} = {95F977E0-B203-4562-8482-5E74113C1FF5}
 		{F5C46B1D-0B2B-41D4-B9FD-4209B79ABED6} = {75E6EB20-D192-429B-846C-78EA54A0C11B}
