@@ -157,7 +157,7 @@ namespace MockGen.Tests
             diagnostics.Should().HaveCount(1).And.ContainSingle(d => d.Severity == DiagnosticSeverity.Error && d.Id == "MG0002");
         }
 
-        private (MockSourceGenerator generator, IEnumerable<Diagnostic> diagnostics) CompileSource(string source)
+        private (MockSourceGeneratorSpy generator, IEnumerable<Diagnostic> diagnostics) CompileSource(string source)
         {
             var rootNode = CSharpSyntaxTree.ParseText(source).GetRoot();
             var syntaxReceiver = new SyntaxReceiver();
@@ -170,7 +170,7 @@ namespace MockGen.Tests
                     null,
                     new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
-            var generator = new MockSourceGenerator();
+            var generator = new MockSourceGeneratorSpy();
 
             var driver = CSharpGeneratorDriver.Create(generator);
             driver.RunGeneratorsAndUpdateCompilation(compilation, out var _, out var generateDiagnostics);
