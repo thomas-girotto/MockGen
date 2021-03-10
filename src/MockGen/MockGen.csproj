@@ -7,7 +7,7 @@
   
   <PropertyGroup>
     <PackageId>MockGen</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
     <Description>MockGen is a .NET mock library based on source generators. It aims to give developpers the best mocking API by using source generators to overcome runtime IL weaving inherent limitations.</Description>
     <Authors>Thomas Girotto</Authors>
     <PackageTags>mocking;mocks;testing;unit-testing;TDD</PackageTags>
