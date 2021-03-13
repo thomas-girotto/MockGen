@@ -8,8 +8,15 @@ namespace MockGen.Setup
     internal abstract class MethodSetup<TParam1, TParam2> : MethodSetupBase, IMethodSetup<TParam1, TParam2>
     {
         protected List<(TParam1 param1, TParam2 param2)> calls = new List<(TParam1 param1, TParam2 param2)>();
-        protected ArgMatcher<TParam1> matcher1;
-        protected ArgMatcher<TParam2> matcher2;
+        protected new ActionConfiguration<TParam1, TParam2> currentConfiguration;
+
+        protected void ForParameter(Arg<TParam1> param1, Arg<TParam2> param2)
+        {
+            ClearCurrentConfiguration();
+            currentConfiguration = new ActionConfiguration<TParam1, TParam2>(base.currentConfiguration);
+            currentConfiguration.Matcher1 = ArgMatcher<TParam1>.Create(param1);
+            currentConfiguration.Matcher2 = ArgMatcher<TParam2>.Create(param2);
+        }
 
         public int NumberOfCalls
         {
@@ -25,16 +32,14 @@ namespace MockGen.Setup
             get
             {
                 EnsureSpyingMethodsAreAllowed(nameof(MatchingCalls));
-                return calls.Where(arg => 
-                    matcher1.Match(arg.param1) && 
-                    matcher2.Match(arg.param2));
+                return calls.Where(arg => currentConfiguration.Match(arg.param1, arg.param2));
             }
         }
 
-        public abstract void Throws<TException>() where TException : Exception, new();
-
-        public abstract void Throws<TException>(TException exception) where TException : Exception;
-
-        public abstract void Execute(Action<TParam1, TParam2> callback);
+        public void Execute(Action<TParam1, TParam2> callback)
+        {
+            EnsureConfigurationMethodsAreAllowed(nameof(Execute));
+            currentConfiguration.ExecuteAction = callback;
+        }
     }
 }

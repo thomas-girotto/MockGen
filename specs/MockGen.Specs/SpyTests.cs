@@ -76,7 +76,9 @@ namespace MockGen.Specs
             mock.DoSomethingWithTwoParameters(new Model1 { Id = 2 }, new Model2 { Name = "tata" });
 
             // When
-            var callsForToto = mockBuilder.DoSomethingWithTwoParameters(Arg<Model1>.When(m => m.Id == 2), Arg<Model2>.When(m => m.Name == "toto")).MatchingCalls;
+            var callsForToto = mockBuilder.DoSomethingWithTwoParameters(
+                Arg<Model1>.When(m => m.Id == 2), 
+                Arg<Model2>.When(m => m.Name == "toto")).MatchingCalls;
 
             // Then
             callsForToto.Should().HaveCount(1)

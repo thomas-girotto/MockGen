@@ -8,7 +8,14 @@ namespace MockGen.Setup
     internal abstract class MethodSetup<TParam1> : MethodSetupBase, IMethodSetup<TParam1>
     {
         protected List<TParam1> calls = new List<TParam1>();
-        protected ArgMatcher<TParam1> matcher;
+        protected new ActionConfiguration<TParam1> currentConfiguration;
+
+        protected void ForParameter(Arg<TParam1> paramValue)
+        {
+            ClearCurrentConfiguration();
+            currentConfiguration = new ActionConfiguration<TParam1>(base.currentConfiguration);
+            currentConfiguration.Matcher1 = ArgMatcher<TParam1>.Create(paramValue);
+        }
 
         public int NumberOfCalls 
         { 
@@ -24,13 +31,14 @@ namespace MockGen.Setup
             get
             {
                 EnsureSpyingMethodsAreAllowed(nameof(MatchingCalls));
-                return calls.Where(param => matcher.Match(param));
+                return calls.Where(param => currentConfiguration.Match(param));
             }
         }
 
-        public abstract void Execute(Action<TParam1> callback);
-        public abstract void Throws<TException>() where TException : Exception, new();
-
-        public abstract void Throws<TException>(TException exception) where TException : Exception;
+        public void Execute(Action<TParam1> callback)
+        {
+            EnsureConfigurationMethodsAreAllowed(nameof(Execute));
+            currentConfiguration.ExecuteAction = callback;
+        }
     }
 }

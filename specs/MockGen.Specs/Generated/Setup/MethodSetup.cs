@@ -4,8 +4,13 @@ namespace MockGen.Setup
 {
     internal abstract class MethodSetup : MethodSetupBase
     {
-        protected Action additionalCallback = () => { };
         protected int numberOfCalls;
+        protected new ActionConfiguration currentConfiguration;
+
+        internal MethodSetup()
+        {
+            currentConfiguration = new ActionConfiguration(base.currentConfiguration);
+        }
 
         public int NumberOfCalls
         {
@@ -16,14 +21,10 @@ namespace MockGen.Setup
             }
         }
 
-        public abstract void Throws<TException>() where TException : Exception, new();
-
-        public abstract void Throws<TException>(TException exception) where TException : Exception;
-
         public void Execute(Action callback)
         {
             EnsureConfigurationMethodsAreAllowed(nameof(Execute));
-            additionalCallback = callback;
+            currentConfiguration.ExecuteAction = callback;
         }
     }
 }

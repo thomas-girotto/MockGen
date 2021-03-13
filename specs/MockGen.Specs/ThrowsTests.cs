@@ -61,7 +61,10 @@ namespace MockGen.Specs
         {
             // Given
             var mockBuilder = Mock.IDependency();
-            mockBuilder.DoSomethingWithTwoParameters(Arg<Model1>.When(m => m.Id == 1), Arg<Model2>.When(m => m.Name == "Throw")).Throws<Exception>();
+            mockBuilder.DoSomethingWithTwoParameters(
+                Arg<Model1>.When(m => m.Id == 1), 
+                Arg<Model2>.When(m => m.Name == "Throw"))
+                .Throws<Exception>();
             var mock = mockBuilder.Build();
 
             // When
