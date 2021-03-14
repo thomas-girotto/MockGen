@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+
 namespace MockGen.Setup
 {
     internal class ActionConfigurationWithReturn<TReturn>
     {
-        private ActionConfiguration baseConfiguration;
+        private readonly ActionConfiguration baseConfiguration;
 
         internal ActionConfigurationWithReturn(ActionConfiguration baseConfiguration)
         {

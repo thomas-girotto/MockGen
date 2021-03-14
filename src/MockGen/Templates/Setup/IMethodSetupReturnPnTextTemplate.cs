@@ -18,7 +18,7 @@ namespace MockGen.Templates.Setup
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Dev\MockGen\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
+    #line 1 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
     public partial class IMethodSetupReturnPnTextTemplate : IMethodSetupReturnPnTextTemplateBase
     {
@@ -28,28 +28,21 @@ namespace MockGen.Templates.Setup
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("namespace MockGen.Setup\r\n{\r\n    internal interface IMethodSetupReturn<");
+            this.Write("namespace MockGen.Setup\r\n{\r\n    internal interface IMethodSetupReturn");
             
-            #line 8 "D:\Dev\MockGen\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
+            #line 8 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypesWithTReturn));
+            
+            #line default
+            #line hidden
+            this.Write(" : IMethodSetup");
+            
+            #line 8 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
             
             #line default
             #line hidden
-            this.Write(", TReturn> : IMethodSetup<");
-            
-            #line 8 "D:\Dev\MockGen\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
-            
-            #line default
-            #line hidden
-            this.Write("> \r\n    {\r\n        IMethodSetup<");
-            
-            #line 10 "D:\Dev\MockGen\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
-            
-            #line default
-            #line hidden
-            this.Write("> Returns(TReturn value);\r\n    }\r\n}");
+            this.Write(" \r\n    {\r\n        void Returns(TReturn value);\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

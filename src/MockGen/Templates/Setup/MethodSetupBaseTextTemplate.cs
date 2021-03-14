@@ -18,7 +18,7 @@ namespace MockGen.Templates.Setup
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupBaseTextTemplate.tt"
+    #line 1 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupBaseTextTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
     public partial class MethodSetupBaseTextTemplate : MethodSetupBaseTextTemplateBase
     {
@@ -28,34 +28,26 @@ namespace MockGen.Templates.Setup
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write(@"using System;
-
-namespace MockGen.Setup
-{
-    internal abstract class MethodSetupBase
-    {
-        protected bool setupDone = false;
-
-        internal virtual void SetupDone() => setupDone = true;
-
-        protected void EnsureConfigurationMethodsAreAllowed(string methodName)
-        {
-            if (setupDone)
-            {
-                throw new InvalidOperationException($""{methodName} method is not allowed once the mock has been built"");
-            }
-        }
-
-        protected void EnsureSpyingMethodsAreAllowed(string methodName)
-        {
-            if (!setupDone)
-            {
-                throw new InvalidOperationException($""{methodName} method is not allowed until the mock has been built"");
-            }
-        }
-    }
-}
-");
+            this.Write("using System;\r\n\r\nnamespace MockGen.Setup\r\n{\r\n    internal abstract class MethodSe" +
+                    "tupBase\r\n    {\r\n        public bool IsSetupDone { get; set; }\r\n        protected" +
+                    " ActionConfigurationBase currentConfiguration = new ActionConfigurationBase();\r\n" +
+                    "\r\n        internal virtual void SetupDone() => IsSetupDone = true;\r\n\r\n        pr" +
+                    "otected void ClearCurrentConfiguration()\r\n        {\r\n            currentConfigur" +
+                    "ation = new ActionConfigurationBase();\r\n        }\r\n\r\n        public void Throws<" +
+                    "TException>() where TException : Exception, new()\r\n        {\r\n            Ensure" +
+                    "ConfigurationMethodsAreAllowed(nameof(Throws));\r\n            currentConfiguratio" +
+                    "n.ThrowAction = () => throw new TException();\r\n        }\r\n\r\n        public void " +
+                    "Throws<TException>(TException exception) where TException : Exception\r\n        {" +
+                    "\r\n            EnsureConfigurationMethodsAreAllowed(nameof(Throws));\r\n           " +
+                    " currentConfiguration.ThrowAction = () => throw exception;\r\n        }\r\n\r\n       " +
+                    " protected void EnsureConfigurationMethodsAreAllowed(string methodName)\r\n       " +
+                    " {\r\n            if (IsSetupDone)\r\n            {\r\n                throw new Inval" +
+                    "idOperationException($\"{methodName} method is not allowed once the mock has been" +
+                    " built\");\r\n            }\r\n        }\r\n\r\n        protected void EnsureSpyingMethod" +
+                    "sAreAllowed(string methodName)\r\n        {\r\n            if (!IsSetupDone)\r\n      " +
+                    "      {\r\n                throw new InvalidOperationException($\"{methodName} meth" +
+                    "od is not allowed until the mock has been built\");\r\n            }\r\n        }\r\n  " +
+                    "  }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

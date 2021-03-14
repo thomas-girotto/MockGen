@@ -31,7 +31,11 @@ namespace MockGen.Model
                     .Select(n => $"P{n}")
                     .Aggregate(string.Empty, (suffix, next) => suffix + next);
 
-        public string GenericTypes => $"{string.Join(", ", EnumerateNumbers.Select(n => $"TParam{n}"))}";
+        public string GenericTypes => EnumerateNumbers.Any() 
+            ? $"<{string.Join(", ", EnumerateNumbers.Select(n => $"TParam{n}"))}>"
+            : string.Empty;
+
+        public string GenericTypesWithTReturn => $"<{string.Join(", ", EnumerateNumbers.Select(n => $"TParam{n}").Concat(new string[] { "TReturn" }))}>";
 
         public string DiscardParameters => $"({string.Join(", ", EnumerateNumbers.Select(_ => "_"))})";
 

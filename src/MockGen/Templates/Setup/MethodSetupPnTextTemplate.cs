@@ -18,7 +18,7 @@ namespace MockGen.Templates.Setup
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+    #line 1 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
     public partial class MethodSetupPnTextTemplate : MethodSetupPnTextTemplateBase
     {
@@ -30,108 +30,207 @@ namespace MockGen.Templates.Setup
         {
             this.Write("using MockGen.Matcher;\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing S" +
                     "ystem.Linq;\r\n\r\nnamespace MockGen.Setup\r\n{\r\n    internal abstract class MethodSet" +
-                    "up<");
+                    "up");
             
-            #line 13 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 13 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
             
             #line default
             #line hidden
-            this.Write("> : MethodSetupBase, IMethodSetup<");
+            this.Write(" : MethodSetupBase, IMethodSetup");
             
-            #line 13 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 13 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
             
             #line default
             #line hidden
-            this.Write(">\r\n    {\r\n");
+            this.Write("\r\n    {\r\n");
             
-            #line 15 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
- if (Descriptor.NumberOfTypes == 1) { 
+            #line 15 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+ if (Descriptor.NumberOfTypes == 0) { 
+            
+            #line default
+            #line hidden
+            this.Write("        protected int numberOfCalls;\r\n");
+            
+            #line 17 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+ } else if (Descriptor.NumberOfTypes == 1) { 
             
             #line default
             #line hidden
             this.Write("        protected List<TParam1> calls = new List<TParam1>();\r\n");
             
-            #line 17 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 19 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("        protected List<(");
             
-            #line 18 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 20 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ParametersTypesWithName));
             
             #line default
             #line hidden
             this.Write(")> calls = new List<(");
             
-            #line 18 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 20 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ParametersTypesWithName));
             
             #line default
             #line hidden
             this.Write(")>();\r\n");
             
-            #line 19 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 21 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
  } 
             
             #line default
             #line hidden
+            this.Write("        \r\n        protected new ActionConfiguration");
             
-            #line 20 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 22 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            
+            #line default
+            #line hidden
+            this.Write(" currentConfiguration;\r\n\r\n");
+            
+            #line 24 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+ if (Descriptor.NumberOfTypes == 0) { 
+            
+            #line default
+            #line hidden
+            this.Write("        internal MethodSetup()\r\n        {\r\n            currentConfiguration = new" +
+                    " ActionConfiguration(base.currentConfiguration);\r\n        }\r\n");
+            
+            #line 29 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 31 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+ if (Descriptor.NumberOfTypes > 0) { 
+            
+            #line default
+            #line hidden
+            this.Write("        protected void ForParameter(");
+            
+            #line 32 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatClassParameterByParameterType("Arg", "param")));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n        {\r\n            ClearCurrentConfiguration();\r\n            currentConfig" +
+                    "uration = new ActionConfiguration");
+            
+            #line 35 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            
+            #line default
+            #line hidden
+            this.Write("(base.currentConfiguration);\r\n");
+            
+            #line 36 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
  foreach (var n in Descriptor.EnumerateNumbers) { 
             
             #line default
             #line hidden
-            this.Write("        protected ArgMatcher<TParam");
+            this.Write("            currentConfiguration.Matcher");
             
-            #line 21 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 37 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(n));
             
             #line default
             #line hidden
-            this.Write("> matcher");
+            this.Write(" = ArgMatcher<TParam");
             
-            #line 21 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 37 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(n));
             
             #line default
             #line hidden
-            this.Write(";\r\n");
+            this.Write(">.Create(param");
             
-            #line 22 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 37 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(n));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n");
+            
+            #line 38 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("\r\n        public int NumberOfCalls\r\n        {\r\n            get\r\n            {\r\n  " +
-                    "              EnsureSpyingMethodsAreAllowed(nameof(NumberOfCalls));\r\n           " +
-                    "     return MatchingCalls.Count();\r\n            }\r\n        }\r\n\r\n");
+            this.Write("            \r\n        }\r\n\r\n");
             
-            #line 33 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 41 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("        public int NumberOfCalls \r\n        { \r\n            get \r\n            {\r\n " +
+                    "               EnsureSpyingMethodsAreAllowed(nameof(NumberOfCalls));\r\n");
+            
+            #line 47 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+ if (Descriptor.NumberOfTypes == 0) { 
+            
+            #line default
+            #line hidden
+            this.Write("                return numberOfCalls;\r\n");
+            
+            #line 49 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+ } else { 
+            
+            #line default
+            #line hidden
+            this.Write("                return MatchingCalls.Count();\r\n");
+            
+            #line 51 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("            }\r\n        } \r\n\r\n");
+            
+            #line 55 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+ if (Descriptor.NumberOfTypes > 0) { 
+            
+            #line default
+            #line hidden
+            
+            #line 56 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
  if (Descriptor.NumberOfTypes == 1) { 
             
             #line default
             #line hidden
-            this.Write("        public IEnumerable<TParam1> MatchingCalls\r\n");
+            this.Write("        public IEnumerable");
             
-            #line 35 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 57 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            
+            #line default
+            #line hidden
+            this.Write(" MatchingCalls\r\n");
+            
+            #line 58 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("        public IEnumerable<(");
             
-            #line 36 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 59 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ParametersTypesWithName));
             
             #line default
             #line hidden
             this.Write(")> MatchingCalls\r\n");
             
-            #line 37 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 60 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
  } 
             
             #line default
@@ -139,47 +238,50 @@ namespace MockGen.Templates.Setup
             this.Write("        {\r\n            get\r\n            {\r\n                EnsureSpyingMethodsAre" +
                     "Allowed(nameof(MatchingCalls));\r\n");
             
-            #line 42 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 65 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
  if (Descriptor.NumberOfTypes == 1) { 
             
             #line default
             #line hidden
-            this.Write("                return calls.Where(param1 => matcher1.Match(param1));\r\n");
+            this.Write("                return calls.Where(@params => currentConfiguration.Match(@params)" +
+                    ");\r\n");
             
-            #line 44 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 67 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
  } else { 
             
             #line default
             #line hidden
-            this.Write("                return calls.Where(args => ");
+            this.Write("                return calls.Where(@params => currentConfiguration.Match(");
             
-            #line 45 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatMatcherCalls("matcher", "args.param")));
+            #line 68 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatParameters("@params.param")));
             
             #line default
             #line hidden
-            this.Write(");\r\n");
+            this.Write("));\r\n");
             
-            #line 46 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 69 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write(@"            }
-        }
-
-        public abstract void Throws<TException>() where TException : Exception, new();
-
-        public abstract void Throws<TException>(TException exception) where TException : Exception;
-
-        public abstract void Execute(Action<");
+            this.Write("            }\r\n        }\r\n\r\n");
             
-            #line 54 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+            #line 73 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("        public void Execute(Action");
+            
+            #line 74 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
             
             #line default
             #line hidden
-            this.Write("> callback);\r\n    }\r\n}");
+            this.Write(" callback)\r\n        {\r\n            EnsureConfigurationMethodsAreAllowed(nameof(Ex" +
+                    "ecute));\r\n            currentConfiguration.ExecuteAction = callback;\r\n        }\r" +
+                    "\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

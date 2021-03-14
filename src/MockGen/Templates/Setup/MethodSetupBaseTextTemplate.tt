@@ -9,13 +9,31 @@ namespace MockGen.Setup
 {
     internal abstract class MethodSetupBase
     {
-        protected bool setupDone = false;
+        public bool IsSetupDone { get; set; }
+        protected ActionConfigurationBase currentConfiguration = new ActionConfigurationBase();
 
-        internal virtual void SetupDone() => setupDone = true;
+        internal virtual void SetupDone() => IsSetupDone = true;
+
+        protected void ClearCurrentConfiguration()
+        {
+            currentConfiguration = new ActionConfigurationBase();
+        }
+
+        public void Throws<TException>() where TException : Exception, new()
+        {
+            EnsureConfigurationMethodsAreAllowed(nameof(Throws));
+            currentConfiguration.ThrowAction = () => throw new TException();
+        }
+
+        public void Throws<TException>(TException exception) where TException : Exception
+        {
+            EnsureConfigurationMethodsAreAllowed(nameof(Throws));
+            currentConfiguration.ThrowAction = () => throw exception;
+        }
 
         protected void EnsureConfigurationMethodsAreAllowed(string methodName)
         {
-            if (setupDone)
+            if (IsSetupDone)
             {
                 throw new InvalidOperationException($"{methodName} method is not allowed once the mock has been built");
             }
@@ -23,7 +41,7 @@ namespace MockGen.Setup
 
         protected void EnsureSpyingMethodsAreAllowed(string methodName)
         {
-            if (!setupDone)
+            if (!IsSetupDone)
             {
                 throw new InvalidOperationException($"{methodName} method is not allowed until the mock has been built");
             }

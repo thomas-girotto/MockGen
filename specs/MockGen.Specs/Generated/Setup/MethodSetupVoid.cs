@@ -2,7 +2,7 @@
 
 namespace MockGen.Setup
 {
-    internal class MethodSetupVoid : MethodSetup, IMethodSetup
+    internal class MethodSetupVoid : MethodSetup
     {
         public void ExecuteSetup()
         {

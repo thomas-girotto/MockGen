@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MockGen.Setup
 {
-    internal abstract class MethodSetup : MethodSetupBase
+    internal abstract class MethodSetup : MethodSetupBase, IMethodSetup
     {
         protected int numberOfCalls;
         protected new ActionConfiguration currentConfiguration;

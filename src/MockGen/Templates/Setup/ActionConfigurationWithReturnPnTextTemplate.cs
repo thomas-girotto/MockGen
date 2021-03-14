@@ -18,9 +18,9 @@ namespace MockGen.Templates.Setup
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Dev\MockGen\MockGen\Templates\Setup\IMethodSetupTextTemplate.tt"
+    #line 1 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public partial class IMethodSetupTextTemplate : IMethodSetupTextTemplateBase
+    public partial class ActionConfigurationWithReturnPnTextTemplate : ActionConfigurationWithReturnPnTextTemplateBase
     {
 #line hidden
         /// <summary>
@@ -28,8 +28,74 @@ namespace MockGen.Templates.Setup
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\r\n\r\nnamespace MockGen.Setup\r\n{\r\n    internal interface IMethodSetup " +
-                    ": IMethodSetupBase\r\n    {\r\n        void Execute(Action callback);\r\n    }\r\n}");
+            this.Write("using System;\r\n\r\nnamespace MockGen.Setup\r\n{\r\n    internal class ActionConfigurati" +
+                    "onWithReturn");
+            
+            #line 10 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypesWithTReturn));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n    {\r\n        private ActionConfiguration");
+            
+            #line 12 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            
+            #line default
+            #line hidden
+            this.Write(" baseConfiguration;\r\n\r\n        internal ActionConfigurationWithReturn(ActionConfi" +
+                    "guration");
+            
+            #line 14 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            
+            #line default
+            #line hidden
+            this.Write(" baseConfiguration)\r\n        {\r\n            this.baseConfiguration = baseConfigur" +
+                    "ation;\r\n        }\r\n\r\n        internal Func<TReturn> ReturnAction { private get; " +
+                    "set; } = () => default(TReturn);\r\n\r\n");
+            
+            #line 21 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
+ if (Descriptor.NumberOfTypes > 0) { 
+            
+            #line default
+            #line hidden
+            this.Write("        internal bool Match(");
+            
+            #line 22 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ParametersTypesWithName));
+            
+            #line default
+            #line hidden
+            this.Write(") => baseConfiguration.Match(");
+            
+            #line 22 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatParameters("param")));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n");
+            
+            #line 23 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        internal TReturn RunActions(");
+            
+            #line 25 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ParametersTypesWithName));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n        {\r\n            baseConfiguration.RunActions(");
+            
+            #line 27 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatParameters("param")));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n            return ReturnAction();\r\n        }\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -41,7 +107,7 @@ namespace MockGen.Templates.Setup
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public class IMethodSetupTextTemplateBase
+    public class ActionConfigurationWithReturnPnTextTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

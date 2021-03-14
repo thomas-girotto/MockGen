@@ -19,11 +19,10 @@ namespace MockGen.Setup
             return this;
         }
 
-        public IMethodSetup<TParam1> Returns(TReturn value)
+        public void Returns(TReturn value)
         {
             EnsureConfigurationMethodsAreAllowed(nameof(Returns));
             currentConfiguration.ReturnAction = () => value;
-            return this;
         }
 
         public TReturn ExecuteSetup(TParam1 param1)

@@ -3,84 +3,63 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using MockGen.Matcher;
 
 namespace MockGen.Setup
 {
-    internal class MethodSetupReturn<<#=Descriptor.GenericTypes#>, TReturn> : MethodSetup<<#=Descriptor.GenericTypes#>>, IMethodSetupReturn<<#=Descriptor.GenericTypes#>, TReturn>
+    internal class MethodSetupReturn<#=Descriptor.GenericTypesWithTReturn#> : MethodSetup<#=Descriptor.GenericTypes#>, IMethodSetupReturn<#=Descriptor.GenericTypesWithTReturn#>
     {
-        private Stack<FuncSpecification<<#=Descriptor.GenericTypes#>, TReturn>> actionByMatchingCriteria = new Stack<FuncSpecification<<#=Descriptor.GenericTypes#>, TReturn>>();
-        private FuncSpecification<<#=Descriptor.GenericTypes#>, TReturn> currentlyConfiguredAction = FuncSpecification<<#=Descriptor.GenericTypes#>, TReturn>.CreateNew();
+        private new ActionConfigurationWithReturn<#=Descriptor.GenericTypesWithTReturn#> currentConfiguration;
+<# if (Descriptor.NumberOfTypes > 0) { #>
+        private Stack<ActionConfigurationWithReturn<#=Descriptor.GenericTypesWithTReturn#>> configuredActions = new Stack<ActionConfigurationWithReturn<#=Descriptor.GenericTypesWithTReturn#>>();
+<# } #>
 
-        public IMethodSetupReturn<<#=Descriptor.GenericTypes#>, TReturn> ForParameter(<#=Descriptor.ConcatClassParameterByParameterType("Arg", "param")#>)
+<# if (Descriptor.NumberOfTypes == 0) { #>
+        internal MethodSetupReturn()
         {
-            if (!setupDone)
-            {
-                actionByMatchingCriteria.Push(currentlyConfiguredAction);
-                currentlyConfiguredAction = FuncSpecification<<#=Descriptor.GenericTypes#>, TReturn>.CreateNew();
-
-<# foreach (var n in Descriptor.EnumerateNumbers) { #>
-                currentlyConfiguredAction.Matcher<#=n#> = ArgMatcher<TParam<#=n#>>.Create(param<#=n#>);
+            currentConfiguration = new ActionConfigurationWithReturn<TReturn>(base.currentConfiguration);
+        }
 <# } #>
-            }
-            else
-            {
-<# foreach (var n in Descriptor.EnumerateNumbers) { #>
-                matcher<#=n#> = ArgMatcher<TParam<#=n#>>.Create(param<#=n#>);
-<# } #>
-            }
 
+<# if (Descriptor.NumberOfTypes > 0) { #>
+        public new IMethodSetupReturn<#=Descriptor.GenericTypesWithTReturn#> ForParameter(<#=Descriptor.ConcatClassParameterByParameterType("Arg", "param")#>)
+        {
+            base.ForParameter(<#=Descriptor.ConcatParameters("param")#>);
+            if (!IsSetupDone)
+            {
+                currentConfiguration = new ActionConfigurationWithReturn<#=Descriptor.GenericTypesWithTReturn#>(base.currentConfiguration);
+                configuredActions.Push(currentConfiguration);
+            }
+            
             return this;
         }
+<# } #>
 
-        public IMethodSetup<<#=Descriptor.GenericTypes#>> Returns(TReturn value)
+        public void Returns(TReturn value)
         {
             EnsureConfigurationMethodsAreAllowed(nameof(Returns));
-            currentlyConfiguredAction.MockingAction = <#=Descriptor.DiscardParameters#> => value;
-            return this;
-        }
-
-        public override void Throws<TException>()
-        {
-            EnsureConfigurationMethodsAreAllowed(nameof(Throws));
-            currentlyConfiguredAction.MockingAction = <#=Descriptor.DiscardParameters#> => throw new TException();
-        }
-
-        public override void Throws<TException>(TException exception)
-        {
-            EnsureConfigurationMethodsAreAllowed(nameof(Throws));
-            currentlyConfiguredAction.MockingAction = <#=Descriptor.DiscardParameters#> => throw exception;
-        }
-
-        public override void Execute(Action<<#=Descriptor.GenericTypes#>> callback)
-        {
-            EnsureConfigurationMethodsAreAllowed(nameof(Execute));
-            currentlyConfiguredAction.AdditionalCallback = callback;
-        }
-
-        internal override void SetupDone()
-        {
-            base.SetupDone();
-            actionByMatchingCriteria.Push(currentlyConfiguredAction);
-            currentlyConfiguredAction = FuncSpecification<<#=Descriptor.GenericTypes#>, TReturn>.CreateNew();
+            currentConfiguration.ReturnAction = () => value;
         }
 
         public TReturn ExecuteSetup(<#=Descriptor.ParametersTypesWithName#>)
         {
+<# if (Descriptor.NumberOfTypes > 0) { #>
             // Register call with given parameter for future assertions on calls
             calls.Add(<# if (Descriptor.NumberOfTypes > 1) {#>(<#}#><#=Descriptor.ConcatParameters("param")#><# if (Descriptor.NumberOfTypes > 1) {#>)<#}#>);
             // Execute the configured action according to given parameters
-            foreach (var setupAction in actionByMatchingCriteria)
+            foreach (var setup in configuredActions)
             {
-                if (setupAction.Match(<#=Descriptor.ConcatParameters("param")#>))
+                if (setup.Match(<#=Descriptor.ConcatParameters("param")#>))
                 {
-                    return setupAction.ExecuteActions(<#=Descriptor.ConcatParameters("param")#>);
+                    return setup.RunActions(<#=Descriptor.ConcatParameters("param")#>);
                 }
             }
+            // If we didn't find any action configured for the given parameters, execute the default one.
             return default(TReturn);
+<# } else { #>
+            numberOfCalls++;
+            return currentConfiguration.RunActions();
+<# } #>
         }
     }
 }

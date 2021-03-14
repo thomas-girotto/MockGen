@@ -18,9 +18,9 @@ namespace MockGen.Templates.Setup
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Dev\MockGen\MockGen\Templates\Setup\MethodSetupReturnTextTemplate.tt"
+    #line 1 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationBaseTextTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public partial class MethodSetupReturnTextTemplate : MethodSetupReturnTextTemplateBase
+    public partial class ActionConfigurationBaseTextTemplate : ActionConfigurationBaseTextTemplateBase
     {
 #line hidden
         /// <summary>
@@ -28,41 +28,8 @@ namespace MockGen.Templates.Setup
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write(@"using System;
-
-namespace MockGen.Setup
-{
-    internal class MethodSetupReturn<TReturn> : MethodSetup, IMethodSetupReturn<TReturn>
-    {
-        private Func<TReturn> setupAction = () => default(TReturn);
-
-        public void Returns(TReturn value)
-        {
-            EnsureConfigurationMethodsAreAllowed(nameof(Returns));
-            setupAction = () => value;
-        }
-
-        public override void Throws<TException>()
-        {
-            EnsureConfigurationMethodsAreAllowed(nameof(Throws));
-            setupAction = () => throw new TException();
-        }
-
-        public override void Throws<TException>(TException exception)
-        {
-            EnsureConfigurationMethodsAreAllowed(nameof(Throws));
-            setupAction = () => throw exception;
-        }
-
-        public TReturn ExecuteSetup()
-        {
-            numberOfCalls++;
-            additionalCallback();
-            return setupAction();
-        }
-    }
-}
-");
+            this.Write("using System;\r\n\r\nnamespace MockGen.Setup\r\n{\r\n    internal class ActionConfigurati" +
+                    "onBase\r\n    {\r\n        internal Action ThrowAction { get; set; }\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -74,7 +41,7 @@ namespace MockGen.Setup
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public class MethodSetupReturnTextTemplateBase
+    public class ActionConfigurationBaseTextTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

@@ -3,7 +3,12 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+using System;
+
 namespace MockGen.Setup
 {
-    interface IMethodSetupVoid : IMethodSetup { }
+    internal class ActionConfigurationBase
+    {
+        internal Action ThrowAction { get; set; }
+    }
 }

@@ -1,5 +1,4 @@
-﻿using MockGen.Matcher;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MockGen.Setup
 {
@@ -20,11 +19,10 @@ namespace MockGen.Setup
             return this;
         }
 
-        public IMethodSetup<TParam1, TParam2> Returns(TReturn value)
+        public void Returns(TReturn value)
         {
             EnsureConfigurationMethodsAreAllowed(nameof(Returns));
             currentConfiguration.ReturnAction = () => value;
-            return this;
         }
 
         public TReturn ExecuteSetup(TParam1 param1, TParam2 param2)

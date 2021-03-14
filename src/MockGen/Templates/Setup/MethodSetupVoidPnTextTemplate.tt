@@ -3,77 +3,45 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using MockGen.Matcher;
 
 namespace MockGen.Setup
 {
-    internal class MethodSetupVoid<<#=Descriptor.GenericTypes#>> : MethodSetup<<#=Descriptor.GenericTypes#>>
+    internal class MethodSetupVoid<#=Descriptor.GenericTypes#> : MethodSetup<#=Descriptor.GenericTypes#>
     {
-        private Stack<ActionSpecification<<#=Descriptor.GenericTypes#>>> actionByMatchingCriteria = new Stack<ActionSpecification<<#=Descriptor.GenericTypes#>>>();
-        private ActionSpecification<<#=Descriptor.GenericTypes#>> currentlyConfiguredAction = ActionSpecification<<#=Descriptor.GenericTypes#>>.CreateNew();
-
-        public IMethodSetup<<#=Descriptor.GenericTypes#>> ForParameter(<#=Descriptor.ConcatClassParameterByParameterType("Arg", "param")#>)
+<# if (Descriptor.NumberOfTypes > 0) { #>
+        private Stack<ActionConfiguration<#=Descriptor.GenericTypes#>> configuredActions = new Stack<ActionConfiguration<#=Descriptor.GenericTypes#>>();
+     
+        public new IMethodSetup<#=Descriptor.GenericTypes#> ForParameter(<#=Descriptor.ConcatClassParameterByParameterType("Arg", "param")#>)
         {
-            if (!setupDone)
+            base.ForParameter(<#=Descriptor.ConcatParameters("param")#>);
+            if (!IsSetupDone)
             {
-                actionByMatchingCriteria.Push(currentlyConfiguredAction);
-                currentlyConfiguredAction = ActionSpecification<<#=Descriptor.GenericTypes#>>.CreateNew();
-
-<# foreach (var n in Descriptor.EnumerateNumbers) { #>
-                currentlyConfiguredAction.Matcher<#=n#> = ArgMatcher<TParam<#=n#>>.Create(param<#=n#>);
-<# } #>
-            }
-            else
-            {
-<# foreach (var n in Descriptor.EnumerateNumbers) { #>
-                matcher<#=n#> = ArgMatcher<TParam<#=n#>>.Create(param<#=n#>);
-<# } #>
+                configuredActions.Push(currentConfiguration);
             }
 
             return this;
         }
 
-        public override void Throws<TException>()
-        {
-            EnsureConfigurationMethodsAreAllowed(nameof(Throws));
-            currentlyConfiguredAction.MockingAction = <#=Descriptor.DiscardParameters#> => throw new TException();
-        }
-
-        public override void Throws<TException>(TException exception)
-        {
-            EnsureConfigurationMethodsAreAllowed(nameof(Throws));
-            currentlyConfiguredAction.MockingAction = <#=Descriptor.DiscardParameters#> => throw exception;
-        }
-
-        public override void Execute(Action<<#=Descriptor.GenericTypes#>> callback)
-        {
-            EnsureConfigurationMethodsAreAllowed(nameof(Execute));
-            currentlyConfiguredAction.AdditionalCallback = callback;
-        }
-
-        internal override void SetupDone()
-        {
-            base.SetupDone();
-            actionByMatchingCriteria.Push(currentlyConfiguredAction);
-            currentlyConfiguredAction = ActionSpecification<<#=Descriptor.GenericTypes#>>.CreateNew();
-        }
-
+<# } #>
         public void ExecuteSetup(<#=Descriptor.ParametersTypesWithName#>)
         {
+<# if (Descriptor.NumberOfTypes > 0) { #>
             // Register call with given parameter for future assertions on calls
             calls.Add(<# if (Descriptor.NumberOfTypes > 1) {#>(<#}#><#=Descriptor.ConcatParameters("param")#><# if (Descriptor.NumberOfTypes > 1) {#>)<#}#>);
             // Execute the configured action according to given parameters
-            foreach (var setupAction in actionByMatchingCriteria)
+            foreach (var setup in configuredActions)
             {
-                if (setupAction.Match(<#=Descriptor.ConcatParameters("param")#>))
+                if (setup.Match(<#=Descriptor.ConcatParameters("param")#>))
                 {
-                    setupAction.ExecuteActions(<#=Descriptor.ConcatParameters("param")#>);
+                    setup.RunActions(<#=Descriptor.ConcatParameters("param")#>);
                     return;
                 }
             }
+<# } else { #>
+            numberOfCalls++;
+            currentConfiguration.RunActions();
+<# } #>
         }
     }
 }

@@ -31,7 +31,7 @@ namespace MockGen.Setup
             get
             {
                 EnsureSpyingMethodsAreAllowed(nameof(MatchingCalls));
-                return calls.Where(param => currentConfiguration.Match(param));
+                return calls.Where(@params => currentConfiguration.Match(@params));
             }
         }
 

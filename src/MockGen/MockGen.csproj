@@ -38,18 +38,22 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MockGeneratorTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\Setup\ActionSpecificationTextTemplate.tt">
+    <None Update="Templates\Setup\ActionConfigurationBaseTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>ActionSpecificationTextTemplate.cs</LastGenOutput>
+      <LastGenOutput>ActionConfigurationBaseTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\Setup\ActionConfigurationPnTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ActionConfigurationPnTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ActionConfigurationWithReturnPnTextTemplate.cs</LastGenOutput>
     </None>
     <None Update="Templates\ArgTextTemplate.tt">
       <CustomToolNamespace></CustomToolNamespace>
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ArgTextTemplate.cs</LastGenOutput>
-    </None>
-    <None Update="Templates\Setup\FuncSpecificationTextTemplate.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>FuncSpecificationTextTemplate.cs</LastGenOutput>
     </None>
     <None Update="Templates\Setup\IMethodSetupPnTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
@@ -62,18 +66,6 @@
     <None Update="Templates\Setup\IMethodSetupBaseTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>IMethodSetupBaseTextTemplate.cs</LastGenOutput>
-    </None>
-    <None Update="Templates\Setup\IMethodSetupReturnTextTemplate.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>IMethodSetupReturnTextTemplate.cs</LastGenOutput>
-    </None>
-    <None Update="Templates\Setup\IMethodSetupTextTemplate.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>IMethodSetupTextTemplate.cs</LastGenOutput>
-    </None>
-    <None Update="Templates\Setup\IMethodSetupVoidTextTemplate.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>IMethodSetupVoidTextTemplate.cs</LastGenOutput>
     </None>
     <None Update="Templates\Matcher\AnyArgMatcherTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
@@ -103,21 +95,9 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSetupReturnPnTextTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Templates\Setup\MethodSetupReturnTextTemplate.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>MethodSetupReturnTextTemplate.cs</LastGenOutput>
-    </None>
-    <None Update="Templates\Setup\MethodSetupTextTemplate.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>MethodSetupTextTemplate.cs</LastGenOutput>
-    </None>
     <None Update="Templates\Setup\MethodSetupVoidPnTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSetupVoidPnTextTemplate.cs</LastGenOutput>
-    </None>
-    <None Update="Templates\Setup\MethodSetupVoidTextTemplate.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>MethodSetupVoidTextTemplate.cs</LastGenOutput>
     </None>
     <None Update="Templates\MockBuilderTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
@@ -148,20 +128,25 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>MockGeneratorTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\Setup\ActionSpecificationTextTemplate.cs">
+    <Compile Update="Templates\Setup\ActionConfigurationBaseTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ActionSpecificationTextTemplate.tt</DependentUpon>
+      <DependentUpon>ActionConfigurationBaseTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\Setup\ActionConfigurationPnTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ActionConfigurationPnTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ActionConfigurationWithReturnPnTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Update="Templates\ArgTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ArgTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\Setup\FuncSpecificationTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>FuncSpecificationTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Update="Templates\Setup\IMethodSetupPnTextTemplate.cs">
       <DesignTime>True</DesignTime>
@@ -177,21 +162,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>IMethodSetupBaseTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\Setup\IMethodSetupReturnTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>IMethodSetupReturnTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\Setup\IMethodSetupTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>IMethodSetupTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\Setup\IMethodSetupVoidTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>IMethodSetupVoidTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Update="Templates\Matcher\AnyArgMatcherTextTemplate.cs">
       <DesignTime>True</DesignTime>
@@ -228,25 +198,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>MethodSetupReturnPnTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Templates\Setup\MethodSetupReturnTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MethodSetupReturnTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\Setup\MethodSetupTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MethodSetupTextTemplate.tt</DependentUpon>
-    </Compile>
     <Compile Update="Templates\Setup\MethodSetupVoidPnTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MethodSetupVoidPnTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Templates\Setup\MethodSetupVoidTextTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MethodSetupVoidTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Update="Templates\MockBuilderTextTemplate.cs">
       <DesignTime>True</DesignTime>

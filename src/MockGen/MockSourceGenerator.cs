@@ -49,29 +49,14 @@ namespace MockGen
                 var predicateArgMatcherTemplate = new PredicateArgMatcherTextTemplate();
                 AddSourceToBuildContext(context, "PredicateArgMatcher.cs", predicateArgMatcherTemplate.TransformText());
 
+                var actionConfigurationBaseTemplate = new ActionConfigurationBaseTextTemplate();
+                AddSourceToBuildContext(context, "ActionConfigurationBase.cs", actionConfigurationBaseTemplate.TransformText());
+
                 var iMethodSetupBaseTemplate = new IMethodSetupBaseTextTemplate();
                 AddSourceToBuildContext(context, "IMethodSetupBase.cs", iMethodSetupBaseTemplate.TransformText());
 
-                var iMethodSetupTemplate = new IMethodSetupTextTemplate();
-                AddSourceToBuildContext(context, "IMethodSetup.cs", iMethodSetupTemplate.TransformText());
-
-                var iMethodSetupVoidTextTemplate = new IMethodSetupVoidTextTemplate();
-                AddSourceToBuildContext(context, "IMethodSetupVoid.cs", iMethodSetupVoidTextTemplate.TransformText());
-
-                var iMethodSetupReturnTextTemplate = new IMethodSetupReturnTextTemplate();
-                AddSourceToBuildContext(context, "IMethodSetupReturn.cs", iMethodSetupReturnTextTemplate.TransformText());
-
                 var methodSetupBaseTemplate = new MethodSetupBaseTextTemplate();
                 AddSourceToBuildContext(context, "MethodSetupBase.cs", methodSetupBaseTemplate.TransformText());
-
-                var methodSetupTemplate = new MethodSetupTextTemplate();
-                AddSourceToBuildContext(context, "MethodSetup.cs", methodSetupTemplate.TransformText());
-
-                var methodSetupReturnTemplate = new MethodSetupReturnTextTemplate();
-                AddSourceToBuildContext(context, "MethodSetupReturn.cs", methodSetupReturnTemplate.TransformText());
-
-                var methodSetupVoidTemplate = new MethodSetupVoidTextTemplate();
-                AddSourceToBuildContext(context, "MethodSetupVoid.cs", methodSetupVoidTemplate.TransformText());
 
                 // Then classes that depends on types to mock declared by the user
                 var typesToMock = new List<MockDescriptor>();
@@ -102,6 +87,10 @@ namespace MockGen
                 foreach (var genericTypeDescriptor in typesToMock.GetAllMethodsGroupedByTypeParameter())
                 {
                     var template = new GenericTypesDescriptor(genericTypeDescriptor);
+
+                    var actionConfigurationPnTemplate = new ActionConfigurationPnTextTemplate(template);
+                    AddSourceToBuildContext(context, $"ActionConfiguration{template.FileSuffix}.cs", actionConfigurationPnTemplate.TransformText());
+
                     var iMethodSetupPn = new IMethodSetupPnTextTemplate();
                     iMethodSetupPn.Descriptor = template;
                     AddSourceToBuildContext(context, $"IMethodSetup{template.FileSuffix}.cs", iMethodSetupPn.TransformText());
@@ -112,19 +101,14 @@ namespace MockGen
 
                     if (genericTypeDescriptor.HasMethodThatReturnsVoid)
                     {
-                        var actionSpecificationTemplate = new ActionSpecificationTextTemplate();
-                        actionSpecificationTemplate.Descriptor = template;
-                        AddSourceToBuildContext(context, $"ActionSpecification{template.FileSuffix}.cs", actionSpecificationTemplate.TransformText());
-
                         var methodSetupVoidPnTemplate = new MethodSetupVoidPnTextTemplate();
                         methodSetupVoidPnTemplate.Descriptor = template;
                         AddSourceToBuildContext(context, $"MethodSetupVoid{template.FileSuffix}.cs", methodSetupVoidPnTemplate.TransformText());
                     }
                     if (genericTypeDescriptor.HasMethodThatReturns)
                     {
-                        var funcSpecificationTemplate = new FuncSpecificationTextTemplate();
-                        funcSpecificationTemplate.Descriptor = template;
-                        AddSourceToBuildContext(context, $"FuncSpecification{template.FileSuffix}.cs", funcSpecificationTemplate.TransformText());
+                        var actionConfigurationWithReturnPnTemplate = new ActionConfigurationWithReturnPnTextTemplate(template);
+                        AddSourceToBuildContext(context, $"ActionConfigurationWithReturn{template.FileSuffix}.cs", actionConfigurationWithReturnPnTemplate.TransformText());
 
                         var iMethodSetupReturnPn = new IMethodSetupReturnPnTextTemplate();
                         iMethodSetupReturnPn.Descriptor = template;

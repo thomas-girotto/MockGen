@@ -1,0 +1,39 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using MockGen.Matcher;
+using System;
+
+namespace MockGen.Setup
+{
+    internal class ActionConfiguration<#=Descriptor.GenericTypes#>
+    {
+        private readonly ActionConfigurationBase baseConfiguration;
+
+        public ActionConfiguration(ActionConfigurationBase baseConfiguration)
+        {
+            this.baseConfiguration = baseConfiguration;
+        }
+
+<# foreach (var n in Descriptor.EnumerateNumbers) { #>
+        internal ArgMatcher<TParam<#=n#>> Matcher<#=n#> { get; set; } = new AnyArgMatcher<TParam<#=n#>>();
+<# } #>
+
+        internal Action<#=Descriptor.GenericTypes#> ExecuteAction { private get; set; }
+
+<# if (Descriptor.NumberOfTypes > 0) { #>
+        internal bool Match(<#=Descriptor.ParametersTypesWithName#>)
+        {
+            return <#=Descriptor.ConcatMatcherCalls("Matcher", "param")#>;
+        }
+<# } #>
+
+        internal void RunActions(<#=Descriptor.ParametersTypesWithName#>)
+        {
+            baseConfiguration.ThrowAction?.Invoke();
+            ExecuteAction?.Invoke(<#=Descriptor.ConcatParameters("param")#>);
+        }
+    }
+}

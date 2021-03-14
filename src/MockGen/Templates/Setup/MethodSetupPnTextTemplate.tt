@@ -10,28 +10,51 @@ using System.Linq;
 
 namespace MockGen.Setup
 {
-    internal abstract class MethodSetup<<#=Descriptor.GenericTypes#>> : MethodSetupBase, IMethodSetup<<#=Descriptor.GenericTypes#>>
+    internal abstract class MethodSetup<#=Descriptor.GenericTypes#> : MethodSetupBase, IMethodSetup<#=Descriptor.GenericTypes#>
     {
-<# if (Descriptor.NumberOfTypes == 1) { #>
+<# if (Descriptor.NumberOfTypes == 0) { #>
+        protected int numberOfCalls;
+<# } else if (Descriptor.NumberOfTypes == 1) { #>
         protected List<TParam1> calls = new List<TParam1>();
 <# } else { #>
         protected List<(<#=Descriptor.ParametersTypesWithName#>)> calls = new List<(<#=Descriptor.ParametersTypesWithName#>)>();
-<# } #>
-<# foreach (var n in Descriptor.EnumerateNumbers) { #>
-        protected ArgMatcher<TParam<#=n#>> matcher<#=n#>;
+<# } #>        
+        protected new ActionConfiguration<#=Descriptor.GenericTypes#> currentConfiguration;
+
+<# if (Descriptor.NumberOfTypes == 0) { #>
+        internal MethodSetup()
+        {
+            currentConfiguration = new ActionConfiguration(base.currentConfiguration);
+        }
 <# } #>
 
-        public int NumberOfCalls
+<# if (Descriptor.NumberOfTypes > 0) { #>
+        protected void ForParameter(<#=Descriptor.ConcatClassParameterByParameterType("Arg", "param")#>)
         {
-            get
-            {
-                EnsureSpyingMethodsAreAllowed(nameof(NumberOfCalls));
-                return MatchingCalls.Count();
-            }
+            ClearCurrentConfiguration();
+            currentConfiguration = new ActionConfiguration<#=Descriptor.GenericTypes#>(base.currentConfiguration);
+<# foreach (var n in Descriptor.EnumerateNumbers) { #>
+            currentConfiguration.Matcher<#=n#> = ArgMatcher<TParam<#=n#>>.Create(param<#=n#>);
+<# } #>            
         }
 
+<# } #>
+        public int NumberOfCalls 
+        { 
+            get 
+            {
+                EnsureSpyingMethodsAreAllowed(nameof(NumberOfCalls));
+<# if (Descriptor.NumberOfTypes == 0) { #>
+                return numberOfCalls;
+<# } else { #>
+                return MatchingCalls.Count();
+<# } #>
+            }
+        } 
+
+<# if (Descriptor.NumberOfTypes > 0) { #>
 <# if (Descriptor.NumberOfTypes == 1) { #>
-        public IEnumerable<TParam1> MatchingCalls
+        public IEnumerable<#=Descriptor.GenericTypes#> MatchingCalls
 <# } else { #>
         public IEnumerable<(<#=Descriptor.ParametersTypesWithName#>)> MatchingCalls
 <# } #>
@@ -40,17 +63,18 @@ namespace MockGen.Setup
             {
                 EnsureSpyingMethodsAreAllowed(nameof(MatchingCalls));
 <# if (Descriptor.NumberOfTypes == 1) { #>
-                return calls.Where(param1 => matcher1.Match(param1));
+                return calls.Where(@params => currentConfiguration.Match(@params));
 <# } else { #>
-                return calls.Where(args => <#=Descriptor.ConcatMatcherCalls("matcher", "args.param")#>);
+                return calls.Where(@params => currentConfiguration.Match(<#=Descriptor.ConcatParameters("@params.param")#>));
 <# } #>
             }
         }
 
-        public abstract void Throws<TException>() where TException : Exception, new();
-
-        public abstract void Throws<TException>(TException exception) where TException : Exception;
-
-        public abstract void Execute(Action<<#=Descriptor.GenericTypes#>> callback);
+<# } #>
+        public void Execute(Action<#=Descriptor.GenericTypes#> callback)
+        {
+            EnsureConfigurationMethodsAreAllowed(nameof(Execute));
+            currentConfiguration.ExecuteAction = callback;
+        }
     }
 }

@@ -7,6 +7,7 @@ namespace MockGen.Tests.Model
     public class GenericTypesDescriptorTests
     {
         [Theory]
+        [InlineData(0, "()")]
         [InlineData(1, "(_)")]
         [InlineData(2, "(_, _)")]
         public void Should_discard_the_right_number_of_times(int numberOfParameters, string discardExpected)
@@ -16,6 +17,7 @@ namespace MockGen.Tests.Model
         }
 
         [Theory]
+        [InlineData(0, "")]
         [InlineData(1, "P1")]
         [InlineData(2, "P1P2")]
         [InlineData(3, "P1P2P3")]
@@ -29,13 +31,27 @@ namespace MockGen.Tests.Model
         }
         
         [Theory]
-        [InlineData(1, "TParam1")]
-        [InlineData(2, "TParam1, TParam2")]
+        [InlineData(0, "")]
+        [InlineData(1, "<TParam1>")]
+        [InlineData(2, "<TParam1, TParam2>")]
         public void Should_build_types(int numberOfParameters, string expectedGenerics)
         {
             var templateModel = new GenericTypesDescriptor(new TypedParameterMethod(numberOfParameters, true, true));
 
             var generics = templateModel.GenericTypes;
+
+            generics.Should().Be(expectedGenerics);
+        }
+
+        [Theory]
+        [InlineData(0, "<TReturn>")]
+        [InlineData(1, "<TParam1, TReturn>")]
+        [InlineData(2, "<TParam1, TParam2, TReturn>")]
+        public void Should_build_types_with_TReturn(int numberOfParameters, string expectedGenerics)
+        {
+            var templateModel = new GenericTypesDescriptor(new TypedParameterMethod(numberOfParameters, true, true));
+
+            var generics = templateModel.GenericTypesWithTReturn;
 
             generics.Should().Be(expectedGenerics);
         }
@@ -65,6 +81,7 @@ namespace MockGen.Tests.Model
         }
 
         [Theory]
+        [InlineData(0, "")]
         [InlineData(1, "TParam1 param1")]
         [InlineData(2, "TParam1 param1, TParam2 param2")]
         public void Should_concat_parameter_types_with_name(int numberOfParameters, string expectedParameters)
@@ -74,6 +91,7 @@ namespace MockGen.Tests.Model
         }
 
         [Theory]
+        [InlineData(0, "")]
         [InlineData(1, "param1")]
         [InlineData(2, "param1, param2")]
         public void Should_concat_parameter_names(int numberOfParameters, string expectedParameterNames)

@@ -1,5 +1,4 @@
-﻿using MockGen.Matcher;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MockGen.Setup
 {
