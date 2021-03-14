@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MockGen.Setup
 {
-    internal class MethodSetupReturn<TParam1, TParam2, TReturn> : MethodSetup<TParam1, TParam2>, IMethodSetupReturn<TParam1, TParam2, TReturn>
+    internal class MethodSetupReturn<TParam1, TParam2, TReturn> : 
+        MethodSetup<TParam1, TParam2>, 
+        IMethodSetupReturn<TParam1, TParam2, TReturn>, 
+        IReturnContinuation<TParam1, TParam2>
     {
         private Stack<ActionConfigurationWithReturn<TParam1, TParam2, TReturn>> configuredActions = new Stack<ActionConfigurationWithReturn<TParam1, TParam2, TReturn>>();
         private new ActionConfigurationWithReturn<TParam1, TParam2, TReturn> currentConfiguration;
@@ -19,10 +23,16 @@ namespace MockGen.Setup
             return this;
         }
 
-        public void Returns(TReturn value)
+        public IReturnContinuation<TParam1, TParam2> Returns(TReturn value)
         {
             EnsureConfigurationMethodsAreAllowed(nameof(Returns));
             currentConfiguration.ReturnAction = () => value;
+            return this;
+        }
+
+        public void AndExecute(Action<TParam1, TParam2> callback)
+        {
+            Execute(callback);
         }
 
         public TReturn ExecuteSetup(TParam1 param1, TParam2 param2)

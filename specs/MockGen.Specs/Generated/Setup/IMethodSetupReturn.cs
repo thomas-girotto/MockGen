@@ -1,7 +1,14 @@
-﻿namespace MockGen.Setup
+﻿using System;
+
+namespace MockGen.Setup
 {
     internal interface IMethodSetupReturn<TReturn> : IMethodSetup
     {
-        void Returns(TReturn value);
+        IReturnContinuation Returns(TReturn value);
+    }
+
+    internal interface IReturnContinuation
+    {
+        void AndExecute(Action callback);
     }
 }

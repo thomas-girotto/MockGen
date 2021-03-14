@@ -2,7 +2,7 @@
 
 namespace MockGen.Setup
 {
-    internal class MethodSetupReturn<TReturn> : MethodSetup, IMethodSetupReturn<TReturn>
+    internal class MethodSetupReturn<TReturn> : MethodSetup, IMethodSetupReturn<TReturn>, IReturnContinuation
     {
         private new ActionConfigurationWithReturn<TReturn> currentConfiguration;
 
@@ -11,10 +11,16 @@ namespace MockGen.Setup
             currentConfiguration = new ActionConfigurationWithReturn<TReturn>(base.currentConfiguration);
         }
 
-        public void Returns(TReturn value)
+        public IReturnContinuation Returns(TReturn value)
         {
             EnsureConfigurationMethodsAreAllowed(nameof(Returns));
             currentConfiguration.ReturnAction = () => value;
+            return this;
+        }
+
+        public void AndExecute(Action callback)
+        {
+            base.Execute(callback);
         }
 
         public TReturn ExecuteSetup()

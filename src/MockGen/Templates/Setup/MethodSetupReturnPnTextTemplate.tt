@@ -3,11 +3,15 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+using System;
 using System.Collections.Generic;
 
 namespace MockGen.Setup
 {
-    internal class MethodSetupReturn<#=Descriptor.GenericTypesWithTReturn#> : MethodSetup<#=Descriptor.GenericTypes#>, IMethodSetupReturn<#=Descriptor.GenericTypesWithTReturn#>
+    internal class MethodSetupReturn<#=Descriptor.GenericTypesWithTReturn#> : 
+        MethodSetup<#=Descriptor.GenericTypes#>, 
+        IMethodSetupReturn<#=Descriptor.GenericTypesWithTReturn#>,
+        IReturnContinuation<#=Descriptor.GenericTypes#>
     {
         private new ActionConfigurationWithReturn<#=Descriptor.GenericTypesWithTReturn#> currentConfiguration;
 <# if (Descriptor.NumberOfTypes > 0) { #>
@@ -35,10 +39,16 @@ namespace MockGen.Setup
         }
 <# } #>
 
-        public void Returns(TReturn value)
+        public IReturnContinuation<#=Descriptor.GenericTypes#> Returns(TReturn value)
         {
             EnsureConfigurationMethodsAreAllowed(nameof(Returns));
             currentConfiguration.ReturnAction = () => value;
+            return this;
+        }
+
+        public void AndExecute(Action<#=Descriptor.GenericTypes#> callback)
+        {
+            Execute(callback);
         }
 
         public TReturn ExecuteSetup(<#=Descriptor.ParametersTypesWithName#>)

@@ -3,10 +3,17 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+using System;
+
 namespace MockGen.Setup
 {
     internal interface IMethodSetupReturn<#=Descriptor.GenericTypesWithTReturn#> : IMethodSetup<#=Descriptor.GenericTypes#> 
     {
-        void Returns(TReturn value);
+        IReturnContinuation<#=Descriptor.GenericTypes#> Returns(TReturn value);
+    }
+
+    internal interface IReturnContinuation<#=Descriptor.GenericTypes#>
+    {
+        void AndExecute(Action<#=Descriptor.GenericTypes#> callback);
     }
 }

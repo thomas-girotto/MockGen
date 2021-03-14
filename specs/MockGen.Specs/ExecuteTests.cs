@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using MockGen.Specs.Sut;
 using System;
 using Xunit;
 
@@ -20,6 +21,30 @@ namespace MockGen.Specs
 
             // Then
             wasCallbackExecuted.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Should_execute_callback_When_chained_after_returns_method()
+        {
+            // Given
+            var mockBuilder = Mock.IDependency();
+            Model1 param1 = new Model1 { Id = 1 };
+            Model2 param2 = new Model2 { Name = "foo" };
+            Model1? callbackParam1 = null;
+            Model2? callbackParam2 = null;
+            mockBuilder.GetSomeNumberWithTwoParameters(Arg<Model1>.Any, Arg<Model2>.Any).Returns(10).AndExecute((m1, m2) =>
+            {
+                callbackParam1 = m1;
+                callbackParam2 = m2;
+            });
+            var mock = mockBuilder.Build();
+
+            // When
+            mock.GetSomeNumberWithTwoParameters(param1, param2);
+
+            // Then
+            callbackParam1.Should().Be(param1);
+            callbackParam2.Should().Be(param2);
         }
 
         [Fact]

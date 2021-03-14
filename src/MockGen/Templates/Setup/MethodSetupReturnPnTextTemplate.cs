@@ -28,66 +28,73 @@ namespace MockGen.Templates.Setup
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System.Collections.Generic;\r\n\r\nnamespace MockGen.Setup\r\n{\r\n    internal cla" +
-                    "ss MethodSetupReturn");
+            this.Write("using System;\r\nusing System.Collections.Generic;\r\n\r\nnamespace MockGen.Setup\r\n{\r\n " +
+                    "   internal class MethodSetupReturn");
             
-            #line 10 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 11 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypesWithTReturn));
             
             #line default
             #line hidden
-            this.Write(" : MethodSetup");
+            this.Write(" : \r\n        MethodSetup");
             
-            #line 10 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 12 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
             
             #line default
             #line hidden
-            this.Write(", IMethodSetupReturn");
+            this.Write(", \r\n        IMethodSetupReturn");
             
-            #line 10 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 13 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypesWithTReturn));
+            
+            #line default
+            #line hidden
+            this.Write(",\r\n        IReturnContinuation");
+            
+            #line 14 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n        private new ActionConfigurationWithReturn");
             
-            #line 12 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 16 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypesWithTReturn));
             
             #line default
             #line hidden
             this.Write(" currentConfiguration;\r\n");
             
-            #line 13 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 17 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
  if (Descriptor.NumberOfTypes > 0) { 
             
             #line default
             #line hidden
             this.Write("        private Stack<ActionConfigurationWithReturn");
             
-            #line 14 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 18 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypesWithTReturn));
             
             #line default
             #line hidden
             this.Write("> configuredActions = new Stack<ActionConfigurationWithReturn");
             
-            #line 14 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 18 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypesWithTReturn));
             
             #line default
             #line hidden
             this.Write(">();\r\n");
             
-            #line 15 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 19 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 17 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 21 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
  if (Descriptor.NumberOfTypes == 0) { 
             
             #line default
@@ -96,35 +103,35 @@ namespace MockGen.Templates.Setup
                     " = new ActionConfigurationWithReturn<TReturn>(base.currentConfiguration);\r\n     " +
                     "   }\r\n");
             
-            #line 22 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 26 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 24 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 28 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
  if (Descriptor.NumberOfTypes > 0) { 
             
             #line default
             #line hidden
             this.Write("        public new IMethodSetupReturn");
             
-            #line 25 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 29 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypesWithTReturn));
             
             #line default
             #line hidden
             this.Write(" ForParameter(");
             
-            #line 25 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 29 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatClassParameterByParameterType("Arg", "param")));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n            base.ForParameter(");
             
-            #line 27 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 31 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatParameters("param")));
             
             #line default
@@ -132,7 +139,7 @@ namespace MockGen.Templates.Setup
             this.Write(");\r\n            if (!IsSetupDone)\r\n            {\r\n                currentConfigur" +
                     "ation = new ActionConfigurationWithReturn");
             
-            #line 30 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 34 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypesWithTReturn));
             
             #line default
@@ -140,23 +147,39 @@ namespace MockGen.Templates.Setup
             this.Write("(base.currentConfiguration);\r\n                configuredActions.Push(currentConfi" +
                     "guration);\r\n            }\r\n            \r\n            return this;\r\n        }\r\n");
             
-            #line 36 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 40 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("\r\n        public void Returns(TReturn value)\r\n        {\r\n            EnsureConfig" +
-                    "urationMethodsAreAllowed(nameof(Returns));\r\n            currentConfiguration.Ret" +
-                    "urnAction = () => value;\r\n        }\r\n\r\n        public TReturn ExecuteSetup(");
+            this.Write("\r\n        public IReturnContinuation");
             
-            #line 44 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 42 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            
+            #line default
+            #line hidden
+            this.Write(" Returns(TReturn value)\r\n        {\r\n            EnsureConfigurationMethodsAreAllo" +
+                    "wed(nameof(Returns));\r\n            currentConfiguration.ReturnAction = () => val" +
+                    "ue;\r\n            return this;\r\n        }\r\n\r\n        public void AndExecute(Actio" +
+                    "n");
+            
+            #line 49 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            
+            #line default
+            #line hidden
+            this.Write(" callback)\r\n        {\r\n            Execute(callback);\r\n        }\r\n\r\n        publi" +
+                    "c TReturn ExecuteSetup(");
+            
+            #line 54 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ParametersTypesWithName));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n");
             
-            #line 46 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 56 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
  if (Descriptor.NumberOfTypes > 0) { 
             
             #line default
@@ -164,33 +187,33 @@ namespace MockGen.Templates.Setup
             this.Write("            // Register call with given parameter for future assertions on calls\r" +
                     "\n            calls.Add(");
             
-            #line 48 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 58 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
  if (Descriptor.NumberOfTypes > 1) {
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 48 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 58 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
 }
             
             #line default
             #line hidden
             
-            #line 48 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 58 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatParameters("param")));
             
             #line default
             #line hidden
             
-            #line 48 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 58 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
  if (Descriptor.NumberOfTypes > 1) {
             
             #line default
             #line hidden
             this.Write(")");
             
-            #line 48 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 58 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
 }
             
             #line default
@@ -199,14 +222,14 @@ namespace MockGen.Templates.Setup
                     "           foreach (var setup in configuredActions)\r\n            {\r\n            " +
                     "    if (setup.Match(");
             
-            #line 52 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 62 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatParameters("param")));
             
             #line default
             #line hidden
             this.Write("))\r\n                {\r\n                    return setup.RunActions(");
             
-            #line 54 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 64 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatParameters("param")));
             
             #line default
@@ -215,7 +238,7 @@ namespace MockGen.Templates.Setup
                     " configured for the given parameters, execute the default one.\r\n            retu" +
                     "rn default(TReturn);\r\n");
             
-            #line 59 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 69 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
  } else { 
             
             #line default
@@ -223,7 +246,7 @@ namespace MockGen.Templates.Setup
             this.Write("            numberOfCalls++;\r\n            return currentConfiguration.RunActions(" +
                     ");\r\n");
             
-            #line 62 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
+            #line 72 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnPnTextTemplate.tt"
  } 
             
             #line default

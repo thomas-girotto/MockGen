@@ -45,6 +45,16 @@ namespace MockGen.Integration.Tests
         }
 
         [Fact]
+        public void Should_execute_callback_When_chained_after_returns_method()
+        {
+            var sources = GetSourceFilesToCompileFromSpecs();
+
+            Action action = () => testRunner.RunTest(sources, nameof(ExecuteTests), nameof(Should_execute_callback_When_chained_after_returns_method));
+
+            action.Should().NotThrow();
+        }
+
+        [Fact]
         public void Should_throw_When_called_after_mock_has_been_built()
         {
             var sources = GetSourceFilesToCompileFromSpecs();
