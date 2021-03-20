@@ -7,31 +7,14 @@ namespace MockGen.Tests
 {
     public class SyntaxReceiverTests
     {
-        [Fact]
-        public void Should_extract_the_type_to_mock()
+        [Theory]
+        [InlineData("MockGenerator.Generate<IDependency>();")]
+        [InlineData("MockGenerator.Generate<SomeNamespace.IDependency>();")]
+        [InlineData("MockGen.MockGenerator.Generate<IDependency>();")]
+        public void Should_recognize_type_to_mock(string mockGenerationSyntax)
         {
             // Given
-            var source = "MockGenerator.Generate<IDependency>();";
-            var rootNode = CSharpSyntaxTree.ParseText(source).GetRoot();
-            var syntaxReceiver = new SyntaxReceiver();
-            var syntaxTreeVisitor = new MockGeneratorSyntaxWalker(syntaxReceiver);
-
-            // When
-            syntaxTreeVisitor.Visit(rootNode);
-
-            // Then
-            syntaxReceiver.TypesToMockSyntax.Should().ContainSingle().Which.Identifier.ValueText.Should().Be("IDependency");
-        }
-
-        [Fact]
-        public void Should_only_add_same_type_to_mock_once()
-        {
-            // Given
-            var source = @"
-MockGenerator.Generate<IDependency>();
-MockGenerator.Generate<IDependency>();
-";
-            var rootNode = CSharpSyntaxTree.ParseText(source).GetRoot();
+            var rootNode = CSharpSyntaxTree.ParseText(mockGenerationSyntax).GetRoot();
             var syntaxReceiver = new SyntaxReceiver();
             var syntaxTreeVisitor = new MockGeneratorSyntaxWalker(syntaxReceiver);
 
@@ -59,22 +42,6 @@ MockGenerator.Generate<IDependency2>();
 
             // Then
             syntaxReceiver.TypesToMockSyntax.Should().HaveCount(2);
-        }
-
-        [Fact]
-        public void Should_recognize_usage_with_full_type()
-        {
-            // Given
-            var source = "MockGen.MockGenerator.Generate<IDependency1>();";
-            var rootNode = CSharpSyntaxTree.ParseText(source).GetRoot();
-            var syntaxReceiver = new SyntaxReceiver();
-            var syntaxTreeVisitor = new MockGeneratorSyntaxWalker(syntaxReceiver);
-
-            // When
-            syntaxTreeVisitor.Visit(rootNode);
-
-            // Then
-            syntaxReceiver.TypesToMockSyntax.Should().HaveCount(1);
         }
 
         [Theory]

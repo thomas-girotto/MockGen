@@ -10,8 +10,7 @@ namespace MockGen
     /// </summary>
     public class SyntaxReceiver : ISyntaxReceiver
     {
-        private Dictionary<string, IdentifierNameSyntax> typesToMock = new Dictionary<string, IdentifierNameSyntax>();
-        public IEnumerable<IdentifierNameSyntax> TypesToMockSyntax => typesToMock.Select(kvp => kvp.Value);
+        public List<TypeSyntax> TypesToMockSyntax = new List<TypeSyntax>();
 
         /// <summary>
         /// Called for every syntax node in the compilation, we can inspect the nodes and save any information useful for generation
@@ -42,13 +41,9 @@ namespace MockGen
                     && candidateForGenerateMethod.Parent is InvocationExpressionSyntax generateInvocationSyntax
                     && generateInvocationSyntax.ArgumentList.Arguments.Count == 0
                     && candidateForGenerateMethod.Name is GenericNameSyntax genericNameSyntax
-                    && genericNameSyntax.TypeArgumentList.Arguments.Count == 1
-                    && genericNameSyntax.TypeArgumentList.Arguments[0] is IdentifierNameSyntax typeToMockInGeneric)
+                    && genericNameSyntax.TypeArgumentList.Arguments.Count == 1)
                 {
-                    if (!typesToMock.ContainsKey(typeToMockInGeneric.Identifier.ValueText))
-                    {
-                        typesToMock.Add(typeToMockInGeneric.Identifier.ValueText, typeToMockInGeneric);
-                    }
+                    TypesToMockSyntax.Add(genericNameSyntax.TypeArgumentList.Arguments[0]);
                 }
             }
         }

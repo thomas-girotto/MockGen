@@ -12,67 +12,37 @@ namespace MockGen.Tests
     public class MockSourceGeneratorTests
     {
         [Fact]
-        public void Should_find_method_parameters_namespaces()
+        public void Should_find_all_types_namespaces()
         {
             var source = @"
 using MockGen;
-using ExternalDependency.Model;
+using MethodParameterNamespace.Model;
+using ReturnNamespace.Model;
+using CtorNamespace.Model;
 
-namespace ExternalDependency.Model
+namespace MethodParameterNamespace.Model
 {
-    public class Model1 {}
+    public class ParameterModel {}
+}
+namespace ReturnNamespace.Model
+{
+    public class ReturnModel {}
+}
+namespace CtorNamespace.Model
+{
+    public class CtorParameterModel
 }
 namespace MyLib.Tests
 {
-    public interface ISomeDependency 
+    public class SomeDependency 
     {
-        // We should find out that we need to include namespace ExternalDependency.Model in our implementation when using Model1 type
-        void DoSomething(Model1 model);
+        // We should extract namespace from ctor parameter
+        public SomeDependency(CtorParameterModel model) { }
+
+        // We should extract namespaces MethodParameterNamespace.Model and ReturnNamespace.Model
+        public virtual ReturnModel DoSomething(ParameterModel model) {}
     }
 
-    public class Generators
-    {
-        public void Generate()
-        {
-            MockGenerator.Generate<ISomeDependency>();
-        }
-    }
-}
-";
-            // When
-            var (generator, diagnostics) = CompileSource(source);
-
-            // Then
-            if (diagnostics.Any())
-            {
-                throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
-            }
-            generator.TypesToMock.Should().HaveCount(1);
-            generator.TypesToMock[0].Namespaces.Should().Contain(new string[] { "ExternalDependency.Model", "MyLib.Tests" });
-        }
-
-        [Fact]
-        public void Should_find_ctor_parameters_namespaces()
-        {
-            var source = @"
-using MockGen;
-using ExternalDependency;
-using ExternalDependency.Model;
-
-namespace ExternalDependency.Model
-{
-    public class Model1 {}
-}
-namespace ExternalDependency
-{
-    public class SomeDependency
-    {
-        // We should find out that we need to include namespace ExternalDependency.Model in our implementation when using Model1 type
-        public SomeDependency(Model1 model) { }
-    }
-}
-namespace MyLib.Tests
-{
     public class Generators
     {
         public void Generate()
@@ -91,33 +61,37 @@ namespace MyLib.Tests
                 throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
             }
             generator.TypesToMock.Should().HaveCount(1);
-            generator.TypesToMock[0].Namespaces.Should().Contain(new string[] { "ExternalDependency.Model", "ExternalDependency" });
+            generator.TypesToMock[0].Namespaces.Should().Contain(new string[] 
+            { 
+                "MethodParameterNamespace.Model", "ReturnNamespace.Model", "CtorNamespace.Model", "MyLib.Tests" 
+            });
         }
 
         [Fact]
-        public void Should_find_method_return_type_namespaces()
+        public void Should_differentiate_two_types_having_the_same_name_by_adding_parts_of_the_fully_qualified_name()
         {
             var source = @"
 using MockGen;
-using ExternalDependency.Model;
+using MethodParameterNamespace.Model;
+using ReturnNamespace.Model;
+using CtorNamespace.Model;
 
-namespace ExternalDependency.Model
+namespace Sut.Namespace1
 {
-    public class Model1 {}
+    public interface IDependency {}
+}
+namespace Sut.Namespace2
+{
+    public interface IDependency {}
 }
 namespace MyLib.Tests
 {
-    public interface ISomeDependency 
-    {
-        // We should find out that we need to include namespace ExternalDependency.Model in our implementation when using Model1 type
-        Model1 DoSomething();
-    }
-
     public class Generators
     {
         public void Generate()
         {
-            MockGenerator.Generate<ISomeDependency>();
+            MockGenerator.Generate<Sut.Namespace1.IDependency>();
+            MockGenerator.Generate<Sut.Namespace2.IDependency>();
         }
     }
 }
@@ -130,8 +104,9 @@ namespace MyLib.Tests
             {
                 throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
             }
-            generator.TypesToMock.Should().HaveCount(1);
-            generator.TypesToMock[0].Namespaces.Should().Contain(new string[] { "ExternalDependency.Model", "MyLib.Tests" });
+            generator.TypesToMock.Should().HaveCount(2);
+            generator.TypesToMock[0].TypeToMock.Should().Be("IDependencyNamespace1");
+            generator.TypesToMock[1].TypeToMock.Should().Be("IDependencyNamespace2");
         }
 
         [Fact]
