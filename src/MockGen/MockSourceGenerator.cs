@@ -25,6 +25,10 @@ namespace MockGen
                     return;
                 }
 
+                // Generate MockGenerator class even when no type to mock yet
+                var mockGeneratorTemplate = new MockGeneratorTextTemplate();
+                AddSourceToBuildContext(context, "MockGenerator.cs", mockGeneratorTemplate.TransformText());
+
                 if (!receiver.TypesToMockSyntax.Any())
                 {
                     return;
@@ -37,9 +41,6 @@ namespace MockGen
                         .Where(m => m != null));
 
                 // First inject helper classes that doesn't depend on user's code
-                var mockGeneratorTemplate = new MockGeneratorTextTemplate();
-                AddSourceToBuildContext(context, "MockGenerator.cs", mockGeneratorTemplate.TransformText());
-                
                 var argTemplate = new ArgTextTemplate();
                 AddSourceToBuildContext(context, "Arg.cs", argTemplate.TransformText());
 
