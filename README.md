@@ -1,5 +1,5 @@
 # MockGen
-MockGen is a .NET mock library based on source generators.
+MockGen is a .NET mock library based on source generators. It aims to be the best mocking library in .net world by using source generators to offer the most powerful and straightforward API.
 
 [![thomas-girotto](https://circleci.com/gh/thomas-girotto/MockGen.svg?style=svg)](https://app.circleci.com/pipelines/github/thomas-girotto/MockGen)
 
