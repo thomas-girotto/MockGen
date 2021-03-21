@@ -26,13 +26,22 @@ MockGenerator.Mock<IDependency>();
 // IDependency method on Mock static class. This is the entrypoint of you mock configuration
 var mock = Mock.IDependency();
 
-// Setup mock behavior
+// Returns
 mock.GetAge(Arg<string>.Any).Returns(42); // Will return 42 for any parameter
 mock.GetAge("My Daughter").Returns(5); // Will return 5 only if this parameter is given
 mock.GetAge("My Daughter").Returns(5).AndExecute(_ => {})); // Also execute the given action when called
 mock.GetAge(Arg<string>.When(s => s.StartsWith("Grand"))).Returns(70); // Will return 70 only for parameters starting with "Grand"
+
+// Exceptions
 mock.GetAge("Lemmy Kilmister").Throws<Exception>(); // Will throw a new instance of Exception
 mock.GetAge("Lemmy Kilmister").Throws(new Exception("He's dead :(")); // Will throw this specifc exception
+
+// Properties
+mock.GetOnlyProperty.Returns(42); // Will always return 42
+mock.SetOnlyProperty.ForValue(Arg<string>.Any).Execute(val => {}); // Execute given action according to value given to the property
+// For get/set properties, we need to differentiate the getter from the setter
+mock.GetSetProperty.Get.Returns(42);
+mock.GetSetProperty.Set.ForValue(Arg<string>.Any).Execute(val => {});
 
 // Pass the mock to the sut
 var sut = new MyServiceUnderTest(mock.Build()); // Build() returns the original type setup with mock behavior
