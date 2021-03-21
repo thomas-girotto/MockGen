@@ -43,7 +43,20 @@ namespace MockGen.Templates.Setup
             
             #line default
             #line hidden
-            this.Write("\r\n    {\r\n");
+            
+            #line 10 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
+ if (Descriptor.NumberOfTypes == 1) { 
+            
+            #line default
+            #line hidden
+            this.Write(", IPropertySetSetup<TParam1>");
+            
+            #line 10 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
+}
+            
+            #line default
+            #line hidden
+            this.Write("    {\r\n");
             
             #line 12 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
  if (Descriptor.NumberOfTypes > 0) { 
@@ -94,16 +107,30 @@ namespace MockGen.Templates.Setup
             
             #line default
             #line hidden
-            this.Write("        public void ExecuteSetup(");
             
             #line 27 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
+ if (Descriptor.NumberOfTypes == 1) { 
+            
+            #line default
+            #line hidden
+            this.Write("        public IMethodSetup<TParam1> ForValue(Arg<TParam1> param) => ForParameter" +
+                    "(param);\r\n");
+            
+            #line 29 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        public void ExecuteSetup(");
+            
+            #line 31 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ParametersTypesWithName));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n");
             
-            #line 29 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
+            #line 33 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
  if (Descriptor.NumberOfTypes > 0) { 
             
             #line default
@@ -111,33 +138,33 @@ namespace MockGen.Templates.Setup
             this.Write("            // Register call with given parameter for future assertions on calls\r" +
                     "\n            calls.Add(");
             
-            #line 31 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
+            #line 35 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
  if (Descriptor.NumberOfTypes > 1) {
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 31 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
+            #line 35 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
 }
             
             #line default
             #line hidden
             
-            #line 31 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
+            #line 35 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatParameters("param")));
             
             #line default
             #line hidden
             
-            #line 31 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
+            #line 35 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
  if (Descriptor.NumberOfTypes > 1) {
             
             #line default
             #line hidden
             this.Write(")");
             
-            #line 31 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
+            #line 35 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
 }
             
             #line default
@@ -146,28 +173,28 @@ namespace MockGen.Templates.Setup
                     "           foreach (var setup in configuredActions)\r\n            {\r\n            " +
                     "    if (setup.Match(");
             
-            #line 35 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
+            #line 39 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatParameters("param")));
             
             #line default
             #line hidden
             this.Write("))\r\n                {\r\n                    setup.RunActions(");
             
-            #line 37 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
+            #line 41 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatParameters("param")));
             
             #line default
             #line hidden
             this.Write(");\r\n                    return;\r\n                }\r\n            }\r\n");
             
-            #line 41 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
+            #line 45 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("            numberOfCalls++;\r\n            currentConfiguration.RunActions();\r\n");
             
-            #line 44 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
+            #line 48 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
  } 
             
             #line default

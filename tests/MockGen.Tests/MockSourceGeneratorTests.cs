@@ -105,8 +105,43 @@ namespace MyLib.Tests
                 throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
             }
             generator.TypesToMock.Should().HaveCount(2);
+            generator.TypesToMock[0].Properties.Should().BeEmpty();
             generator.TypesToMock[0].TypeToMock.Should().Be("IDependencyNamespace1");
             generator.TypesToMock[1].TypeToMock.Should().Be("IDependencyNamespace2");
+        }
+
+        [Fact]
+        public void Should_recognize_get_property_from_method()
+        {
+            // Given
+            string source = @"
+namespace MockGen.Tests
+{
+    public interface IDependency 
+    {
+        public int GetProperty { get; }
+    }
+    public class Generators
+    {
+        public void GenerateMocks()
+        {
+            MockGenerator.Generate<IDependency>();
+        }
+    }
+}";
+            // When
+            var (generator, diagnostics) = CompileSource(source);
+
+            // Then
+            if (diagnostics.Any())
+            {
+                throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
+            }
+            generator.TypesToMock.Should().HaveCount(1);
+            generator.TypesToMock[0].Methods.Should().BeEmpty();
+            generator.TypesToMock[0].Properties.Should().HaveCount(1);
+            generator.TypesToMock[0].Properties[0].HasGetter.Should().BeTrue();
+            generator.TypesToMock[0].Properties[0].HasSetter.Should().BeFalse();
         }
 
         [Fact]

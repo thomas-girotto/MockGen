@@ -2,6 +2,9 @@
 {
     public interface IDependency
     {
+        Model1 GetOnlyProperty { get; }
+        Model1 SetOnlyProperty { set; }
+        Model1 GetSetProperty { get; set; }
         void DoSomething();
         void DoSomethingWithParameter(int input);
         void DoSomethingWithReferenceTypeParameter(Model1 model);

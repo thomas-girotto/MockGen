@@ -83,6 +83,10 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>PredicateArgMatcherTextTemplate.cs</LastGenOutput>
     </None>
+    <None Update="Templates\Setup\IPropertySetSetupTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>IPropertySetSetupTextTemplate.cs</LastGenOutput>
+    </None>
     <None Update="Templates\Setup\MethodSetupBaseTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSetupBaseTextTemplate.cs</LastGenOutput>
@@ -110,6 +114,10 @@
     <None Update="Templates\MockTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MockTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\Setup\PropertyGetSetSetupTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>PropertyGetSetSetupTextTemplate.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -183,6 +191,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PredicateArgMatcherTextTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Update="Templates\Setup\IPropertySetSetupTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IPropertySetSetupTextTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Update="Templates\Setup\MethodSetupBaseTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -217,6 +230,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MockTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\Setup\PropertyGetSetSetupTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PropertyGetSetSetupTextTemplate.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

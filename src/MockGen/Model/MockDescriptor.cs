@@ -10,7 +10,8 @@ namespace MockGen.Model
         
         public string TypeToMock { get; set; }
         public string TypeToMockNamespace { get; set; }
-        public List<MethodDescriptor> Methods { get; set; }
+        public List<MethodDescriptor> Methods { get; set; } = new List<MethodDescriptor>();
+        public List<PropertyDescriptor> Properties { get; set; } = new List<PropertyDescriptor>();
 
         public List<CtorDescriptor> Ctors
         {

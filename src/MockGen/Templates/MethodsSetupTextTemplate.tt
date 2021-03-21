@@ -12,12 +12,24 @@ namespace MockGen
 {
 	internal class <#=Descriptor.TypeToMock#>MethodsSetup
 	{
+<# foreach (var property in Descriptor.Properties) {#>
+<# if(property.HasGetter && property.HasSetter) { #>
+        internal PropertyGetSetSetup<<#=property.Type#>> <#=property.Name#>Setup { get; } = new PropertyGetSetSetup<<#=property.Type#>>();
+<# } else if (property.HasGetter) { #>
+        internal MethodSetupReturn<<#=property.Type#>> <#=property.Name#>Setup { get; } = new MethodSetupReturn<<#=property.Type#>>();
+<# } else { #>
+        internal MethodSetupVoid<<#=property.Type#>> <#=property.Name#>Setup { get; } = new MethodSetupVoid<<#=property.Type#>>();		
+<# } #>
+<# } #>
 <# foreach (var method in Descriptor.Methods) {#>
         internal <#=method.MethodSetupWithTypedParameters#> <#=method.Name#>Setup { get; } = new <#=method.MethodSetupWithTypedParameters#>();
 <#}#>
 
 		internal void SetupDone()
 		{
+<# foreach (var property in Descriptor.Properties) {#>
+            <#=property.Name#>Setup.SetupDone();
+<# } #>
 <# foreach (var method in Descriptor.Methods) {#>
             <#=method.Name#>Setup.SetupDone();
 <# } #>

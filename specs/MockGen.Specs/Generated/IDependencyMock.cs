@@ -11,6 +11,18 @@ namespace MockGen
             this.methods = methods;
         }
 
+        public Model1 GetOnlyProperty => methods.GetOnlyPropertySetup.ExecuteSetup();
+        public Model1 SetOnlyProperty
+        {
+            set => methods.SetOnlyPropertySetup.ExecuteSetup(value);
+        }
+
+        public Model1 GetSetProperty
+        {
+            get => methods.GetSetPropertySetup.ExecuteGetSetup();
+            set => methods.GetSetPropertySetup.ExecuteSetSetup(value);
+        }
+
         public void DoSomething()
         {
             methods.DoSomethingSetup.ExecuteSetup();

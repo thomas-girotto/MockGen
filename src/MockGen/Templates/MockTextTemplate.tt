@@ -5,7 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 using System;
 using MockGen.Setup;
-using <#=Descriptor.TypeToMockOriginalNamespace#>;
+using <#=Descriptor.TypeToMockNamespace#>;
 
 namespace MockGen
 {
@@ -20,6 +20,23 @@ namespace MockGen
         }
 <# } #>
 
+<# foreach (var property in Descriptor.Properties) { #>
+<# if(property.HasGetter && property.HasSetter) { #>
+        public <#=property.Type#> <#=property.Name#>
+        {
+            get => methods.<#=property.Name#>Setup.ExecuteGetSetup();
+            set => methods.<#=property.Name#>Setup.ExecuteSetSetup(value);
+        }
+<# } else if (property.HasGetter) { #>
+        public <#=property.Type#> <#=property.Name#> => methods.<#=property.Name#>Setup.ExecuteSetup();
+<# } else { #>
+        public <#=property.Type#> <#=property.Name#>
+        {
+            set => methods.<#=property.Name#>Setup.ExecuteSetup(value);
+        }
+<# } #>
+
+<# } #>
 <# foreach (var method in Descriptor.Methods) { #>
         public <#=method.AddOverrideKeywordIfNeeded#><#=method.ReturnType#> <#=method.Name#>(<#=method.ParametersDeclaration#>)
         {

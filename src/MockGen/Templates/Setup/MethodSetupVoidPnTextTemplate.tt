@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace MockGen.Setup
 {
-    internal class MethodSetupVoid<#=Descriptor.GenericTypes#> : MethodSetup<#=Descriptor.GenericTypes#>
+    internal class MethodSetupVoid<#=Descriptor.GenericTypes#> : MethodSetup<#=Descriptor.GenericTypes#><# if (Descriptor.NumberOfTypes == 1) { #>, IPropertySetSetup<TParam1><#}#>
     {
 <# if (Descriptor.NumberOfTypes > 0) { #>
         private Stack<ActionConfiguration<#=Descriptor.GenericTypes#>> configuredActions = new Stack<ActionConfiguration<#=Descriptor.GenericTypes#>>();
@@ -24,6 +24,10 @@ namespace MockGen.Setup
         }
 
 <# } #>
+<# if (Descriptor.NumberOfTypes == 1) { #>
+        public IMethodSetup<TParam1> ForValue(Arg<TParam1> param) => ForParameter(param);
+<# } #>
+
         public void ExecuteSetup(<#=Descriptor.ParametersTypesWithName#>)
         {
 <# if (Descriptor.NumberOfTypes > 0) { #>

@@ -7,7 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace MockGen.Templates
+namespace MockGen.Templates.Setup
 {
     using System.Linq;
     using System.Text;
@@ -18,9 +18,9 @@ namespace MockGen.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+    #line 1 "D:\Dev\MockGen\src\MockGen\Templates\Setup\PropertyGetSetSetupTextTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public partial class MethodsSetupTextTemplate : MethodsSetupTextTemplateBase
+    public partial class PropertyGetSetSetupTextTemplate : PropertyGetSetSetupTextTemplateBase
     {
 #line hidden
         /// <summary>
@@ -28,213 +28,34 @@ namespace MockGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using MockGen.Setup;\r\n");
-            
-            #line 7 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-foreach (var ns in Descriptor.Namespaces) { 
-            
-            #line default
-            #line hidden
-            this.Write("using ");
-            
-            #line 8 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ns));
-            
-            #line default
-            #line hidden
-            this.Write(";\r\n");
-            
-            #line 9 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-}
-            
-            #line default
-            #line hidden
-            this.Write("\r\nnamespace MockGen\r\n{\r\n\tinternal class ");
-            
-            #line 13 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMock));
-            
-            #line default
-            #line hidden
-            this.Write("MethodsSetup\r\n\t{\r\n");
-            
-            #line 15 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
- foreach (var property in Descriptor.Properties) {
-            
-            #line default
-            #line hidden
-            
-            #line 16 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
- if(property.HasGetter && property.HasSetter) { 
-            
-            #line default
-            #line hidden
-            this.Write("        internal PropertyGetSetSetup<");
-            
-            #line 17 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));
-            
-            #line default
-            #line hidden
-            this.Write("> ");
-            
-            #line 17 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
-            
-            #line default
-            #line hidden
-            this.Write("Setup { get; } = new PropertyGetSetSetup<");
-            
-            #line 17 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));
-            
-            #line default
-            #line hidden
-            this.Write(">();\r\n");
-            
-            #line 18 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
- } else if (property.HasGetter) { 
-            
-            #line default
-            #line hidden
-            this.Write("        internal MethodSetupReturn<");
-            
-            #line 19 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));
-            
-            #line default
-            #line hidden
-            this.Write("> ");
-            
-            #line 19 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
-            
-            #line default
-            #line hidden
-            this.Write("Setup { get; } = new MethodSetupReturn<");
-            
-            #line 19 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));
-            
-            #line default
-            #line hidden
-            this.Write(">();\r\n");
-            
-            #line 20 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
- } else { 
-            
-            #line default
-            #line hidden
-            this.Write("        internal MethodSetupVoid<");
-            
-            #line 21 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));
-            
-            #line default
-            #line hidden
-            this.Write("> ");
-            
-            #line 21 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
-            
-            #line default
-            #line hidden
-            this.Write("Setup { get; } = new MethodSetupVoid<");
-            
-            #line 21 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));
-            
-            #line default
-            #line hidden
-            this.Write(">();\t\t\r\n");
-            
-            #line 22 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            
-            #line 23 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            
-            #line 24 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
- foreach (var method in Descriptor.Methods) {
-            
-            #line default
-            #line hidden
-            this.Write("        internal ");
-            
-            #line 25 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.MethodSetupWithTypedParameters));
-            
-            #line default
-            #line hidden
-            this.Write(" ");
-            
-            #line 25 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
-            
-            #line default
-            #line hidden
-            this.Write("Setup { get; } = new ");
-            
-            #line 25 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.MethodSetupWithTypedParameters));
-            
-            #line default
-            #line hidden
-            this.Write("();\r\n");
-            
-            #line 26 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-}
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t\tinternal void SetupDone()\r\n\t\t{\r\n");
-            
-            #line 30 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
- foreach (var property in Descriptor.Properties) {
-            
-            #line default
-            #line hidden
-            this.Write("            ");
-            
-            #line 31 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
-            
-            #line default
-            #line hidden
-            this.Write("Setup.SetupDone();\r\n");
-            
-            #line 32 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            
-            #line 33 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
- foreach (var method in Descriptor.Methods) {
-            
-            #line default
-            #line hidden
-            this.Write("            ");
-            
-            #line 34 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
-            
-            #line default
-            #line hidden
-            this.Write("Setup.SetupDone();\r\n");
-            
-            #line 35 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t}\r\n\t}\r\n}");
+            this.Write(@"namespace MockGen.Setup
+{
+    internal interface IPropertyGetSetSetup<T>
+    {
+        IMethodSetupReturn<T> Get { get; }
+        IPropertySetSetup<T> Set { get; }
+    }
+
+    internal class PropertyGetSetSetup<T> : IPropertyGetSetSetup<T>
+    {
+        private readonly MethodSetupReturn<T> getPropertySetup = new MethodSetupReturn<T>();
+        private readonly MethodSetupVoid<T> setPropertySetup = new MethodSetupVoid<T>();
+
+        internal void SetupDone()
+        {
+            getPropertySetup.SetupDone();
+            setPropertySetup.SetupDone();
+        }
+
+        internal T ExecuteGetSetup() => getPropertySetup.ExecuteSetup();
+        
+        internal void ExecuteSetSetup(T param) => setPropertySetup.ExecuteSetup(param);
+
+        public IMethodSetupReturn<T> Get => getPropertySetup;
+
+        public IPropertySetSetup<T> Set => setPropertySetup;
+    }
+}");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -246,7 +67,7 @@ foreach (var ns in Descriptor.Namespaces) {
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public class MethodsSetupTextTemplateBase
+    public class PropertyGetSetSetupTextTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

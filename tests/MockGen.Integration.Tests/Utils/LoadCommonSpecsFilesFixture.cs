@@ -19,6 +19,7 @@ namespace MockGen.Integration.Tests.Utils
         public string SpyTestFile { get; private set; }
         public string ExecuteTestFile { get; private set; }
         public string ConcreteClassTestFile { get; private set; }
+        public string PropertyTestFile { get; private set; }
 
         public LoadCommonSpecsFilesFixture()
         {
@@ -32,6 +33,7 @@ namespace MockGen.Integration.Tests.Utils
             SpyTestFile = SourceFileReader.ReadFile("SpyTests.cs");
             ExecuteTestFile = SourceFileReader.ReadFile("ExecuteTests.cs");
             ConcreteClassTestFile = SourceFileReader.ReadFile("ConcreteClassTests.cs");
+            PropertyTestFile = SourceFileReader.ReadFile("PropertyTests.cs");
         }
     }
 }

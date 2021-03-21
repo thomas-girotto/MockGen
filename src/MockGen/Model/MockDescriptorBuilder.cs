@@ -42,7 +42,10 @@ namespace MockGen.Model
 
                 descriptorForTemplate.Methods = namedTypeSymbol.GetMembers()
                     .OfType<IMethodSymbol>()
-                    .Where(m => m.IsAbstract || m.IsVirtual)
+                    .Where(m => 
+                        (m.IsAbstract || m.IsVirtual) 
+                        && m.MethodKind != MethodKind.PropertyGet 
+                        && m.MethodKind != MethodKind.PropertySet)
                     .Select(m => new MethodDescriptor
                     {
                         Name = m.Name,
@@ -51,12 +54,23 @@ namespace MockGen.Model
                             ? string.Empty 
                             : GetNamespace(m.ReturnType),
                         ReturnsVoid = m.ReturnsVoid,
-                        Parameters = m.Parameters.Select(p =>
-                        { 
-                            var parameterNamespace = GetNamespace(p.Type);
-                            return new ParameterDescriptor(GetTypeName(p.Type), p.Name, parameterNamespace); 
-                        }).ToList(),
+                        Parameters = m.Parameters
+                            .Select(p => new ParameterDescriptor(GetTypeName(p.Type), p.Name, GetNamespace(p.Type)))
+                            .ToList(),
                         ShouldBeOverriden = namedTypeSymbol.TypeKind == TypeKind.Class && (m.IsVirtual || m.IsAbstract)
+                    })
+                    .ToList();
+
+                descriptorForTemplate.Properties = namedTypeSymbol.GetMembers()
+                    .OfType<IPropertySymbol>()
+                    .Where(p => p.IsAbstract || p.IsVirtual)
+                    .Select(p => new PropertyDescriptor
+                    {
+                        Name = p.Name,
+                        Namespace = GetNamespace(p.Type),
+                        Type = GetTypeName(p.Type),
+                        HasGetter = p.GetMethod != null,
+                        HasSetter = p.SetMethod != null,
                     })
                     .ToList();
             }
