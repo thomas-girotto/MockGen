@@ -111,6 +111,12 @@ namespace MyLib.Tests
         }
 
         [Fact]
+        public void Should_handle_methods_overload()
+        {
+
+        }
+
+        [Fact]
         public void Should_recognize_get_property_from_method()
         {
             // Given

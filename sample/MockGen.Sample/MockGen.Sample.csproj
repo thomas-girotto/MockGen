@@ -1,46 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="..\..\specs\MockGen.Specs\ConcreteClassTests.cs" Link="ConcreteClassTests.cs" />
-    <Compile Include="..\..\specs\MockGen.Specs\ExecuteTests.cs" Link="ExecuteTests.cs" />
-    <Compile Include="..\..\specs\MockGen.Specs\Generators.cs" Link="Generators.cs" />
-    <Compile Include="..\..\specs\MockGen.Specs\ReturnsTests.cs" Link="ReturnsTests.cs" />
-    <Compile Include="..\..\specs\MockGen.Specs\SpyTests.cs" Link="SpyTests.cs" />
-    <Compile Include="..\..\specs\MockGen.Specs\Sut\ConcreteDependency.cs" Link="Sut\ConcreteDependency.cs" />
-    <Compile Include="..\..\specs\MockGen.Specs\Sut\IDependency.cs" Link="Sut\IDependency.cs" />
-    <Compile Include="..\..\specs\MockGen.Specs\Sut\IOtherDependency.cs" Link="Sut\IOtherDependency.cs" />
-    <Compile Include="..\..\specs\MockGen.Specs\Sut\Model1.cs" Link="Sut\Model1.cs" />
-    <Compile Include="..\..\specs\MockGen.Specs\Sut\Model2.cs" Link="Sut\Model2.cs" />
-    <Compile Include="..\..\specs\MockGen.Specs\ThrowsTests.cs" Link="ThrowsTests.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="coverlet.collector" Version="1.3.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-
-    <PackageReference Include="System.CodeDom" Version="5.*" />
-    <PackageReference Include="FluentAssertions" Version="5.*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\MockGen\MockGen.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Sut\" />
-  </ItemGroup>
-  
 </Project>
