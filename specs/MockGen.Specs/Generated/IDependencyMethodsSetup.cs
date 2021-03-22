@@ -5,9 +5,9 @@ namespace MockGen
 {
     internal class IDependencyMethodsSetup
     {
-        internal MethodSetupReturn<Model1> GetOnlyPropertySetup { get; } = new MethodSetupReturn<Model1>();
-        internal MethodSetupVoid<Model1> SetOnlyPropertySetup { get; } = new MethodSetupVoid<Model1>();
-        internal PropertyGetSetSetup<Model1> GetSetPropertySetup { get; } = new PropertyGetSetSetup<Model1>();
+        internal PropertySetup<Model1> GetOnlyPropertySetup { get; } = new PropertySetup<Model1>();
+        internal PropertySetup<Model1> SetOnlyPropertySetup { get; } = new PropertySetup<Model1>();
+        internal PropertySetup<Model1> GetSetPropertySetup { get; } = new PropertySetup<Model1>();
         internal MethodSetupVoid DoSomethingSetup { get; } = new MethodSetupVoid();
         internal MethodSetupVoid<int> DoSomethingWithParameterSetup { get; } = new MethodSetupVoid<int>();
         internal MethodSetupVoid<Model1> DoSomethingWithReferenceTypeParameterSetup { get; } = new MethodSetupVoid<Model1>();

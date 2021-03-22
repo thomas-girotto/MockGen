@@ -12,7 +12,7 @@ namespace MockGen.Specs
             // Given
             var mockBuilder = Mock.IDependency();
             var propertyValue = new Model1 { Id = 1 };
-            mockBuilder.GetOnlyProperty.Returns(propertyValue);
+            mockBuilder.GetOnlyProperty.Get.Returns(propertyValue);
             var mock = mockBuilder.Build();
 
             // When
@@ -29,7 +29,7 @@ namespace MockGen.Specs
             var mockBuilder = Mock.IDependency();
             var propertyValue = new Model1 { Id = 1 };
             var wasCalled = false;
-            mockBuilder.GetOnlyProperty.Execute(() => wasCalled = true);
+            mockBuilder.GetOnlyProperty.Get.Execute(() => wasCalled = true);
             var mock = mockBuilder.Build();
 
             // When
@@ -51,7 +51,7 @@ namespace MockGen.Specs
             var secondCallResult = mock.GetOnlyProperty;
 
             // Then
-            mockBuilder.GetOnlyProperty.NumberOfCalls.Should().Be(2);
+            mockBuilder.GetOnlyProperty.Get.NumberOfCalls.Should().Be(2);
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace MockGen.Specs
             // Given
             var mockBuilder = Mock.IDependency();
             var wasCalled = false;
-            mockBuilder.SetOnlyProperty.ForValue(Arg<Model1>.Any).Execute(_ => wasCalled = true);
+            mockBuilder.SetOnlyProperty.Set(Arg<Model1>.Any).Execute(_ => wasCalled = true);
             var mock = mockBuilder.Build();
 
             // When
@@ -83,7 +83,7 @@ namespace MockGen.Specs
             mock.SetOnlyProperty = model;
 
             // Then
-            mockBuilder.SetOnlyProperty.ForValue(Arg<Model1>.Any).NumberOfCalls.Should().Be(2);
+            mockBuilder.SetOnlyProperty.Set(Arg<Model1>.Any).NumberOfCalls.Should().Be(2);
         }
 
         [Fact]
@@ -111,7 +111,7 @@ namespace MockGen.Specs
             var getWasCalled = false;
             var setWasCalled = false;
             mockBuilder.GetSetProperty.Get.Execute(() => getWasCalled = true);
-            mockBuilder.GetSetProperty.Set.ForValue(Arg<Model1>.Any).Execute(_ => setWasCalled = true);
+            mockBuilder.GetSetProperty.Set(Arg<Model1>.Any).Execute(_ => setWasCalled = true);
             var mock = mockBuilder.Build();
 
             // When
@@ -137,9 +137,9 @@ namespace MockGen.Specs
 
             // Then
             mockBuilder.GetSetProperty.Get.NumberOfCalls.Should().Be(1);
-            mockBuilder.GetSetProperty.Set.ForValue(Arg<Model1>.Any).NumberOfCalls.Should().Be(2);
-            mockBuilder.GetSetProperty.Set.ForValue(Arg<Model1>.When(m => m.Id == 1)).NumberOfCalls.Should().Be(1);
-            mockBuilder.GetSetProperty.Set.ForValue(Arg<Model1>.When(m => m.Id == 2)).NumberOfCalls.Should().Be(1);
+            mockBuilder.GetSetProperty.Set(Arg<Model1>.Any).NumberOfCalls.Should().Be(2);
+            mockBuilder.GetSetProperty.Set(Arg<Model1>.When(m => m.Id == 1)).NumberOfCalls.Should().Be(1);
+            mockBuilder.GetSetProperty.Set(Arg<Model1>.When(m => m.Id == 2)).NumberOfCalls.Should().Be(1);
         }
     }
 }

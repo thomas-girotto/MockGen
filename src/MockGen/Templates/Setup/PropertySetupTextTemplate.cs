@@ -18,9 +18,9 @@ namespace MockGen.Templates.Setup
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Dev\MockGen\src\MockGen\Templates\Setup\PropertyGetSetSetupTextTemplate.tt"
+    #line 1 "D:\Dev\MockGen\src\MockGen\Templates\Setup\PropertySetupTextTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public partial class PropertyGetSetSetupTextTemplate : PropertyGetSetSetupTextTemplateBase
+    public partial class PropertySetupTextTemplate : PropertySetupTextTemplateBase
     {
 #line hidden
         /// <summary>
@@ -30,13 +30,19 @@ namespace MockGen.Templates.Setup
         {
             this.Write(@"namespace MockGen.Setup
 {
-    internal interface IPropertyGetSetSetup<T>
+    internal interface IPropertyGet<T>
     {
         IMethodSetupReturn<T> Get { get; }
-        IPropertySetSetup<T> Set { get; }
     }
 
-    internal class PropertyGetSetSetup<T> : IPropertyGetSetSetup<T>
+    internal interface IPropertySet<T>
+    {
+        IMethodSetup<T> Set(Arg<T> value);
+    }
+
+    internal interface IPropertyGetSet<T> : IPropertyGet<T>, IPropertySet<T> { }
+
+    internal class PropertySetup<T> : IPropertyGetSet<T>
     {
         private readonly MethodSetupReturn<T> getPropertySetup = new MethodSetupReturn<T>();
         private readonly MethodSetupVoid<T> setPropertySetup = new MethodSetupVoid<T>();
@@ -53,7 +59,7 @@ namespace MockGen.Templates.Setup
 
         public IMethodSetupReturn<T> Get => getPropertySetup;
 
-        public IPropertySetSetup<T> Set => setPropertySetup;
+        public IMethodSetup<T> Set(Arg<T> value) => setPropertySetup.ForParameter(value);
     }
 }");
             return this.GenerationEnvironment.ToString();
@@ -67,7 +73,7 @@ namespace MockGen.Templates.Setup
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public class PropertyGetSetSetupTextTemplateBase
+    public class PropertySetupTextTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

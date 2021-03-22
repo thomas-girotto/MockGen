@@ -1,17 +1,18 @@
-﻿<#@ template language="C#" #>
-<#@ assembly name="System.Core" #>
-<#@ import namespace="System.Linq" #>
-<#@ import namespace="System.Text" #>
-<#@ import namespace="System.Collections.Generic" #>
-namespace MockGen.Setup
+﻿namespace MockGen.Setup
 {
-    internal interface IPropertyGetSetSetup<T>
+    internal interface IPropertyGet<T>
     {
         IMethodSetupReturn<T> Get { get; }
-        IPropertySetSetup<T> Set { get; }
     }
 
-    internal class PropertyGetSetSetup<T> : IPropertyGetSetSetup<T>
+    internal interface IPropertySet<T>
+    {
+        IMethodSetup<T> Set(Arg<T> value);
+    }
+
+    internal interface IPropertyGetSet<T> : IPropertyGet<T>, IPropertySet<T> { }
+
+    internal class PropertySetup<T> : IPropertyGetSet<T>
     {
         private readonly MethodSetupReturn<T> getPropertySetup = new MethodSetupReturn<T>();
         private readonly MethodSetupVoid<T> setPropertySetup = new MethodSetupVoid<T>();
@@ -28,6 +29,6 @@ namespace MockGen.Setup
 
         public IMethodSetupReturn<T> Get => getPropertySetup;
 
-        public IPropertySetSetup<T> Set => setPropertySetup;
+        public IMethodSetup<T> Set(Arg<T> value) => setPropertySetup.ForParameter(value);
     }
 }

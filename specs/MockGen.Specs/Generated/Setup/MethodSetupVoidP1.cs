@@ -2,7 +2,7 @@
 
 namespace MockGen.Setup
 {
-    internal class MethodSetupVoid<TParam> : MethodSetup<TParam>, IPropertySetSetup<TParam>
+    internal class MethodSetupVoid<TParam> : MethodSetup<TParam>
     {
         private Stack<ActionConfiguration<TParam>> configuredActions = new Stack<ActionConfiguration<TParam>>();
 
@@ -16,8 +16,6 @@ namespace MockGen.Setup
             
             return this;
         }
-
-        public IMethodSetup<TParam> ForValue(Arg<TParam> param) => ForParameter(param);
 
         public void ExecuteSetup(TParam param)
         {

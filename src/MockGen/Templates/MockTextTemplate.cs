@@ -160,7 +160,7 @@ namespace MockGen.Templates
             
             #line default
             #line hidden
-            this.Write("Setup.ExecuteSetup();\r\n");
+            this.Write("Setup.ExecuteGetSetup();\r\n");
             
             #line 32 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
  } else { 
@@ -188,7 +188,7 @@ namespace MockGen.Templates
             
             #line default
             #line hidden
-            this.Write("Setup.ExecuteSetup(value);\r\n        }\r\n");
+            this.Write("Setup.ExecuteSetSetup(value);\r\n        }\r\n");
             
             #line 37 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
  } 

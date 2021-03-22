@@ -28,11 +28,11 @@ namespace MockGen
             set => methods.<#=property.Name#>Setup.ExecuteSetSetup(value);
         }
 <# } else if (property.HasGetter) { #>
-        public <#=property.Type#> <#=property.Name#> => methods.<#=property.Name#>Setup.ExecuteSetup();
+        public <#=property.Type#> <#=property.Name#> => methods.<#=property.Name#>Setup.ExecuteGetSetup();
 <# } else { #>
         public <#=property.Type#> <#=property.Name#>
         {
-            set => methods.<#=property.Name#>Setup.ExecuteSetup(value);
+            set => methods.<#=property.Name#>Setup.ExecuteSetSetup(value);
         }
 <# } #>
 

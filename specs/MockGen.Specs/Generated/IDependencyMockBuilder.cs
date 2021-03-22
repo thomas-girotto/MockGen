@@ -14,11 +14,11 @@ namespace MockGen
             ctor = () => new IDependencyMock(methods);
         }
 
-        public IMethodSetupReturn<Model1> GetOnlyProperty => methods.GetOnlyPropertySetup;
+        public IPropertyGet<Model1> GetOnlyProperty => methods.GetOnlyPropertySetup;
         
-        public IPropertySetSetup<Model1> SetOnlyProperty => methods.SetOnlyPropertySetup;
+        public IPropertySet<Model1> SetOnlyProperty => methods.SetOnlyPropertySetup;
 
-        public IPropertyGetSetSetup<Model1> GetSetProperty => methods.GetSetPropertySetup;
+        public IPropertyGetSet<Model1> GetSetProperty => methods.GetSetPropertySetup;
         
         public IMethodSetup DoSomething()
         {

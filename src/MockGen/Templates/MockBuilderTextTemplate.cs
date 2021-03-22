@@ -132,7 +132,7 @@ namespace MockGen.Templates
             
             #line default
             #line hidden
-            this.Write("        public IPropertyGetSetSetup<");
+            this.Write("        public IPropertyGetSet<");
             
             #line 28 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));
@@ -160,7 +160,7 @@ namespace MockGen.Templates
             
             #line default
             #line hidden
-            this.Write("        public IMethodSetupReturn<");
+            this.Write("        public IPropertyGet<");
             
             #line 30 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));
@@ -188,7 +188,7 @@ namespace MockGen.Templates
             
             #line default
             #line hidden
-            this.Write("        public IPropertySetSetup<");
+            this.Write("        public IPropertySet<");
             
             #line 32 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));

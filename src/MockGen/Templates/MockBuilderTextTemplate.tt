@@ -25,11 +25,11 @@ namespace MockGen
 
 <# foreach (var property in Descriptor.Properties) {#>
 <# if(property.HasGetter && property.HasSetter) { #>
-        public IPropertyGetSetSetup<<#=property.Type#>> <#=property.Name#> => methods.<#=property.Name#>Setup;
+        public IPropertyGetSet<<#=property.Type#>> <#=property.Name#> => methods.<#=property.Name#>Setup;
 <# } else if (property.HasGetter) { #>
-        public IMethodSetupReturn<<#=property.Type#>> <#=property.Name#> => methods.<#=property.Name#>Setup;
+        public IPropertyGet<<#=property.Type#>> <#=property.Name#> => methods.<#=property.Name#>Setup;
 <# } else { #>
-        public IPropertySetSetup<<#=property.Type#>> <#=property.Name#> => methods.<#=property.Name#>Setup;
+        public IPropertySet<<#=property.Type#>> <#=property.Name#> => methods.<#=property.Name#>Setup;
 <# } #>
 
 <# } #>
