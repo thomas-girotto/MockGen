@@ -1,8 +1,6 @@
 ﻿using FluentAssertions;
 using MockGen.Model;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace MockGen.Tests.Model
@@ -72,6 +70,39 @@ namespace MockGen.Tests.Model
             numberOfParameters.Should()
                 .HaveCount(1)
                 .And.Contain(new TypedParameterMethod(1, true, true));
+        }
+
+        [Fact]
+        public void Should_create_one_method_with_one_parameter_and_one_method_returning_something_When_property_exists()
+        {
+            // That's because we're using MethodSetupVoid<T> to setup the Set property and MethodSetupReturn<T>
+            // to setup Get property => we make sur that we generate those classes
+            // Given
+            var mocks = new List<MockDescriptor> {
+                new MockDescriptor
+                {
+                    TypeToMockNamespace = "SomeLib.Namespace",
+                    Properties = new List<PropertyDescriptor>
+                    {
+                        new PropertyDescriptor
+                        {
+                            Name = "GetSetProperty",
+                            HasGetter = true,
+                            HasSetter = true,
+                            Type = "SomeModel"
+                        },
+                    }
+                },
+            };
+
+            // When
+            var numberOfParameters = mocks.GetAllMethodsGroupedByTypeParameter();
+
+            // Then
+            numberOfParameters.Should()
+                .HaveCount(2)
+                .And.Contain(new TypedParameterMethod(0, false, true))
+                .And.Contain(new TypedParameterMethod(1, true, false));
         }
     }
 }
