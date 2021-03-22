@@ -65,8 +65,12 @@ namespace MockGen
                 var methodSetupBaseTemplate = new MethodSetupBaseTextTemplate();
                 AddSourceToBuildContext(context, "MethodSetupBase.cs", methodSetupBaseTemplate.TransformText());
 
-                var propertySetupTemplate = new PropertySetupTextTemplate();
-                AddSourceToBuildContext(context, "PropertySetup.cs", propertySetupTemplate.TransformText());
+                // Generate PropertySetup only When properties exists
+                if (sanityzedMocks.Any(m => m.Properties.Any()))
+                {
+                    var propertySetupTemplate = new PropertySetupTextTemplate();
+                    AddSourceToBuildContext(context, "PropertySetup.cs", propertySetupTemplate.TransformText());
+                }
 
                 // Then classes that depends on types to mock declared by the user
                 foreach (var mockDescriptor in sanityzedMocks)
