@@ -302,7 +302,7 @@ namespace MockGen.Templates
             this.Write("        public ");
             
             #line 47 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMock));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMockOriginalName));
             
             #line default
             #line hidden

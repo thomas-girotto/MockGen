@@ -2,16 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Xunit;
 
-namespace MockGen.Integration.Tests
+namespace MockGen.Tests.Fixtures
 {
-
-    [CollectionDefinition("Load Metadata References")]
-    public class LoadMetadataReferenceFixture : ICollectionFixture<LoadMetadataReferenceFixture>
+    public class LoadMetadataReferenceFixture
     {
         public List<MetadataReference> MetadataReferences { get; } = new List<MetadataReference>();
-        public List<string> CommonSources { get; } = new List<string>();
 
         public LoadMetadataReferenceFixture()
         {

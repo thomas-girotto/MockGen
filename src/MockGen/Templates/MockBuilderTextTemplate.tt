@@ -44,7 +44,7 @@ namespace MockGen
         }
 
 <#}#>
-        public <#=Descriptor.TypeToMock#> Build()
+        public <#=Descriptor.TypeToMockOriginalName#> Build()
         {
             methods.SetupDone();
             return ctor();

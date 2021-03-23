@@ -29,6 +29,7 @@ namespace MockGen.Model
             {
                 descriptorForTemplate.IsInterface = namedTypeSymbol.TypeKind == TypeKind.Interface;
                 descriptorForTemplate.TypeToMock = GetTypeName(namedTypeSymbol);
+                descriptorForTemplate.TypeToMockOriginalName = descriptorForTemplate.TypeToMock;
                 descriptorForTemplate.TypeToMockNamespace = GetNamespace(namedTypeSymbol);
                 descriptorForTemplate.Ctors = namedTypeSymbol.InstanceConstructors
                     .Select(c => new CtorDescriptor

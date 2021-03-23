@@ -5,11 +5,13 @@
 <#@ import namespace="System.Collections.Generic" #>
 using System;
 using MockGen.Setup;
-using <#=Descriptor.TypeToMockNamespace#>;
+<# foreach (var ns in Descriptor.Namespaces) { #> 
+using <#=ns#>;
+<# } #>
 
 namespace MockGen
 {
-    internal class <#=Descriptor.TypeToMock#>Mock : <#=Descriptor.TypeToMock#>
+    internal class <#=Descriptor.TypeToMock#>Mock : <#=Descriptor.TypeToMockOriginalName#>
     {
         private readonly <#=Descriptor.TypeToMock#>MethodsSetup methods;
 

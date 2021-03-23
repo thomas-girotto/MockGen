@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using MockGen.Tests.Fixtures;
 using MockGen.Tests.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,15 @@ using Xunit.Sdk;
 
 namespace MockGen.Tests
 {
-    public class MockSourceGeneratorTests
+    public class MockSourceGeneratorTests : IClassFixture<LoadMetadataReferenceFixture>
     {
+        private readonly LoadMetadataReferenceFixture metadata;
+
+        public MockSourceGeneratorTests(LoadMetadataReferenceFixture metadata)
+        {
+            this.metadata = metadata;
+        }
+
         [Fact]
         public void Should_find_all_types_namespaces()
         {
@@ -30,7 +38,7 @@ namespace ReturnNamespace.Model
 }
 namespace CtorNamespace.Model
 {
-    public class CtorParameterModel
+    public class CtorParameterModel {}
 }
 namespace MyLib.Tests
 {
@@ -40,7 +48,7 @@ namespace MyLib.Tests
         public SomeDependency(CtorParameterModel model) { }
 
         // We should extract namespaces MethodParameterNamespace.Model and ReturnNamespace.Model
-        public virtual ReturnModel DoSomething(ParameterModel model) {}
+        public virtual ReturnModel DoSomething(ParameterModel model) { return new ReturnModel(); }
     }
 
     public class Generators
@@ -72,10 +80,6 @@ namespace MyLib.Tests
         {
             var source = @"
 using MockGen;
-using MethodParameterNamespace.Model;
-using ReturnNamespace.Model;
-using CtorNamespace.Model;
-
 namespace Sut.Namespace1
 {
     public interface IDependency {}
@@ -111,12 +115,6 @@ namespace MyLib.Tests
         }
 
         [Fact]
-        public void Should_handle_methods_overload()
-        {
-
-        }
-
-        [Fact]
         public void Should_recognize_get_property_from_method()
         {
             // Given
@@ -125,7 +123,7 @@ namespace MockGen.Tests
 {
     public interface IDependency 
     {
-        public int GetProperty { get; }
+        int GetProperty { get; }
     }
     public class Generators
     {
@@ -183,15 +181,18 @@ namespace MockGen.Tests
             var compilation = CSharpCompilation.Create(
                     "TestCodeInMemoryAssembly",
                     new[] { rootNode.SyntaxTree},
-                    null,
+                    metadata.MetadataReferences,
                     new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
             var generator = new MockSourceGeneratorSpy();
 
             var driver = CSharpGeneratorDriver.Create(generator);
-            driver.RunGeneratorsAndUpdateCompilation(compilation, out var _, out var generateDiagnostics);
+            driver.RunGeneratorsAndUpdateCompilation(compilation, out var fullCompilation, out var generatorDiagnostics);
 
-            return (generator, generateDiagnostics);
+            var allDiagnostics = fullCompilation.GetDiagnostics().Where(d => d.Severity == DiagnosticSeverity.Error).ToList();
+            allDiagnostics.AddRange(generatorDiagnostics.ToList());
+
+            return (generator, allDiagnostics);
         }
     }
 }

@@ -9,6 +9,10 @@ namespace MockGen.Model
         private List<CtorDescriptor> _ctors = new List<CtorDescriptor>();
         
         public string TypeToMock { get; set; }
+        /// <summary>
+        /// Keeps the original type to mock unchanged (as opposed to <see cref="TypeToMock"/> which can be changed to avoid type collision)
+        /// </summary>
+        public string TypeToMockOriginalName { get; set; }
         public string TypeToMockNamespace { get; set; }
         public List<MethodDescriptor> Methods { get; set; } = new List<MethodDescriptor>();
         public List<PropertyDescriptor> Properties { get; set; } = new List<PropertyDescriptor>();
