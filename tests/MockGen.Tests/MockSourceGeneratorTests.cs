@@ -115,6 +115,39 @@ namespace MyLib.Tests
         }
 
         [Fact]
+        public void Should_handle_methods_overload()
+        {
+            // Given
+            string source = @"
+using MockGen;
+namespace MockGen.Tests
+{
+    public interface IDependency 
+    {
+        void DoSomething();
+        void DoSomething(int value);
+    }
+    public class Generators
+    {
+        public void GenerateMocks()
+        {
+            MockGenerator.Generate<IDependency>();
+        }
+    }
+}";
+            // When
+            var (generator, diagnostics) = CompileSource(source);
+
+            // Then
+            if (diagnostics.Any())
+            {
+                throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
+            }
+            generator.TypesToMock.Should().HaveCount(1);
+            generator.TypesToMock[0].Methods.Should().HaveCount(2);
+        }
+
+        [Fact]
         public void Should_recognize_get_property_from_method()
         {
             // Given

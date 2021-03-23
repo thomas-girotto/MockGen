@@ -107,7 +107,7 @@ foreach (var ns in Descriptor.Namespaces) {
             this.Write(" ");
             
             #line 19 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.UniqueName));
             
             #line default
             #line hidden
@@ -155,7 +155,7 @@ foreach (var ns in Descriptor.Namespaces) {
             this.Write("            ");
             
             #line 28 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.UniqueName));
             
             #line default
             #line hidden

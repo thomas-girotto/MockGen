@@ -60,6 +60,24 @@ namespace MockGen.Tests.Model
         };
 
         [Fact]
+        public void Should_set_a_unique_name_for_methods_overload()
+        {
+            var mock = new MockDescriptor();
+            var method1 = new MethodDescriptor { Name = "DoSomething" };
+            var method2 = new MethodDescriptor { Name = "DoSomething" };
+            var method3 = new MethodDescriptor { Name = "DoSomething" };
+            
+            mock.AddMethod(method1);
+            method1.UniqueName.Should().Be("DoSomething");
+
+            mock.AddMethod(method2);
+            method2.UniqueName.Should().Be("DoSomething1");
+
+            mock.AddMethod(method3);
+            method3.UniqueName.Should().Be("DoSomething2");
+        }
+
+        [Fact]
         public void Should_build_MethodSetup_with_generic_typed_parameters()
         {
             string methodSetupVoid = GetMethodVoid().MethodSetupWithTypedParameters;

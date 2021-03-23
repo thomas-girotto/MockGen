@@ -260,7 +260,7 @@ namespace MockGen.Templates
             this.Write("            return methods.");
             
             #line 40 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.UniqueName));
             
             #line default
             #line hidden
@@ -281,7 +281,7 @@ namespace MockGen.Templates
             this.Write("            return methods.");
             
             #line 42 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.UniqueName));
             
             #line default
             #line hidden

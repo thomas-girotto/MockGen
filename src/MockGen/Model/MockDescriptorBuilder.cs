@@ -41,7 +41,7 @@ namespace MockGen.Model
                         }).ToList()
                     }).ToList();
 
-                descriptorForTemplate.Methods = namedTypeSymbol.GetMembers()
+                var methods = namedTypeSymbol.GetMembers()
                     .OfType<IMethodSymbol>()
                     .Where(m => 
                         (m.IsAbstract || m.IsVirtual) 
@@ -59,8 +59,12 @@ namespace MockGen.Model
                             .Select(p => new ParameterDescriptor(GetTypeName(p.Type), p.Name, GetNamespace(p.Type)))
                             .ToList(),
                         ShouldBeOverriden = namedTypeSymbol.TypeKind == TypeKind.Class && (m.IsVirtual || m.IsAbstract)
-                    })
-                    .ToList();
+                    });
+
+                foreach(var method in methods)
+                {
+                    descriptorForTemplate.AddMethod(method);
+                }
 
                 descriptorForTemplate.Properties = namedTypeSymbol.GetMembers()
                     .OfType<IPropertySymbol>()

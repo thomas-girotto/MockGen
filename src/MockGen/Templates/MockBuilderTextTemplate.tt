@@ -37,9 +37,9 @@ namespace MockGen
         public <#=method.IMethodSetupWithTypedParameters#> <#=method.Name#>(<#=method.ParametersDeclarationWithArg#>)
         {
 <# if (method.Parameters.Count > 0) {#>
-            return methods.<#=method.Name#>Setup.ForParameter(<#=method.CallForParameterMethod#>);
+            return methods.<#=method.UniqueName#>Setup.ForParameter(<#=method.CallForParameterMethod#>);
 <#} else { #>
-            return methods.<#=method.Name#>Setup;
+            return methods.<#=method.UniqueName#>Setup;
 <#}#>
         }
 

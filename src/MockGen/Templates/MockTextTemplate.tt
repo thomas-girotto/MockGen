@@ -43,9 +43,9 @@ namespace MockGen
         public <#=method.AddOverrideKeywordIfNeeded#><#=method.ReturnType#> <#=method.Name#>(<#=method.ParametersDeclaration#>)
         {
 <# if (!method.ReturnsVoid) { #>
-            return methods.<#=method.Name#>Setup.ExecuteSetup(<#=method.ParameterNames#>);
+            return methods.<#=method.UniqueName#>Setup.ExecuteSetup(<#=method.ParameterNames#>);
 <# } else { #>
-            methods.<#=method.Name#>Setup.ExecuteSetup(<#=method.ParameterNames#>);
+            methods.<#=method.UniqueName#>Setup.ExecuteSetup(<#=method.ParameterNames#>);
 <# } #>
         }
 
