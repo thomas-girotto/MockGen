@@ -11,51 +11,48 @@ namespace MockGen.Tests.Model
         private MethodDescriptor GetMethodVoid() => new MethodDescriptor
         {
             Name = "MethodVoid",
-            ReturnType = "Void",
-            ReturnsVoid = true,
+            ReturnType = Type.Void,
         };
 
         private MethodDescriptor GetMethodVoidWithParam() => new MethodDescriptor
         {
             Name = "MethodVoidWithParam",
-            ReturnsVoid = true,
-            ReturnType = "Void",
-            Parameters = new List<ParameterDescriptor> { new ParameterDescriptor("Type1", "param1", "SomeLib.Namespace") },
+            ReturnType = Type.Void,
+            Parameters = new List<ParameterDescriptor> { new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1") },
         };
 
         private MethodDescriptor GetMethodVoidWithTwoParam() => new MethodDescriptor
         {
             Name = "MethodVoidWithTwoParam",
-            ReturnsVoid = true,
-            ReturnType = "Void",
+            ReturnType = Type.Void,
             Parameters = new List<ParameterDescriptor> 
             { 
-                new ParameterDescriptor("Type1", "param1", "SomeLib.Namespace"),
-                new ParameterDescriptor("Type2", "param2", "SomeLib.Namespace"),
+                new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1"),
+                new ParameterDescriptor(new Type("Type2", "SomeLib.Namespace"), "param2"),
             },
         };
 
         private MethodDescriptor GetMethodWithoutParameter() => new MethodDescriptor
         {
             Name = "Method1",
-            ReturnType = "int",
+            ReturnType = new Type("int"),
         };
 
         private MethodDescriptor GetMethodWithOneParameter() => new MethodDescriptor
         {
             Name = "Method2",
-            ReturnType = "int",
-            Parameters = new List<ParameterDescriptor> { new ParameterDescriptor("Type1", "param1", "SomeLib.Namespace") }
+            ReturnType = new Type("int"),
+            Parameters = new List<ParameterDescriptor> { new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1") }
         };
 
         private MethodDescriptor GetMethodWithTwoParameters() => new MethodDescriptor
         {
             Name = "Method3",
-            ReturnType = "int",
+            ReturnType = new Type("int"),
             Parameters = new List<ParameterDescriptor> 
             { 
-                new ParameterDescriptor("Type1", "param1", "SomeLib.Namespace"), 
-                new ParameterDescriptor("Type2", "param2", "SomeLib.Namespace"),
+                new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1"), 
+                new ParameterDescriptor(new Type("Type2", "SomeLib.Namespace"), "param2"),
             }
         };
 

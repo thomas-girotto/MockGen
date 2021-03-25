@@ -39,17 +39,16 @@ namespace MockGen.Tests.Model
             var parameterTypeNamespace = "SomeLib.Namespace.For.ParameterType";
             var mock = new MockDescriptor
             {
-                TypeToMockNamespace = typeToMockNamespace,
+                TypeToMock = new Type("MyType", typeToMockNamespace),
                 Methods = new List<MethodDescriptor>
                 {
                     new MethodDescriptor
                     {
                         Name = "MethodTParamTReturn",
-                        ReturnType = "Type1",
-                        ReturnTypeNamespace = returnedTypeNamespace,
+                        ReturnType = new Type("Type1", returnedTypeNamespace),
                         Parameters = new List<ParameterDescriptor>
                         {
-                            new ParameterDescriptor("Type2", "param1", parameterTypeNamespace),
+                            new ParameterDescriptor(new Type("Type2", parameterTypeNamespace), "param1"),
                         },
                     }
                 }
@@ -69,17 +68,16 @@ namespace MockGen.Tests.Model
             var typeToMockNamespace = "SomeLib.TypeNamespace";
             var mock = new MockDescriptor
             {
-                TypeToMockNamespace = typeToMockNamespace,
+                TypeToMock = new Type("MyType", typeToMockNamespace),
                 Methods = new List<MethodDescriptor>
                 {
                     new MethodDescriptor
                     {
                         Name = "MethodTParamTReturn",
-                        ReturnType = "Type1",
-                        ReturnTypeNamespace = typeToMockNamespace,
+                        ReturnType = new Type("Type1", typeToMockNamespace),
                         Parameters = new List<ParameterDescriptor>
                         {
-                            new ParameterDescriptor("Type1", "param1", typeToMockNamespace),
+                            new ParameterDescriptor(new Type("Type1", typeToMockNamespace), "param1"),
                         },
                     }
                 }

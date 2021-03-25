@@ -11,12 +11,12 @@ using <#=ns#>;
 
 namespace MockGen
 {
-    internal class <#=Descriptor.TypeToMock#>Mock : <#=Descriptor.TypeToMockOriginalName#>
+    internal class <#=Descriptor.TypeToMock.Name#>Mock : <#=Descriptor.TypeToMockOriginalName#>
     {
-        private readonly <#=Descriptor.TypeToMock#>MethodsSetup methods;
+        private readonly <#=Descriptor.TypeToMock.Name#>MethodsSetup methods;
 
 <# foreach (var ctor in Descriptor.Ctors) { #>
-        public <#=Descriptor.TypeToMock#>Mock(<#=ctor.ConcatParametersDeclarationWith(Descriptor.TypeToMock + "MethodsSetup methods")#>)<#=string.Format(Descriptor.CallBaseCtorIfNeeded, ctor.ParameterNames)#>
+        public <#=Descriptor.TypeToMock.Name#>Mock(<#=ctor.ConcatParametersDeclarationWith(Descriptor.TypeToMock.Name + "MethodsSetup methods")#>)<#=string.Format(Descriptor.CallBaseCtorIfNeeded, ctor.ParameterNames)#>
         {
             this.methods = methods;
         }
@@ -24,15 +24,15 @@ namespace MockGen
 
 <# foreach (var property in Descriptor.Properties) { #>
 <# if(property.HasGetter && property.HasSetter) { #>
-        public <#=property.Type#> <#=property.Name#>
+        public <#=property.Type.Name#> <#=property.Name#>
         {
             get => methods.<#=property.Name#>Setup.ExecuteGetSetup();
             set => methods.<#=property.Name#>Setup.ExecuteSetSetup(value);
         }
 <# } else if (property.HasGetter) { #>
-        public <#=property.Type#> <#=property.Name#> => methods.<#=property.Name#>Setup.ExecuteGetSetup();
+        public <#=property.Type.Name#> <#=property.Name#> => methods.<#=property.Name#>Setup.ExecuteGetSetup();
 <# } else { #>
-        public <#=property.Type#> <#=property.Name#>
+        public <#=property.Type.Name#> <#=property.Name#>
         {
             set => methods.<#=property.Name#>Setup.ExecuteSetSetup(value);
         }
@@ -40,7 +40,7 @@ namespace MockGen
 
 <# } #>
 <# foreach (var method in Descriptor.Methods) { #>
-        public <#=method.AddOverrideKeywordIfNeeded#><#=method.ReturnType#> <#=method.Name#>(<#=method.ParametersDeclaration#>)
+        public <#=method.AddOverrideKeywordIfNeeded#><#=method.ReturnType.Name#> <#=method.Name#>(<#=method.ParametersDeclaration#>)
         {
 <# if (!method.ReturnsVoid) { #>
             return methods.<#=method.UniqueName#>Setup.ExecuteSetup(<#=method.ParameterNames#>);

@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using MockGen.Model;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace MockGen.Tests.Model
@@ -14,25 +15,25 @@ namespace MockGen.Tests.Model
             var mocks = new List<MockDescriptor> {
                 new MockDescriptor
                 {
-                    TypeToMockNamespace = "SomeLib.Namespace",
+                    TypeToMock = new Type("IDependency", "SomeLib.Namespace"),
                     Methods = new List<MethodDescriptor>
                     {
                         new MethodDescriptor
                         {
                             Name = "MethodWithOneTypedParameterAndReturnSomething1",
-                            ReturnType = "ReturnedType1",
+                            ReturnType = new Type("ReturnedType1", "SomeLib.Namespace"),
                             Parameters = new List<ParameterDescriptor>
                             {
-                                new ParameterDescriptor("Type1", "param1", "SomeLib.Namespace"),
+                                new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1"),
                             },
                         },
                         new MethodDescriptor
                         {
                             Name = "MethodWithOneTypedParameterThatReturnsVoid1",
-                            ReturnsVoid = true,
+                            ReturnType = Type.Void,
                             Parameters = new List<ParameterDescriptor>
                             {
-                                new ParameterDescriptor("Type3", "param1", "SomeLib.Namespace"),
+                                new ParameterDescriptor(new Type("Type3", "SomeLib.Namespace"), "param1"),
                             },
                         },
                     }
@@ -44,19 +45,19 @@ namespace MockGen.Tests.Model
                         new MethodDescriptor
                         {
                             Name = "MethodWithOneTypedParameterAndReturnSomething2",
-                            ReturnType = "ReturnedType2",
+                            ReturnType = new Type("ReturnedType2", "SomeLib.Namespace"),
                             Parameters = new List<ParameterDescriptor>
                             {
-                                new ParameterDescriptor("Type2", "param1", "SomeLib.Namespace"),
+                                new ParameterDescriptor(new Type("Type2", "SomeLib.Namespace"), "param1"),
                             },
                         },
                         new MethodDescriptor
                         {
                             Name = "MethodWithOneTypedParameterThatReturnsVoid2",
-                            ReturnsVoid = true,
+                            ReturnType = Type.Void,
                             Parameters = new List<ParameterDescriptor>
                             {
-                                new ParameterDescriptor("Type4", "param1", "SomeLib.Namespace"),
+                                new ParameterDescriptor(new Type("Type4", "SomeLib.Namespace"), "param1"),
                             },
                         },
                     }
@@ -81,7 +82,7 @@ namespace MockGen.Tests.Model
             var mocks = new List<MockDescriptor> {
                 new MockDescriptor
                 {
-                    TypeToMockNamespace = "SomeLib.Namespace",
+                    TypeToMock = new Type("IDependency", "SomeLib.Namespace"),
                     Properties = new List<PropertyDescriptor>
                     {
                         new PropertyDescriptor
@@ -89,7 +90,7 @@ namespace MockGen.Tests.Model
                             Name = "GetSetProperty",
                             HasGetter = true,
                             HasSetter = true,
-                            Type = "SomeModel"
+                            Type = new Type("SomeModel", "SomeLib.Namespace")
                         },
                     }
                 },

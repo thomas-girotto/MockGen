@@ -19,13 +19,11 @@ namespace MockGen.Tests.Model
             {
                 new MockDescriptor
                 {
-                    TypeToMock = type,
-                    TypeToMockNamespace = namespace1,
+                    TypeToMock = new Type(type, namespace1),
                 },
                 new MockDescriptor
                 {
-                    TypeToMock = type,
-                    TypeToMockNamespace = namespace2,
+                    TypeToMock = new Type(type, namespace2),
                 }
             };
 
@@ -33,8 +31,8 @@ namespace MockGen.Tests.Model
             MockDescriptorSanitizer.Sanitize(mocks);
 
             // Then
-            mocks[0].TypeToMock.Should().Be(expectedType1);
-            mocks[1].TypeToMock.Should().Be(expectedType2);
+            mocks[0].TypeToMock.Name.Should().Be(expectedType1);
+            mocks[1].TypeToMock.Name.Should().Be(expectedType2);
         }
     }
 }

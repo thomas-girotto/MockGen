@@ -12,24 +12,24 @@ namespace MockGen.Model
             var mocksPerType = new Dictionary<string, MockDescriptor>();
             foreach(var mock in mocks)
             {
-                if (mocksPerType.ContainsKey(mock.TypeToMock))
+                if (mocksPerType.ContainsKey(mock.TypeToMock.Name))
                 {
                     // If types are the exactly the same, don't do anything
-                    if (mocksPerType[mock.TypeToMock].TypeToMockNamespace == mock.TypeToMockNamespace)
+                    if (mocksPerType[mock.TypeToMock.Name].TypeToMock.FullName == mock.TypeToMock.FullName)
                     {
                         continue;
                     }
-                    var (type1, type2) = AddPartsOfNamespaceToTypeUntilTheyAreDifferent(mock.TypeToMock, mocksPerType[mock.TypeToMock].TypeToMockNamespace, mock.TypeToMockNamespace);
-                    var alreadyRegisteredMock = mocksPerType[mock.TypeToMock];
-                    alreadyRegisteredMock.TypeToMock = type1;
-                    mocksPerType.Remove(mock.TypeToMock);
+                    var (type1, type2) = AddPartsOfNamespaceToTypeUntilTheyAreDifferent(mock.TypeToMock.Name, mocksPerType[mock.TypeToMock.Name].TypeToMock.FullName, mock.TypeToMock.FullName);
+                    var alreadyRegisteredMock = mocksPerType[mock.TypeToMock.Name];
+                    alreadyRegisteredMock.TypeToMock.Name = type1;
+                    mocksPerType.Remove(mock.TypeToMock.Name);
                     mocksPerType.Add(type1, alreadyRegisteredMock);
-                    mock.TypeToMock = type2;
+                    mock.TypeToMock.Name = type2;
                     mocksPerType.Add(type2, mock);
                 }
                 else
                 {
-                    mocksPerType.Add(mock.TypeToMock, mock);
+                    mocksPerType.Add(mock.TypeToMock.Name, mock);
                 }
             }
 
@@ -44,7 +44,9 @@ namespace MockGen.Model
             var ns1Decomposition = namespace1.Split('.').Reverse().ToArray();
             var ns2Decomposition = namespace2.Split('.').Reverse().ToArray();
             
-            for (int i = 0; i < Math.Min(ns1Decomposition.Length, ns2Decomposition.Length); i++)
+            // starts at index 1 because we don't want to include the type itself (which is the last part of the FullName,
+            // so the first after the Reverse)
+            for (int i = 1; i < Math.Min(ns1Decomposition.Length, ns2Decomposition.Length); i++)
             {
                 type1 += ns1Decomposition[i];
                 type2 += ns2Decomposition[i];

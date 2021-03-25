@@ -5,15 +5,7 @@ namespace MockGen.Model
 {
     public class MethodDescriptor : CtorDescriptor
     {
-        private string returnType;
-
-        public string ReturnType
-        {
-            get => ReturnsVoid ? "void" : returnType;
-            set => returnType = value;
-        }
-
-        public string ReturnTypeNamespace { get; set; }
+        public Type ReturnType { get; set; }
 
         public string Name { get; set; }
 
@@ -25,7 +17,7 @@ namespace MockGen.Model
 
         public bool ShouldBeOverriden { get; set; }
 
-        public bool ReturnsVoid { get; set; }
+        public bool ReturnsVoid => ReturnType == Type.Void;
 
         public string AddOverrideKeywordIfNeeded => ShouldBeOverriden ? "override " : string.Empty;
 
@@ -34,8 +26,8 @@ namespace MockGen.Model
             {
                 (true, 0) => "MethodSetupVoid",
                 (true, > 0) => $"MethodSetupVoid<{ParameterTypes}>",
-                (false, 0) => $"MethodSetupReturn<{ReturnType}>",
-                (false, > 0) => $"MethodSetupReturn<{ParameterTypes}, {ReturnType}>",
+                (false, 0) => $"MethodSetupReturn<{ReturnType.Name}>",
+                (false, > 0) => $"MethodSetupReturn<{ParameterTypes}, {ReturnType.Name}>",
                 (_, _) => throw new NotImplementedException($"Case not implemented for values: {nameof(ReturnsVoid)}: {ReturnsVoid} and {nameof(Parameters.Count)}: {Parameters.Count}"),
             };
 
@@ -44,11 +36,11 @@ namespace MockGen.Model
             {
                 (true, 0) => "IMethodSetup",
                 (true, > 0) => $"IMethodSetup<{ParameterTypes}>",
-                (false, 0) => $"IMethodSetupReturn<{ReturnType}>",
-                (false, > 0) => $"IMethodSetupReturn<{ParameterTypes}, {ReturnType}>",
+                (false, 0) => $"IMethodSetupReturn<{ReturnType.Name}>",
+                (false, > 0) => $"IMethodSetupReturn<{ParameterTypes}, {ReturnType.Name}>",
                 (_, _) => throw new NotImplementedException($"Case not implemented for values: {nameof(ReturnsVoid)}: {ReturnsVoid} and {nameof(Parameters.Count)}: {Parameters.Count}"),
             };
 
-        public string CallForParameterMethod => string.Join(", ", Parameters.Select(p => $"{p.Name} ?? Arg<{p.Type}>.Null"));
+        public string CallForParameterMethod => string.Join(", ", Parameters.Select(p => $"{p.Name} ?? Arg<{p.Type.Name}>.Null"));
     }
 }

@@ -13,16 +13,16 @@ namespace MockGen
     {
 <# foreach(var mock in Mocks) { #>
 <# if (mock.IsInterface) { #>
-        internal static <#=mock.TypeToMock#>MockBuilder <#=mock.TypeToMock#>()
+        internal static <#=mock.TypeToMock.Name#>MockBuilder <#=mock.TypeToMock.Name#>()
         {
-            return new <#=mock.TypeToMock#>MockBuilder();
+            return new <#=mock.TypeToMock.Name#>MockBuilder();
         }
 
 <# } else { #>
 <# foreach(var ctor in mock.Ctors) { #>
-        internal static <#=mock.TypeToMock#>MockBuilder <#=mock.TypeToMock#>(<#=ctor.ParametersDeclaration#>)
+        internal static <#=mock.TypeToMock.Name#>MockBuilder <#=mock.TypeToMock.Name#>(<#=ctor.ParametersDeclaration#>)
         {
-            return new <#=mock.TypeToMock#>MockBuilder(<#=ctor.ParameterNames#>);
+            return new <#=mock.TypeToMock.Name#>MockBuilder(<#=ctor.ParameterNames#>);
         }
 
 <# } #>

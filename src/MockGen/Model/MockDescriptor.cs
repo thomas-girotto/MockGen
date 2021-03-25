@@ -9,12 +9,12 @@ namespace MockGen.Model
         private List<CtorDescriptor> _ctors = new List<CtorDescriptor>();
         private Dictionary<string, int> _numberOfMethodWithSameName = new Dictionary<string, int>();
 
-        public string TypeToMock { get; set; }
+        public Type TypeToMock { get; set; }
         /// <summary>
         /// Keeps the original type to mock unchanged (as opposed to <see cref="TypeToMock"/> which can be changed to avoid type collision)
         /// </summary>
         public string TypeToMockOriginalName { get; set; }
-        public string TypeToMockNamespace { get; set; }
+
         public List<MethodDescriptor> Methods { get; set; } = new List<MethodDescriptor>();
         
         public void AddMethod(MethodDescriptor method)
@@ -47,12 +47,12 @@ namespace MockGen.Model
         }
         public bool IsInterface { get; set; }
 
-        public IEnumerable<string> Namespaces => new List<string> { TypeToMockNamespace }
-            .Concat(Methods.SelectMany(m => m.Parameters.Select(p => p.Namespace)))
-            .Concat(Methods.Select(m => m.ReturnTypeNamespace))
-            .Concat(Ctors.SelectMany(c => c.Parameters.Select(p => p.Namespace)))
-            .Where(ns => !string.IsNullOrEmpty(ns))
-            .Distinct();
+        public IEnumerable<string> Namespaces => TypeToMock.Namespaces
+            .Union(Methods.SelectMany(m => m.Parameters.SelectMany(p => p.Type.Namespaces)))
+            .Union(Methods.SelectMany(m => m.ReturnType.Namespaces))
+            .Union(Ctors.SelectMany(c => c.Parameters.SelectMany(p => p.Type.Namespaces)))
+            .Union(Properties.SelectMany(p => p.Type.Namespaces))
+            .Where(ns => !string.IsNullOrEmpty(ns));
 
         public string CallBaseCtorIfNeeded => IsInterface ? "" : " : base({0})";
     }

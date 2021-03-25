@@ -2,15 +2,13 @@
 {
     public class ParameterDescriptor
     {
-        public ParameterDescriptor(string type, string name, string @namespace)
+        public ParameterDescriptor(Type type, string name)
         {
             Name = name;
             Type = type;
-            Namespace = @namespace;
         }
 
         public string Name { get; private set; }
-        public string Type { get; private set; }
-        public string Namespace { get; private set; }
+        public Type Type { get; private set; }
     }
 }

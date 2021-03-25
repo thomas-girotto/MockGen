@@ -11,25 +11,25 @@ using <#=ns#>;
 
 namespace MockGen
 {
-    internal class <#=Descriptor.TypeToMock#>MockBuilder
+    internal class <#=Descriptor.TypeToMock.Name#>MockBuilder
     {
-        private readonly <#=Descriptor.TypeToMock#>MethodsSetup methods = new <#=Descriptor.TypeToMock#>MethodsSetup();
-        private readonly Func<<#=Descriptor.TypeToMock#>Mock> ctor;
+        private readonly <#=Descriptor.TypeToMock.Name#>MethodsSetup methods = new <#=Descriptor.TypeToMock.Name#>MethodsSetup();
+        private readonly Func<<#=Descriptor.TypeToMock.Name#>Mock> ctor;
 
 <# foreach (var ctor in Descriptor.Ctors) {#>
-        internal <#=Descriptor.TypeToMock#>MockBuilder(<#=ctor.ParametersDeclaration#>)
+        internal <#=Descriptor.TypeToMock.Name#>MockBuilder(<#=ctor.ParametersDeclaration#>)
         {
-            ctor = () => new <#=Descriptor.TypeToMock#>Mock(<#=ctor.ConcatParametersNameWith("methods")#>);
+            ctor = () => new <#=Descriptor.TypeToMock.Name#>Mock(<#=ctor.ConcatParametersNameWith("methods")#>);
         }
 <#}#>
 
 <# foreach (var property in Descriptor.Properties) {#>
 <# if(property.HasGetter && property.HasSetter) { #>
-        public IPropertyGetSet<<#=property.Type#>> <#=property.Name#> => methods.<#=property.Name#>Setup;
+        public IPropertyGetSet<<#=property.Type.Name#>> <#=property.Name#> => methods.<#=property.Name#>Setup;
 <# } else if (property.HasGetter) { #>
-        public IPropertyGet<<#=property.Type#>> <#=property.Name#> => methods.<#=property.Name#>Setup;
+        public IPropertyGet<<#=property.Type.Name#>> <#=property.Name#> => methods.<#=property.Name#>Setup;
 <# } else { #>
-        public IPropertySet<<#=property.Type#>> <#=property.Name#> => methods.<#=property.Name#>Setup;
+        public IPropertySet<<#=property.Type.Name#>> <#=property.Name#> => methods.<#=property.Name#>Setup;
 <# } #>
 
 <# } #>

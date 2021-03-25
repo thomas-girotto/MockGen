@@ -10,10 +10,10 @@ using <#=ns#>;
 
 namespace MockGen
 {
-	internal class <#=Descriptor.TypeToMock#>MethodsSetup
+	internal class <#=Descriptor.TypeToMock.Name#>MethodsSetup
 	{
 <# foreach (var property in Descriptor.Properties) {#>
-        internal PropertySetup<<#=property.Type#>> <#=property.Name#>Setup { get; } = new PropertySetup<<#=property.Type#>>();		
+        internal PropertySetup<<#=property.Type.Name#>> <#=property.Name#>Setup { get; } = new PropertySetup<<#=property.Type.Name#>>();		
 <# } #>
 <# foreach (var method in Descriptor.Methods) {#>
         internal <#=method.MethodSetupWithTypedParameters#> <#=method.UniqueName#>Setup { get; } = new <#=method.MethodSetupWithTypedParameters#>();

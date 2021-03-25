@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using MockGen.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace MockGen.Model
 {
@@ -28,17 +29,12 @@ namespace MockGen.Model
             if (symbol is INamedTypeSymbol namedTypeSymbol)
             {
                 descriptorForTemplate.IsInterface = namedTypeSymbol.TypeKind == TypeKind.Interface;
-                descriptorForTemplate.TypeToMock = GetTypeName(namedTypeSymbol);
-                descriptorForTemplate.TypeToMockOriginalName = descriptorForTemplate.TypeToMock;
-                descriptorForTemplate.TypeToMockNamespace = GetNamespace(namedTypeSymbol);
+                descriptorForTemplate.TypeToMock = GetType(namedTypeSymbol);
+                descriptorForTemplate.TypeToMockOriginalName = descriptorForTemplate.TypeToMock.Name;
                 descriptorForTemplate.Ctors = namedTypeSymbol.InstanceConstructors
                     .Select(c => new CtorDescriptor
                     {
-                        Parameters = c.Parameters.Select(p =>
-                        {
-                            var parameterNamespace = GetNamespace(p.Type);
-                            return new ParameterDescriptor(GetTypeName(p.Type), p.Name, parameterNamespace);
-                        }).ToList()
+                        Parameters = c.Parameters.Select(p => new ParameterDescriptor(GetType(p.Type), p.Name)).ToList()
                     }).ToList();
 
                 var methods = namedTypeSymbol.GetMembers()
@@ -50,13 +46,9 @@ namespace MockGen.Model
                     .Select(m => new MethodDescriptor
                     {
                         Name = m.Name,
-                        ReturnType = GetTypeName(m.ReturnType),
-                        ReturnTypeNamespace = m.ReturnType.Name == "Void" 
-                            ? string.Empty 
-                            : GetNamespace(m.ReturnType),
-                        ReturnsVoid = m.ReturnsVoid,
+                        ReturnType = m.ReturnsVoid ? Type.Void : GetType(m.ReturnType),
                         Parameters = m.Parameters
-                            .Select(p => new ParameterDescriptor(GetTypeName(p.Type), p.Name, GetNamespace(p.Type)))
+                            .Select(p => new ParameterDescriptor(GetType(p.Type), p.Name))
                             .ToList(),
                         ShouldBeOverriden = namedTypeSymbol.TypeKind == TypeKind.Class && (m.IsVirtual || m.IsAbstract)
                     });
@@ -72,8 +64,7 @@ namespace MockGen.Model
                     .Select(p => new PropertyDescriptor
                     {
                         Name = p.Name,
-                        Namespace = GetNamespace(p.Type),
-                        Type = GetTypeName(p.Type),
+                        Type = GetType(p.Type),
                         HasGetter = p.GetMethod != null,
                         HasSetter = p.SetMethod != null,
                     })
@@ -83,23 +74,22 @@ namespace MockGen.Model
             return descriptorForTemplate;
         }
 
-        private static string GetFullyQualifiedName(ITypeSymbol typeSymbol)
+        private static Type GetType(ITypeSymbol typeSymbol)
         {
-            return typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat).Replace("global::", string.Empty);
+            var name = typeSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+            var fullyQualifiedName = typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat).Replace("global::", string.Empty);
+            var namespaces = ExtractAllNamespaces(fullyQualifiedName);
+            return new Type(name, namespaces);
         }
 
-        private static string GetTypeName(ITypeSymbol typeSymbol)
+        public static List<string> ExtractAllNamespaces(string fullName)
         {
-            return typeSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-        }
+            var types = fullName.Split(new char[] { '<', '>', ',' }, System.StringSplitOptions.RemoveEmptyEntries);
 
-        private static string GetNamespace(ITypeSymbol typeSymbol)
-        {
-            var fullyQualifiedName = GetFullyQualifiedName(typeSymbol);
-            var lastDotIndex = fullyQualifiedName.LastIndexOf(".");
-            return lastDotIndex == -1
-                ? string.Empty
-                : fullyQualifiedName.Substring(0, lastDotIndex);
+            return types
+                .Where(n => n.IndexOf(".") != -1)
+                .Select(n => n.Substring(0, n.LastIndexOf(".")).TrimStart())
+                .ToList();
         }
     }
 }

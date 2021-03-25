@@ -76,13 +76,13 @@ namespace MockGen
                 foreach (var mockDescriptor in sanityzedMocks)
                 {
                     var methodsSetupTemplate = new MethodsSetupTextTemplate(mockDescriptor);
-                    AddSourceToBuildContext(context, $"{mockDescriptor.TypeToMock}MethodsSetup.cs", methodsSetupTemplate.TransformText());
+                    AddSourceToBuildContext(context, $"{mockDescriptor.TypeToMock.Name}MethodsSetup.cs", methodsSetupTemplate.TransformText());
 
                     var mockBuilderTemplate = new MockBuilderTextTemplate(mockDescriptor);
-                    AddSourceToBuildContext(context, $"{mockDescriptor.TypeToMock}MockBuilder.cs", mockBuilderTemplate.TransformText());
+                    AddSourceToBuildContext(context, $"{mockDescriptor.TypeToMock.Name}MockBuilder.cs", mockBuilderTemplate.TransformText());
 
                     var mockTemplate = new MockTextTemplate(mockDescriptor);
-                    AddSourceToBuildContext(context, $"{mockDescriptor.TypeToMock}Mock.cs", mockTemplate.TransformText());
+                    AddSourceToBuildContext(context, $"{mockDescriptor.TypeToMock.Name}Mock.cs", mockTemplate.TransformText());
                 }
 
                 var mockStaticTemplate = new MockStaticTextTemplate(sanityzedMocks);

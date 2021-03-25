@@ -20,7 +20,7 @@ namespace MockGen.Tests
         }
 
         [Fact]
-        public void Should_find_all_types_namespaces()
+        public void Should_find_all_namespaces_used_in_a_class()
         {
             var source = @"
 using MockGen;
@@ -75,6 +75,42 @@ namespace MyLib.Tests
             });
         }
 
+
+        [Fact]
+        public void Should_find_all_namespaces_in_generic_type()
+        {
+            // Given
+            string source = @"
+using System.Net;
+using System.Threading.Tasks;
+namespace MockGen.Tests
+{
+    public interface IDependency 
+    {
+        Task<HttpStatusCode> GetSomeStatusCodeAsync();
+    }
+    public class Generators
+    {
+        public void GenerateMocks()
+        {
+            MockGenerator.Generate<IDependency>();
+        }
+    }
+}";
+            // When
+            var (generator, diagnostics) = CompileSource(source);
+
+            // Then
+            if (diagnostics.Any())
+            {
+                throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
+            }
+            generator.TypesToMock.Should().HaveCount(1);
+            generator.TypesToMock[0].Methods.Should().HaveCount(1);
+            generator.TypesToMock[0].Methods[0].ReturnType.Name.Should().Be("Task<HttpStatusCode>");
+            generator.TypesToMock[0].Methods[0].ReturnType.Namespaces.Should().ContainInOrder("System.Threading.Tasks", "System.Net");
+        }
+
         [Fact]
         public void Should_differentiate_two_types_having_the_same_name_by_adding_parts_of_the_fully_qualified_name()
         {
@@ -110,8 +146,8 @@ namespace MyLib.Tests
             }
             generator.TypesToMock.Should().HaveCount(2);
             generator.TypesToMock[0].Properties.Should().BeEmpty();
-            generator.TypesToMock[0].TypeToMock.Should().Be("IDependencyNamespace1");
-            generator.TypesToMock[1].TypeToMock.Should().Be("IDependencyNamespace2");
+            generator.TypesToMock[0].TypeToMock.Name.Should().Be("IDependencyNamespace1");
+            generator.TypesToMock[1].TypeToMock.Name.Should().Be("IDependencyNamespace2");
         }
 
         [Fact]
@@ -152,6 +188,7 @@ namespace MockGen.Tests
         {
             // Given
             string source = @"
+using MockGen;
 namespace MockGen.Tests
 {
     public interface IDependency 
@@ -186,6 +223,7 @@ namespace MockGen.Tests
         {
             // Given
             string source = @"
+using MockGen;
 namespace MockGen.Tests
 {
     public sealed class SealedClass { }

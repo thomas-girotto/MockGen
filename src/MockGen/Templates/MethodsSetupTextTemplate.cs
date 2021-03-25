@@ -52,7 +52,7 @@ foreach (var ns in Descriptor.Namespaces) {
             this.Write("\r\nnamespace MockGen\r\n{\r\n\tinternal class ");
             
             #line 13 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMock));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMock.Name));
             
             #line default
             #line hidden
@@ -66,7 +66,7 @@ foreach (var ns in Descriptor.Namespaces) {
             this.Write("        internal PropertySetup<");
             
             #line 16 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));
+            this.Write(this.ToStringHelper.ToStringWithCulture(property.Type.Name));
             
             #line default
             #line hidden
@@ -80,7 +80,7 @@ foreach (var ns in Descriptor.Namespaces) {
             this.Write("Setup { get; } = new PropertySetup<");
             
             #line 16 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));
+            this.Write(this.ToStringHelper.ToStringWithCulture(property.Type.Name));
             
             #line default
             #line hidden
