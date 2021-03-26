@@ -9,4 +9,7 @@
        - checkout
        - run: dotnet restore
        - run: dotnet build --no-restore -c Release
-       - run: dotnet test --no-build -c Release
+       - run: dotnet test --no-build -c Release -v n --results-directory:test_coverage --collect:"Code Coverage"
+       - store_test_results:
+          path: test-results
+ 
