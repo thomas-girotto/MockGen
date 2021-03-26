@@ -44,8 +44,6 @@ mock.GetAge("Lemmy Kilmister").Throws(new Exception("He's dead :(")); // Will th
 // For get/set properties, we need to differentiate getter config from setter config.
 mock.GetSetProperty.Get.Returns(42); // Will always return 42
 mock.GetSetProperty.Set(42).Execute(val => {}); // Execute given action when setting property to 42
-mock.GetOnlyProperty.Get.Returns(42); // Get only properties don't have a Set() method
-mock.SetOnlyProperty.Set(Arg<string>.Any).Execute(val => {}); // Set only properties don't have a Get property
 
 // Pass the mock to the sut
 var sut = new MyServiceUnderTest(mock.Build()); // Build() returns the original type setup with mock behavior
