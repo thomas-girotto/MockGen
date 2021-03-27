@@ -46,7 +46,7 @@ namespace MockGen.Model
                     .Select(m => new MethodDescriptor
                     {
                         Name = m.Name,
-                        ReturnType = m.ReturnsVoid ? Type.Void : GetType(m.ReturnType),
+                        ReturnType = m.ReturnsVoid ? ReturnType.Void : GetType(m.ReturnType),
                         Parameters = m.Parameters
                             .Select(p => new ParameterDescriptor(GetType(p.Type), p.Name))
                             .ToList(),
@@ -74,12 +74,18 @@ namespace MockGen.Model
             return descriptorForTemplate;
         }
 
-        private static Type GetType(ITypeSymbol typeSymbol)
+        private static ReturnType GetType(ITypeSymbol typeSymbol)
         {
             var name = typeSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
             var fullyQualifiedName = typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat).Replace("global::", string.Empty);
             var namespaces = ExtractAllNamespaces(fullyQualifiedName);
-            return new Type(name, namespaces);
+            if (name.StartsWith("Task<"))
+            {
+                // Get the T of Task<T>
+                var taskOfT = name.Substring(5, name.Length - 6);
+                return new ReturnType(taskOfT, true, namespaces);
+            }
+            return new ReturnType(name, false, namespaces);
         }
 
         public static List<string> ExtractAllNamespaces(string fullName)

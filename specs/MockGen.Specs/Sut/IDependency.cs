@@ -1,4 +1,6 @@
-﻿namespace MockGen.Specs.Sut
+﻿using System.Threading.Tasks;
+
+namespace MockGen.Specs.Sut
 {
     public interface IDependency
     {
@@ -13,5 +15,6 @@
         int GetSomeNumberWithParameter(int input);
         int GetSomeNumberWithReferenceTypeParameter(Model1 model1);
         int GetSomeNumberWithTwoParameters(Model1 model1, Model2 model2);
+        Task<int> GetSomeNumberAsync();
     }
 }

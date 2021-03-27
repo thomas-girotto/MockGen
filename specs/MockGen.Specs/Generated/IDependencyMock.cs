@@ -1,4 +1,5 @@
 ﻿using MockGen.Specs.Sut;
+using System.Threading.Tasks;
 
 namespace MockGen
 {
@@ -62,6 +63,11 @@ namespace MockGen
         public int GetSomeNumberWithTwoParameters(Model1 model1, Model2 model2)
         {
             return methods.GetSomeNumberWithTwoParametersSetup.ExecuteSetup(model1, model2);
+        }
+
+        public Task<int> GetSomeNumberAsync()
+        {
+            return methods.GetSomeNumberAsyncSetup.ExecuteSetup();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace MockGen.Tests.Model
                         new MethodDescriptor
                         {
                             Name = "MethodWithOneTypedParameterAndReturnSomething1",
-                            ReturnType = new Type("ReturnedType1", "SomeLib.Namespace"),
+                            ReturnType = new ReturnType("ReturnedType1", false, "SomeLib.Namespace"),
                             Parameters = new List<ParameterDescriptor>
                             {
                                 new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1"),
@@ -30,7 +30,7 @@ namespace MockGen.Tests.Model
                         new MethodDescriptor
                         {
                             Name = "MethodWithOneTypedParameterThatReturnsVoid1",
-                            ReturnType = Type.Void,
+                            ReturnType = ReturnType.Void,
                             Parameters = new List<ParameterDescriptor>
                             {
                                 new ParameterDescriptor(new Type("Type3", "SomeLib.Namespace"), "param1"),
@@ -45,7 +45,7 @@ namespace MockGen.Tests.Model
                         new MethodDescriptor
                         {
                             Name = "MethodWithOneTypedParameterAndReturnSomething2",
-                            ReturnType = new Type("ReturnedType2", "SomeLib.Namespace"),
+                            ReturnType = new ReturnType("ReturnedType2", false, "SomeLib.Namespace"),
                             Parameters = new List<ParameterDescriptor>
                             {
                                 new ParameterDescriptor(new Type("Type2", "SomeLib.Namespace"), "param1"),
@@ -54,7 +54,7 @@ namespace MockGen.Tests.Model
                         new MethodDescriptor
                         {
                             Name = "MethodWithOneTypedParameterThatReturnsVoid2",
-                            ReturnType = Type.Void,
+                            ReturnType = ReturnType.Void,
                             Parameters = new List<ParameterDescriptor>
                             {
                                 new ParameterDescriptor(new Type("Type4", "SomeLib.Namespace"), "param1"),
@@ -70,7 +70,7 @@ namespace MockGen.Tests.Model
             // Then
             numberOfParameters.Should()
                 .HaveCount(1)
-                .And.Contain(new TypedParameterMethod(1, true, true));
+                .And.Contain(new TypedParameterMethod(1, true, true, false));
         }
 
         [Fact]
@@ -90,7 +90,7 @@ namespace MockGen.Tests.Model
                             Name = "GetSetProperty",
                             HasGetter = true,
                             HasSetter = true,
-                            Type = new Type("SomeModel", "SomeLib.Namespace")
+                            Type = new ReturnType("SomeModel", false, "SomeLib.Namespace")
                         },
                     }
                 },
@@ -102,8 +102,8 @@ namespace MockGen.Tests.Model
             // Then
             numberOfParameters.Should()
                 .HaveCount(2)
-                .And.Contain(new TypedParameterMethod(0, false, true))
-                .And.Contain(new TypedParameterMethod(1, true, false));
+                .And.Contain(new TypedParameterMethod(0, false, true, false))
+                .And.Contain(new TypedParameterMethod(1, true, false, false));
         }
     }
 }

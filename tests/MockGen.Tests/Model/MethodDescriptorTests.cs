@@ -11,20 +11,20 @@ namespace MockGen.Tests.Model
         private MethodDescriptor GetMethodVoid() => new MethodDescriptor
         {
             Name = "MethodVoid",
-            ReturnType = Type.Void,
+            ReturnType = ReturnType.Void,
         };
 
         private MethodDescriptor GetMethodVoidWithParam() => new MethodDescriptor
         {
             Name = "MethodVoidWithParam",
-            ReturnType = Type.Void,
+            ReturnType = ReturnType.Void,
             Parameters = new List<ParameterDescriptor> { new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1") },
         };
 
         private MethodDescriptor GetMethodVoidWithTwoParam() => new MethodDescriptor
         {
             Name = "MethodVoidWithTwoParam",
-            ReturnType = Type.Void,
+            ReturnType = ReturnType.Void,
             Parameters = new List<ParameterDescriptor> 
             { 
                 new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1"),
@@ -35,20 +35,20 @@ namespace MockGen.Tests.Model
         private MethodDescriptor GetMethodWithoutParameter() => new MethodDescriptor
         {
             Name = "Method1",
-            ReturnType = new Type("int"),
+            ReturnType = new ReturnType("int", false),
         };
 
         private MethodDescriptor GetMethodWithOneParameter() => new MethodDescriptor
         {
             Name = "Method2",
-            ReturnType = new Type("int"),
+            ReturnType = new ReturnType("int", false),
             Parameters = new List<ParameterDescriptor> { new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1") }
         };
 
         private MethodDescriptor GetMethodWithTwoParameters() => new MethodDescriptor
         {
             Name = "Method3",
-            ReturnType = new Type("int"),
+            ReturnType = new ReturnType("int", false),
             Parameters = new List<ParameterDescriptor> 
             { 
                 new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1"), 

@@ -110,7 +110,7 @@ namespace MockGen
                         methodSetupVoidPnTemplate.Descriptor = template;
                         AddSourceToBuildContext(context, $"MethodSetupVoid{template.FileSuffix}.cs", methodSetupVoidPnTemplate.TransformText());
                     }
-                    if (genericTypeDescriptor.HasMethodThatReturns)
+                    if (genericTypeDescriptor.HasMethodThatReturns || genericTypeDescriptor.HasMethodThatReturnsTask)
                     {
                         var actionConfigurationWithReturnPnTemplate = new ActionConfigurationWithReturnPnTextTemplate(template);
                         AddSourceToBuildContext(context, $"ActionConfigurationWithReturn{template.FileSuffix}.cs", actionConfigurationWithReturnPnTemplate.TransformText());
@@ -118,10 +118,18 @@ namespace MockGen
                         var iMethodSetupReturnPn = new IMethodSetupReturnPnTextTemplate();
                         iMethodSetupReturnPn.Descriptor = template;
                         AddSourceToBuildContext(context, $"IMethodSetupReturn{template.FileSuffix}.cs", iMethodSetupReturnPn.TransformText());
-                            
+                    }
+                    if (genericTypeDescriptor.HasMethodThatReturns)
+                    {
                         var methodSetupReturnPnTemplate = new MethodSetupReturnPnTextTemplate();
                         methodSetupReturnPnTemplate.Descriptor = template;
                         AddSourceToBuildContext(context, $"MethodSetupReturn{template.FileSuffix}.cs", methodSetupReturnPnTemplate.TransformText());
+                    }
+                    if (genericTypeDescriptor.HasMethodThatReturnsTask)
+                    {
+                        var methodSetupReturnTaskPnTemplate = new MethodSetupReturnTaskPnTextTemplate();
+                        methodSetupReturnTaskPnTemplate.Descriptor = template;
+                        AddSourceToBuildContext(context, $"MethodSetupReturnTask{template.FileSuffix}.cs", methodSetupReturnTaskPnTemplate.TransformText());
                     }
                 }
             }

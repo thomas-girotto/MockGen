@@ -45,7 +45,7 @@ namespace MockGen.Tests.Model
                     new MethodDescriptor
                     {
                         Name = "MethodTParamTReturn",
-                        ReturnType = new Type("Type1", returnedTypeNamespace),
+                        ReturnType = new ReturnType("Type1", false, returnedTypeNamespace),
                         Parameters = new List<ParameterDescriptor>
                         {
                             new ParameterDescriptor(new Type("Type2", parameterTypeNamespace), "param1"),
@@ -74,7 +74,7 @@ namespace MockGen.Tests.Model
                     new MethodDescriptor
                     {
                         Name = "MethodTParamTReturn",
-                        ReturnType = new Type("Type1", typeToMockNamespace),
+                        ReturnType = new ReturnType("Type1", false, typeToMockNamespace),
                         Parameters = new List<ParameterDescriptor>
                         {
                             new ParameterDescriptor(new Type("Type1", typeToMockNamespace), "param1"),

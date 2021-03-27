@@ -37,6 +37,8 @@ namespace MockGen.Model
 
         public string GenericTypesWithTReturn => $"<{string.Join(", ", EnumerateNumbers.Select(n => $"TParam{n}").Concat(new string[] { "TReturn" }))}>";
 
+        public string GenericTypesWithTaskOfTReturn => $"<{string.Join(", ", EnumerateNumbers.Select(n => $"TParam{n}").Concat(new string[] { "Task<TReturn>" }))}>";
+
         public string DiscardParameters => $"({string.Join(", ", EnumerateNumbers.Select(_ => "_"))})";
 
         private IEnumerable<string> ClassByParameterType(string className) => EnumerateNumbers.Select(n => $"{className}<TParam{n}>");

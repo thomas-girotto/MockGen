@@ -5,8 +5,6 @@ namespace MockGen.Model
 {
     public class Type
     {
-        public static Type Void = new Type("void", Enumerable.Empty<string>());
-
         public Type(string name) : this(name, Enumerable.Empty<string>()) { }
         public Type(string name, string @namespace) : this(name, new string[] { @namespace }) { }
         public Type(string name, IEnumerable<string> namespaces)

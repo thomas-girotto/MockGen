@@ -91,6 +91,10 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSetupPnTextTemplate.cs</LastGenOutput>
     </None>
+    <None Update="Templates\Setup\MethodSetupReturnTaskPnTextTemplate.tt">
+      <LastGenOutput>MethodSetupReturnTaskPnTextTemplate.cs</LastGenOutput>
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+    </None>
     <None Update="Templates\Setup\MethodSetupReturnPnTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MethodSetupReturnPnTextTemplate.cs</LastGenOutput>
@@ -201,6 +205,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MethodSetupReturnPnTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\Setup\MethodSetupReturnTaskPnTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MethodSetupReturnTaskPnTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Update="Templates\Setup\MethodSetupVoidPnTextTemplate.cs">
       <DesignTime>True</DesignTime>

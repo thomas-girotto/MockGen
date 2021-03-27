@@ -115,11 +115,21 @@ namespace MockGen.Integration.Tests
         }
 
         [Fact]
-        public void Should_return_per_parameters_mocked_value_When_parameters_match_both_criterias()
+        public void Should_return_value_based_on_arguments_match()
         {
             var sources = GetSourceFilesToCompileFromSpecs();
 
-            Action action = () => testRunner.RunTest(sources, nameof(ReturnsTests), nameof(Should_return_per_parameters_mocked_value_When_parameters_match_both_criterias));
+            Action action = () => testRunner.RunTest(sources, nameof(ReturnsTests), nameof(Should_return_value_based_on_arguments_match));
+
+            action.Should().NotThrow();
+        }
+
+        [Fact]
+        public void Should_return_a_task_When_configured_with_the_underlying_type()
+        {
+            var sources = GetSourceFilesToCompileFromSpecs();
+
+            Action action = () => testRunner.RunTest(sources, nameof(ReturnsTests), nameof(Should_return_a_task_When_configured_with_the_underlying_type));
 
             action.Should().NotThrow();
         }

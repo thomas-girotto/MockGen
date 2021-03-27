@@ -16,6 +16,7 @@ namespace MockGen
         internal MethodSetupReturn<int, int> GetSomeNumberWithParameterSetup { get; } = new MethodSetupReturn<int, int>();
         internal MethodSetupReturn<Model1, int> GetSomeNumberWithReferenceTypeParameterSetup { get; } = new MethodSetupReturn<Model1, int>();
         internal MethodSetupReturn<Model1, Model2, int> GetSomeNumberWithTwoParametersSetup { get; } = new MethodSetupReturn<Model1, Model2, int>();
+        internal MethodSetupReturnTask<int> GetSomeNumberAsyncSetup { get; } = new MethodSetupReturnTask<int>();
 
         internal void SetupDone()
         {
@@ -30,6 +31,7 @@ namespace MockGen
             GetSomeNumberWithParameterSetup.SetupDone();
             GetSomeNumberWithReferenceTypeParameterSetup.SetupDone();
             GetSomeNumberWithTwoParametersSetup.SetupDone();
+            GetSomeNumberAsyncSetup.SetupDone();
         }
     }
 }

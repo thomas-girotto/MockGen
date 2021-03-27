@@ -40,7 +40,11 @@ namespace MockGen
 
 <# } #>
 <# foreach (var method in Descriptor.Methods) { #>
+<# if (method.ReturnType.IsTask) { #>
+        public <#=method.AddOverrideKeywordIfNeeded#>Task<<#=method.ReturnType.Name#>> <#=method.Name#>(<#=method.ParametersDeclaration#>)
+<# } else { #>
         public <#=method.AddOverrideKeywordIfNeeded#><#=method.ReturnType.Name#> <#=method.Name#>(<#=method.ParametersDeclaration#>)
+<# } #>        
         {
 <# if (!method.ReturnsVoid) { #>
             return methods.<#=method.UniqueName#>Setup.ExecuteSetup(<#=method.ParameterNames#>);

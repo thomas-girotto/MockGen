@@ -82,6 +82,41 @@ namespace MyLib.Tests
             // Given
             string source = @"
 using System.Net;
+using System.Collections.Generic;
+namespace MockGen.Tests
+{
+    public interface IDependency 
+    {
+        List<HttpStatusCode> GetSomeStatusCodes();
+    }
+    public class Generators
+    {
+        public void GenerateMocks()
+        {
+            MockGenerator.Generate<IDependency>();
+        }
+    }
+}";
+            // When
+            var (generator, diagnostics) = CompileSource(source);
+            
+            // Then
+            if (diagnostics.Any())
+            {
+                throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
+            }
+            generator.TypesToMock.Should().HaveCount(1);
+            generator.TypesToMock[0].Methods.Should().HaveCount(1);
+            generator.TypesToMock[0].Methods[0].ReturnType.Name.Should().Be("List<HttpStatusCode>");
+            generator.TypesToMock[0].Methods[0].ReturnType.Namespaces.Should().ContainInOrder("System.Collections.Generic", "System.Net");
+        }
+
+        [Fact]
+        public void Should_handle_special_case_of_return_type_being_a_task_of_T()
+        {
+            // Given
+            string source = @"
+using System.Net;
 using System.Threading.Tasks;
 namespace MockGen.Tests
 {
@@ -107,8 +142,8 @@ namespace MockGen.Tests
             }
             generator.TypesToMock.Should().HaveCount(1);
             generator.TypesToMock[0].Methods.Should().HaveCount(1);
-            generator.TypesToMock[0].Methods[0].ReturnType.Name.Should().Be("Task<HttpStatusCode>");
-            generator.TypesToMock[0].Methods[0].ReturnType.Namespaces.Should().ContainInOrder("System.Threading.Tasks", "System.Net");
+            generator.TypesToMock[0].Methods[0].ReturnType.IsTask.Should().BeTrue();
+            generator.TypesToMock[0].Methods[0].ReturnType.Name.Should().Be("HttpStatusCode"); // And not Task<HttpStatusCode>
         }
 
         [Fact]

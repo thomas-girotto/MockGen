@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using MockGen.Specs.Sut;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace MockGen.Specs
@@ -146,7 +147,7 @@ namespace MockGen.Specs
         }
 
         [Fact]
-        public void Should_return_per_parameters_mocked_value_When_parameters_match_both_criterias()
+        public void Should_return_value_based_on_arguments_match()
         {
             // Given
             var mockBuilder = Mock.IDependency();
@@ -169,6 +170,21 @@ namespace MockGen.Specs
             result2.Should().Be(11);
             result3.Should().Be(12);
             result4.Should().Be(0);
+        }
+
+
+        [Fact]
+        public async Task Should_return_a_task_When_configured_with_the_underlying_type()
+        {
+            // Given
+            var mock = Mock.IDependency();
+            mock.GetSomeNumberAsync().Returns(1);
+
+            // When
+            var result = await mock.Build().GetSomeNumberAsync();
+
+            // Then
+            result.Should().Be(1);
         }
 
         [Fact]
