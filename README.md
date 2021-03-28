@@ -14,6 +14,7 @@ That allow the following capabilities :
  - Expose directly the calls with their parameters that were made on your mocked methods (reprensented as a list of tuples), and let you use your favorite assertion library to check them, instead of having assertions being part of the mocking library
  - Mock protected method (that's still a TODO :))
  - Have a nice API like nsubstitute (which i prefer compared to moq), but without the downsize of having all those extensions methods on object, which pop in your intellisense every time you enter a dot :)
+ - It's a lot faster at runtime: See [Benchmark.md](Benchmark.md)
 
 ## Warning
 
@@ -71,7 +72,6 @@ var mock = Mock.ConcreteClass(ctorParam1, ctorParam2);
 ## What's left to do
 
 This lib is not yet production ready, but I expect to have a 1.0.0 release arround mid April 2021 with the following additional features:
- - Handle async methods
  - Handle out parameaters
  - Mock protected methods
 

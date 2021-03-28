@@ -6,7 +6,7 @@ namespace MockGen.Benchmark
     {
         public static void Main(string[] args)
         {
-            var summary = BenchmarkRunner.Run<MockLibraryBenchmark>();
+            BenchmarkRunner.Run<MockGenBenchmark>();
         }
     }
 }
