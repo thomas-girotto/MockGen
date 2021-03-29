@@ -1,5 +1,6 @@
 ﻿using MockGen.Setup;
 using MockGen.Specs.Sut;
+using System;
 
 namespace MockGen
 {
@@ -17,6 +18,10 @@ namespace MockGen
         internal MethodSetupReturn<Model1, int> GetSomeNumberWithReferenceTypeParameterSetup { get; } = new MethodSetupReturn<Model1, int>();
         internal MethodSetupReturn<Model1, Model2, int> GetSomeNumberWithTwoParametersSetup { get; } = new MethodSetupReturn<Model1, Model2, int>();
         internal MethodSetupReturnTask<int> GetSomeNumberAsyncSetup { get; } = new MethodSetupReturnTask<int>();
+        internal MethodSetupReturn<int, bool> TryGetByIdSetup { get; } = new MethodSetupReturn<int, bool>();
+        internal MethodSetupReturn<int, bool> TryGetByIdSetup2 { get; } = new MethodSetupReturn<int, bool>();
+        internal Func<int, Model1> TryGetByIdSetupOutParameters { get; set; } = (_) => default(Model1);
+        internal Func<int, (Model1 model, Model2 model2)> TryGetByIdSetupOutParameters2 { get; set; } = (_) => (default(Model1), default(Model2));
 
         internal void SetupDone()
         {
@@ -32,6 +37,8 @@ namespace MockGen
             GetSomeNumberWithReferenceTypeParameterSetup.SetupDone();
             GetSomeNumberWithTwoParametersSetup.SetupDone();
             GetSomeNumberAsyncSetup.SetupDone();
+            TryGetByIdSetup.SetupDone();
+            TryGetByIdSetup2.SetupDone();
         }
     }
 }

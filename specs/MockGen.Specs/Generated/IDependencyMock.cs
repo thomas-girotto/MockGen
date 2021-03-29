@@ -69,5 +69,17 @@ namespace MockGen
         {
             return methods.GetSomeNumberAsyncSetup.ExecuteSetup();
         }
+
+        public bool TryGetById(int id, out Model1 model)
+        {
+            model = methods.TryGetByIdSetupOutParameters(id);
+            return methods.TryGetByIdSetup.ExecuteSetup(id);
+        }
+
+        public bool TryGetById(int id, out Model1 model, out Model2 model2)
+        {
+            (model, model2) = methods.TryGetByIdSetupOutParameters2(id);
+            return methods.TryGetByIdSetup2.ExecuteSetup(id);
+        }
     }
 }
