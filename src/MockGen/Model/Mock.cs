@@ -4,7 +4,7 @@ namespace MockGen.Model
 {
     public class Mock
     {
-        private List<CtorDescriptor> _ctors = new List<CtorDescriptor>();
+        private List<Ctor> _ctors = new List<Ctor>();
         private Dictionary<string, int> _numberOfMethodWithSameName = new Dictionary<string, int>();
 
         public Type TypeToMock { get; set; }
@@ -35,13 +35,13 @@ namespace MockGen.Model
         
         public List<PropertyDescriptor> Properties { get; set; } = new List<PropertyDescriptor>();
 
-        public List<CtorDescriptor> Ctors
+        public List<Ctor> Ctors
         {
             get => _ctors;
             set
             {
                 _ctors = (value == null || value.Count == 0)
-                    ? new List<CtorDescriptor> { CtorDescriptor.EmptyCtor }
+                    ? new List<Ctor> { Ctor.EmptyCtor }
                     : value;
             }
         }

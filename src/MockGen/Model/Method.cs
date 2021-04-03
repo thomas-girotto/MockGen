@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace MockGen.Model
 {
-    public class Method : CtorDescriptor
+    public class Method : Ctor
     {
         public ReturnType ReturnType { get; set; }
 

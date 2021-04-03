@@ -32,7 +32,7 @@ namespace MockGen.Model
                 descriptorForTemplate.TypeToMock = GetType(namedTypeSymbol);
                 descriptorForTemplate.TypeToMockOriginalName = descriptorForTemplate.TypeToMock.Name;
                 descriptorForTemplate.Ctors = namedTypeSymbol.InstanceConstructors
-                    .Select(c => new CtorDescriptor
+                    .Select(c => new Ctor
                     {
                         Parameters = c.Parameters
                             .Select(p => new ParameterDescriptor(GetType(p.Type), p.Name, p.RefKind == RefKind.Out))

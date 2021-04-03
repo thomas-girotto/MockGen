@@ -16,7 +16,7 @@ namespace MockGen.Tests.Model
             // When
             mock.Ctors = null;
             // Then
-            mock.Ctors.Should().HaveCount(1).And.Contain(CtorDescriptor.EmptyCtor);
+            mock.Ctors.Should().HaveCount(1).And.Contain(Ctor.EmptyCtor);
         }
 
         [Fact]
@@ -25,9 +25,9 @@ namespace MockGen.Tests.Model
             // Given
             var mock = new Mock();
             // When
-            mock.Ctors = new List<CtorDescriptor>();
+            mock.Ctors = new List<Ctor>();
             // Then
-            mock.Ctors.Should().HaveCount(1).And.Contain(CtorDescriptor.EmptyCtor);
+            mock.Ctors.Should().HaveCount(1).And.Contain(Ctor.EmptyCtor);
         }
     }
 }

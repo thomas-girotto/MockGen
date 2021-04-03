@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace MockGen.Model
 {
-    public class CtorDescriptor
+    public class Ctor
     {
-        public static CtorDescriptor EmptyCtor = new CtorDescriptor();
+        public static Ctor EmptyCtor = new Ctor();
         public List<ParameterDescriptor> Parameters { get; set; } = new List<ParameterDescriptor>();
         public List<ParameterDescriptor> ParametersWithoutOutParams => Parameters.Where(p => !p.IsOutParameter).ToList();
         public List<ParameterDescriptor> OutParameters => Parameters.Where(p => p.IsOutParameter).ToList();
