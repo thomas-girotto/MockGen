@@ -67,12 +67,17 @@ Assert.Equal(1, mock.GetAge(Arg<string>.When(s => s.StartsWith("foo")).NumberOfC
 // Concrete class: you have access to constructor overloads and not only a params object[]
 var mock = Mock.ConcreteClass(ctorParam1, ctorParam2);
 
+// Out Parameters
+// method we're mocking: 
+// bool TryGetById(int id, out Model model) { ... }
+mock.TryGetById(Arg<int>.Any).Returns(true); // will returns true and set the out parameter with default value
+mock.TryGetById(Arg<int>.Any, (id) => new Model()).Returns(true); // will return true and set the out parameter with new Model()
+
 ```
 
-## What's left to do
+## What features are coming next
 
-This lib is not yet production ready, but I expect to have a 1.0.0 release arround mid April 2021 with the following additional features:
- - Handle out parameaters
- - Mock protected methods
-
-and a real world testing by using it on one of my work projects. 
+- Mock protected methods
+- Respect nullable types in generated code when user's lib have them 
+- Returns from Func
+- ? 
