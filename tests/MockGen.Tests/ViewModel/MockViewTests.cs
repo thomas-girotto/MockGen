@@ -18,9 +18,9 @@ namespace MockGen.Tests.ViewModel
             var mock = new Mock
             {
                 TypeToMock = new Type("MyType", typeToMockNamespace),
-                Methods = new List<MethodDescriptor>
+                Methods = new List<Method>
                 {
-                    new MethodDescriptor
+                    new Method
                     {
                         Name = "MethodTParamTReturn",
                         ReturnType = new ReturnType("Type1", false, returnedTypeNamespace),
@@ -48,9 +48,9 @@ namespace MockGen.Tests.ViewModel
             var mock = new Mock
             {
                 TypeToMock = new Type("MyType", typeToMockNamespace),
-                Methods = new List<MethodDescriptor>
+                Methods = new List<Method>
                 {
-                    new MethodDescriptor
+                    new Method
                     {
                         Name = "MethodTParamTReturn",
                         ReturnType = new ReturnType("Type1", false, typeToMockNamespace),

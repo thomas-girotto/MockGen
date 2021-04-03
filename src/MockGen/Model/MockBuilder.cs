@@ -45,7 +45,7 @@ namespace MockGen.Model
                         (m.IsAbstract || m.IsVirtual) 
                         && m.MethodKind != MethodKind.PropertyGet 
                         && m.MethodKind != MethodKind.PropertySet)
-                    .Select(m => new MethodDescriptor
+                    .Select(m => new Method
                     {
                         Name = m.Name,
                         ReturnType = m.ReturnsVoid ? ReturnType.Void : GetType(m.ReturnType),

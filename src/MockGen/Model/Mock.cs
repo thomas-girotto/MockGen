@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace MockGen.Model
 {
@@ -10,15 +8,16 @@ namespace MockGen.Model
         private Dictionary<string, int> _numberOfMethodWithSameName = new Dictionary<string, int>();
 
         public Type TypeToMock { get; set; }
+
         /// <summary>
         /// Keeps the original type to mock unchanged (as opposed to <see cref="TypeToMock"/> which can be changed to avoid type collision)
         /// </summary>
         public string TypeToMockOriginalName { get; set; }
 
-        public List<MethodDescriptor> Methods { get; set; } = new List<MethodDescriptor>();
+        public List<Method> Methods { get; set; } = new List<Method>();
 
 
-        public void AddMethod(MethodDescriptor method)
+        public void AddMethod(Method method)
         {
             if (_numberOfMethodWithSameName.ContainsKey(method.Name))
             {

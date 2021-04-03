@@ -18,7 +18,7 @@ namespace MockGen.ViewModel
             .Union(Mock.Properties.SelectMany(p => p.Type.Namespaces))
             .Where(ns => !string.IsNullOrEmpty(ns));
 
-        public IEnumerable<MethodDescriptor> MethodsWithOutParameters => Mock.Methods.Where(m => m.OutParameters.Any());
+        public IEnumerable<Method> MethodsWithOutParameters => Mock.Methods.Where(m => m.OutParameters.Any());
 
         public string CallBaseCtorIfNeeded => Mock.IsInterface ? "" : " : base({0})";
 

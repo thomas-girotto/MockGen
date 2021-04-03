@@ -16,9 +16,9 @@ namespace MockGen.Tests.Model
                 new Mock
                 {
                     TypeToMock = new Type("IDependency", "SomeLib.Namespace"),
-                    Methods = new List<MethodDescriptor>
+                    Methods = new List<Method>
                     {
-                        new MethodDescriptor
+                        new Method
                         {
                             Name = "MethodWithOneTypedParameterAndReturnSomething1",
                             ReturnType = new ReturnType("ReturnedType1", false, "SomeLib.Namespace"),
@@ -27,7 +27,7 @@ namespace MockGen.Tests.Model
                                 new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1", false),
                             },
                         },
-                        new MethodDescriptor
+                        new Method
                         {
                             Name = "MethodWithOneTypedParameterThatReturnsVoid1",
                             ReturnType = ReturnType.Void,
@@ -40,9 +40,9 @@ namespace MockGen.Tests.Model
                 },
                 new Mock
                 {
-                    Methods = new List<MethodDescriptor>
+                    Methods = new List<Method>
                     {
-                        new MethodDescriptor
+                        new Method
                         {
                             Name = "MethodWithOneTypedParameterAndReturnSomething2",
                             ReturnType = new ReturnType("ReturnedType2", false, "SomeLib.Namespace"),
@@ -51,7 +51,7 @@ namespace MockGen.Tests.Model
                                 new ParameterDescriptor(new Type("Type2", "SomeLib.Namespace"), "param1", false),
                             },
                         },
-                        new MethodDescriptor
+                        new Method
                         {
                             Name = "MethodWithOneTypedParameterThatReturnsVoid2",
                             ReturnType = ReturnType.Void,

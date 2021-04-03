@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace MockGen.Model
 {
-    public class MethodDescriptor : CtorDescriptor
+    public class Method : CtorDescriptor
     {
         public ReturnType ReturnType { get; set; }
 
@@ -42,8 +42,6 @@ namespace MockGen.Model
                 (false, > 0) => $"IMethodSetupReturn<{ParameterTypesWithoutOutParameters}, {ReturnType.Name}>",
                 (_, _) => throw new NotImplementedException($"Case not implemented for values: {nameof(ReturnsVoid)}: {ReturnsVoid} and {nameof(Parameters.Count)}: {Parameters.Count}"),
             };
-
-
 
         public string CallForParameterMethod => string.Join(", ", ParametersWithoutOutParams.Select(p => $"{p.Name} ?? Arg<{p.Type.Name}>.Null"));
     }

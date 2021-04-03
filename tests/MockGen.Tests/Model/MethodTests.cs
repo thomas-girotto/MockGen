@@ -1,27 +1,26 @@
 ﻿using FluentAssertions;
 using MockGen.Model;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace MockGen.Tests.Model
 {
-    public class MethodDescriptorTests
+    public class MethodTests
     {
-        private MethodDescriptor MethodVoid => new MethodDescriptor
+        private Method MethodVoid => new Method
         {
             Name = "MethodVoid",
             ReturnType = ReturnType.Void,
         };
 
-        private MethodDescriptor MethodVoidWithParam => new MethodDescriptor
+        private Method MethodVoidWithParam => new Method
         {
             Name = "MethodVoidWithParam",
             ReturnType = ReturnType.Void,
             Parameters = new List<ParameterDescriptor> { new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1", false) },
         };
 
-        private MethodDescriptor MethodVoidWithTwoParam => new MethodDescriptor
+        private Method MethodVoidWithTwoParam => new Method
         {
             Name = "MethodVoidWithTwoParam",
             ReturnType = ReturnType.Void,
@@ -32,20 +31,20 @@ namespace MockGen.Tests.Model
             },
         };
 
-        private MethodDescriptor MethodThatReturnsWithoutParameter => new MethodDescriptor
+        private Method MethodThatReturnsWithoutParameter => new Method
         {
             Name = "Method1",
             ReturnType = new ReturnType("int", false),
         };
 
-        private MethodDescriptor MethodThatReturnsWithOneParameter => new MethodDescriptor
+        private Method MethodThatReturnsWithOneParameter => new Method
         {
             Name = "Method2",
             ReturnType = new ReturnType("int", false),
             Parameters = new List<ParameterDescriptor> { new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1", false) }
         };
 
-        private MethodDescriptor MethodThatReturnsWithTwoParameters => new MethodDescriptor
+        private Method MethodThatReturnsWithTwoParameters => new Method
         {
             Name = "Method3",
             ReturnType = new ReturnType("int", false),
@@ -56,7 +55,7 @@ namespace MockGen.Tests.Model
             }
         };
 
-        private MethodDescriptor MethodVoidWithOneOutParameter => new MethodDescriptor
+        private Method MethodVoidWithOneOutParameter => new Method
         {
             Name = "Method4",
             ReturnType = ReturnType.Void,
@@ -66,7 +65,7 @@ namespace MockGen.Tests.Model
             }
         };
 
-        private MethodDescriptor MethodVoidWithTwoOutParameters => new MethodDescriptor
+        private Method MethodVoidWithTwoOutParameters => new Method
         {
             Name = "Method4",
             ReturnType = ReturnType.Void,
@@ -77,7 +76,7 @@ namespace MockGen.Tests.Model
             }
         };
 
-        private MethodDescriptor MethodVoidWithOneParameterAndOneOutParameter => new MethodDescriptor
+        private Method MethodVoidWithOneParameterAndOneOutParameter => new Method
         {
             Name = "Method5",
             ReturnType = ReturnType.Void,
@@ -88,7 +87,7 @@ namespace MockGen.Tests.Model
             }
         };
 
-        private MethodDescriptor MethodVoidWithOneParameterAndTwoOutParameters => new MethodDescriptor
+        private Method MethodVoidWithOneParameterAndTwoOutParameters => new Method
         {
             Name = "Method5",
             ReturnType = ReturnType.Void,
@@ -100,7 +99,7 @@ namespace MockGen.Tests.Model
             }
         };
 
-        private MethodDescriptor MethodThatReturnsWithOneOutParameter => new MethodDescriptor
+        private Method MethodThatReturnsWithOneOutParameter => new Method
         {
             Name = "Method4",
             ReturnType = new ReturnType("int", false),
@@ -110,7 +109,7 @@ namespace MockGen.Tests.Model
             }
         };
 
-        private MethodDescriptor MethodThatReturnsWithOneParameterAndOneOutParameter => new MethodDescriptor
+        private Method MethodThatReturnsWithOneParameterAndOneOutParameter => new Method
         {
             Name = "Method5",
             ReturnType = new ReturnType("int", false),
@@ -125,9 +124,9 @@ namespace MockGen.Tests.Model
         public void AddMethod_Should_set_a_unique_name_for_methods_overload()
         {
             var mock = new Mock();
-            var method1 = new MethodDescriptor { Name = "DoSomething" };
-            var method2 = new MethodDescriptor { Name = "DoSomething" };
-            var method3 = new MethodDescriptor { Name = "DoSomething" };
+            var method1 = new Method { Name = "DoSomething" };
+            var method2 = new Method { Name = "DoSomething" };
+            var method3 = new Method { Name = "DoSomething" };
             
             mock.AddMethod(method1);
             method1.UniqueName.Should().Be("DoSomething");

@@ -73,16 +73,16 @@ namespace MockGen
                 }
 
                 // Then classes that depends on types to mock declared by the user
-                foreach (var mockDescriptor in sanityzedMocks)
+                foreach (var mock in sanityzedMocks)
                 {
-                    var methodsSetupTemplate = new MethodsSetupTextTemplate(mockDescriptor);
-                    AddSourceToBuildContext(context, $"{mockDescriptor.TypeToMock.Name}MethodsSetup.cs", methodsSetupTemplate.TransformText());
+                    var methodsSetupTemplate = new MethodsSetupTextTemplate(mock);
+                    AddSourceToBuildContext(context, $"{mock.TypeToMock.Name}MethodsSetup.cs", methodsSetupTemplate.TransformText());
 
-                    var mockBuilderTemplate = new MockBuilderTextTemplate(mockDescriptor);
-                    AddSourceToBuildContext(context, $"{mockDescriptor.TypeToMock.Name}MockBuilder.cs", mockBuilderTemplate.TransformText());
+                    var mockBuilderTemplate = new MockBuilderTextTemplate(mock);
+                    AddSourceToBuildContext(context, $"{mock.TypeToMock.Name}MockBuilder.cs", mockBuilderTemplate.TransformText());
 
-                    var mockTemplate = new MockTextTemplate(mockDescriptor);
-                    AddSourceToBuildContext(context, $"{mockDescriptor.TypeToMock.Name}Mock.cs", mockTemplate.TransformText());
+                    var mockTemplate = new MockTextTemplate(mock);
+                    AddSourceToBuildContext(context, $"{mock.TypeToMock.Name}Mock.cs", mockTemplate.TransformText());
                 }
 
                 var mockStaticTemplate = new MockStaticTextTemplate(sanityzedMocks);
