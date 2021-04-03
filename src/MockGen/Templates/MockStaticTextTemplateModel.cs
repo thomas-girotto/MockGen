@@ -1,4 +1,5 @@
 ﻿using MockGen.Model;
+using MockGen.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,7 +15,7 @@ namespace MockGen.Templates
         public IEnumerable<MockDescriptor> Mocks { get; private set; }
 
         public IEnumerable<string> Namespaces => Mocks
-            .SelectMany(m => m.Namespaces)
+            .SelectMany(m => new MockView(m).Namespaces)
             .Distinct()
             .Where(ns => !string.IsNullOrEmpty(ns));
     }

@@ -5,24 +5,24 @@
 <#@ import namespace="System.Collections.Generic" #>
 using System;
 using MockGen.Setup;
-<# foreach (var ns in Descriptor.Namespaces) { #> 
+<# foreach (var ns in view.Namespaces) { #> 
 using <#=ns#>;
 <# } #>
 
 namespace MockGen
 {
-    internal class <#=Descriptor.TypeToMock.Name#>Mock : <#=Descriptor.TypeToMockOriginalName#>
+    internal class <#=view.Mock.TypeToMock.Name#>Mock : <#=view.Mock.TypeToMockOriginalName#>
     {
-        private readonly <#=Descriptor.TypeToMock.Name#>MethodsSetup methods;
+        private readonly <#=view.Mock.TypeToMock.Name#>MethodsSetup methods;
 
-<# foreach (var ctor in Descriptor.Ctors) { #>
-        public <#=Descriptor.TypeToMock.Name#>Mock(<#=ctor.ConcatParametersDeclarationWith(Descriptor.TypeToMock.Name + "MethodsSetup methods")#>)<#=string.Format(Descriptor.CallBaseCtorIfNeeded, ctor.ParameterNames)#>
+<# foreach (var ctor in view.Mock.Ctors) { #>
+        public <#=view.Mock.TypeToMock.Name#>Mock(<#=ctor.ConcatParametersDeclarationWith(view.Mock.TypeToMock.Name + "MethodsSetup methods")#>)<#=string.Format(view.CallBaseCtorIfNeeded, ctor.ParameterNames)#>
         {
             this.methods = methods;
         }
 <# } #>
 
-<# foreach (var property in Descriptor.Properties) { #>
+<# foreach (var property in view.Mock.Properties) { #>
 <# if(property.HasGetter && property.HasSetter) { #>
         public <#=property.Type.Name#> <#=property.Name#>
         {
@@ -39,7 +39,7 @@ namespace MockGen
 <# } #>
 
 <# } #>
-<# foreach (var method in Descriptor.Methods) { #>
+<# foreach (var method in view.Mock.Methods) { #>
 <# if (method.ReturnType.IsTask) { #>
         public <#=method.AddOverrideKeywordIfNeeded#>Task<<#=method.ReturnType.Name#>> <#=method.Name#>(<#=method.ParametersDeclarationWithOutParameters#>)
 <# } else { #>

@@ -31,7 +31,7 @@ namespace MockGen.Templates
             this.Write("using System;\r\nusing MockGen.Setup;\r\n");
             
             #line 8 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
- foreach (var ns in Descriptor.Namespaces) { 
+ foreach (var ns in view.Namespaces) { 
             
             #line default
             #line hidden
@@ -52,42 +52,42 @@ namespace MockGen.Templates
             this.Write("\r\nnamespace MockGen\r\n{\r\n    internal class ");
             
             #line 14 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.Mock.TypeToMock.Name));
             
             #line default
             #line hidden
             this.Write("MockBuilder\r\n    {\r\n        private readonly ");
             
             #line 16 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.Mock.TypeToMock.Name));
             
             #line default
             #line hidden
             this.Write("MethodsSetup methods = new ");
             
             #line 16 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.Mock.TypeToMock.Name));
             
             #line default
             #line hidden
             this.Write("MethodsSetup();\r\n        private readonly Func<");
             
             #line 17 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.Mock.TypeToMock.Name));
             
             #line default
             #line hidden
             this.Write("Mock> ctor;\r\n\r\n");
             
             #line 19 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
- foreach (var ctor in Descriptor.Ctors) {
+ foreach (var ctor in view.Mock.Ctors) {
             
             #line default
             #line hidden
             this.Write("        internal ");
             
             #line 20 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.Mock.TypeToMock.Name));
             
             #line default
             #line hidden
@@ -101,7 +101,7 @@ namespace MockGen.Templates
             this.Write(")\r\n        {\r\n            ctor = () => new ");
             
             #line 22 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.Mock.TypeToMock.Name));
             
             #line default
             #line hidden
@@ -122,7 +122,7 @@ namespace MockGen.Templates
             this.Write("\r\n");
             
             #line 26 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
- foreach (var property in Descriptor.Properties) {
+ foreach (var property in view.Mock.Properties) {
             
             #line default
             #line hidden
@@ -225,7 +225,7 @@ namespace MockGen.Templates
             #line hidden
             
             #line 36 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
- foreach (var method in Descriptor.Methods) {
+ foreach (var method in view.Mock.Methods) {
             
             #line default
             #line hidden
@@ -321,7 +321,7 @@ namespace MockGen.Templates
             #line hidden
             
             #line 50 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
- foreach (var method in Descriptor.Methods.Where(m => m.OutParameters.Any()).GroupBy(m => m.Name).Select(methods => methods.First())) {
+ foreach (var method in view.Mock.Methods.Where(m => m.OutParameters.Any()).GroupBy(m => m.Name).Select(methods => methods.First())) {
             
             #line default
             #line hidden
@@ -384,7 +384,7 @@ namespace MockGen.Templates
             this.Write("        public ");
             
             #line 57 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMockOriginalName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.Mock.TypeToMockOriginalName));
             
             #line default
             #line hidden

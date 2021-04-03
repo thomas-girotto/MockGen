@@ -1,14 +1,16 @@
 ﻿using MockGen.Model;
+using MockGen.ViewModel;
 
 namespace MockGen.Templates
 {
     public partial class MockTextTemplate
     {
-        public MockTextTemplate(MockDescriptor descriptor)
+        private readonly MockView view;
+
+        public MockTextTemplate(MockDescriptor mock)
         {
-            Descriptor = descriptor;
+            view = new MockView(mock);
         }
 
-        public MockDescriptor Descriptor { get; private set; }
     }
 }

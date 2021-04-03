@@ -5,25 +5,25 @@
 <#@ import namespace="System.Collections.Generic" #>
 using System;
 using MockGen.Setup;
-<# foreach (var ns in Descriptor.Namespaces) { #> 
+<# foreach (var ns in view.Namespaces) { #> 
 using <#=ns#>;
 <# } #>
 
 namespace MockGen
 {
-    internal class <#=Descriptor.TypeToMock.Name#>MockBuilder
+    internal class <#=view.Mock.TypeToMock.Name#>MockBuilder
     {
-        private readonly <#=Descriptor.TypeToMock.Name#>MethodsSetup methods = new <#=Descriptor.TypeToMock.Name#>MethodsSetup();
-        private readonly Func<<#=Descriptor.TypeToMock.Name#>Mock> ctor;
+        private readonly <#=view.Mock.TypeToMock.Name#>MethodsSetup methods = new <#=view.Mock.TypeToMock.Name#>MethodsSetup();
+        private readonly Func<<#=view.Mock.TypeToMock.Name#>Mock> ctor;
 
-<# foreach (var ctor in Descriptor.Ctors) {#>
-        internal <#=Descriptor.TypeToMock.Name#>MockBuilder(<#=ctor.ParametersDeclaration#>)
+<# foreach (var ctor in view.Mock.Ctors) {#>
+        internal <#=view.Mock.TypeToMock.Name#>MockBuilder(<#=ctor.ParametersDeclaration#>)
         {
-            ctor = () => new <#=Descriptor.TypeToMock.Name#>Mock(<#=ctor.ConcatParametersNameWith("methods")#>);
+            ctor = () => new <#=view.Mock.TypeToMock.Name#>Mock(<#=ctor.ConcatParametersNameWith("methods")#>);
         }
 <#}#>
 
-<# foreach (var property in Descriptor.Properties) {#>
+<# foreach (var property in view.Mock.Properties) {#>
 <# if(property.HasGetter && property.HasSetter) { #>
         public IPropertyGetSet<<#=property.Type.Name#>> <#=property.Name#> => methods.<#=property.Name#>Setup;
 <# } else if (property.HasGetter) { #>
@@ -33,7 +33,7 @@ namespace MockGen
 <# } #>
 
 <# } #>
-<# foreach (var method in Descriptor.Methods) {#>
+<# foreach (var method in view.Mock.Methods) {#>
         public <#=method.IMethodSetupWithTypedParameters#> <#=method.Name#>(<#=method.ParametersDeclarationWithArgAndOutParameters#>)
         {
 <# if (method.OutParameters.Count > 0) { #>
@@ -47,14 +47,14 @@ namespace MockGen
         }
 
 <#}#>
-<# foreach (var method in Descriptor.Methods.Where(m => m.OutParameters.Any()).GroupBy(m => m.Name).Select(methods => methods.First())) {#>
+<# foreach (var method in view.Mock.Methods.Where(m => m.OutParameters.Any()).GroupBy(m => m.Name).Select(methods => methods.First())) {#>
         public <#=method.IMethodSetupWithTypedParameters#> <#=method.Name#>(<#=method.ParametersDeclarationWithArg#>)
         {
             return <#=method.Name#>(<#=method.ParameterNames#>, (<#=method.DiscardParameters#>) => default(<#=method.OutParameterTypesDefault#>));
         }
 
 <# } #>
-        public <#=Descriptor.TypeToMockOriginalName#> Build()
+        public <#=view.Mock.TypeToMockOriginalName#> Build()
         {
             methods.SetupDone();
             return ctor();

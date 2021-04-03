@@ -31,7 +31,7 @@ namespace MockGen.Templates
             this.Write("using System;\r\nusing MockGen.Setup;\r\n");
             
             #line 8 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-foreach (var ns in Descriptor.Namespaces) { 
+foreach (var ns in view.Namespaces) { 
             
             #line default
             #line hidden
@@ -52,14 +52,14 @@ foreach (var ns in Descriptor.Namespaces) {
             this.Write("\r\nnamespace MockGen\r\n{\r\n\tinternal class ");
             
             #line 14 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.Mock.TypeToMock.Name));
             
             #line default
             #line hidden
             this.Write("MethodsSetup\r\n\t{\r\n");
             
             #line 16 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
- foreach (var property in Descriptor.Properties) {
+ foreach (var property in view.Mock.Properties) {
             
             #line default
             #line hidden
@@ -93,7 +93,7 @@ foreach (var ns in Descriptor.Namespaces) {
             #line hidden
             
             #line 19 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
- foreach (var method in Descriptor.Methods) {
+ foreach (var method in view.Mock.Methods) {
             
             #line default
             #line hidden
@@ -127,7 +127,7 @@ foreach (var ns in Descriptor.Namespaces) {
             #line hidden
             
             #line 22 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
- foreach (var method in Descriptor.MethodsWithOutParameters) {
+ foreach (var method in view.MethodsWithOutParameters) {
             
             #line default
             #line hidden
@@ -169,7 +169,7 @@ foreach (var ns in Descriptor.Namespaces) {
             this.Write("\r\n\t\tinternal void SetupDone()\r\n\t\t{\r\n");
             
             #line 28 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
- foreach (var property in Descriptor.Properties) {
+ foreach (var property in view.Mock.Properties) {
             
             #line default
             #line hidden
@@ -189,7 +189,7 @@ foreach (var ns in Descriptor.Namespaces) {
             #line hidden
             
             #line 31 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
- foreach (var method in Descriptor.Methods) {
+ foreach (var method in view.Mock.Methods) {
             
             #line default
             #line hidden

@@ -5,30 +5,30 @@
 <#@ import namespace="System.Collections.Generic" #>
 using System;
 using MockGen.Setup;
-<#foreach (var ns in Descriptor.Namespaces) { #>
+<#foreach (var ns in view.Namespaces) { #>
 using <#=ns#>;
 <#}#>
 
 namespace MockGen
 {
-	internal class <#=Descriptor.TypeToMock.Name#>MethodsSetup
+	internal class <#=view.Mock.TypeToMock.Name#>MethodsSetup
 	{
-<# foreach (var property in Descriptor.Properties) {#>
+<# foreach (var property in view.Mock.Properties) {#>
         internal PropertySetup<<#=property.Type.Name#>> <#=property.Name#>Setup { get; } = new PropertySetup<<#=property.Type.Name#>>();		
 <# } #>
-<# foreach (var method in Descriptor.Methods) {#>
+<# foreach (var method in view.Mock.Methods) {#>
         internal <#=method.MethodSetupWithTypedParameters#> <#=method.UniqueName#>Setup { get; } = new <#=method.MethodSetupWithTypedParameters#>();
 <#}#>
-<# foreach (var method in Descriptor.MethodsWithOutParameters) {#>
+<# foreach (var method in view.MethodsWithOutParameters) {#>
         internal <#=method.OutParameterSetupFunc#> <#=method.UniqueName#>OutParameterSetup { get; set; } = (<#=method.DiscardParameters#>) => default(<#=method.OutParameterTypesDefault#>);
 <#}#>
 
 		internal void SetupDone()
 		{
-<# foreach (var property in Descriptor.Properties) {#>
+<# foreach (var property in view.Mock.Properties) {#>
             <#=property.Name#>Setup.SetupDone();
 <# } #>
-<# foreach (var method in Descriptor.Methods) {#>
+<# foreach (var method in view.Mock.Methods) {#>
             <#=method.UniqueName#>Setup.SetupDone();
 <# } #>
 		}

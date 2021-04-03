@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using MockGen.Tests.Fixtures;
 using MockGen.Tests.Utils;
+using MockGen.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -69,7 +70,8 @@ namespace MyLib.Tests
                 throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
             }
             generator.TypesToMock.Should().HaveCount(1);
-            generator.TypesToMock[0].Namespaces.Should().Contain(new string[] 
+            var view = new MockView(generator.TypesToMock[0]);
+            view.Namespaces.Should().Contain(new string[] 
             { 
                 "MethodParameterNamespace.Model", "ReturnNamespace.Model", "CtorNamespace.Model", "MyLib.Tests" 
             });

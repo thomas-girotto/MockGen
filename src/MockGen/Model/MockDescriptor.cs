@@ -17,7 +17,6 @@ namespace MockGen.Model
 
         public List<MethodDescriptor> Methods { get; set; } = new List<MethodDescriptor>();
 
-        public List<MethodDescriptor> MethodsWithOutParameters => Methods.Where(m => m.OutParameters.Any()).ToList();
 
         public void AddMethod(MethodDescriptor method)
         {
@@ -47,15 +46,6 @@ namespace MockGen.Model
                     : value;
             }
         }
-        public bool IsInterface { get; set; }
-
-        public IEnumerable<string> Namespaces => TypeToMock.Namespaces
-            .Union(Methods.SelectMany(m => m.Parameters.SelectMany(p => p.Type.Namespaces)))
-            .Union(Methods.SelectMany(m => m.ReturnType.Namespaces))
-            .Union(Ctors.SelectMany(c => c.Parameters.SelectMany(p => p.Type.Namespaces)))
-            .Union(Properties.SelectMany(p => p.Type.Namespaces))
-            .Where(ns => !string.IsNullOrEmpty(ns));
-
-        public string CallBaseCtorIfNeeded => IsInterface ? "" : " : base({0})";
+        public bool IsInterface { get; set; }   
     }
 }
