@@ -56,7 +56,70 @@ namespace MockGen.Tests.Model
             }
         };
 
+        private MethodDescriptor MethodVoidWithOneOutParameter => new MethodDescriptor
+        {
+            Name = "Method4",
+            ReturnType = ReturnType.Void,
+            Parameters = new List<ParameterDescriptor>
+            {
+                new ParameterDescriptor(new Type("TypeOut", "SomeLib.Namespace"), "param1", true),
+            }
+        };
 
+        private MethodDescriptor MethodVoidWithTwoOutParameters => new MethodDescriptor
+        {
+            Name = "Method4",
+            ReturnType = ReturnType.Void,
+            Parameters = new List<ParameterDescriptor>
+            {
+                new ParameterDescriptor(new Type("TypeOut1", "SomeLib.Namespace"), "out1", true),
+                new ParameterDescriptor(new Type("TypeOut2", "SomeLib.Namespace"), "out2", true),
+            }
+        };
+
+        private MethodDescriptor MethodVoidWithOneParameterAndOneOutParameter => new MethodDescriptor
+        {
+            Name = "Method5",
+            ReturnType = ReturnType.Void,
+            Parameters = new List<ParameterDescriptor>
+            {
+                new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1", false),
+                new ParameterDescriptor(new Type("TypeOut", "SomeLib.Namespace"), "param2", true),
+            }
+        };
+
+        private MethodDescriptor MethodVoidWithOneParameterAndTwoOutParameters => new MethodDescriptor
+        {
+            Name = "Method5",
+            ReturnType = ReturnType.Void,
+            Parameters = new List<ParameterDescriptor>
+            {
+                new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1", false),
+                new ParameterDescriptor(new Type("TypeOut1", "SomeLib.Namespace"), "out1", true),
+                new ParameterDescriptor(new Type("TypeOut2", "SomeLib.Namespace"), "out2", true),
+            }
+        };
+
+        private MethodDescriptor MethodThatReturnsWithOneOutParameter => new MethodDescriptor
+        {
+            Name = "Method4",
+            ReturnType = new ReturnType("int", false),
+            Parameters = new List<ParameterDescriptor>
+            {
+                new ParameterDescriptor(new Type("TypeOut", "SomeLib.Namespace"), "param1", true),
+            }
+        };
+
+        private MethodDescriptor MethodThatReturnsWithOneParameterAndOneOutParameter => new MethodDescriptor
+        {
+            Name = "Method5",
+            ReturnType = new ReturnType("int", false),
+            Parameters = new List<ParameterDescriptor>
+            {
+                new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1", false),
+                new ParameterDescriptor(new Type("TypeOut", "SomeLib.Namespace"), "param2", true),
+            }
+        };
 
         [Fact]
         public void AddMethod_Should_set_a_unique_name_for_methods_overload()
@@ -82,9 +145,13 @@ namespace MockGen.Tests.Model
             MethodVoid.MethodSetupWithTypedParameters.Should().Be("MethodSetupVoid");
             MethodVoidWithParam.MethodSetupWithTypedParameters.Should().Be("MethodSetupVoid<Type1>");
             MethodVoidWithTwoParam.MethodSetupWithTypedParameters.Should().Be("MethodSetupVoid<Type1, Type2>");
+            MethodVoidWithOneOutParameter.MethodSetupWithTypedParameters.Should().Be("MethodSetupVoid");
+            MethodVoidWithOneParameterAndOneOutParameter.MethodSetupWithTypedParameters.Should().Be("MethodSetupVoid<Type1>");
             MethodThatReturnsWithoutParameter.MethodSetupWithTypedParameters.Should().Be("MethodSetupReturn<int>");
             MethodThatReturnsWithOneParameter.MethodSetupWithTypedParameters.Should().Be("MethodSetupReturn<Type1, int>");
             MethodThatReturnsWithTwoParameters.MethodSetupWithTypedParameters.Should().Be("MethodSetupReturn<Type1, Type2, int>");
+            MethodThatReturnsWithOneOutParameter.MethodSetupWithTypedParameters.Should().Be("MethodSetupReturn<int>");
+            MethodThatReturnsWithOneParameterAndOneOutParameter.MethodSetupWithTypedParameters.Should().Be("MethodSetupReturn<Type1, int>");
         }
 
         [Fact]
@@ -93,9 +160,23 @@ namespace MockGen.Tests.Model
             MethodVoid.IMethodSetupWithTypedParameters.Should().Be("IMethodSetup");
             MethodVoidWithParam.IMethodSetupWithTypedParameters.Should().Be("IMethodSetup<Type1>");
             MethodVoidWithTwoParam.IMethodSetupWithTypedParameters.Should().Be("IMethodSetup<Type1, Type2>");
+            MethodVoidWithOneOutParameter.IMethodSetupWithTypedParameters.Should().Be("IMethodSetup");
+            MethodVoidWithOneParameterAndOneOutParameter.IMethodSetupWithTypedParameters.Should().Be("IMethodSetup<Type1>");
             MethodThatReturnsWithoutParameter.IMethodSetupWithTypedParameters.Should().Be("IMethodSetupReturn<int>");
             MethodThatReturnsWithOneParameter.IMethodSetupWithTypedParameters.Should().Be("IMethodSetupReturn<Type1, int>");
             MethodThatReturnsWithTwoParameters.IMethodSetupWithTypedParameters.Should().Be("IMethodSetupReturn<Type1, Type2, int>");
+            MethodThatReturnsWithOneOutParameter.IMethodSetupWithTypedParameters.Should().Be("IMethodSetupReturn<int>");
+            MethodThatReturnsWithOneParameterAndOneOutParameter.IMethodSetupWithTypedParameters.Should().Be("IMethodSetupReturn<Type1, int>");
+        }
+
+        [Fact]
+        public void OutParameterFunc_Should_build_func_method_used_to_setup_out_parameter()
+        {
+            MethodVoidWithOneOutParameter.OutParameterSetupFunc.Should().Be("Func<TypeOut>");
+            MethodVoidWithTwoOutParameters.OutParameterSetupFunc.Should().Be("Func<(TypeOut1 out1, TypeOut2 out2)>");
+            MethodVoidWithOneParameterAndOneOutParameter.OutParameterSetupFunc.Should().Be("Func<Type1, TypeOut>");
+            MethodVoidWithOneParameterAndTwoOutParameters.OutParameterSetupFunc.Should().Be("Func<Type1, (TypeOut1 out1, TypeOut2 out2)>");
+            MethodThatReturnsWithOneOutParameter.OutParameterSetupFunc.Should().Be("Func<TypeOut>");
         }
 
         [Fact]
@@ -107,11 +188,16 @@ namespace MockGen.Tests.Model
         }
 
         [Fact]
-        public void ParametersDeclarationWithArg_Should_build_method_parameter_declaration_with_Arg()
+        public void ParametersDeclarationWithArgAndOutParameters_Should_build_method_parameter_declaration_with_Arg()
         {
-            MethodThatReturnsWithoutParameter.ParametersDeclarationWithArg.Should().BeEmpty();
-            MethodThatReturnsWithOneParameter.ParametersDeclarationWithArg.Should().Be("Arg<Type1> param1");
-            MethodThatReturnsWithTwoParameters.ParametersDeclarationWithArg.Should().Be("Arg<Type1> param1, Arg<Type2> param2");
+            MethodVoid.ParametersDeclarationWithArgAndOutParameters.Should().BeEmpty();
+            MethodVoidWithParam.ParametersDeclarationWithArgAndOutParameters.Should().Be("Arg<Type1> param1");
+            MethodVoidWithTwoOutParameters.ParametersDeclarationWithArgAndOutParameters.Should().Be("Func<(TypeOut1 out1, TypeOut2 out2)> setupOutParameter");
+            MethodThatReturnsWithoutParameter.ParametersDeclarationWithArgAndOutParameters.Should().BeEmpty();
+            MethodThatReturnsWithOneParameter.ParametersDeclarationWithArgAndOutParameters.Should().Be("Arg<Type1> param1");
+            MethodThatReturnsWithTwoParameters.ParametersDeclarationWithArgAndOutParameters.Should().Be("Arg<Type1> param1, Arg<Type2> param2");
+            MethodThatReturnsWithOneOutParameter.ParametersDeclarationWithArgAndOutParameters.Should().Be("Func<TypeOut> setupOutParameter");
+            MethodThatReturnsWithOneParameterAndOneOutParameter.ParametersDeclarationWithArgAndOutParameters.Should().Be("Arg<Type1> param1, Func<Type1, TypeOut> setupOutParameter");
         }
 
         [Fact]

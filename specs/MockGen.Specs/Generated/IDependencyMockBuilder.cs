@@ -71,20 +71,10 @@ namespace MockGen
             return TryGetById(id, (_) => default(Model1));
         }
 
-        public IMethodSetupReturn<int, bool> TryGetById(Arg<int> id, Func<Model1> setupOutParameter)
-        {
-            return TryGetById(id, (_) => setupOutParameter());
-        }
-
         public IMethodSetupReturn<int, bool> TryGetById(Arg<int> id, Func<int, Model1> setupOutParameter)
         {
             methods.TryGetByIdSetupOutParameters = setupOutParameter;
             return methods.TryGetByIdSetup.ForParameter(id);
-        }
-
-        public IMethodSetupReturn<int, bool> TryGetById(Arg<int> id, Func<(Model1 model1, Model2 model2)> setupOutParameters)
-        {
-            return TryGetById(id, (_) => setupOutParameters());
         }
 
         public IMethodSetupReturn<int, bool> TryGetById(Arg<int> id, Func<int, (Model1 model1, Model2 model2)> setupOutParameters)

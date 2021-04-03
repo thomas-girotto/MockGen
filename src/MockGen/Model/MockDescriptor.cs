@@ -16,7 +16,9 @@ namespace MockGen.Model
         public string TypeToMockOriginalName { get; set; }
 
         public List<MethodDescriptor> Methods { get; set; } = new List<MethodDescriptor>();
-        
+
+        public List<MethodDescriptor> MethodsWithOutParameters => Methods.Where(m => m.OutParameters.Any()).ToList();
+
         public void AddMethod(MethodDescriptor method)
         {
             if (_numberOfMethodWithSameName.ContainsKey(method.Name))

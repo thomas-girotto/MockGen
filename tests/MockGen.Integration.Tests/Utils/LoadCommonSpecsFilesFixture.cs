@@ -18,6 +18,7 @@ namespace MockGen.Integration.Tests.Utils
         public string ThrowsTestFile { get; private set; }
         public string SpyTestFile { get; private set; }
         public string ExecuteTestFile { get; private set; }
+        public string OutParameterTestFile { get; private set; }
         public string ConcreteClassTestFile { get; private set; }
         public string PropertyTestFile { get; private set; }
 
@@ -34,6 +35,7 @@ namespace MockGen.Integration.Tests.Utils
             ExecuteTestFile = SourceFileReader.ReadFile("ExecuteTests.cs");
             ConcreteClassTestFile = SourceFileReader.ReadFile("ConcreteClassTests.cs");
             PropertyTestFile = SourceFileReader.ReadFile("PropertyTests.cs");
+            OutParameterTestFile = SourceFileReader.ReadFile("OutParameterTests.cs");
         }
     }
 }

@@ -34,9 +34,12 @@ namespace MockGen
 
 <# } #>
 <# foreach (var method in Descriptor.Methods) {#>
-        public <#=method.IMethodSetupWithTypedParameters#> <#=method.Name#>(<#=method.ParametersDeclarationWithArg#>)
+        public <#=method.IMethodSetupWithTypedParameters#> <#=method.Name#>(<#=method.ParametersDeclarationWithArgAndOutParameters#>)
         {
-<# if (method.Parameters.Count > 0) {#>
+<# if (method.OutParameters.Count > 0) { #>
+            methods.<#=method.UniqueName#>OutParameterSetup = setupOutParameter;
+<# } #>
+<# if (method.ParametersWithoutOutParams.Count > 0) {#>
             return methods.<#=method.UniqueName#>Setup.ForParameter(<#=method.CallForParameterMethod#>);
 <#} else { #>
             return methods.<#=method.UniqueName#>Setup;
@@ -44,6 +47,13 @@ namespace MockGen
         }
 
 <#}#>
+<# foreach (var method in Descriptor.Methods.Where(m => m.OutParameters.Any()).GroupBy(m => m.Name).Select(methods => methods.First())) {#>
+        public <#=method.IMethodSetupWithTypedParameters#> <#=method.Name#>(<#=method.ParametersDeclarationWithArg#>)
+        {
+            return <#=method.Name#>(<#=method.ParameterNames#>, (<#=method.DiscardParameters#>) => default(<#=method.OutParameterTypesDefault#>));
+        }
+
+<# } #>
         public <#=Descriptor.TypeToMockOriginalName#> Build()
         {
             methods.SetupDone();

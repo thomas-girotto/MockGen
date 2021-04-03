@@ -28,140 +28,181 @@ namespace MockGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using MockGen.Setup;\r\n");
+            this.Write("using System;\r\nusing MockGen.Setup;\r\n");
             
-            #line 7 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 8 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
 foreach (var ns in Descriptor.Namespaces) { 
             
             #line default
             #line hidden
             this.Write("using ");
             
-            #line 8 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 9 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ns));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 9 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 10 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\nnamespace MockGen\r\n{\r\n\tinternal class ");
             
-            #line 13 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 14 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.TypeToMock.Name));
             
             #line default
             #line hidden
             this.Write("MethodsSetup\r\n\t{\r\n");
             
-            #line 15 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 16 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
  foreach (var property in Descriptor.Properties) {
             
             #line default
             #line hidden
             this.Write("        internal PropertySetup<");
             
-            #line 16 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 17 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Type.Name));
             
             #line default
             #line hidden
             this.Write("> ");
             
-            #line 16 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 17 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write("Setup { get; } = new PropertySetup<");
             
-            #line 16 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 17 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Type.Name));
             
             #line default
             #line hidden
             this.Write(">();\t\t\r\n");
             
-            #line 17 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 18 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 18 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 19 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
  foreach (var method in Descriptor.Methods) {
             
             #line default
             #line hidden
             this.Write("        internal ");
             
-            #line 19 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 20 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.MethodSetupWithTypedParameters));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 19 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 20 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.UniqueName));
             
             #line default
             #line hidden
             this.Write("Setup { get; } = new ");
             
-            #line 19 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 20 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.MethodSetupWithTypedParameters));
             
             #line default
             #line hidden
             this.Write("();\r\n");
             
-            #line 20 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 21 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+}
+            
+            #line default
+            #line hidden
+            
+            #line 22 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+ foreach (var method in Descriptor.MethodsWithOutParameters) {
+            
+            #line default
+            #line hidden
+            this.Write("        internal ");
+            
+            #line 23 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.OutParameterSetupFunc));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 23 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.UniqueName));
+            
+            #line default
+            #line hidden
+            this.Write("OutParameterSetup { get; set; } = (");
+            
+            #line 23 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.DiscardParameters));
+            
+            #line default
+            #line hidden
+            this.Write(") => default(");
+            
+            #line 23 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.OutParameterTypesDefault));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n");
+            
+            #line 24 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n\t\tinternal void SetupDone()\r\n\t\t{\r\n");
             
-            #line 24 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 28 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
  foreach (var property in Descriptor.Properties) {
             
             #line default
             #line hidden
             this.Write("            ");
             
-            #line 25 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 29 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write("Setup.SetupDone();\r\n");
             
-            #line 26 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 30 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 27 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 31 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
  foreach (var method in Descriptor.Methods) {
             
             #line default
             #line hidden
             this.Write("            ");
             
-            #line 28 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 32 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.UniqueName));
             
             #line default
             #line hidden
             this.Write("Setup.SetupDone();\r\n");
             
-            #line 29 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
+            #line 33 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
  } 
             
             #line default

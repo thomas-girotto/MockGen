@@ -48,7 +48,7 @@ namespace MockGen.Tests.Model
                         ReturnType = new ReturnType("Type1", false, returnedTypeNamespace),
                         Parameters = new List<ParameterDescriptor>
                         {
-                            new ParameterDescriptor(new Type("Type2", parameterTypeNamespace), "param1"),
+                            new ParameterDescriptor(new Type("Type2", parameterTypeNamespace), "param1", false),
                         },
                     }
                 }
@@ -77,7 +77,7 @@ namespace MockGen.Tests.Model
                         ReturnType = new ReturnType("Type1", false, typeToMockNamespace),
                         Parameters = new List<ParameterDescriptor>
                         {
-                            new ParameterDescriptor(new Type("Type1", typeToMockNamespace), "param1"),
+                            new ParameterDescriptor(new Type("Type1", typeToMockNamespace), "param1", false),
                         },
                     }
                 }

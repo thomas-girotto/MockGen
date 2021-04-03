@@ -24,7 +24,7 @@ namespace MockGen.Tests.Model
                             ReturnType = new ReturnType("ReturnedType1", false, "SomeLib.Namespace"),
                             Parameters = new List<ParameterDescriptor>
                             {
-                                new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1"),
+                                new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1", false),
                             },
                         },
                         new MethodDescriptor
@@ -33,7 +33,7 @@ namespace MockGen.Tests.Model
                             ReturnType = ReturnType.Void,
                             Parameters = new List<ParameterDescriptor>
                             {
-                                new ParameterDescriptor(new Type("Type3", "SomeLib.Namespace"), "param1"),
+                                new ParameterDescriptor(new Type("Type3", "SomeLib.Namespace"), "param1", false),
                             },
                         },
                     }
@@ -48,7 +48,7 @@ namespace MockGen.Tests.Model
                             ReturnType = new ReturnType("ReturnedType2", false, "SomeLib.Namespace"),
                             Parameters = new List<ParameterDescriptor>
                             {
-                                new ParameterDescriptor(new Type("Type2", "SomeLib.Namespace"), "param1"),
+                                new ParameterDescriptor(new Type("Type2", "SomeLib.Namespace"), "param1", false),
                             },
                         },
                         new MethodDescriptor
@@ -57,7 +57,7 @@ namespace MockGen.Tests.Model
                             ReturnType = ReturnType.Void,
                             Parameters = new List<ParameterDescriptor>
                             {
-                                new ParameterDescriptor(new Type("Type4", "SomeLib.Namespace"), "param1"),
+                                new ParameterDescriptor(new Type("Type4", "SomeLib.Namespace"), "param1", false),
                             },
                         },
                     }

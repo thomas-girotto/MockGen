@@ -41,15 +41,18 @@ namespace MockGen
 <# } #>
 <# foreach (var method in Descriptor.Methods) { #>
 <# if (method.ReturnType.IsTask) { #>
-        public <#=method.AddOverrideKeywordIfNeeded#>Task<<#=method.ReturnType.Name#>> <#=method.Name#>(<#=method.ParametersDeclaration#>)
+        public <#=method.AddOverrideKeywordIfNeeded#>Task<<#=method.ReturnType.Name#>> <#=method.Name#>(<#=method.ParametersDeclarationWithOutParameters#>)
 <# } else { #>
-        public <#=method.AddOverrideKeywordIfNeeded#><#=method.ReturnType.Name#> <#=method.Name#>(<#=method.ParametersDeclaration#>)
+        public <#=method.AddOverrideKeywordIfNeeded#><#=method.ReturnType.Name#> <#=method.Name#>(<#=method.ParametersDeclarationWithOutParameters#>)
 <# } #>        
         {
+<# if (method.OutParameters.Any()) { #>
+            <#=method.OutParameterNames#> = methods.<#=method.UniqueName#>OutParameterSetup(<#=method.ParameterNamesWithoutOutParameters#>); 
+<# } #>
 <# if (!method.ReturnsVoid) { #>
-            return methods.<#=method.UniqueName#>Setup.ExecuteSetup(<#=method.ParameterNames#>);
+            return methods.<#=method.UniqueName#>Setup.ExecuteSetup(<#=method.ParameterNamesWithoutOutParameters#>);
 <# } else { #>
-            methods.<#=method.UniqueName#>Setup.ExecuteSetup(<#=method.ParameterNames#>);
+            methods.<#=method.UniqueName#>Setup.ExecuteSetup(<#=method.ParameterNamesWithoutOutParameters#>);
 <# } #>
         }
 

@@ -3,6 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+using System;
 using MockGen.Setup;
 <#foreach (var ns in Descriptor.Namespaces) { #>
 using <#=ns#>;
@@ -17,6 +18,9 @@ namespace MockGen
 <# } #>
 <# foreach (var method in Descriptor.Methods) {#>
         internal <#=method.MethodSetupWithTypedParameters#> <#=method.UniqueName#>Setup { get; } = new <#=method.MethodSetupWithTypedParameters#>();
+<#}#>
+<# foreach (var method in Descriptor.MethodsWithOutParameters) {#>
+        internal <#=method.OutParameterSetupFunc#> <#=method.UniqueName#>OutParameterSetup { get; set; } = (<#=method.DiscardParameters#>) => default(<#=method.OutParameterTypesDefault#>);
 <#}#>
 
 		internal void SetupDone()

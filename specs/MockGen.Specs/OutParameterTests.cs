@@ -23,23 +23,6 @@ namespace MockGen.Specs
         }
 
         [Fact]
-        public void Should_setup_out_parameter_For_any_parameter()
-        {
-            // Given
-            var mockBuilder = Mock.IDependency();
-            var model = new Model1 { Id = 1 };
-            mockBuilder.TryGetById(Arg<int>.Any, () => model).Returns(true);
-            var mock = mockBuilder.Build();
-
-            // When
-            var success = mock.TryGetById(1, out var outParam);
-
-            // Then
-            success.Should().BeTrue();
-            outParam.Should().Be(model);
-        }
-
-        [Fact]
         public void Should_setup_out_parameter_depending_on_input_parameter()
         {
             // Given
@@ -67,7 +50,7 @@ namespace MockGen.Specs
             var mockBuilder = Mock.IDependency();
             var model1 = new Model1 { Id = 1 };
             var model2 = new Model2 { Name = "foo" };
-            mockBuilder.TryGetById(Arg<int>.Any, () => (model1, model2)).Returns(true);
+            mockBuilder.TryGetById(Arg<int>.Any, (_) => (model1, model2)).Returns(true);
             var mock = mockBuilder.Build();
 
             // When

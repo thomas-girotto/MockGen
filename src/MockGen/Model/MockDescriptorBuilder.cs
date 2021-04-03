@@ -34,7 +34,9 @@ namespace MockGen.Model
                 descriptorForTemplate.Ctors = namedTypeSymbol.InstanceConstructors
                     .Select(c => new CtorDescriptor
                     {
-                        Parameters = c.Parameters.Select(p => new ParameterDescriptor(GetType(p.Type), p.Name)).ToList()
+                        Parameters = c.Parameters
+                            .Select(p => new ParameterDescriptor(GetType(p.Type), p.Name, p.RefKind == RefKind.Out))
+                            .ToList()
                     }).ToList();
 
                 var methods = namedTypeSymbol.GetMembers()
@@ -48,7 +50,7 @@ namespace MockGen.Model
                         Name = m.Name,
                         ReturnType = m.ReturnsVoid ? ReturnType.Void : GetType(m.ReturnType),
                         Parameters = m.Parameters
-                            .Select(p => new ParameterDescriptor(GetType(p.Type), p.Name))
+                            .Select(p => new ParameterDescriptor(GetType(p.Type), p.Name, p.RefKind == RefKind.Out))
                             .ToList(),
                         ShouldBeOverriden = namedTypeSymbol.TypeKind == TypeKind.Class && (m.IsVirtual || m.IsAbstract)
                     });
