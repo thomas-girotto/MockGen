@@ -33,7 +33,7 @@ namespace MockGen.Model
             Methods.Add(method);
         }
         
-        public List<PropertyDescriptor> Properties { get; set; } = new List<PropertyDescriptor>();
+        public List<Property> Properties { get; set; } = new List<Property>();
 
         public List<Ctor> Ctors
         {

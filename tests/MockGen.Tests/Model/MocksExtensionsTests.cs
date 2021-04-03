@@ -83,9 +83,9 @@ namespace MockGen.Tests.Model
                 new Mock
                 {
                     TypeToMock = new Type("IDependency", "SomeLib.Namespace"),
-                    Properties = new List<PropertyDescriptor>
+                    Properties = new List<Property>
                     {
-                        new PropertyDescriptor
+                        new Property
                         {
                             Name = "GetSetProperty",
                             HasGetter = true,

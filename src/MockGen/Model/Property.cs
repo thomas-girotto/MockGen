@@ -1,6 +1,6 @@
 ﻿namespace MockGen.Model
 {
-    public class PropertyDescriptor
+    public class Property
     {
         public string Name { get; set; }
         public ReturnType Type { get; set; }

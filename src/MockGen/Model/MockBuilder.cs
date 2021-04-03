@@ -63,7 +63,7 @@ namespace MockGen.Model
                 descriptorForTemplate.Properties = namedTypeSymbol.GetMembers()
                     .OfType<IPropertySymbol>()
                     .Where(p => p.IsAbstract || p.IsVirtual)
-                    .Select(p => new PropertyDescriptor
+                    .Select(p => new Property
                     {
                         Name = p.Name,
                         Type = GetType(p.Type),
