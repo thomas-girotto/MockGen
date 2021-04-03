@@ -35,7 +35,7 @@ namespace MockGen.Model
                     .Select(c => new Ctor
                     {
                         Parameters = c.Parameters
-                            .Select(p => new ParameterDescriptor(GetType(p.Type), p.Name, p.RefKind == RefKind.Out))
+                            .Select(p => new Parameter(GetType(p.Type), p.Name, p.RefKind == RefKind.Out))
                             .ToList()
                     }).ToList();
 
@@ -50,7 +50,7 @@ namespace MockGen.Model
                         Name = m.Name,
                         ReturnType = m.ReturnsVoid ? ReturnType.Void : GetType(m.ReturnType),
                         Parameters = m.Parameters
-                            .Select(p => new ParameterDescriptor(GetType(p.Type), p.Name, p.RefKind == RefKind.Out))
+                            .Select(p => new Parameter(GetType(p.Type), p.Name, p.RefKind == RefKind.Out))
                             .ToList(),
                         ShouldBeOverriden = namedTypeSymbol.TypeKind == TypeKind.Class && (m.IsVirtual || m.IsAbstract)
                     });

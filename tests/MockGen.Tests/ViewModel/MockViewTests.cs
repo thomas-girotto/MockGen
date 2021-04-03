@@ -24,9 +24,9 @@ namespace MockGen.Tests.ViewModel
                     {
                         Name = "MethodTParamTReturn",
                         ReturnType = new ReturnType("Type1", false, returnedTypeNamespace),
-                        Parameters = new List<ParameterDescriptor>
+                        Parameters = new List<Parameter>
                         {
-                            new ParameterDescriptor(new Type("Type2", parameterTypeNamespace), "param1", false),
+                            new Parameter(new Type("Type2", parameterTypeNamespace), "param1", false),
                         },
                     }
                 }
@@ -54,9 +54,9 @@ namespace MockGen.Tests.ViewModel
                     {
                         Name = "MethodTParamTReturn",
                         ReturnType = new ReturnType("Type1", false, typeToMockNamespace),
-                        Parameters = new List<ParameterDescriptor>
+                        Parameters = new List<Parameter>
                         {
-                            new ParameterDescriptor(new Type("Type1", typeToMockNamespace), "param1", false),
+                            new Parameter(new Type("Type1", typeToMockNamespace), "param1", false),
                         },
                     }
                 }

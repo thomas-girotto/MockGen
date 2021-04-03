@@ -7,9 +7,9 @@ namespace MockGen.Model
     public class Ctor
     {
         public static Ctor EmptyCtor = new Ctor();
-        public List<ParameterDescriptor> Parameters { get; set; } = new List<ParameterDescriptor>();
-        public List<ParameterDescriptor> ParametersWithoutOutParams => Parameters.Where(p => !p.IsOutParameter).ToList();
-        public List<ParameterDescriptor> OutParameters => Parameters.Where(p => p.IsOutParameter).ToList();
+        public List<Parameter> Parameters { get; set; } = new List<Parameter>();
+        public List<Parameter> ParametersWithoutOutParams => Parameters.Where(p => !p.IsOutParameter).ToList();
+        public List<Parameter> OutParameters => Parameters.Where(p => p.IsOutParameter).ToList();
         
         public string ParametersDeclaration =>
             string.Join(", ", ParametersWithoutOutParams.Select(p => $"{p.Type.Name} {p.Name}"));

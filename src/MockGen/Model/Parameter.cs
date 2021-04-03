@@ -1,8 +1,8 @@
 ﻿namespace MockGen.Model
 {
-    public class ParameterDescriptor
+    public class Parameter
     {
-        public ParameterDescriptor(Type type, string name, bool isOutParameter)
+        public Parameter(Type type, string name, bool isOutParameter)
         {
             Name = name;
             Type = type;

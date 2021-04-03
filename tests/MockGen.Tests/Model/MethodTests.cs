@@ -17,17 +17,17 @@ namespace MockGen.Tests.Model
         {
             Name = "MethodVoidWithParam",
             ReturnType = ReturnType.Void,
-            Parameters = new List<ParameterDescriptor> { new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1", false) },
+            Parameters = new List<Parameter> { new Parameter(new Type("Type1", "SomeLib.Namespace"), "param1", false) },
         };
 
         private Method MethodVoidWithTwoParam => new Method
         {
             Name = "MethodVoidWithTwoParam",
             ReturnType = ReturnType.Void,
-            Parameters = new List<ParameterDescriptor>
+            Parameters = new List<Parameter>
             {
-                new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1", false),
-                new ParameterDescriptor(new Type("Type2", "SomeLib.Namespace"), "param2", false),
+                new Parameter(new Type("Type1", "SomeLib.Namespace"), "param1", false),
+                new Parameter(new Type("Type2", "SomeLib.Namespace"), "param2", false),
             },
         };
 
@@ -41,17 +41,17 @@ namespace MockGen.Tests.Model
         {
             Name = "Method2",
             ReturnType = new ReturnType("int", false),
-            Parameters = new List<ParameterDescriptor> { new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1", false) }
+            Parameters = new List<Parameter> { new Parameter(new Type("Type1", "SomeLib.Namespace"), "param1", false) }
         };
 
         private Method MethodThatReturnsWithTwoParameters => new Method
         {
             Name = "Method3",
             ReturnType = new ReturnType("int", false),
-            Parameters = new List<ParameterDescriptor>
+            Parameters = new List<Parameter>
             {
-                new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1", false),
-                new ParameterDescriptor(new Type("Type2", "SomeLib.Namespace"), "param2", false),
+                new Parameter(new Type("Type1", "SomeLib.Namespace"), "param1", false),
+                new Parameter(new Type("Type2", "SomeLib.Namespace"), "param2", false),
             }
         };
 
@@ -59,9 +59,9 @@ namespace MockGen.Tests.Model
         {
             Name = "Method4",
             ReturnType = ReturnType.Void,
-            Parameters = new List<ParameterDescriptor>
+            Parameters = new List<Parameter>
             {
-                new ParameterDescriptor(new Type("TypeOut", "SomeLib.Namespace"), "param1", true),
+                new Parameter(new Type("TypeOut", "SomeLib.Namespace"), "param1", true),
             }
         };
 
@@ -69,10 +69,10 @@ namespace MockGen.Tests.Model
         {
             Name = "Method4",
             ReturnType = ReturnType.Void,
-            Parameters = new List<ParameterDescriptor>
+            Parameters = new List<Parameter>
             {
-                new ParameterDescriptor(new Type("TypeOut1", "SomeLib.Namespace"), "out1", true),
-                new ParameterDescriptor(new Type("TypeOut2", "SomeLib.Namespace"), "out2", true),
+                new Parameter(new Type("TypeOut1", "SomeLib.Namespace"), "out1", true),
+                new Parameter(new Type("TypeOut2", "SomeLib.Namespace"), "out2", true),
             }
         };
 
@@ -80,10 +80,10 @@ namespace MockGen.Tests.Model
         {
             Name = "Method5",
             ReturnType = ReturnType.Void,
-            Parameters = new List<ParameterDescriptor>
+            Parameters = new List<Parameter>
             {
-                new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1", false),
-                new ParameterDescriptor(new Type("TypeOut", "SomeLib.Namespace"), "param2", true),
+                new Parameter(new Type("Type1", "SomeLib.Namespace"), "param1", false),
+                new Parameter(new Type("TypeOut", "SomeLib.Namespace"), "param2", true),
             }
         };
 
@@ -91,11 +91,11 @@ namespace MockGen.Tests.Model
         {
             Name = "Method5",
             ReturnType = ReturnType.Void,
-            Parameters = new List<ParameterDescriptor>
+            Parameters = new List<Parameter>
             {
-                new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1", false),
-                new ParameterDescriptor(new Type("TypeOut1", "SomeLib.Namespace"), "out1", true),
-                new ParameterDescriptor(new Type("TypeOut2", "SomeLib.Namespace"), "out2", true),
+                new Parameter(new Type("Type1", "SomeLib.Namespace"), "param1", false),
+                new Parameter(new Type("TypeOut1", "SomeLib.Namespace"), "out1", true),
+                new Parameter(new Type("TypeOut2", "SomeLib.Namespace"), "out2", true),
             }
         };
 
@@ -103,9 +103,9 @@ namespace MockGen.Tests.Model
         {
             Name = "Method4",
             ReturnType = new ReturnType("int", false),
-            Parameters = new List<ParameterDescriptor>
+            Parameters = new List<Parameter>
             {
-                new ParameterDescriptor(new Type("TypeOut", "SomeLib.Namespace"), "param1", true),
+                new Parameter(new Type("TypeOut", "SomeLib.Namespace"), "param1", true),
             }
         };
 
@@ -113,10 +113,10 @@ namespace MockGen.Tests.Model
         {
             Name = "Method5",
             ReturnType = new ReturnType("int", false),
-            Parameters = new List<ParameterDescriptor>
+            Parameters = new List<Parameter>
             {
-                new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1", false),
-                new ParameterDescriptor(new Type("TypeOut", "SomeLib.Namespace"), "param2", true),
+                new Parameter(new Type("Type1", "SomeLib.Namespace"), "param1", false),
+                new Parameter(new Type("TypeOut", "SomeLib.Namespace"), "param2", true),
             }
         };
 

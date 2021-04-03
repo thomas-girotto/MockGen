@@ -22,18 +22,18 @@ namespace MockGen.Tests.Model
                         {
                             Name = "MethodWithOneTypedParameterAndReturnSomething1",
                             ReturnType = new ReturnType("ReturnedType1", false, "SomeLib.Namespace"),
-                            Parameters = new List<ParameterDescriptor>
+                            Parameters = new List<Parameter>
                             {
-                                new ParameterDescriptor(new Type("Type1", "SomeLib.Namespace"), "param1", false),
+                                new Parameter(new Type("Type1", "SomeLib.Namespace"), "param1", false),
                             },
                         },
                         new Method
                         {
                             Name = "MethodWithOneTypedParameterThatReturnsVoid1",
                             ReturnType = ReturnType.Void,
-                            Parameters = new List<ParameterDescriptor>
+                            Parameters = new List<Parameter>
                             {
-                                new ParameterDescriptor(new Type("Type3", "SomeLib.Namespace"), "param1", false),
+                                new Parameter(new Type("Type3", "SomeLib.Namespace"), "param1", false),
                             },
                         },
                     }
@@ -46,18 +46,18 @@ namespace MockGen.Tests.Model
                         {
                             Name = "MethodWithOneTypedParameterAndReturnSomething2",
                             ReturnType = new ReturnType("ReturnedType2", false, "SomeLib.Namespace"),
-                            Parameters = new List<ParameterDescriptor>
+                            Parameters = new List<Parameter>
                             {
-                                new ParameterDescriptor(new Type("Type2", "SomeLib.Namespace"), "param1", false),
+                                new Parameter(new Type("Type2", "SomeLib.Namespace"), "param1", false),
                             },
                         },
                         new Method
                         {
                             Name = "MethodWithOneTypedParameterThatReturnsVoid2",
                             ReturnType = ReturnType.Void,
-                            Parameters = new List<ParameterDescriptor>
+                            Parameters = new List<Parameter>
                             {
-                                new ParameterDescriptor(new Type("Type4", "SomeLib.Namespace"), "param1", false),
+                                new Parameter(new Type("Type4", "SomeLib.Namespace"), "param1", false),
                             },
                         },
                     }
