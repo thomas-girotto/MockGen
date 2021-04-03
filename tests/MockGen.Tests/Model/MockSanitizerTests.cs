@@ -5,7 +5,7 @@ using Xunit;
 
 namespace MockGen.Tests.Model
 {
-    public class MockDescriptorSanitizerTests
+    public class MockSanitizerTests
     {
         [Theory]
         [InlineData("TypeName", "Sut.Namespace1", "Sut.Namespace2", "TypeNameNamespace1", "TypeNameNamespace2")]
@@ -15,20 +15,20 @@ namespace MockGen.Tests.Model
         public void Should_avoid_collision_between_types_by_suffixing_with_parts_of_namespace(string type, string namespace1, string namespace2, string expectedType1, string expectedType2)
         {
             // Given
-            var mocks = new List<MockDescriptor>
+            var mocks = new List<Mock>
             {
-                new MockDescriptor
+                new Mock
                 {
                     TypeToMock = new Type(type, namespace1),
                 },
-                new MockDescriptor
+                new Mock
                 {
                     TypeToMock = new Type(type, namespace2),
                 }
             };
 
             // When
-            MockDescriptorSanitizer.Sanitize(mocks);
+            MockSanitizer.Sanitize(mocks);
 
             // Then
             mocks[0].TypeToMock.Name.Should().Be(expectedType1);

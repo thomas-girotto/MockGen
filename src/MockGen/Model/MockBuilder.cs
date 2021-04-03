@@ -7,9 +7,9 @@ using System.Text.RegularExpressions;
 
 namespace MockGen.Model
 {
-    public class MockDescriptorBuilder
+    public class MockBuilder
     {
-        public static MockDescriptor FromSemanticModel(GeneratorExecutionContext diagnosticReporter, Compilation compilation, TypeSyntax typeSyntax)
+        public static Mock FromSemanticModel(GeneratorExecutionContext diagnosticReporter, Compilation compilation, TypeSyntax typeSyntax)
         {
             var semanticModel = compilation.GetSemanticModel(typeSyntax.SyntaxTree);
             var symbol = semanticModel.GetSymbolInfo(typeSyntax).Symbol;
@@ -25,7 +25,7 @@ namespace MockGen.Model
 
             var cachedNamespace = new Dictionary<string, string>();
 
-            var descriptorForTemplate = new MockDescriptor();
+            var descriptorForTemplate = new Mock();
             if (symbol is INamedTypeSymbol namedTypeSymbol)
             {
                 descriptorForTemplate.IsInterface = namedTypeSymbol.TypeKind == TypeKind.Interface;

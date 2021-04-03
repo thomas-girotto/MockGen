@@ -37,7 +37,7 @@ namespace MockGen
                 // Sanitize types to mock to handle type collision and ensure that we generate a mock only once for each type
                 var sanityzedMocks = SanityzeMocks(
                     receiver.TypesToMockSyntax
-                        .Select(mockSyntax => MockDescriptorBuilder.FromSemanticModel(context, context.Compilation, mockSyntax))
+                        .Select(mockSyntax => MockBuilder.FromSemanticModel(context, context.Compilation, mockSyntax))
                         .Where(m => m != null));
 
                 // First inject helper classes that doesn't depend on user's code
@@ -150,9 +150,9 @@ namespace MockGen
         /// the same type in this list, leading to having same method declared several times in generated Mock.cs).
         /// </summary>
         /// <param name="allMocksFoundFromSyntax"></param>
-        protected virtual IEnumerable<MockDescriptor> SanityzeMocks(IEnumerable<MockDescriptor> allMocksFoundFromSyntax)
+        protected virtual IEnumerable<Mock> SanityzeMocks(IEnumerable<Mock> allMocksFoundFromSyntax)
         {
-            return MockDescriptorSanitizer.Sanitize(allMocksFoundFromSyntax);
+            return MockSanitizer.Sanitize(allMocksFoundFromSyntax);
         }
 
         public void Initialize(GeneratorInitializationContext context)

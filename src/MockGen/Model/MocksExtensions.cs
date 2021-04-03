@@ -5,7 +5,7 @@ namespace MockGen.Model
 {
     public static class MocksExtensions
     {
-        public static IEnumerable<TypedParameterMethod> GetAllMethodsGroupedByTypeParameter(this IEnumerable<MockDescriptor> mocks)
+        public static IEnumerable<TypedParameterMethod> GetAllMethodsGroupedByTypeParameter(this IEnumerable<Mock> mocks)
         {
             var initTypedMethodsFromProperties = new List<TypedParameterMethod>();
 

@@ -7,12 +7,12 @@ namespace MockGen.Templates
 {
     public partial class MockStaticTextTemplate
     {
-        public MockStaticTextTemplate(IEnumerable<MockDescriptor> descriptor)
+        public MockStaticTextTemplate(IEnumerable<Mock> descriptor)
         {
             Mocks = descriptor;
         }
 
-        public IEnumerable<MockDescriptor> Mocks { get; private set; }
+        public IEnumerable<Mock> Mocks { get; private set; }
 
         public IEnumerable<string> Namespaces => Mocks
             .SelectMany(m => new MockView(m).Namespaces)

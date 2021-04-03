@@ -9,13 +9,13 @@ using Xunit;
 
 namespace MockGen.Tests.Model
 {
-    public class MockDescriptorBuilderTests
+    public class MockBuilderTests
     {
         [Theory]
         [MemberData(nameof(ExtractNamespacesTestValues))]
         public void Should_extract_all_namespaces_from_a_complex_type(string fullName, IEnumerable<string> expectedNamespaces)
         {
-            var namespaces = MockDescriptorBuilder.ExtractAllNamespaces(fullName);
+            var namespaces = MockBuilder.ExtractAllNamespaces(fullName);
             
             namespaces.Should().Equal(expectedNamespaces);
         }

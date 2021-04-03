@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MockGen.Model
 {
-    public class MockDescriptor
+    public class Mock
     {
         private List<CtorDescriptor> _ctors = new List<CtorDescriptor>();
         private Dictionary<string, int> _numberOfMethodWithSameName = new Dictionary<string, int>();

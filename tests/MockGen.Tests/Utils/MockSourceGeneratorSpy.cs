@@ -8,11 +8,11 @@ namespace MockGen.Tests.Utils
     {
         /// <summary>
         /// Expose the types we want to mock but only in the context of unit tests 
-        /// <see cref="MockSourceGenerator.SanityzeMocks(IEnumerable{MockDescriptor})"/> comment
+        /// <see cref="MockSourceGenerator.SanityzeMocks(IEnumerable{Mock})"/> comment
         /// </summary>
-        public List<MockDescriptor> TypesToMock = new List<MockDescriptor>();
+        public List<Mock> TypesToMock = new List<Mock>();
 
-        protected override IEnumerable<MockDescriptor> SanityzeMocks(IEnumerable<MockDescriptor> allMocksFoundFromSyntax)
+        protected override IEnumerable<Mock> SanityzeMocks(IEnumerable<Mock> allMocksFoundFromSyntax)
         {
             TypesToMock = base.SanityzeMocks(allMocksFoundFromSyntax).ToList();
             return TypesToMock;

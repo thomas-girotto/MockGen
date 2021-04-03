@@ -124,7 +124,7 @@ namespace MockGen.Tests.Model
         [Fact]
         public void AddMethod_Should_set_a_unique_name_for_methods_overload()
         {
-            var mock = new MockDescriptor();
+            var mock = new Mock();
             var method1 = new MethodDescriptor { Name = "DoSomething" };
             var method2 = new MethodDescriptor { Name = "DoSomething" };
             var method3 = new MethodDescriptor { Name = "DoSomething" };

@@ -15,7 +15,7 @@ namespace MockGen.Tests.ViewModel
             var typeToMockNamespace = "SomeLib.TypeNamespace";
             var returnedTypeNamespace = "SomeLib.Namespace.For.ReturnedType";
             var parameterTypeNamespace = "SomeLib.Namespace.For.ParameterType";
-            var mock = new MockDescriptor
+            var mock = new Mock
             {
                 TypeToMock = new Type("MyType", typeToMockNamespace),
                 Methods = new List<MethodDescriptor>
@@ -45,7 +45,7 @@ namespace MockGen.Tests.ViewModel
         {
             // Given
             var typeToMockNamespace = "SomeLib.TypeNamespace";
-            var mock = new MockDescriptor
+            var mock = new Mock
             {
                 TypeToMock = new Type("MyType", typeToMockNamespace),
                 Methods = new List<MethodDescriptor>

@@ -5,7 +5,7 @@ namespace MockGen.Templates
 {
     public partial class MockBuilderTextTemplate
     {
-        public MockBuilderTextTemplate(MockDescriptor mock)
+        public MockBuilderTextTemplate(Mock mock)
         {
             view = new MockView(mock);
         }

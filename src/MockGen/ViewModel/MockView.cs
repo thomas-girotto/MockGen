@@ -6,7 +6,7 @@ namespace MockGen.ViewModel
 {
     public class MockView
     {
-        public MockView(MockDescriptor mock)
+        public MockView(Mock mock)
         {
             Mock = mock;
         }
@@ -22,6 +22,6 @@ namespace MockGen.ViewModel
 
         public string CallBaseCtorIfNeeded => Mock.IsInterface ? "" : " : base({0})";
 
-        public MockDescriptor Mock { get; private set; }
+        public Mock Mock { get; private set; }
     }
 }

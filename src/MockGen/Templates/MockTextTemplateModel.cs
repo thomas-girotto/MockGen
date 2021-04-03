@@ -7,7 +7,7 @@ namespace MockGen.Templates
     {
         private readonly MockView view;
 
-        public MockTextTemplate(MockDescriptor mock)
+        public MockTextTemplate(Mock mock)
         {
             view = new MockView(mock);
         }

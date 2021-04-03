@@ -5,11 +5,11 @@ using System.Text;
 
 namespace MockGen.Model
 {
-    public class MockDescriptorSanitizer
+    public class MockSanitizer
     {
-        public static IEnumerable<MockDescriptor> Sanitize(IEnumerable<MockDescriptor> mocks)
+        public static IEnumerable<Mock> Sanitize(IEnumerable<Mock> mocks)
         {
-            var mocksPerType = new Dictionary<string, MockDescriptor>();
+            var mocksPerType = new Dictionary<string, Mock>();
             foreach(var mock in mocks)
             {
                 if (mocksPerType.ContainsKey(mock.TypeToMock.Name))

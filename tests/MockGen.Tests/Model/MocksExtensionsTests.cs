@@ -12,8 +12,8 @@ namespace MockGen.Tests.Model
         public void Should_group_all_mocks_methods_by_number_of_typed_parameters_whatever_types_are()
         {
             // Given
-            var mocks = new List<MockDescriptor> {
-                new MockDescriptor
+            var mocks = new List<Mock> {
+                new Mock
                 {
                     TypeToMock = new Type("IDependency", "SomeLib.Namespace"),
                     Methods = new List<MethodDescriptor>
@@ -38,7 +38,7 @@ namespace MockGen.Tests.Model
                         },
                     }
                 },
-                new MockDescriptor
+                new Mock
                 {
                     Methods = new List<MethodDescriptor>
                     {
@@ -79,8 +79,8 @@ namespace MockGen.Tests.Model
             // That's because we're using MethodSetupVoid<T> to setup the Set property and MethodSetupReturn<T>
             // to setup Get property => we make sur that we generate those classes
             // Given
-            var mocks = new List<MockDescriptor> {
-                new MockDescriptor
+            var mocks = new List<Mock> {
+                new Mock
                 {
                     TypeToMock = new Type("IDependency", "SomeLib.Namespace"),
                     Properties = new List<PropertyDescriptor>
