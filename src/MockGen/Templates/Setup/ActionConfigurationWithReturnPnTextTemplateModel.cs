@@ -1,14 +1,14 @@
-﻿using MockGen.Model;
+﻿using MockGen.ViewModel;
 
 namespace MockGen.Templates.Setup
 {
     public partial class ActionConfigurationWithReturnPnTextTemplate
     {
-        public ActionConfigurationWithReturnPnTextTemplate(GenericTypesDescriptor descriptor)
-        {
-            Descriptor = descriptor;
-        }
+        private readonly MethodsInfoView view;
 
-        public GenericTypesDescriptor Descriptor { get; set; }
+        public ActionConfigurationWithReturnPnTextTemplate(MethodsInfoView view)
+        {
+            this.view = view;
+        }
     }
 }

@@ -1,9 +1,14 @@
-﻿using MockGen.Model;
+﻿using MockGen.ViewModel;
 
 namespace MockGen.Templates.Setup
 {
     public partial class MethodSetupVoidPnTextTemplate
     {
-        public GenericTypesDescriptor Descriptor { get; set; }
+        private readonly MethodsInfoView view;
+
+        public MethodSetupVoidPnTextTemplate(MethodsInfoView view)
+        {
+            this.view = view;
+        }
     }
 }

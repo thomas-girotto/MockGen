@@ -7,13 +7,13 @@ using System;
 
 namespace MockGen.Setup
 {
-    internal interface IMethodSetupReturn<#=Descriptor.GenericTypesWithTReturn#> : IMethodSetup<#=Descriptor.GenericTypes#> 
+    internal interface IMethodSetupReturn<#=view.GenericTypesWithTReturn#> : IMethodSetup<#=view.GenericTypes#> 
     {
-        IReturnContinuation<#=Descriptor.GenericTypes#> Returns(TReturn value);
+        IReturnContinuation<#=view.GenericTypes#> Returns(TReturn value);
     }
 
-    internal interface IReturnContinuation<#=Descriptor.GenericTypes#>
+    internal interface IReturnContinuation<#=view.GenericTypes#>
     {
-        void AndExecute(Action<#=Descriptor.GenericTypes#> callback);
+        void AndExecute(Action<#=view.GenericTypes#> callback);
     }
 }

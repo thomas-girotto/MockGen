@@ -5,37 +5,37 @@ namespace MockGen.Model
 {
     public static class MocksExtensions
     {
-        public static IEnumerable<TypedParameterMethod> GetAllMethodsGroupedByTypeParameter(this IEnumerable<Mock> mocks)
+        public static IEnumerable<MethodsInfo> GetAllMethodsGroupedByTypeParameter(this IEnumerable<Mock> mocks)
         {
-            var initTypedMethodsFromProperties = new List<TypedParameterMethod>();
+            var initTypedMethodsFromProperties = new List<MethodsInfo>();
 
             var properties = mocks.SelectMany(m => m.Properties);
             if (properties.Any())
             {
                 // set property is configured via MethodSetupVoid<T>
-                initTypedMethodsFromProperties.Add(new TypedParameterMethod(1, true, false, false));
+                initTypedMethodsFromProperties.Add(new MethodsInfo(1, true, false, false));
                 // get property is configured via MethodSetupReturn<T> (here T is the return type and not a parameter type)
                 if (properties.Any(p => p.Type.IsTask))
                 {
-                    initTypedMethodsFromProperties.Add(new TypedParameterMethod(0, false, true, true));
+                    initTypedMethodsFromProperties.Add(new MethodsInfo(0, false, true, true));
                 }
                 if (properties.Any(p => !p.Type.IsTask))
                 {
-                    initTypedMethodsFromProperties.Add(new TypedParameterMethod(0, false, true, false));
+                    initTypedMethodsFromProperties.Add(new MethodsInfo(0, false, true, false));
                 }
             }
 
             return mocks
                 .SelectMany(mock => mock.Methods)
-                .Select(m => new TypedParameterMethod(
+                .Select(m => new MethodsInfo(
                     m.Parameters.Count, 
                     m.ReturnsVoid, 
                     !m.ReturnsVoid && !m.ReturnType.IsTask, 
                     !m.ReturnsVoid && m.ReturnType.IsTask))
                 .Union(initTypedMethodsFromProperties)
                 .GroupBy(
-                    m => m.NumberOfTypedParameters,
-                    (n, methodsInGroup) => new TypedParameterMethod(
+                    m => m.NumberOfParameters,
+                    (n, methodsInGroup) => new MethodsInfo(
                         n, 
                         methodsInGroup.Any(m => m.HasMethodThatReturnsVoid), 
                         methodsInGroup.Any(m => m.HasMethodThatReturns),

@@ -8,13 +8,13 @@ using System.Collections.Generic;
 
 namespace MockGen.Setup
 {
-    internal interface IMethodSetup<#=Descriptor.GenericTypes#> : IMethodSetupBase
+    internal interface IMethodSetup<#=view.GenericTypes#> : IMethodSetupBase
     {
-<# if (Descriptor.NumberOfTypes == 1) {#>
+<# if (view.NumberOfTypes == 1) {#>
         IEnumerable<TParam1> MatchingCalls { get; }
-<# } else if (Descriptor.NumberOfTypes > 1) { #>
-        IEnumerable<(<#=Descriptor.ParametersTypesWithName#>)> MatchingCalls { get; }
+<# } else if (view.NumberOfTypes > 1) { #>
+        IEnumerable<(<#=view.ParametersTypesWithName#>)> MatchingCalls { get; }
 <# } #>
-        void Execute(Action<#=Descriptor.GenericTypes#> callback);
+        void Execute(Action<#=view.GenericTypes#> callback);
     }
 }

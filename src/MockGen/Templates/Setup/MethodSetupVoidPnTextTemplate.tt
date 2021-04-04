@@ -7,14 +7,14 @@ using System.Collections.Generic;
 
 namespace MockGen.Setup
 {
-    internal class MethodSetupVoid<#=Descriptor.GenericTypes#> : MethodSetup<#=Descriptor.GenericTypes#>
+    internal class MethodSetupVoid<#=view.GenericTypes#> : MethodSetup<#=view.GenericTypes#>
     {
-<# if (Descriptor.NumberOfTypes > 0) { #>
-        private Stack<ActionConfiguration<#=Descriptor.GenericTypes#>> configuredActions = new Stack<ActionConfiguration<#=Descriptor.GenericTypes#>>();
+<# if (view.NumberOfTypes > 0) { #>
+        private Stack<ActionConfiguration<#=view.GenericTypes#>> configuredActions = new Stack<ActionConfiguration<#=view.GenericTypes#>>();
      
-        public new IMethodSetup<#=Descriptor.GenericTypes#> ForParameter(<#=Descriptor.ConcatClassParameterByParameterType("Arg", "param")#>)
+        public new IMethodSetup<#=view.GenericTypes#> ForParameter(<#=view.ConcatClassParameterByParameterType("Arg", "param")#>)
         {
-            base.ForParameter(<#=Descriptor.ConcatParameters("param")#>);
+            base.ForParameter(<#=view.ConcatParameters("param")#>);
             if (!IsSetupDone)
             {
                 configuredActions.Push(currentConfiguration);
@@ -25,17 +25,17 @@ namespace MockGen.Setup
 
 <# } #>
 
-        public void ExecuteSetup(<#=Descriptor.ParametersTypesWithName#>)
+        public void ExecuteSetup(<#=view.ParametersTypesWithName#>)
         {
-<# if (Descriptor.NumberOfTypes > 0) { #>
+<# if (view.NumberOfTypes > 0) { #>
             // Register call with given parameter for future assertions on calls
-            calls.Add(<# if (Descriptor.NumberOfTypes > 1) {#>(<#}#><#=Descriptor.ConcatParameters("param")#><# if (Descriptor.NumberOfTypes > 1) {#>)<#}#>);
+            calls.Add(<# if (view.NumberOfTypes > 1) {#>(<#}#><#=view.ConcatParameters("param")#><# if (view.NumberOfTypes > 1) {#>)<#}#>);
             // Execute the configured action according to given parameters
             foreach (var setup in configuredActions)
             {
-                if (setup.Match(<#=Descriptor.ConcatParameters("param")#>))
+                if (setup.Match(<#=view.ConcatParameters("param")#>))
                 {
-                    setup.RunActions(<#=Descriptor.ConcatParameters("param")#>);
+                    setup.RunActions(<#=view.ConcatParameters("param")#>);
                     return;
                 }
             }

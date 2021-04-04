@@ -32,7 +32,7 @@ namespace MockGen.Templates.Setup
                     " class ActionConfiguration");
             
             #line 11 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
             
             #line default
             #line hidden
@@ -41,7 +41,7 @@ namespace MockGen.Templates.Setup
                     "      {\r\n            this.baseConfiguration = baseConfiguration;\r\n        }\r\n\r\n");
             
             #line 20 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationPnTextTemplate.tt"
- foreach (var n in Descriptor.EnumerateNumbers) { 
+ foreach (var n in view.EnumerateNumbers) { 
             
             #line default
             #line hidden
@@ -76,28 +76,28 @@ namespace MockGen.Templates.Setup
             this.Write("\r\n        internal Action");
             
             #line 24 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
             
             #line default
             #line hidden
             this.Write(" ExecuteAction { private get; set; }\r\n\r\n");
             
             #line 26 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationPnTextTemplate.tt"
- if (Descriptor.NumberOfTypes > 0) { 
+ if (view.NumberOfTypes > 0) { 
             
             #line default
             #line hidden
             this.Write("        internal bool Match(");
             
             #line 27 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ParametersTypesWithName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.ParametersTypesWithName));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n            return ");
             
             #line 29 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatMatcherCalls("Matcher", "param")));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.ConcatMatcherCalls("Matcher", "param")));
             
             #line default
             #line hidden
@@ -111,7 +111,7 @@ namespace MockGen.Templates.Setup
             this.Write("\r\n        internal void RunActions(");
             
             #line 33 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ParametersTypesWithName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.ParametersTypesWithName));
             
             #line default
             #line hidden
@@ -119,7 +119,7 @@ namespace MockGen.Templates.Setup
                     "xecuteAction?.Invoke(");
             
             #line 36 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatParameters("param")));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.ConcatParameters("param")));
             
             #line default
             #line hidden

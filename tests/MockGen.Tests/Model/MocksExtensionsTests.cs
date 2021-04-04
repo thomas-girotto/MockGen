@@ -70,7 +70,7 @@ namespace MockGen.Tests.Model
             // Then
             numberOfParameters.Should()
                 .HaveCount(1)
-                .And.Contain(new TypedParameterMethod(1, true, true, false));
+                .And.Contain(new MethodsInfo(1, true, true, false));
         }
 
         [Fact]
@@ -102,8 +102,8 @@ namespace MockGen.Tests.Model
             // Then
             numberOfParameters.Should()
                 .HaveCount(2)
-                .And.Contain(new TypedParameterMethod(0, false, true, false))
-                .And.Contain(new TypedParameterMethod(1, true, false, false));
+                .And.Contain(new MethodsInfo(0, false, true, false))
+                .And.Contain(new MethodsInfo(1, true, false, false));
         }
     }
 }

@@ -32,56 +32,56 @@ namespace MockGen.Templates.Setup
                     "ss MethodSetupVoid");
             
             #line 10 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
             
             #line default
             #line hidden
             this.Write(" : MethodSetup");
             
             #line 10 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n");
             
             #line 12 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
- if (Descriptor.NumberOfTypes > 0) { 
+ if (view.NumberOfTypes > 0) { 
             
             #line default
             #line hidden
             this.Write("        private Stack<ActionConfiguration");
             
             #line 13 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
             
             #line default
             #line hidden
             this.Write("> configuredActions = new Stack<ActionConfiguration");
             
             #line 13 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
             
             #line default
             #line hidden
             this.Write(">();\r\n     \r\n        public new IMethodSetup");
             
             #line 15 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
             
             #line default
             #line hidden
             this.Write(" ForParameter(");
             
             #line 15 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatClassParameterByParameterType("Arg", "param")));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.ConcatClassParameterByParameterType("Arg", "param")));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n            base.ForParameter(");
             
             #line 17 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatParameters("param")));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.ConcatParameters("param")));
             
             #line default
             #line hidden
@@ -97,14 +97,14 @@ namespace MockGen.Templates.Setup
             this.Write("\r\n        public void ExecuteSetup(");
             
             #line 28 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ParametersTypesWithName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.ParametersTypesWithName));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n");
             
             #line 30 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
- if (Descriptor.NumberOfTypes > 0) { 
+ if (view.NumberOfTypes > 0) { 
             
             #line default
             #line hidden
@@ -112,7 +112,7 @@ namespace MockGen.Templates.Setup
                     "\n            calls.Add(");
             
             #line 32 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
- if (Descriptor.NumberOfTypes > 1) {
+ if (view.NumberOfTypes > 1) {
             
             #line default
             #line hidden
@@ -125,13 +125,13 @@ namespace MockGen.Templates.Setup
             #line hidden
             
             #line 32 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatParameters("param")));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.ConcatParameters("param")));
             
             #line default
             #line hidden
             
             #line 32 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
- if (Descriptor.NumberOfTypes > 1) {
+ if (view.NumberOfTypes > 1) {
             
             #line default
             #line hidden
@@ -147,14 +147,14 @@ namespace MockGen.Templates.Setup
                     "    if (setup.Match(");
             
             #line 36 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatParameters("param")));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.ConcatParameters("param")));
             
             #line default
             #line hidden
             this.Write("))\r\n                {\r\n                    setup.RunActions(");
             
             #line 38 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupVoidPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatParameters("param")));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.ConcatParameters("param")));
             
             #line default
             #line hidden

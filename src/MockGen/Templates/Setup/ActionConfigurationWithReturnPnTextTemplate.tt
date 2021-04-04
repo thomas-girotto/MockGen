@@ -7,24 +7,24 @@ using System;
 
 namespace MockGen.Setup
 {
-    internal class ActionConfigurationWithReturn<#=Descriptor.GenericTypesWithTReturn#>
+    internal class ActionConfigurationWithReturn<#=view.GenericTypesWithTReturn#>
     {
-        private ActionConfiguration<#=Descriptor.GenericTypes#> baseConfiguration;
+        private ActionConfiguration<#=view.GenericTypes#> baseConfiguration;
 
-        internal ActionConfigurationWithReturn(ActionConfiguration<#=Descriptor.GenericTypes#> baseConfiguration)
+        internal ActionConfigurationWithReturn(ActionConfiguration<#=view.GenericTypes#> baseConfiguration)
         {
             this.baseConfiguration = baseConfiguration;
         }
 
         internal Func<TReturn> ReturnAction { private get; set; } = () => default(TReturn);
 
-<# if (Descriptor.NumberOfTypes > 0) { #>
-        internal bool Match(<#=Descriptor.ParametersTypesWithName#>) => baseConfiguration.Match(<#=Descriptor.ConcatParameters("param")#>);
+<# if (view.NumberOfTypes > 0) { #>
+        internal bool Match(<#=view.ParametersTypesWithName#>) => baseConfiguration.Match(<#=view.ConcatParameters("param")#>);
 <# } #>
 
-        internal TReturn RunActions(<#=Descriptor.ParametersTypesWithName#>)
+        internal TReturn RunActions(<#=view.ParametersTypesWithName#>)
         {
-            baseConfiguration.RunActions(<#=Descriptor.ConcatParameters("param")#>);
+            baseConfiguration.RunActions(<#=view.ConcatParameters("param")#>);
             return ReturnAction();
         }
     }

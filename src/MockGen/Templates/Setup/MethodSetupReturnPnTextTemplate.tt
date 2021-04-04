@@ -8,30 +8,30 @@ using System.Collections.Generic;
 
 namespace MockGen.Setup
 {
-    internal class MethodSetupReturn<#=Descriptor.GenericTypesWithTReturn#> : 
-        MethodSetup<#=Descriptor.GenericTypes#>, 
-        IMethodSetupReturn<#=Descriptor.GenericTypesWithTReturn#>,
-        IReturnContinuation<#=Descriptor.GenericTypes#>
+    internal class MethodSetupReturn<#=view.GenericTypesWithTReturn#> : 
+        MethodSetup<#=view.GenericTypes#>, 
+        IMethodSetupReturn<#=view.GenericTypesWithTReturn#>,
+        IReturnContinuation<#=view.GenericTypes#>
     {
-        private new ActionConfigurationWithReturn<#=Descriptor.GenericTypesWithTReturn#> currentConfiguration;
-<# if (Descriptor.NumberOfTypes > 0) { #>
-        private Stack<ActionConfigurationWithReturn<#=Descriptor.GenericTypesWithTReturn#>> configuredActions = new Stack<ActionConfigurationWithReturn<#=Descriptor.GenericTypesWithTReturn#>>();
+        private new ActionConfigurationWithReturn<#=view.GenericTypesWithTReturn#> currentConfiguration;
+<# if (view.NumberOfTypes > 0) { #>
+        private Stack<ActionConfigurationWithReturn<#=view.GenericTypesWithTReturn#>> configuredActions = new Stack<ActionConfigurationWithReturn<#=view.GenericTypesWithTReturn#>>();
 <# } #>
 
-<# if (Descriptor.NumberOfTypes == 0) { #>
+<# if (view.NumberOfTypes == 0) { #>
         internal MethodSetupReturn()
         {
             currentConfiguration = new ActionConfigurationWithReturn<TReturn>(base.currentConfiguration);
         }
 <# } #>
 
-<# if (Descriptor.NumberOfTypes > 0) { #>
-        public new IMethodSetupReturn<#=Descriptor.GenericTypesWithTReturn#> ForParameter(<#=Descriptor.ConcatClassParameterByParameterType("Arg", "param")#>)
+<# if (view.NumberOfTypes > 0) { #>
+        public new IMethodSetupReturn<#=view.GenericTypesWithTReturn#> ForParameter(<#=view.ConcatClassParameterByParameterType("Arg", "param")#>)
         {
-            base.ForParameter(<#=Descriptor.ConcatParameters("param")#>);
+            base.ForParameter(<#=view.ConcatParameters("param")#>);
             if (!IsSetupDone)
             {
-                currentConfiguration = new ActionConfigurationWithReturn<#=Descriptor.GenericTypesWithTReturn#>(base.currentConfiguration);
+                currentConfiguration = new ActionConfigurationWithReturn<#=view.GenericTypesWithTReturn#>(base.currentConfiguration);
                 configuredActions.Push(currentConfiguration);
             }
             
@@ -39,29 +39,29 @@ namespace MockGen.Setup
         }
 <# } #>
 
-        public IReturnContinuation<#=Descriptor.GenericTypes#> Returns(TReturn value)
+        public IReturnContinuation<#=view.GenericTypes#> Returns(TReturn value)
         {
             EnsureConfigurationMethodsAreAllowed(nameof(Returns));
             currentConfiguration.ReturnAction = () => value;
             return this;
         }
 
-        public void AndExecute(Action<#=Descriptor.GenericTypes#> callback)
+        public void AndExecute(Action<#=view.GenericTypes#> callback)
         {
             Execute(callback);
         }
 
-        public TReturn ExecuteSetup(<#=Descriptor.ParametersTypesWithName#>)
+        public TReturn ExecuteSetup(<#=view.ParametersTypesWithName#>)
         {
-<# if (Descriptor.NumberOfTypes > 0) { #>
+<# if (view.NumberOfTypes > 0) { #>
             // Register call with given parameter for future assertions on calls
-            calls.Add(<# if (Descriptor.NumberOfTypes > 1) {#>(<#}#><#=Descriptor.ConcatParameters("param")#><# if (Descriptor.NumberOfTypes > 1) {#>)<#}#>);
+            calls.Add(<# if (view.NumberOfTypes > 1) {#>(<#}#><#=view.ConcatParameters("param")#><# if (view.NumberOfTypes > 1) {#>)<#}#>);
             // Execute the configured action according to given parameters
             foreach (var setup in configuredActions)
             {
-                if (setup.Match(<#=Descriptor.ConcatParameters("param")#>))
+                if (setup.Match(<#=view.ConcatParameters("param")#>))
                 {
-                    return setup.RunActions(<#=Descriptor.ConcatParameters("param")#>);
+                    return setup.RunActions(<#=view.ConcatParameters("param")#>);
                 }
             }
             // If we didn't find any action configured for the given parameters, execute the default one.

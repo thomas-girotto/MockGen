@@ -8,7 +8,7 @@ using System;
 
 namespace MockGen.Setup
 {
-    internal class ActionConfiguration<#=Descriptor.GenericTypes#>
+    internal class ActionConfiguration<#=view.GenericTypes#>
     {
         private readonly ActionConfigurationBase baseConfiguration;
 
@@ -17,23 +17,23 @@ namespace MockGen.Setup
             this.baseConfiguration = baseConfiguration;
         }
 
-<# foreach (var n in Descriptor.EnumerateNumbers) { #>
+<# foreach (var n in view.EnumerateNumbers) { #>
         internal ArgMatcher<TParam<#=n#>> Matcher<#=n#> { get; set; } = new AnyArgMatcher<TParam<#=n#>>();
 <# } #>
 
-        internal Action<#=Descriptor.GenericTypes#> ExecuteAction { private get; set; }
+        internal Action<#=view.GenericTypes#> ExecuteAction { private get; set; }
 
-<# if (Descriptor.NumberOfTypes > 0) { #>
-        internal bool Match(<#=Descriptor.ParametersTypesWithName#>)
+<# if (view.NumberOfTypes > 0) { #>
+        internal bool Match(<#=view.ParametersTypesWithName#>)
         {
-            return <#=Descriptor.ConcatMatcherCalls("Matcher", "param")#>;
+            return <#=view.ConcatMatcherCalls("Matcher", "param")#>;
         }
 <# } #>
 
-        internal void RunActions(<#=Descriptor.ParametersTypesWithName#>)
+        internal void RunActions(<#=view.ParametersTypesWithName#>)
         {
             baseConfiguration.ThrowAction?.Invoke();
-            ExecuteAction?.Invoke(<#=Descriptor.ConcatParameters("param")#>);
+            ExecuteAction?.Invoke(<#=view.ConcatParameters("param")#>);
         }
     }
 }

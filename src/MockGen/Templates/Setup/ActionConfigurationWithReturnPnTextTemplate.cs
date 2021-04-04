@@ -32,14 +32,14 @@ namespace MockGen.Templates.Setup
                     "onWithReturn");
             
             #line 10 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypesWithTReturn));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypesWithTReturn));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n        private ActionConfiguration");
             
             #line 12 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
             
             #line default
             #line hidden
@@ -47,7 +47,7 @@ namespace MockGen.Templates.Setup
                     "guration");
             
             #line 14 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
             
             #line default
             #line hidden
@@ -56,21 +56,21 @@ namespace MockGen.Templates.Setup
                     "set; } = () => default(TReturn);\r\n\r\n");
             
             #line 21 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
- if (Descriptor.NumberOfTypes > 0) { 
+ if (view.NumberOfTypes > 0) { 
             
             #line default
             #line hidden
             this.Write("        internal bool Match(");
             
             #line 22 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ParametersTypesWithName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.ParametersTypesWithName));
             
             #line default
             #line hidden
             this.Write(") => baseConfiguration.Match(");
             
             #line 22 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatParameters("param")));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.ConcatParameters("param")));
             
             #line default
             #line hidden
@@ -84,14 +84,14 @@ namespace MockGen.Templates.Setup
             this.Write("\r\n        internal TReturn RunActions(");
             
             #line 25 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ParametersTypesWithName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.ParametersTypesWithName));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n            baseConfiguration.RunActions(");
             
             #line 27 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ConcatParameters("param")));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.ConcatParameters("param")));
             
             #line default
             #line hidden

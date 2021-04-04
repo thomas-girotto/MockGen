@@ -32,28 +32,28 @@ namespace MockGen.Templates.Setup
                     "   internal interface IMethodSetup");
             
             #line 11 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
             
             #line default
             #line hidden
             this.Write(" : IMethodSetupBase\r\n    {\r\n");
             
             #line 13 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupPnTextTemplate.tt"
- if (Descriptor.NumberOfTypes == 1) {
+ if (view.NumberOfTypes == 1) {
             
             #line default
             #line hidden
             this.Write("        IEnumerable<TParam1> MatchingCalls { get; }\r\n");
             
             #line 15 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupPnTextTemplate.tt"
- } else if (Descriptor.NumberOfTypes > 1) { 
+ } else if (view.NumberOfTypes > 1) { 
             
             #line default
             #line hidden
             this.Write("        IEnumerable<(");
             
             #line 16 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.ParametersTypesWithName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.ParametersTypesWithName));
             
             #line default
             #line hidden
@@ -67,7 +67,7 @@ namespace MockGen.Templates.Setup
             this.Write("        void Execute(Action");
             
             #line 18 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
             
             #line default
             #line hidden

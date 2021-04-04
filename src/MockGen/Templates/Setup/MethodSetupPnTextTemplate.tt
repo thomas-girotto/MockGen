@@ -10,30 +10,30 @@ using System.Linq;
 
 namespace MockGen.Setup
 {
-    internal abstract class MethodSetup<#=Descriptor.GenericTypes#> : MethodSetupBase, IMethodSetup<#=Descriptor.GenericTypes#>
+    internal abstract class MethodSetup<#=view.GenericTypes#> : MethodSetupBase, IMethodSetup<#=view.GenericTypes#>
     {
-<# if (Descriptor.NumberOfTypes == 0) { #>
+<# if (view.NumberOfTypes == 0) { #>
         protected int numberOfCalls;
-<# } else if (Descriptor.NumberOfTypes == 1) { #>
+<# } else if (view.NumberOfTypes == 1) { #>
         protected List<TParam1> calls = new List<TParam1>();
 <# } else { #>
-        protected List<(<#=Descriptor.ParametersTypesWithName#>)> calls = new List<(<#=Descriptor.ParametersTypesWithName#>)>();
+        protected List<(<#=view.ParametersTypesWithName#>)> calls = new List<(<#=view.ParametersTypesWithName#>)>();
 <# } #>        
-        protected new ActionConfiguration<#=Descriptor.GenericTypes#> currentConfiguration;
+        protected new ActionConfiguration<#=view.GenericTypes#> currentConfiguration;
 
-<# if (Descriptor.NumberOfTypes == 0) { #>
+<# if (view.NumberOfTypes == 0) { #>
         internal MethodSetup()
         {
             currentConfiguration = new ActionConfiguration(base.currentConfiguration);
         }
 <# } #>
 
-<# if (Descriptor.NumberOfTypes > 0) { #>
-        protected void ForParameter(<#=Descriptor.ConcatClassParameterByParameterType("Arg", "param")#>)
+<# if (view.NumberOfTypes > 0) { #>
+        protected void ForParameter(<#=view.ConcatClassParameterByParameterType("Arg", "param")#>)
         {
             ClearCurrentConfiguration();
-            currentConfiguration = new ActionConfiguration<#=Descriptor.GenericTypes#>(base.currentConfiguration);
-<# foreach (var n in Descriptor.EnumerateNumbers) { #>
+            currentConfiguration = new ActionConfiguration<#=view.GenericTypes#>(base.currentConfiguration);
+<# foreach (var n in view.EnumerateNumbers) { #>
             currentConfiguration.Matcher<#=n#> = ArgMatcher<TParam<#=n#>>.Create(param<#=n#>);
 <# } #>            
         }
@@ -44,7 +44,7 @@ namespace MockGen.Setup
             get 
             {
                 EnsureSpyingMethodsAreAllowed(nameof(NumberOfCalls));
-<# if (Descriptor.NumberOfTypes == 0) { #>
+<# if (view.NumberOfTypes == 0) { #>
                 return numberOfCalls;
 <# } else { #>
                 return MatchingCalls.Count();
@@ -52,26 +52,26 @@ namespace MockGen.Setup
             }
         } 
 
-<# if (Descriptor.NumberOfTypes > 0) { #>
-<# if (Descriptor.NumberOfTypes == 1) { #>
-        public IEnumerable<#=Descriptor.GenericTypes#> MatchingCalls
+<# if (view.NumberOfTypes > 0) { #>
+<# if (view.NumberOfTypes == 1) { #>
+        public IEnumerable<#=view.GenericTypes#> MatchingCalls
 <# } else { #>
-        public IEnumerable<(<#=Descriptor.ParametersTypesWithName#>)> MatchingCalls
+        public IEnumerable<(<#=view.ParametersTypesWithName#>)> MatchingCalls
 <# } #>
         {
             get
             {
                 EnsureSpyingMethodsAreAllowed(nameof(MatchingCalls));
-<# if (Descriptor.NumberOfTypes == 1) { #>
+<# if (view.NumberOfTypes == 1) { #>
                 return calls.Where(@params => currentConfiguration.Match(@params));
 <# } else { #>
-                return calls.Where(@params => currentConfiguration.Match(<#=Descriptor.ConcatParameters("@params.param")#>));
+                return calls.Where(@params => currentConfiguration.Match(<#=view.ConcatParameters("@params.param")#>));
 <# } #>
             }
         }
 
 <# } #>
-        public void Execute(Action<#=Descriptor.GenericTypes#> callback)
+        public void Execute(Action<#=view.GenericTypes#> callback)
         {
             EnsureConfigurationMethodsAreAllowed(nameof(Execute));
             currentConfiguration.ExecuteAction = callback;

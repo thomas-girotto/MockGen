@@ -32,35 +32,35 @@ namespace MockGen.Templates.Setup
                     "eturn");
             
             #line 10 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypesWithTReturn));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypesWithTReturn));
             
             #line default
             #line hidden
             this.Write(" : IMethodSetup");
             
             #line 10 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
             
             #line default
             #line hidden
             this.Write(" \r\n    {\r\n        IReturnContinuation");
             
             #line 12 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
             
             #line default
             #line hidden
             this.Write(" Returns(TReturn value);\r\n    }\r\n\r\n    internal interface IReturnContinuation");
             
             #line 15 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n        void AndExecute(Action");
             
             #line 17 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Descriptor.GenericTypes));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
             
             #line default
             #line hidden

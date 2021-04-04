@@ -5,6 +5,7 @@ using MockGen.Model;
 using MockGen.Templates;
 using MockGen.Templates.Matcher;
 using MockGen.Templates.Setup;
+using MockGen.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -89,47 +90,41 @@ namespace MockGen
                 AddSourceToBuildContext(context, "Mock.cs", mockStaticTemplate.TransformText());
 
                 // Finally classes that only depend on the number of generic types in methods that we would mock
-                foreach (var genericTypeDescriptor in sanityzedMocks.GetAllMethodsGroupedByTypeParameter())
+                foreach (var methodsInfo in sanityzedMocks.GetAllMethodsGroupedByTypeParameter())
                 {
-                    var template = new GenericTypesDescriptor(genericTypeDescriptor);
+                    var methodsInfoView = new MethodsInfoView(methodsInfo);
 
-                    var actionConfigurationPnTemplate = new ActionConfigurationPnTextTemplate(template);
-                    AddSourceToBuildContext(context, $"ActionConfiguration{template.FileSuffix}.cs", actionConfigurationPnTemplate.TransformText());
+                    var actionConfigurationPnTemplate = new ActionConfigurationPnTextTemplate(methodsInfoView);
+                    AddSourceToBuildContext(context, $"ActionConfiguration{methodsInfoView.FileSuffix}.cs", actionConfigurationPnTemplate.TransformText());
 
-                    var iMethodSetupPn = new IMethodSetupPnTextTemplate();
-                    iMethodSetupPn.Descriptor = template;
-                    AddSourceToBuildContext(context, $"IMethodSetup{template.FileSuffix}.cs", iMethodSetupPn.TransformText());
+                    var iMethodSetupPn = new IMethodSetupPnTextTemplate(methodsInfoView);
+                    AddSourceToBuildContext(context, $"IMethodSetup{methodsInfoView.FileSuffix}.cs", iMethodSetupPn.TransformText());
 
-                    var methodSetupPnTemplate = new MethodSetupPnTextTemplate();
-                    methodSetupPnTemplate.Descriptor = template;
-                    AddSourceToBuildContext(context, $"MethodSetup{template.FileSuffix}.cs", methodSetupPnTemplate.TransformText());
+                    var methodSetupPnTemplate = new MethodSetupPnTextTemplate(methodsInfoView);
+                    AddSourceToBuildContext(context, $"MethodSetup{methodsInfoView.FileSuffix}.cs", methodSetupPnTemplate.TransformText());
 
-                    if (genericTypeDescriptor.HasMethodThatReturnsVoid)
+                    if (methodsInfo.HasMethodThatReturnsVoid)
                     {
-                        var methodSetupVoidPnTemplate = new MethodSetupVoidPnTextTemplate();
-                        methodSetupVoidPnTemplate.Descriptor = template;
-                        AddSourceToBuildContext(context, $"MethodSetupVoid{template.FileSuffix}.cs", methodSetupVoidPnTemplate.TransformText());
+                        var methodSetupVoidPnTemplate = new MethodSetupVoidPnTextTemplate(methodsInfoView);
+                        AddSourceToBuildContext(context, $"MethodSetupVoid{methodsInfoView.FileSuffix}.cs", methodSetupVoidPnTemplate.TransformText());
                     }
-                    if (genericTypeDescriptor.HasMethodThatReturns || genericTypeDescriptor.HasMethodThatReturnsTask)
+                    if (methodsInfo.HasMethodThatReturns || methodsInfo.HasMethodThatReturnsTask)
                     {
-                        var actionConfigurationWithReturnPnTemplate = new ActionConfigurationWithReturnPnTextTemplate(template);
-                        AddSourceToBuildContext(context, $"ActionConfigurationWithReturn{template.FileSuffix}.cs", actionConfigurationWithReturnPnTemplate.TransformText());
+                        var actionConfigurationWithReturnPnTemplate = new ActionConfigurationWithReturnPnTextTemplate(methodsInfoView);
+                        AddSourceToBuildContext(context, $"ActionConfigurationWithReturn{methodsInfoView.FileSuffix}.cs", actionConfigurationWithReturnPnTemplate.TransformText());
 
-                        var iMethodSetupReturnPn = new IMethodSetupReturnPnTextTemplate();
-                        iMethodSetupReturnPn.Descriptor = template;
-                        AddSourceToBuildContext(context, $"IMethodSetupReturn{template.FileSuffix}.cs", iMethodSetupReturnPn.TransformText());
+                        var iMethodSetupReturnPn = new IMethodSetupReturnPnTextTemplate(methodsInfoView);
+                        AddSourceToBuildContext(context, $"IMethodSetupReturn{methodsInfoView.FileSuffix}.cs", iMethodSetupReturnPn.TransformText());
                     }
-                    if (genericTypeDescriptor.HasMethodThatReturns)
+                    if (methodsInfo.HasMethodThatReturns)
                     {
-                        var methodSetupReturnPnTemplate = new MethodSetupReturnPnTextTemplate();
-                        methodSetupReturnPnTemplate.Descriptor = template;
-                        AddSourceToBuildContext(context, $"MethodSetupReturn{template.FileSuffix}.cs", methodSetupReturnPnTemplate.TransformText());
+                        var methodSetupReturnPnTemplate = new MethodSetupReturnPnTextTemplate(methodsInfoView);
+                        AddSourceToBuildContext(context, $"MethodSetupReturn{methodsInfoView.FileSuffix}.cs", methodSetupReturnPnTemplate.TransformText());
                     }
-                    if (genericTypeDescriptor.HasMethodThatReturnsTask)
+                    if (methodsInfo.HasMethodThatReturnsTask)
                     {
-                        var methodSetupReturnTaskPnTemplate = new MethodSetupReturnTaskPnTextTemplate();
-                        methodSetupReturnTaskPnTemplate.Descriptor = template;
-                        AddSourceToBuildContext(context, $"MethodSetupReturnTask{template.FileSuffix}.cs", methodSetupReturnTaskPnTemplate.TransformText());
+                        var methodSetupReturnTaskPnTemplate = new MethodSetupReturnTaskPnTextTemplate(methodsInfoView);
+                        AddSourceToBuildContext(context, $"MethodSetupReturnTask{methodsInfoView.FileSuffix}.cs", methodSetupReturnTaskPnTemplate.TransformText());
                     }
                 }
             }
