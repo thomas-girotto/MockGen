@@ -15,8 +15,8 @@ namespace MockGen
     {
         private readonly <#=view.Mock.TypeToMock.Name#>MethodsSetup methods;
 
-<# foreach (var ctor in view.Mock.Ctors) { #>
-        public <#=view.Mock.TypeToMock.Name#>Mock(<#=ctor.ConcatParametersDeclarationWith(view.Mock.TypeToMock.Name + "MethodsSetup methods")#>)<#=string.Format(view.CallBaseCtorIfNeeded, ctor.ParameterNames)#>
+<# foreach (var ctorParameters in view.CtorsParameters) { #>
+        public <#=view.Mock.TypeToMock.Name#>Mock(<#=ctorParameters.ConcatParametersDeclarationWith(view.Mock.TypeToMock.Name + "MethodsSetup methods")#>)<#=string.Format(view.CallBaseCtorIfNeeded, ctorParameters.Names)#>
         {
             this.methods = methods;
         }

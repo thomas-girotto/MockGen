@@ -73,7 +73,7 @@ namespace MockGen.Templates
             this.Write("MethodsSetup methods;\r\n\r\n");
             
             #line 18 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
- foreach (var ctor in view.Mock.Ctors) { 
+ foreach (var ctorParameters in view.CtorsParameters) { 
             
             #line default
             #line hidden
@@ -87,14 +87,14 @@ namespace MockGen.Templates
             this.Write("Mock(");
             
             #line 19 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ctor.ConcatParametersDeclarationWith(view.Mock.TypeToMock.Name + "MethodsSetup methods")));
+            this.Write(this.ToStringHelper.ToStringWithCulture(ctorParameters.ConcatParametersDeclarationWith(view.Mock.TypeToMock.Name + "MethodsSetup methods")));
             
             #line default
             #line hidden
             this.Write(")");
             
             #line 19 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format(view.CallBaseCtorIfNeeded, ctor.ParameterNames)));
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format(view.CallBaseCtorIfNeeded, ctorParameters.Names)));
             
             #line default
             #line hidden

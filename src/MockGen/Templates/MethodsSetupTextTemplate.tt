@@ -16,11 +16,11 @@ namespace MockGen
 <# foreach (var property in view.Mock.Properties) {#>
         internal PropertySetup<<#=property.Type.Name#>> <#=property.Name#>Setup { get; } = new PropertySetup<<#=property.Type.Name#>>();		
 <# } #>
-<# foreach (var method in view.Mock.Methods) {#>
+<# foreach (var method in view.Methods) {#>
         internal <#=method.MethodSetupWithTypedParameters#> <#=method.UniqueName#>Setup { get; } = new <#=method.MethodSetupWithTypedParameters#>();
 <#}#>
 <# foreach (var method in view.MethodsWithOutParameters) {#>
-        internal <#=method.OutParameterSetupFunc#> <#=method.UniqueName#>OutParameterSetup { get; set; } = (<#=method.DiscardParameters#>) => default(<#=method.OutParameterTypesDefault#>);
+        internal <#=method.Parameters.OutParameterSetupFunc#> <#=method.UniqueName#>OutParameterSetup { get; set; } = (<#=method.Parameters.Discard#>) => default(<#=method.Parameters.OutParameterTypesDefault#>);
 <#}#>
 
 		internal void SetupDone()

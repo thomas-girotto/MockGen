@@ -16,10 +16,10 @@ namespace MockGen
         private readonly <#=view.Mock.TypeToMock.Name#>MethodsSetup methods = new <#=view.Mock.TypeToMock.Name#>MethodsSetup();
         private readonly Func<<#=view.Mock.TypeToMock.Name#>Mock> ctor;
 
-<# foreach (var ctor in view.Mock.Ctors) {#>
-        internal <#=view.Mock.TypeToMock.Name#>MockBuilder(<#=ctor.ParametersDeclaration#>)
+<# foreach (var ctorParameters in view.CtorsParameters) {#>
+        internal <#=view.Mock.TypeToMock.Name#>MockBuilder(<#=ctorParameters.TypesAndNames#>)
         {
-            ctor = () => new <#=view.Mock.TypeToMock.Name#>Mock(<#=ctor.ConcatParametersNameWith("methods")#>);
+            ctor = () => new <#=view.Mock.TypeToMock.Name#>Mock(<#=ctorParameters.ConcatParametersNameWith("methods")#>);
         }
 <#}#>
 
@@ -33,24 +33,24 @@ namespace MockGen
 <# } #>
 
 <# } #>
-<# foreach (var method in view.Mock.Methods) {#>
-        public <#=method.IMethodSetupWithTypedParameters#> <#=method.Name#>(<#=method.ParametersDeclarationWithArgAndOutParameters#>)
+<# foreach (var method in view.Methods) {#>
+        public <#=method.IMethodSetupWithTypedParameters#> <#=method.Name#>(<#=method.Parameters.ParametersDeclarationWithArgAndOutParameters#>)
         {
-<# if (method.OutParameters.Count > 0) { #>
+<# if (method.Parameters.HasOutParameter) { #>
             methods.<#=method.UniqueName#>OutParameterSetup = setupOutParameter;
 <# } #>
-<# if (method.ParametersWithoutOutParams.Count > 0) {#>
-            return methods.<#=method.UniqueName#>Setup.ForParameter(<#=method.CallForParameterMethod#>);
+<# if (method.Parameters.HasClassicParameter) {#>
+            return methods.<#=method.UniqueName#>Setup.ForParameter(<#=method.Parameters.CallForParameterMethod#>);
 <#} else { #>
             return methods.<#=method.UniqueName#>Setup;
 <#}#>
         }
 
 <#}#>
-<# foreach (var method in view.Mock.Methods.Where(m => m.OutParameters.Any()).GroupBy(m => m.Name).Select(methods => methods.First())) {#>
-        public <#=method.IMethodSetupWithTypedParameters#> <#=method.Name#>(<#=method.ParametersDeclarationWithArg#>)
+<# foreach (var method in view.Methods.Where(m => m.Parameters.HasOutParameter).GroupBy(m => m.Name).Select(methods => methods.First())) {#>
+        public <#=method.IMethodSetupWithTypedParameters#> <#=method.Name#>(<#=method.Parameters.ParametersDeclarationWithArg#>)
         {
-            return <#=method.Name#>(<#=method.ParameterNames#>, (<#=method.DiscardParameters#>) => default(<#=method.OutParameterTypesDefault#>));
+            return <#=method.Name#>(<#=method.Parameters.Names#>, (<#=method.Parameters.Discard#>) => default(<#=method.Parameters.OutParameterTypesDefault#>));
         }
 
 <# } #>

@@ -80,7 +80,7 @@ namespace MockGen.Templates
             this.Write("Mock> ctor;\r\n\r\n");
             
             #line 19 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
- foreach (var ctor in view.Mock.Ctors) {
+ foreach (var ctorParameters in view.CtorsParameters) {
             
             #line default
             #line hidden
@@ -94,7 +94,7 @@ namespace MockGen.Templates
             this.Write("MockBuilder(");
             
             #line 20 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ctor.ParametersDeclaration));
+            this.Write(this.ToStringHelper.ToStringWithCulture(ctorParameters.TypesAndNames));
             
             #line default
             #line hidden
@@ -108,7 +108,7 @@ namespace MockGen.Templates
             this.Write("Mock(");
             
             #line 22 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ctor.ConcatParametersNameWith("methods")));
+            this.Write(this.ToStringHelper.ToStringWithCulture(ctorParameters.ConcatParametersNameWith("methods")));
             
             #line default
             #line hidden
@@ -225,7 +225,7 @@ namespace MockGen.Templates
             #line hidden
             
             #line 36 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
- foreach (var method in view.Mock.Methods) {
+ foreach (var method in view.Methods) {
             
             #line default
             #line hidden
@@ -246,14 +246,14 @@ namespace MockGen.Templates
             this.Write("(");
             
             #line 37 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.ParametersDeclarationWithArgAndOutParameters));
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.Parameters.ParametersDeclarationWithArgAndOutParameters));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n");
             
             #line 39 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
- if (method.OutParameters.Count > 0) { 
+ if (method.Parameters.HasOutParameter) { 
             
             #line default
             #line hidden
@@ -273,7 +273,7 @@ namespace MockGen.Templates
             #line hidden
             
             #line 42 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
- if (method.ParametersWithoutOutParams.Count > 0) {
+ if (method.Parameters.HasClassicParameter) {
             
             #line default
             #line hidden
@@ -287,7 +287,7 @@ namespace MockGen.Templates
             this.Write("Setup.ForParameter(");
             
             #line 43 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.CallForParameterMethod));
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.Parameters.CallForParameterMethod));
             
             #line default
             #line hidden
@@ -321,7 +321,7 @@ namespace MockGen.Templates
             #line hidden
             
             #line 50 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
- foreach (var method in view.Mock.Methods.Where(m => m.OutParameters.Any()).GroupBy(m => m.Name).Select(methods => methods.First())) {
+ foreach (var method in view.Methods.Where(m => m.Parameters.HasOutParameter).GroupBy(m => m.Name).Select(methods => methods.First())) {
             
             #line default
             #line hidden
@@ -342,7 +342,7 @@ namespace MockGen.Templates
             this.Write("(");
             
             #line 51 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.ParametersDeclarationWithArg));
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.Parameters.ParametersDeclarationWithArg));
             
             #line default
             #line hidden
@@ -356,21 +356,21 @@ namespace MockGen.Templates
             this.Write("(");
             
             #line 53 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.ParameterNames));
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.Parameters.Names));
             
             #line default
             #line hidden
             this.Write(", (");
             
             #line 53 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.DiscardParameters));
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.Parameters.Discard));
             
             #line default
             #line hidden
             this.Write(") => default(");
             
             #line 53 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.OutParameterTypesDefault));
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.Parameters.OutParameterTypesDefault));
             
             #line default
             #line hidden

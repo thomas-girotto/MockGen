@@ -93,7 +93,7 @@ foreach (var ns in view.Namespaces) {
             #line hidden
             
             #line 19 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
- foreach (var method in view.Mock.Methods) {
+ foreach (var method in view.Methods) {
             
             #line default
             #line hidden
@@ -134,7 +134,7 @@ foreach (var ns in view.Namespaces) {
             this.Write("        internal ");
             
             #line 23 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.OutParameterSetupFunc));
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.Parameters.OutParameterSetupFunc));
             
             #line default
             #line hidden
@@ -148,14 +148,14 @@ foreach (var ns in view.Namespaces) {
             this.Write("OutParameterSetup { get; set; } = (");
             
             #line 23 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.DiscardParameters));
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.Parameters.Discard));
             
             #line default
             #line hidden
             this.Write(") => default(");
             
             #line 23 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(method.OutParameterTypesDefault));
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.Parameters.OutParameterTypesDefault));
             
             #line default
             #line hidden

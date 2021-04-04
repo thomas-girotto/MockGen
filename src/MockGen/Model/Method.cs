@@ -20,29 +20,5 @@ namespace MockGen.Model
         public bool ReturnsVoid => ReturnType == ReturnType.Void;
 
         public string AddOverrideKeywordIfNeeded => ShouldBeOverriden ? "override " : string.Empty;
-
-        public string MethodSetupWithTypedParameters =>
-            (ReturnsVoid, ReturnType.IsTask, ParametersWithoutOutParams.Count) switch
-            {
-                (true, _, 0) => "MethodSetupVoid",
-                (true, _, > 0) => $"MethodSetupVoid<{ParameterTypesWithoutOutParameters}>",
-                (false, false, 0) => $"MethodSetupReturn<{ReturnType.Name}>",
-                (false, false, > 0) => $"MethodSetupReturn<{ParameterTypesWithoutOutParameters}, {ReturnType.Name}>",
-                (false, true, 0) => $"MethodSetupReturnTask<{ReturnType.Name}>",
-                (false, true, > 0) => $"MethodSetupReturnTask<{ParameterTypesWithoutOutParameters}, {ReturnType.Name}>",
-                (_, _, _) => throw new NotImplementedException($"Case not implemented for values: {nameof(ReturnsVoid)}: {ReturnsVoid} and {nameof(Parameters.Count)}: {Parameters.Count}"),
-            };
-
-        public string IMethodSetupWithTypedParameters =>
-            (ReturnsVoid, ParametersWithoutOutParams.Count) switch
-            {
-                (true, 0) => "IMethodSetup",
-                (true, > 0) => $"IMethodSetup<{ParameterTypesWithoutOutParameters}>",
-                (false, 0) => $"IMethodSetupReturn<{ReturnType.Name}>",
-                (false, > 0) => $"IMethodSetupReturn<{ParameterTypesWithoutOutParameters}, {ReturnType.Name}>",
-                (_, _) => throw new NotImplementedException($"Case not implemented for values: {nameof(ReturnsVoid)}: {ReturnsVoid} and {nameof(Parameters.Count)}: {Parameters.Count}"),
-            };
-
-        public string CallForParameterMethod => string.Join(", ", ParametersWithoutOutParams.Select(p => $"{p.Name} ?? Arg<{p.Type.Name}>.Null"));
     }
 }

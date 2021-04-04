@@ -7,15 +7,15 @@ namespace MockGen.Templates
 {
     public partial class MockStaticTextTemplate
     {
-        public MockStaticTextTemplate(IEnumerable<Mock> descriptor)
+        public List<MockView> Mocks { get; private set; }
+
+        public MockStaticTextTemplate(IEnumerable<Mock> mocks)
         {
-            Mocks = descriptor;
+            Mocks = mocks.Select(m => new MockView(m)).ToList();
         }
 
-        public IEnumerable<Mock> Mocks { get; private set; }
-
         public IEnumerable<string> Namespaces => Mocks
-            .SelectMany(m => new MockView(m).Namespaces)
+            .SelectMany(m => m.Namespaces)
             .Distinct()
             .Where(ns => !string.IsNullOrEmpty(ns));
     }
