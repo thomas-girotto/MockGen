@@ -52,7 +52,7 @@ namespace MockGen.Model
                         Parameters = m.Parameters
                             .Select(p => new Parameter(GetType(p.Type), p.Name, p.RefKind == RefKind.Out))
                             .ToList(),
-                        ShouldBeOverriden = namedTypeSymbol.TypeKind == TypeKind.Class && (m.IsVirtual || m.IsAbstract)
+                        IsVirtual = namedTypeSymbol.TypeKind == TypeKind.Class && (m.IsVirtual || m.IsAbstract)
                     });
 
                 foreach(var method in methods)

@@ -29,13 +29,16 @@ namespace MockGen.ViewModel
 
         public bool HasOutParameter => outParameters.Count > 0;
 
+        public int NumberOfClassicParameters => classicParameters.Count;
+
         public bool HasClassicParameter => classicParameters.Count > 0;
 
         public string Names => string.Join(", ", classicParameters.Select(p => p.Name));
 
-        public string TypesAndNames =>
-            string.Join(", ", classicParameters.Select(p => $"{p.Type.Name} {p.Name}"));
+        public string TypesAndNames => string.Join(", ", classicParameters.Select(p => $"{p.Type.Name} {p.Name}"));
 
+        public string Types => string.Join(", ", classicParameters.Select(p => p.Type.Name));
+        
         public string Discard => string.Join(", ", classicParameters.Select(p => "_"));
 
         public string OutParameterTypes => string.Join(", ", outParameters.Select(p => p.Type.Name));

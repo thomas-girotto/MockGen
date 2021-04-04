@@ -1,12 +1,13 @@
-﻿using System;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace MockGen.Model
 {
-    public class Method : Ctor
+    public class Method
     {
         public ReturnType ReturnType { get; set; }
         
+        public List<Parameter> Parameters { get; set; } = new List<Parameter>();
+
         public bool ReturnsVoid => ReturnType == ReturnType.Void;
 
         public string Name { get; set; }
@@ -17,6 +18,6 @@ namespace MockGen.Model
         /// </summary>
         public string UniqueName { get; set; }
 
-        public bool ShouldBeOverriden { get; set; }
+        public bool IsVirtual { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using MockGen.Model;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace MockGen.Tests.Model

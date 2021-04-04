@@ -22,27 +22,27 @@ namespace MockGen.ViewModel
         public bool ReturnsVoid => method.ReturnsVoid;
 
         public string MethodSetupWithTypedParameters =>
-            (ReturnsVoid, ReturnType.IsTask, method.ParametersWithoutOutParams.Count) switch
+            (ReturnsVoid, ReturnType.IsTask, Parameters.NumberOfClassicParameters) switch
             {
                 (true, _, 0) => "MethodSetupVoid",
-                (true, _, > 0) => $"MethodSetupVoid<{method.ParameterTypesWithoutOutParameters}>",
-                (false, false, 0) => $"MethodSetupReturn<{method.ReturnType.Name}>",
-                (false, false, > 0) => $"MethodSetupReturn<{method.ParameterTypesWithoutOutParameters}, {method.ReturnType.Name}>",
-                (false, true, 0) => $"MethodSetupReturnTask<{method.ReturnType.Name}>",
-                (false, true, > 0) => $"MethodSetupReturnTask<{method.ParameterTypesWithoutOutParameters}, {method.ReturnType.Name}>",
+                (true, _, > 0) => $"MethodSetupVoid<{Parameters.Types}>",
+                (false, false, 0) => $"MethodSetupReturn<{ReturnType.Name}>",
+                (false, false, > 0) => $"MethodSetupReturn<{Parameters.Types}, {ReturnType.Name}>",
+                (false, true, 0) => $"MethodSetupReturnTask<{ReturnType.Name}>",
+                (false, true, > 0) => $"MethodSetupReturnTask<{Parameters.Types}, {ReturnType.Name}>",
                 (_, _, _) => throw new System.NotImplementedException(),
             };
 
         public string IMethodSetupWithTypedParameters =>
-            (ReturnsVoid, method.ParametersWithoutOutParams.Count) switch
+            (ReturnsVoid, Parameters.NumberOfClassicParameters) switch
             {
                 (true, 0) => "IMethodSetup",
-                (true, > 0) => $"IMethodSetup<{method.ParameterTypesWithoutOutParameters}>",
-                (false, 0) => $"IMethodSetupReturn<{method.ReturnType.Name}>",
-                (false, > 0) => $"IMethodSetupReturn<{method.ParameterTypesWithoutOutParameters}, {method.ReturnType.Name}>",
+                (true, > 0) => $"IMethodSetup<{Parameters.Types}>",
+                (false, 0) => $"IMethodSetupReturn<{ReturnType.Name}>",
+                (false, > 0) => $"IMethodSetupReturn<{Parameters.Types}, {ReturnType.Name}>",
                 (_, _) => throw new System.NotImplementedException(),
             };
 
-        public string AddOverrideKeywordIfNeeded => method.ShouldBeOverriden ? "override " : string.Empty;
+        public string AddOverrideKeywordIfNeeded => method.IsVirtual ? "override " : string.Empty;
     }
 }
