@@ -7,6 +7,7 @@ namespace MockGen.ViewModel
 {
     public class ParametersView
     {
+        private readonly List<Parameter> allParameters = new List<Parameter>();
         private readonly List<Parameter> classicParameters = new List<Parameter>();
         private readonly List<Parameter> outParameters = new List<Parameter>();
 
@@ -14,6 +15,7 @@ namespace MockGen.ViewModel
         {
             foreach (var parameter in parameters)
             {
+                allParameters.Add(parameter);
                 if (parameter.IsOutParameter)
                 {
                     outParameters.Add(parameter);
@@ -37,6 +39,8 @@ namespace MockGen.ViewModel
         public string Discard => string.Join(", ", classicParameters.Select(p => "_"));
 
         public string OutParameterTypes => string.Join(", ", outParameters.Select(p => p.Type.Name));
+        
+        public string OutParameterNames => outParameters.Count == 1 ? outParameters.First().Name : $"({string.Join(", ", outParameters.Select(p => p.Name))})";
 
         public string OutParameterTypesDefault => outParameters.Count == 1 ? outParameters.First().Type.Name : $"({OutParameterTypes})";
 
@@ -68,6 +72,11 @@ namespace MockGen.ViewModel
                 .Select(p => $"Arg<{p.Type.Name}> {p.Name}")
                 .Concat(new string[] { outParameters.Any() ? $"{OutParameterSetupFunc} setupOutParameter" : string.Empty })
                 .Where(s => !string.IsNullOrEmpty(s)));
+
+        public string ParametersDeclarationWithOutParameters =>
+            string.Join(", ", allParameters.Select(p => !p.IsOutParameter
+                ? $"{p.Type.Name} {p.Name}"
+                : $"out {p.Type.Name} {p.Name}"));
 
         public string CallForParameterMethod => string.Join(", ", classicParameters.Select(p => $"{p.Name} ?? Arg<{p.Type.Name}>.Null"));
     }

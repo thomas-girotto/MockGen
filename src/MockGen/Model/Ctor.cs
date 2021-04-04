@@ -11,17 +11,7 @@ namespace MockGen.Model
         public List<Parameter> ParametersWithoutOutParams => Parameters.Where(p => !p.IsOutParameter).ToList();
         public List<Parameter> OutParameters => Parameters.Where(p => p.IsOutParameter).ToList();
         
-        public string ParametersDeclarationWithOutParameters =>
-            string.Join(", ", Parameters.Select(p => !p.IsOutParameter
-                ? $"{p.Type.Name} {p.Name}"
-                : $"out {p.Type.Name} {p.Name}"));
-
-        
-        public string OutParameterNames => OutParameters.Count == 1 ? OutParameters.First().Name : $"({string.Join(", ", OutParameters.Select(p => p.Name))})";
-
         public string ParameterTypes => string.Join(", ", Parameters.Select(p => p.Type.Name));
-        
-        public string ParameterNamesWithoutOutParameters => string.Join(", ", ParametersWithoutOutParams.Select(p => p.Name));
         
         public string ParameterTypesWithoutOutParameters => string.Join(", ", ParametersWithoutOutParams.Select(p => p.Type.Name));
     }

@@ -39,20 +39,20 @@ namespace MockGen
 <# } #>
 
 <# } #>
-<# foreach (var method in view.Mock.Methods) { #>
+<# foreach (var method in view.Methods) { #>
 <# if (method.ReturnType.IsTask) { #>
-        public <#=method.AddOverrideKeywordIfNeeded#>Task<<#=method.ReturnType.Name#>> <#=method.Name#>(<#=method.ParametersDeclarationWithOutParameters#>)
+        public <#=method.AddOverrideKeywordIfNeeded#>Task<<#=method.ReturnType.Name#>> <#=method.Name#>(<#=method.Parameters.ParametersDeclarationWithOutParameters#>)
 <# } else { #>
-        public <#=method.AddOverrideKeywordIfNeeded#><#=method.ReturnType.Name#> <#=method.Name#>(<#=method.ParametersDeclarationWithOutParameters#>)
+        public <#=method.AddOverrideKeywordIfNeeded#><#=method.ReturnType.Name#> <#=method.Name#>(<#=method.Parameters.ParametersDeclarationWithOutParameters#>)
 <# } #>        
         {
-<# if (method.OutParameters.Any()) { #>
-            <#=method.OutParameterNames#> = methods.<#=method.UniqueName#>OutParameterSetup(<#=method.ParameterNamesWithoutOutParameters#>); 
+<# if (method.Parameters.HasOutParameter) { #>
+            <#=method.Parameters.OutParameterNames#> = methods.<#=method.UniqueName#>OutParameterSetup(<#=method.Parameters.Names#>); 
 <# } #>
 <# if (!method.ReturnsVoid) { #>
-            return methods.<#=method.UniqueName#>Setup.ExecuteSetup(<#=method.ParameterNamesWithoutOutParameters#>);
+            return methods.<#=method.UniqueName#>Setup.ExecuteSetup(<#=method.Parameters.Names#>);
 <# } else { #>
-            methods.<#=method.UniqueName#>Setup.ExecuteSetup(<#=method.ParameterNamesWithoutOutParameters#>);
+            methods.<#=method.UniqueName#>Setup.ExecuteSetup(<#=method.Parameters.Names#>);
 <# } #>
         }
 

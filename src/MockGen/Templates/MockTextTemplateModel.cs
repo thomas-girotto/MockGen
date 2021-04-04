@@ -1,5 +1,7 @@
 ﻿using MockGen.Model;
 using MockGen.ViewModel;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MockGen.Templates
 {

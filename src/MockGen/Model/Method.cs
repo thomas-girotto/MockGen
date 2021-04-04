@@ -6,6 +6,8 @@ namespace MockGen.Model
     public class Method : Ctor
     {
         public ReturnType ReturnType { get; set; }
+        
+        public bool ReturnsVoid => ReturnType == ReturnType.Void;
 
         public string Name { get; set; }
 
@@ -16,9 +18,5 @@ namespace MockGen.Model
         public string UniqueName { get; set; }
 
         public bool ShouldBeOverriden { get; set; }
-
-        public bool ReturnsVoid => ReturnType == ReturnType.Void;
-
-        public string AddOverrideKeywordIfNeeded => ShouldBeOverriden ? "override " : string.Empty;
     }
 }
