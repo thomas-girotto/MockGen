@@ -52,28 +52,28 @@ namespace MockGen.Templates
             this.Write("\r\nnamespace MockGen\r\n{\r\n    internal class ");
             
             #line 14 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(view.Mock.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.TypeToMock));
             
             #line default
             #line hidden
             this.Write("MockBuilder\r\n    {\r\n        private readonly ");
             
             #line 16 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(view.Mock.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.TypeToMock));
             
             #line default
             #line hidden
             this.Write("MethodsSetup methods = new ");
             
             #line 16 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(view.Mock.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.TypeToMock));
             
             #line default
             #line hidden
             this.Write("MethodsSetup();\r\n        private readonly Func<");
             
             #line 17 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(view.Mock.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.TypeToMock));
             
             #line default
             #line hidden
@@ -87,7 +87,7 @@ namespace MockGen.Templates
             this.Write("        internal ");
             
             #line 20 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(view.Mock.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.TypeToMock));
             
             #line default
             #line hidden
@@ -101,7 +101,7 @@ namespace MockGen.Templates
             this.Write(")\r\n        {\r\n            ctor = () => new ");
             
             #line 22 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(view.Mock.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.TypeToMock));
             
             #line default
             #line hidden

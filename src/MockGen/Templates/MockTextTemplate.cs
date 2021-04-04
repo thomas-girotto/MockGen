@@ -52,7 +52,7 @@ namespace MockGen.Templates
             this.Write("\r\nnamespace MockGen\r\n{\r\n    internal class ");
             
             #line 14 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(view.Mock.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.TypeToMock));
             
             #line default
             #line hidden
@@ -66,7 +66,7 @@ namespace MockGen.Templates
             this.Write("\r\n    {\r\n        private readonly ");
             
             #line 16 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(view.Mock.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.TypeToMock));
             
             #line default
             #line hidden
@@ -80,14 +80,14 @@ namespace MockGen.Templates
             this.Write("        public ");
             
             #line 19 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(view.Mock.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.TypeToMock));
             
             #line default
             #line hidden
             this.Write("Mock(");
             
             #line 19 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ctorParameters.ConcatParametersDeclarationWith(view.Mock.TypeToMock.Name + "MethodsSetup methods")));
+            this.Write(this.ToStringHelper.ToStringWithCulture(ctorParameters.ConcatParametersDeclarationWith(view.TypeToMock + "MethodsSetup methods")));
             
             #line default
             #line hidden

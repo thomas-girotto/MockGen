@@ -11,12 +11,12 @@ using <#=ns#>;
 
 namespace MockGen
 {
-    internal class <#=view.Mock.TypeToMock.Name#>Mock : <#=view.Mock.TypeToMockOriginalName#>
+    internal class <#=view.TypeToMock#>Mock : <#=view.Mock.TypeToMockOriginalName#>
     {
-        private readonly <#=view.Mock.TypeToMock.Name#>MethodsSetup methods;
+        private readonly <#=view.TypeToMock#>MethodsSetup methods;
 
 <# foreach (var ctorParameters in view.CtorsParameters) { #>
-        public <#=view.Mock.TypeToMock.Name#>Mock(<#=ctorParameters.ConcatParametersDeclarationWith(view.Mock.TypeToMock.Name + "MethodsSetup methods")#>)<#=string.Format(view.CallBaseCtorIfNeeded, ctorParameters.Names)#>
+        public <#=view.TypeToMock#>Mock(<#=ctorParameters.ConcatParametersDeclarationWith(view.TypeToMock + "MethodsSetup methods")#>)<#=string.Format(view.CallBaseCtorIfNeeded, ctorParameters.Names)#>
         {
             this.methods = methods;
         }

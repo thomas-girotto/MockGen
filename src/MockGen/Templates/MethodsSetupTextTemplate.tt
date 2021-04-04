@@ -11,7 +11,7 @@ using <#=ns#>;
 
 namespace MockGen
 {
-	internal class <#=view.Mock.TypeToMock.Name#>MethodsSetup
+	internal class <#=view.TypeToMock#>MethodsSetup
 	{
 <# foreach (var property in view.Mock.Properties) {#>
         internal PropertySetup<<#=property.Type.Name#>> <#=property.Name#>Setup { get; } = new PropertySetup<<#=property.Type.Name#>>();		

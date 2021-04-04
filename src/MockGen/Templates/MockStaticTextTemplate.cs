@@ -64,21 +64,21 @@ namespace MockGen.Templates
             this.Write("        internal static ");
             
             #line 16 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(mock.Mock.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
             
             #line default
             #line hidden
             this.Write("MockBuilder ");
             
             #line 16 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(mock.Mock.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
             
             #line default
             #line hidden
             this.Write("()\r\n        {\r\n            return new ");
             
             #line 18 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(mock.Mock.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
             
             #line default
             #line hidden
@@ -98,14 +98,14 @@ namespace MockGen.Templates
             this.Write("        internal static ");
             
             #line 23 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(mock.Mock.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
             
             #line default
             #line hidden
             this.Write("MockBuilder ");
             
             #line 23 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(mock.Mock.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
             
             #line default
             #line hidden
@@ -119,7 +119,7 @@ namespace MockGen.Templates
             this.Write(")\r\n        {\r\n            return new ");
             
             #line 25 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(mock.Mock.TypeToMock.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
             
             #line default
             #line hidden
