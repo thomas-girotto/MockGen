@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace MockGen.Sample
 {
@@ -8,5 +9,6 @@ namespace MockGen.Sample
         void DoSomethingWithParam(SomeModel value);
         int ReturnSomeInt();
         int ReturnSomeIntWithParam(SomeModel input);
+        Task<SomeModel> GetSomeModelAsync(int id);
     }
 }

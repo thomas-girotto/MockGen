@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace MockGen.Sample
 {
@@ -29,6 +30,11 @@ namespace MockGen.Sample
         public int ReturnSomeInt(SomeModel model)
         {
             return dependency.ReturnSomeIntWithParam(model);
+        }
+
+        public async Task<SomeModel> GetSomeModelAsync(int id)
+        {
+            return await dependency.GetSomeModelAsync(id);
         }
     }
 }
