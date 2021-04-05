@@ -2,7 +2,6 @@
 using BenchmarkDotNet.Configs;
 using MockGen.Specs.Sut;
 using NSubstitute;
-using System.Linq;
 using Xunit;
 
 namespace MockGen.Benchmark
@@ -81,7 +80,6 @@ namespace MockGen.Benchmark
             nSubstitute.Received(1000).GetSomeNumberWithParameter(Arg.Any<int>());
         }
 
-        #endregion
         [GlobalSetup(Target = nameof(MoqAssertBench))]
         public void MoqAssertOnOneCallSetup()
         {
@@ -98,5 +96,8 @@ namespace MockGen.Benchmark
         {
             moq.Verify(m => m.GetSomeNumberWithParameter(Moq.It.IsAny<int>()), Moq.Times.Exactly(1000));
         }
+
+        #endregion
+
     }
 }
