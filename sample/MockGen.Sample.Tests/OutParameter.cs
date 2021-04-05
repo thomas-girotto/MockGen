@@ -2,7 +2,7 @@
 
 namespace MockGen.Sample.Tests
 {
-    public class OutParameterTests
+    public class OutParameter
     {
         [Fact]
         public void OutParameter_default_Exemple()

@@ -2,7 +2,7 @@
 
 namespace MockGen.Sample.Tests
 {
-    public class BasicUsageTests
+    public class BasicUsage
     {
         [Fact]
         public void Assert_on_number_of_calls_example()
