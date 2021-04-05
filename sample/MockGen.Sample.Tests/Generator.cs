@@ -11,6 +11,7 @@ namespace MockGen.Sample.Tests
         public void Generate()
         {
             MockGenerator.Generate<IDependency>();
+            MockGenerator.Generate<IDependencyOutParams>();
         }
     }
 }
