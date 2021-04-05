@@ -32,8 +32,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{750CF7D5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockGen.Sample", "sample\MockGen.Sample\MockGen.Sample.csproj", "{CDDABFBA-C274-4F33-BDAB-CCC9B0309DAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockGen.Sample.Nuget.Tests", "sample\MockGen.Sample.Nuget.Tests\MockGen.Sample.Nuget.Tests.csproj", "{E616512B-936B-4D53-8323-E26B6A79A6E7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,10 +66,6 @@ Global
 		{CDDABFBA-C274-4F33-BDAB-CCC9B0309DAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDDABFBA-C274-4F33-BDAB-CCC9B0309DAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDDABFBA-C274-4F33-BDAB-CCC9B0309DAE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E616512B-936B-4D53-8323-E26B6A79A6E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E616512B-936B-4D53-8323-E26B6A79A6E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E616512B-936B-4D53-8323-E26B6A79A6E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E616512B-936B-4D53-8323-E26B6A79A6E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,7 +78,6 @@ Global
 		{EA35FD52-6947-4567-B61D-B7DF582E10B4} = {B8E99487-157C-4253-9AF9-75ED3257AC90}
 		{EBF4157F-A91F-460C-B21E-A0080365EE69} = {75E6EB20-D192-429B-846C-78EA54A0C11B}
 		{CDDABFBA-C274-4F33-BDAB-CCC9B0309DAE} = {95F977E0-B203-4562-8482-5E74113C1FF5}
-		{E616512B-936B-4D53-8323-E26B6A79A6E7} = {95F977E0-B203-4562-8482-5E74113C1FF5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D94FFD89-A20F-4894-8A77-8A4B2080E5AA}
