@@ -75,6 +75,12 @@ mock.TryGetById(Arg<int>.Any, (id) => new Model()).Returns(true); // will return
 
 ```
 
+## Closer look
+
+
+Check the [sample project](https://github.com/thomas-girotto/MockGen/tree/master/sample/MockGen.Sample.Tests) for more details in how to use this lib. 
+
+
 ## What features are coming next
 
 - Mock protected methods
