@@ -15,11 +15,11 @@ namespace MockGen.Model
                 // set property is configured via MethodSetupVoid<T>
                 initTypedMethodsFromProperties.Add(new MethodsInfo(1, true, false, false));
                 // get property is configured via MethodSetupReturn<T> (here T is the return type and not a parameter type)
-                if (properties.Any(p => p.Type.IsTask))
+                if (properties.Any(p => p.Type.TaskInfo == TaskInfo.Task))
                 {
                     initTypedMethodsFromProperties.Add(new MethodsInfo(0, false, true, true));
                 }
-                if (properties.Any(p => !p.Type.IsTask))
+                if (properties.Any(p => p.Type.TaskInfo == TaskInfo.NotATask))
                 {
                     initTypedMethodsFromProperties.Add(new MethodsInfo(0, false, true, false));
                 }
@@ -30,8 +30,8 @@ namespace MockGen.Model
                 .Select(m => new MethodsInfo(
                     m.Parameters.Count, 
                     m.ReturnsVoid, 
-                    !m.ReturnsVoid && !m.ReturnType.IsTask, 
-                    !m.ReturnsVoid && m.ReturnType.IsTask))
+                    !m.ReturnsVoid && m.ReturnType.TaskInfo == TaskInfo.NotATask,
+                    !m.ReturnsVoid && m.ReturnType.TaskInfo == TaskInfo.Task))
                 .Union(initTypedMethodsFromProperties)
                 .GroupBy(
                     m => m.NumberOfParameters,

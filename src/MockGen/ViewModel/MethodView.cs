@@ -22,14 +22,14 @@ namespace MockGen.ViewModel
         public bool ReturnsVoid => method.ReturnsVoid;
 
         public string MethodSetupWithTypedParameters =>
-            (ReturnsVoid, ReturnType.IsTask, Parameters.NumberOfClassicParameters) switch
+            (ReturnsVoid, ReturnType.TaskInfo, Parameters.NumberOfClassicParameters) switch
             {
                 (true, _, 0) => "MethodSetupVoid",
                 (true, _, > 0) => $"MethodSetupVoid<{Parameters.Types}>",
-                (false, false, 0) => $"MethodSetupReturn<{ReturnType.Name}>",
-                (false, false, > 0) => $"MethodSetupReturn<{Parameters.Types}, {ReturnType.Name}>",
-                (false, true, 0) => $"MethodSetupReturnTask<{ReturnType.Name}>",
-                (false, true, > 0) => $"MethodSetupReturnTask<{Parameters.Types}, {ReturnType.Name}>",
+                (false, TaskInfo.NotATask, 0) => $"MethodSetupReturn<{ReturnType.Name}>",
+                (false, TaskInfo.NotATask, > 0) => $"MethodSetupReturn<{Parameters.Types}, {ReturnType.Name}>",
+                (false, TaskInfo.Task, 0) => $"MethodSetupReturnTask<{ReturnType.Name}>",
+                (false, TaskInfo.Task, > 0) => $"MethodSetupReturnTask<{Parameters.Types}, {ReturnType.Name}>",
                 (_, _, _) => throw new System.NotImplementedException(),
             };
 

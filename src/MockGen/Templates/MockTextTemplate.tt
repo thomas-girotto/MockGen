@@ -3,6 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="MockGen.Model" #>
 using System;
 using MockGen.Setup;
 <# foreach (var ns in view.Namespaces) { #> 
@@ -40,7 +41,7 @@ namespace MockGen
 
 <# } #>
 <# foreach (var method in view.Methods) { #>
-<# if (method.ReturnType.IsTask) { #>
+<# if (method.ReturnType.TaskKind == TaskKind.Task) { #>
         public <#=method.AddOverrideKeywordIfNeeded#>Task<<#=method.ReturnType.Name#>> <#=method.Name#>(<#=method.Parameters.ParametersDeclarationWithOutParameters#>)
 <# } else { #>
         public <#=method.AddOverrideKeywordIfNeeded#><#=method.ReturnType.Name#> <#=method.Name#>(<#=method.Parameters.ParametersDeclarationWithOutParameters#>)

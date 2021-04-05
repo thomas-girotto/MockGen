@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using MockGen.Model;
 using MockGen.Tests.Fixtures;
 using MockGen.Tests.Utils;
 using MockGen.ViewModel;
@@ -144,7 +145,7 @@ namespace MockGen.Tests
             }
             generator.TypesToMock.Should().HaveCount(1);
             generator.TypesToMock[0].Methods.Should().HaveCount(1);
-            generator.TypesToMock[0].Methods[0].ReturnType.IsTask.Should().BeTrue();
+            generator.TypesToMock[0].Methods[0].ReturnType.TaskInfo.Should().Be(TaskInfo.Task);
             generator.TypesToMock[0].Methods[0].ReturnType.Name.Should().Be("HttpStatusCode"); // And not Task<HttpStatusCode>
         }
 

@@ -23,7 +23,7 @@ namespace MockGen.Tests.ViewModel
                     new Method
                     {
                         Name = "MethodTParamTReturn",
-                        ReturnType = new ReturnType("Type1", false, returnedTypeNamespace),
+                        ReturnType = new ReturnType("Type1", TaskInfo.NotATask, returnedTypeNamespace),
                         Parameters = new List<Parameter>
                         {
                             new Parameter(new Type("Type2", parameterTypeNamespace), "param1", false),
@@ -53,7 +53,7 @@ namespace MockGen.Tests.ViewModel
                     new Method
                     {
                         Name = "MethodTParamTReturn",
-                        ReturnType = new ReturnType("Type1", false, typeToMockNamespace),
+                        ReturnType = new ReturnType("Type1", TaskInfo.NotATask, typeToMockNamespace),
                         Parameters = new List<Parameter>
                         {
                             new Parameter(new Type("Type1", typeToMockNamespace), "param1", false),

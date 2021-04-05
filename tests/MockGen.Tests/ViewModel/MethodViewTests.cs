@@ -35,20 +35,20 @@ namespace MockGen.Tests.ViewModel
         private MethodView MethodThatReturnsWithoutParameter => new MethodView(new Method
         {
             Name = "Method1",
-            ReturnType = new ReturnType("int", false),
+            ReturnType = new ReturnType("int", TaskInfo.NotATask),
         });
 
         private MethodView MethodThatReturnsWithOneParameter => new MethodView(new Method
         {
             Name = "Method2",
-            ReturnType = new ReturnType("int", false),
+            ReturnType = new ReturnType("int", TaskInfo.NotATask),
             Parameters = new List<Parameter> { new Parameter(new Type("Type1", "SomeLib.Namespace"), "param1", false) }
         });
 
         private MethodView MethodThatReturnsWithTwoParameters => new MethodView(new Method
         {
             Name = "Method3",
-            ReturnType = new ReturnType("int", false),
+            ReturnType = new ReturnType("int", TaskInfo.NotATask),
             Parameters = new List<Parameter>
             {
                 new Parameter(new Type("Type1", "SomeLib.Namespace"), "param1", false),
@@ -80,7 +80,7 @@ namespace MockGen.Tests.ViewModel
         private MethodView MethodThatReturnsWithOneOutParameter => new MethodView(new Method
         {
             Name = "Method4",
-            ReturnType = new ReturnType("int", false),
+            ReturnType = new ReturnType("int", TaskInfo.NotATask),
             Parameters = new List<Parameter>
             {
                 new Parameter(new Type("TypeOut", "SomeLib.Namespace"), "param1", true),
@@ -90,7 +90,7 @@ namespace MockGen.Tests.ViewModel
         private MethodView MethodThatReturnsWithOneParameterAndOneOutParameter => new MethodView(new Method
         {
             Name = "Method5",
-            ReturnType = new ReturnType("int", false),
+            ReturnType = new ReturnType("int", TaskInfo.NotATask),
             Parameters = new List<Parameter>
             {
                 new Parameter(new Type("Type1", "SomeLib.Namespace"), "param1", false),

@@ -5,27 +5,42 @@ namespace MockGen.Model
 {
     public class ReturnType : Type
     {
-        public static ReturnType Void = new ReturnType("void", false, Enumerable.Empty<string>());
+        public static ReturnType Void = new ReturnType("void", TaskInfo.NotATask, Enumerable.Empty<string>());
 
-        public ReturnType(string name, bool isTask) : base(name)
+        public ReturnType(string name, TaskInfo taskInfo) : base(name)
         {
-            IsTask = isTask;
+            TaskInfo = taskInfo;
         }
 
-        public ReturnType(string name, bool isTask, string @namespace) : base(name, @namespace)
+        public ReturnType(string name, TaskInfo taskInfo, string @namespace) : base(name, @namespace)
         {
-            IsTask = isTask;
+            TaskInfo = taskInfo;
         }
 
-        public ReturnType(string name, bool isTask, IEnumerable<string> namespaces) : base(name, namespaces)
+        public ReturnType(string name, TaskInfo taskInfo, IEnumerable<string> namespaces) : base(name, namespaces)
         {
-            IsTask = isTask;
+            TaskInfo = taskInfo;
         }
 
         /// <summary>
         /// Is the type a Task<T>
         /// </summary>
-        public bool IsTask { get; }
+        public TaskInfo TaskInfo { get; }
+    }
 
+    public enum TaskInfo
+    {
+        /// <summary>
+        /// The type is neither a Task<T> nor a ValueTask<T>
+        /// </summary>
+        NotATask,
+        /// <summary>
+        /// The type is a Task<T>
+        /// </summary>
+        Task,
+        /// <summary>
+        /// The type is a ValueTask<T>
+        /// </summary>
+        ValueTask,
     }
 }

@@ -21,7 +21,7 @@ namespace MockGen.Tests.Model
                         new Method
                         {
                             Name = "MethodWithOneTypedParameterAndReturnSomething1",
-                            ReturnType = new ReturnType("ReturnedType1", false, "SomeLib.Namespace"),
+                            ReturnType = new ReturnType("ReturnedType1", TaskInfo.NotATask, "SomeLib.Namespace"),
                             Parameters = new List<Parameter>
                             {
                                 new Parameter(new Type("Type1", "SomeLib.Namespace"), "param1", false),
@@ -45,7 +45,7 @@ namespace MockGen.Tests.Model
                         new Method
                         {
                             Name = "MethodWithOneTypedParameterAndReturnSomething2",
-                            ReturnType = new ReturnType("ReturnedType2", false, "SomeLib.Namespace"),
+                            ReturnType = new ReturnType("ReturnedType2", TaskInfo.NotATask, "SomeLib.Namespace"),
                             Parameters = new List<Parameter>
                             {
                                 new Parameter(new Type("Type2", "SomeLib.Namespace"), "param1", false),
@@ -90,7 +90,7 @@ namespace MockGen.Tests.Model
                             Name = "GetSetProperty",
                             HasGetter = true,
                             HasSetter = true,
-                            Type = new ReturnType("SomeModel", false, "SomeLib.Namespace")
+                            Type = new ReturnType("SomeModel", TaskInfo.NotATask, "SomeLib.Namespace")
                         },
                     }
                 },

@@ -85,9 +85,9 @@ namespace MockGen.Model
             {
                 // Get the T of Task<T>
                 var taskOfT = name.Substring(5, name.Length - 6);
-                return new ReturnType(taskOfT, true, namespaces);
+                return new ReturnType(taskOfT, TaskInfo.Task, namespaces);
             }
-            return new ReturnType(name, false, namespaces);
+            return new ReturnType(name, TaskInfo.NotATask, namespaces);
         }
 
         public static List<string> ExtractAllNamespaces(string fullName)
