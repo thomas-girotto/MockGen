@@ -60,16 +60,6 @@ namespace MockGen
             return methods.GetSomeNumberWithTwoParametersSetup.ForParameter(model1 ?? Arg<Model1>.Null, model2 ?? Arg<Model2>.Null);
         }
 
-        public IMethodSetupReturn<int> GetSomeNumberAsync()
-        {
-            return methods.GetSomeNumberAsyncSetup;
-        }
-
-        public IMethodSetupReturn<int> GetSomeNumberWithValueTaskAsync()
-        {
-            return methods.GetSomeNumberWithValueTaskAsyncSetup;
-        }
-
         public IMethodSetupReturn<int, bool> TryGetById(Arg<int> id)
         {
             return TryGetById(id, (_) => default(Model1));

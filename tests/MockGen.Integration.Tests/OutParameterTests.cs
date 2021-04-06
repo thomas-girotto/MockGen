@@ -2,9 +2,6 @@
 using MockGen.Integration.Tests.Utils;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -30,6 +27,7 @@ namespace MockGen.Integration.Tests
             {
                 loadSourceFilesFixture.ConcreteDependencySourceFile,
                 loadSourceFilesFixture.IDependencySourceFile,
+                loadSourceFilesFixture.ITaskDependencySourceFile,
                 loadSourceFilesFixture.Model1SourceFile,
                 loadSourceFilesFixture.Model2SourceFile,
                 loadSourceFilesFixture.GeneratorsSourceFile,

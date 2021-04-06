@@ -11,6 +11,11 @@ namespace MockGen
             return new IDependencyMockBuilder();
         }
 
+        internal static ITaskDependencyMockBuilder ITaskDependency()
+        {
+            return new ITaskDependencyMockBuilder();
+        }
+
         internal static ConcreteDependencyMockBuilder ConcreteDependency()
         {
             return new ConcreteDependencyMockBuilder();

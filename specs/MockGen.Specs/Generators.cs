@@ -7,6 +7,7 @@ namespace MockGen.Specs
         public void GenerateMocks()
         {
             MockGenerator.Generate<IDependency>();
+            MockGenerator.Generate<ITaskDependency>();
             MockGenerator.Generate<ConcreteDependency>();
         }
     }

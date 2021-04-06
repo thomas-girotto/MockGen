@@ -30,6 +30,7 @@ namespace MockGen.Integration.Tests
             {
                 loadSourceFilesFixture.ConcreteDependencySourceFile,
                 loadSourceFilesFixture.IDependencySourceFile,
+                loadSourceFilesFixture.ITaskDependencySourceFile,
                 loadSourceFilesFixture.Model1SourceFile,
                 loadSourceFilesFixture.Model2SourceFile,
                 loadSourceFilesFixture.GeneratorsSourceFile,
