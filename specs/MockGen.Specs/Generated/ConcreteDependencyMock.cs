@@ -26,5 +26,10 @@ namespace MockGen
         {
             return methods.ICanBeMockedSetup.ExecuteSetup();
         }
+
+        protected override void SaveFullName(string fullName)
+        {
+            methods.SaveFullName.ExecuteSetup(fullName);
+        }
     }
 }

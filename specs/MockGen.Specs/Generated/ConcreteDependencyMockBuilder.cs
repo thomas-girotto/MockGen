@@ -29,6 +29,11 @@ namespace MockGen
             return methods.ICanBeMockedSetup;
         }
 
+        internal IMethodSetup<string> SaveFullName(Arg<string>? firstname)
+        {
+            return methods.SaveFullName.ForParameter(firstname?? Arg<string>.Null);
+        }
+
         internal ConcreteDependencyMock Build()
         {
             methods.SetupDone();

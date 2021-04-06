@@ -45,5 +45,18 @@ namespace MockGen.Specs
             mock3.M1.Should().Be(model1);
             mock3.M2.Should().Be(model2);
         }
+
+        [Fact]
+        public void Should_mock_protected_method()
+        {
+            var mockBuilder = Mock.ConcreteDependency();
+            var mock = mockBuilder.Build();
+
+            // When
+            mock.AddLastNameAndSave("Firstname");
+
+            // Then
+            mockBuilder.SaveFullName("Firstname Lastname").NumberOfCalls.Should().Be(1);
+        }
     }
 }

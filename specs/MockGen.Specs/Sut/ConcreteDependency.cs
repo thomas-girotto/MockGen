@@ -40,5 +40,17 @@ namespace MockGen.Specs.Sut
         {
             return m1?.Id ?? 0;
         }
+
+        public void AddLastNameAndSave(string firstname)
+        {
+            SaveFullName(firstname + " Lastname");
+        }
+
+        protected virtual void SaveFullName(string fullName)
+        {
+            // Let's say we save the fullName in a database and for some reason we don't have a classic injection and
+            // can't mock the database dependency => we'd like to mock this protected method and assert against
+            // the call and its parameter
+        }
     }
 }
