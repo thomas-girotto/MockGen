@@ -70,6 +70,11 @@ namespace MockGen
             return methods.GetSomeNumberAsyncSetup.ExecuteSetup();
         }
 
+        public ValueTask<int> GetSomeNumberWithValueTaskAsync()
+        {
+            return methods.GetSomeNumberWithValueTaskAsyncSetup.ExecuteSetup();
+        }
+
         public bool TryGetById(int id, out Model1 model)
         {
             model = methods.TryGetByIdSetupOutParameters(id);

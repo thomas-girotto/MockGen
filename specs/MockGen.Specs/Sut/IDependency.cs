@@ -16,6 +16,7 @@ namespace MockGen.Specs.Sut
         int GetSomeNumberWithReferenceTypeParameter(Model1 model1);
         int GetSomeNumberWithTwoParameters(Model1 model1, Model2 model2);
         Task<int> GetSomeNumberAsync();
+        ValueTask<int> GetSomeNumberWithValueTaskAsync();
         bool TryGetById(int id, out Model1 model);
         bool TryGetById(int id, out Model1 model, out Model2 model2);
     }

@@ -172,21 +172,6 @@ namespace MockGen.Specs
             result4.Should().Be(0);
         }
 
-
-        [Fact]
-        public async Task Should_return_a_task_When_configured_with_the_underlying_type()
-        {
-            // Given
-            var mock = Mock.IDependency();
-            mock.GetSomeNumberAsync().Returns(1);
-
-            // When
-            var result = await mock.Build().GetSomeNumberAsync();
-
-            // Then
-            result.Should().Be(1);
-        }
-
         [Fact]
         public void Should_throw_When_called_after_mock_has_been_built()
         {

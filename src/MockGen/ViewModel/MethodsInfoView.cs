@@ -39,7 +39,7 @@ namespace MockGen.ViewModel
 
         public string GenericTypesWithTReturn => $"<{string.Join(", ", EnumerateNumbers.Select(n => $"TParam{n}").Concat(new string[] { "TReturn" }))}>";
 
-        public string GenericTypesWithTaskOfTReturn => $"<{string.Join(", ", EnumerateNumbers.Select(n => $"TParam{n}").Concat(new string[] { "Task<TReturn>" }))}>";
+        public string GenericTypesWithTaskOfTReturn(TaskContext taskContext) => $"<{string.Join(", ", EnumerateNumbers.Select(n => $"TParam{n}").Concat(new string[] { $"{taskContext}<TReturn>" }))}>";
 
         public string DiscardParameters => $"({string.Join(", ", EnumerateNumbers.Select(_ => "_"))})";
 
@@ -56,5 +56,11 @@ namespace MockGen.ViewModel
         public string ConcatMatcherCalls(string matcherName, string parameterName) => string.Join(" && ", EnumerateNumbers.Select(n => $"{matcherName + n}.Match({parameterName + n})"));
 
         public string ConcatParameters(string paramName) => string.Join(", ", EnumerateNumbers.Select(n => $"{paramName + n}"));
+    }
+
+    public enum TaskContext
+    {
+        Task,
+        ValueTask
     }
 }

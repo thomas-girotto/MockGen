@@ -65,6 +65,10 @@ namespace MockGen
             return methods.GetSomeNumberAsyncSetup;
         }
 
+        public IMethodSetupReturn<int> GetSomeNumberWithValueTaskAsync()
+        {
+            return methods.GetSomeNumberWithValueTaskAsyncSetup;
+        }
 
         public IMethodSetupReturn<int, bool> TryGetById(Arg<int> id)
         {

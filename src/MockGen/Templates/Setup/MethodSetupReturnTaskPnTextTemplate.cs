@@ -29,7 +29,13 @@ namespace MockGen.Templates.Setup
         public virtual string TransformText()
         {
             this.Write("using System;\r\nusing System.Collections.Generic;\r\nusing System.Threading.Tasks;\r\n" +
-                    "\r\nnamespace MockGen.Setup\r\n{\r\n    internal class MethodSetupReturnTask");
+                    "\r\nnamespace MockGen.Setup\r\n{\r\n    internal class MethodSetupReturn");
+            
+            #line 12 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnTaskPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(taskContext.ToString()));
+            
+            #line default
+            #line hidden
             
             #line 12 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnTaskPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypesWithTReturn));
@@ -60,7 +66,7 @@ namespace MockGen.Templates.Setup
             this.Write("\r\n    {\r\n        private new ActionConfigurationWithReturn");
             
             #line 17 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnTaskPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypesWithTaskOfTReturn));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypesWithTaskOfTReturn(taskContext)));
             
             #line default
             #line hidden
@@ -74,14 +80,14 @@ namespace MockGen.Templates.Setup
             this.Write("        private Stack<ActionConfigurationWithReturn");
             
             #line 19 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnTaskPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypesWithTaskOfTReturn));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypesWithTaskOfTReturn(taskContext)));
             
             #line default
             #line hidden
             this.Write("> configuredActions = new Stack<ActionConfigurationWithReturn");
             
             #line 19 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnTaskPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypesWithTaskOfTReturn));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypesWithTaskOfTReturn(taskContext)));
             
             #line default
             #line hidden
@@ -99,9 +105,22 @@ namespace MockGen.Templates.Setup
             
             #line default
             #line hidden
-            this.Write("        internal MethodSetupReturnTask()\r\n        {\r\n            currentConfigura" +
-                    "tion = new ActionConfigurationWithReturn<Task<TReturn>>(base.currentConfiguratio" +
-                    "n);\r\n        }\r\n");
+            this.Write("        internal MethodSetupReturn");
+            
+            #line 23 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnTaskPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(taskContext.ToString()));
+            
+            #line default
+            #line hidden
+            this.Write("()\r\n        {\r\n            currentConfiguration = new ActionConfigurationWithRetu" +
+                    "rn<");
+            
+            #line 25 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnTaskPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(taskContext.ToString()));
+            
+            #line default
+            #line hidden
+            this.Write("<TReturn>>(base.currentConfiguration);\r\n        }\r\n");
             
             #line 27 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnTaskPnTextTemplate.tt"
  } 
@@ -140,7 +159,7 @@ namespace MockGen.Templates.Setup
                     "ation = new ActionConfigurationWithReturn");
             
             #line 35 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnTaskPnTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypesWithTaskOfTReturn));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypesWithTaskOfTReturn(taskContext)));
             
             #line default
             #line hidden
@@ -159,14 +178,16 @@ namespace MockGen.Templates.Setup
             
             #line default
             #line hidden
-            this.Write(@" Returns(TReturn value)
-        {
-            EnsureConfigurationMethodsAreAllowed(nameof(Returns));
-            currentConfiguration.ReturnAction = () => Task.FromResult(value);
-            return this;
-        }
-
-        public void AndExecute(Action");
+            this.Write(" Returns(TReturn value)\r\n        {\r\n            EnsureConfigurationMethodsAreAllo" +
+                    "wed(nameof(Returns));\r\n            currentConfiguration.ReturnAction = () => ");
+            
+            #line 46 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnTaskPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(taskContext.ToString()));
+            
+            #line default
+            #line hidden
+            this.Write(".FromResult(value);\r\n            return this;\r\n        }\r\n\r\n        public void A" +
+                    "ndExecute(Action");
             
             #line 50 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnTaskPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
@@ -174,7 +195,14 @@ namespace MockGen.Templates.Setup
             #line default
             #line hidden
             this.Write(" callback)\r\n        {\r\n            Execute(callback);\r\n        }\r\n\r\n        publi" +
-                    "c Task<TReturn> ExecuteSetup(");
+                    "c ");
+            
+            #line 55 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnTaskPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(taskContext.ToString()));
+            
+            #line default
+            #line hidden
+            this.Write("<TReturn> ExecuteSetup(");
             
             #line 55 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnTaskPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(view.ParametersTypesWithName));
@@ -240,7 +268,14 @@ namespace MockGen.Templates.Setup
             #line hidden
             this.Write(");\r\n                }\r\n            }\r\n            // If we didn\'t find any action" +
                     " configured for the given parameters, execute the default one.\r\n            retu" +
-                    "rn Task.FromResult(default(TReturn));\r\n");
+                    "rn ");
+            
+            #line 69 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnTaskPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(taskContext.ToString()));
+            
+            #line default
+            #line hidden
+            this.Write(".FromResult(default(TReturn));\r\n");
             
             #line 70 "D:\Dev\MockGen\src\MockGen\Templates\Setup\MethodSetupReturnTaskPnTextTemplate.tt"
  } else { 

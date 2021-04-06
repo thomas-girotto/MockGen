@@ -108,7 +108,7 @@ namespace MockGen
                         var methodSetupVoidPnTemplate = new MethodSetupVoidPnTextTemplate(methodsInfoView);
                         AddSourceToBuildContext(context, $"MethodSetupVoid{methodsInfoView.FileSuffix}.cs", methodSetupVoidPnTemplate.TransformText());
                     }
-                    if (methodsInfo.HasMethodThatReturns || methodsInfo.HasMethodThatReturnsTask)
+                    if (methodsInfo.HasMethodThatReturns || methodsInfo.HasMethodThatReturnsTask || methodsInfo.HasMethodThatReturnsValueTask)
                     {
                         var actionConfigurationWithReturnPnTemplate = new ActionConfigurationWithReturnPnTextTemplate(methodsInfoView);
                         AddSourceToBuildContext(context, $"ActionConfigurationWithReturn{methodsInfoView.FileSuffix}.cs", actionConfigurationWithReturnPnTemplate.TransformText());
@@ -116,15 +116,20 @@ namespace MockGen
                         var iMethodSetupReturnPn = new IMethodSetupReturnPnTextTemplate(methodsInfoView);
                         AddSourceToBuildContext(context, $"IMethodSetupReturn{methodsInfoView.FileSuffix}.cs", iMethodSetupReturnPn.TransformText());
                     }
+                    if (methodsInfo.HasMethodThatReturnsTask)
+                    {
+                        var methodSetupReturnTaskPnTemplate = new MethodSetupReturnTaskPnTextTemplate(methodsInfoView, TaskContext.Task);
+                        AddSourceToBuildContext(context, $"MethodSetupReturnTask{methodsInfoView.FileSuffix}.cs", methodSetupReturnTaskPnTemplate.TransformText());
+                    }
+                    if (methodsInfo.HasMethodThatReturnsValueTask)
+                    {
+                        var methodSetupReturnTaskPnTemplate = new MethodSetupReturnTaskPnTextTemplate(methodsInfoView, TaskContext.ValueTask);
+                        AddSourceToBuildContext(context, $"MethodSetupReturnValueTask{methodsInfoView.FileSuffix}.cs", methodSetupReturnTaskPnTemplate.TransformText());
+                    }
                     if (methodsInfo.HasMethodThatReturns)
                     {
                         var methodSetupReturnPnTemplate = new MethodSetupReturnPnTextTemplate(methodsInfoView);
                         AddSourceToBuildContext(context, $"MethodSetupReturn{methodsInfoView.FileSuffix}.cs", methodSetupReturnPnTemplate.TransformText());
-                    }
-                    if (methodsInfo.HasMethodThatReturnsTask)
-                    {
-                        var methodSetupReturnTaskPnTemplate = new MethodSetupReturnTaskPnTextTemplate(methodsInfoView);
-                        AddSourceToBuildContext(context, $"MethodSetupReturnTask{methodsInfoView.FileSuffix}.cs", methodSetupReturnTaskPnTemplate.TransformText());
                     }
                 }
             }

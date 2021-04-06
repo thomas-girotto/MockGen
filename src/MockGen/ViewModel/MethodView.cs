@@ -30,6 +30,8 @@ namespace MockGen.ViewModel
                 (false, TaskInfo.NotATask, > 0) => $"MethodSetupReturn<{Parameters.Types}, {ReturnType.Name}>",
                 (false, TaskInfo.Task, 0) => $"MethodSetupReturnTask<{ReturnType.Name}>",
                 (false, TaskInfo.Task, > 0) => $"MethodSetupReturnTask<{Parameters.Types}, {ReturnType.Name}>",
+                (false, TaskInfo.ValueTask, 0) => $"MethodSetupReturnValueTask<{ReturnType.Name}>",
+                (false, TaskInfo.ValueTask, > 0) => $"MethodSetupReturnValueTask<{Parameters.Types}, {ReturnType.Name}>",
                 (_, _, _) => throw new System.NotImplementedException(),
             };
 

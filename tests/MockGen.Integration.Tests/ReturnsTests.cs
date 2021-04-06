@@ -125,16 +125,6 @@ namespace MockGen.Integration.Tests
         }
 
         [Fact]
-        public void Should_return_a_task_When_configured_with_the_underlying_type()
-        {
-            var sources = GetSourceFilesToCompileFromSpecs();
-
-            Action action = () => testRunner.RunTest(sources, nameof(ReturnsTests), nameof(Should_return_a_task_When_configured_with_the_underlying_type));
-
-            action.Should().NotThrow();
-        }
-
-        [Fact]
         public void Should_throw_When_called_after_mock_has_been_built()
         {
             var sources = GetSourceFilesToCompileFromSpecs();

@@ -15,6 +15,7 @@ namespace MockGen.Integration.Tests.Utils
         public string Model2SourceFile { get; private set; }
         public string GeneratorsSourceFile { get; private set; }
         public string ReturnsTestFile { get; private set; }
+        public string ReturnsTaskTestFile { get; private set; }
         public string ThrowsTestFile { get; private set; }
         public string SpyTestFile { get; private set; }
         public string ExecuteTestFile { get; private set; }
@@ -30,6 +31,7 @@ namespace MockGen.Integration.Tests.Utils
             Model2SourceFile = SourceFileReader.ReadFile(Path.Combine("Sut", "Model2.cs"));
             GeneratorsSourceFile = SourceFileReader.ReadFile("Generators.cs");
             ReturnsTestFile = SourceFileReader.ReadFile("ReturnsTests.cs");
+            ReturnsTaskTestFile = SourceFileReader.ReadFile("ReturnsTaskTests.cs");
             ThrowsTestFile = SourceFileReader.ReadFile("ThrowsTests.cs");
             SpyTestFile = SourceFileReader.ReadFile("SpyTests.cs");
             ExecuteTestFile = SourceFileReader.ReadFile("ExecuteTests.cs");

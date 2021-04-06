@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 
 namespace MockGen.Setup
 {
-    internal class MethodSetupReturnTask<#=view.GenericTypesWithTReturn#> : 
+    internal class MethodSetupReturn<#=taskContext.ToString()#><#=view.GenericTypesWithTReturn#> : 
         MethodSetup<#=view.GenericTypes#>, 
         IMethodSetupReturn<#=view.GenericTypesWithTReturn#>,
         IReturnContinuation<#=view.GenericTypes#>
     {
-        private new ActionConfigurationWithReturn<#=view.GenericTypesWithTaskOfTReturn#> currentConfiguration;
+        private new ActionConfigurationWithReturn<#=view.GenericTypesWithTaskOfTReturn(taskContext)#> currentConfiguration;
 <# if (view.NumberOfTypes > 0) { #>
-        private Stack<ActionConfigurationWithReturn<#=view.GenericTypesWithTaskOfTReturn#>> configuredActions = new Stack<ActionConfigurationWithReturn<#=view.GenericTypesWithTaskOfTReturn#>>();
+        private Stack<ActionConfigurationWithReturn<#=view.GenericTypesWithTaskOfTReturn(taskContext)#>> configuredActions = new Stack<ActionConfigurationWithReturn<#=view.GenericTypesWithTaskOfTReturn(taskContext)#>>();
 <# } #>
 
 <# if (view.NumberOfTypes == 0) { #>
-        internal MethodSetupReturnTask()
+        internal MethodSetupReturn<#=taskContext.ToString()#>()
         {
-            currentConfiguration = new ActionConfigurationWithReturn<Task<TReturn>>(base.currentConfiguration);
+            currentConfiguration = new ActionConfigurationWithReturn<<#=taskContext.ToString()#><TReturn>>(base.currentConfiguration);
         }
 <# } #>
 
@@ -32,7 +32,7 @@ namespace MockGen.Setup
             base.ForParameter(<#=view.ConcatParameters("param")#>);
             if (!IsSetupDone)
             {
-                currentConfiguration = new ActionConfigurationWithReturn<#=view.GenericTypesWithTaskOfTReturn#>(base.currentConfiguration);
+                currentConfiguration = new ActionConfigurationWithReturn<#=view.GenericTypesWithTaskOfTReturn(taskContext)#>(base.currentConfiguration);
                 configuredActions.Push(currentConfiguration);
             }
             
@@ -43,7 +43,7 @@ namespace MockGen.Setup
         public IReturnContinuation<#=view.GenericTypes#> Returns(TReturn value)
         {
             EnsureConfigurationMethodsAreAllowed(nameof(Returns));
-            currentConfiguration.ReturnAction = () => Task.FromResult(value);
+            currentConfiguration.ReturnAction = () => <#=taskContext.ToString()#>.FromResult(value);
             return this;
         }
 
@@ -52,7 +52,7 @@ namespace MockGen.Setup
             Execute(callback);
         }
 
-        public Task<TReturn> ExecuteSetup(<#=view.ParametersTypesWithName#>)
+        public <#=taskContext.ToString()#><TReturn> ExecuteSetup(<#=view.ParametersTypesWithName#>)
         {
 <# if (view.NumberOfTypes > 0) { #>
             // Register call with given parameter for future assertions on calls
@@ -66,7 +66,7 @@ namespace MockGen.Setup
                 }
             }
             // If we didn't find any action configured for the given parameters, execute the default one.
-            return Task.FromResult(default(TReturn));
+            return <#=taskContext.ToString()#>.FromResult(default(TReturn));
 <# } else { #>
             numberOfCalls++;
             return currentConfiguration.RunActions();

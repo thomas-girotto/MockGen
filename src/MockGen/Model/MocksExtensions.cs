@@ -13,15 +13,19 @@ namespace MockGen.Model
             if (properties.Any())
             {
                 // set property is configured via MethodSetupVoid<T>
-                initTypedMethodsFromProperties.Add(new MethodsInfo(1, true, false, false));
+                initTypedMethodsFromProperties.Add(new MethodsInfo(1, true, false, false, false));
                 // get property is configured via MethodSetupReturn<T> (here T is the return type and not a parameter type)
                 if (properties.Any(p => p.Type.TaskInfo == TaskInfo.Task))
                 {
-                    initTypedMethodsFromProperties.Add(new MethodsInfo(0, false, true, true));
+                    initTypedMethodsFromProperties.Add(new MethodsInfo(0, false, true, true, false));
+                }
+                if (properties.Any(p => p.Type.TaskInfo == TaskInfo.ValueTask))
+                {
+                    initTypedMethodsFromProperties.Add(new MethodsInfo(0, false, true, false, true));
                 }
                 if (properties.Any(p => p.Type.TaskInfo == TaskInfo.NotATask))
                 {
-                    initTypedMethodsFromProperties.Add(new MethodsInfo(0, false, true, false));
+                    initTypedMethodsFromProperties.Add(new MethodsInfo(0, false, true, false, false));
                 }
             }
 
@@ -31,7 +35,8 @@ namespace MockGen.Model
                     m.Parameters.Count, 
                     m.ReturnsVoid, 
                     !m.ReturnsVoid && m.ReturnType.TaskInfo == TaskInfo.NotATask,
-                    !m.ReturnsVoid && m.ReturnType.TaskInfo == TaskInfo.Task))
+                    !m.ReturnsVoid && m.ReturnType.TaskInfo == TaskInfo.Task,
+                    !m.ReturnsVoid && m.ReturnType.TaskInfo == TaskInfo.ValueTask))
                 .Union(initTypedMethodsFromProperties)
                 .GroupBy(
                     m => m.NumberOfParameters,
@@ -39,7 +44,8 @@ namespace MockGen.Model
                         n, 
                         methodsInGroup.Any(m => m.HasMethodThatReturnsVoid), 
                         methodsInGroup.Any(m => m.HasMethodThatReturns),
-                        methodsInGroup.Any(m => m.HasMethodThatReturnsTask))
+                        methodsInGroup.Any(m => m.HasMethodThatReturnsTask),
+                        methodsInGroup.Any(m => m.HasMethodThatReturnsValueTask))
                 )
                 .Distinct();
         }

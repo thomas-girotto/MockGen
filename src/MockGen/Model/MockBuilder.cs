@@ -81,11 +81,18 @@ namespace MockGen.Model
             var name = typeSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
             var fullyQualifiedName = typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat).Replace("global::", string.Empty);
             var namespaces = ExtractAllNamespaces(fullyQualifiedName);
+            
             if (name.StartsWith("Task<"))
             {
                 // Get the T of Task<T>
                 var taskOfT = name.Substring(5, name.Length - 6);
                 return new ReturnType(taskOfT, TaskInfo.Task, namespaces);
+            }
+            else if (name.StartsWith("ValueTask<"))
+            {
+                // Get the T of ValueTask<T>
+                var valueTaskOfT = name.Substring(10, name.Length - 11);
+                return new ReturnType(valueTaskOfT, TaskInfo.ValueTask, namespaces);
             }
             return new ReturnType(name, TaskInfo.NotATask, namespaces);
         }

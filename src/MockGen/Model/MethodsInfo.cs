@@ -13,12 +13,14 @@
     /// </summary>
     public record MethodsInfo
     {
-        public MethodsInfo(int numberOfParameters, bool hasMethodThatReturnsVoid, bool hasMethodThatReturns, bool hasMethodThatReturnsTask)
+        public MethodsInfo(int numberOfParameters, bool hasMethodThatReturnsVoid, bool hasMethodThatReturns, 
+            bool hasMethodThatReturnsTask, bool hasMethodThatReturnsValueTask)
         {
             NumberOfParameters = numberOfParameters;
             HasMethodThatReturnsVoid = hasMethodThatReturnsVoid;
             HasMethodThatReturns = hasMethodThatReturns;
             HasMethodThatReturnsTask = hasMethodThatReturnsTask;
+            HasMethodThatReturnsValueTask = hasMethodThatReturnsValueTask;
         }
 
         /// <summary>
@@ -40,5 +42,10 @@
         /// Is there one method with the given number of parameters that returns a Task<T>
         /// </summary>
         public bool HasMethodThatReturnsTask { get; }
+
+        /// <summary>
+        /// Is there one method with the given number of parameters that returns a ValueTask<T>
+        /// </summary>
+        public bool HasMethodThatReturnsValueTask { get; }
     }
 }

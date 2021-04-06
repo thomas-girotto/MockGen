@@ -115,7 +115,7 @@ namespace MockGen.Tests
         }
 
         [Fact]
-        public void Should_handle_special_case_of_return_type_being_a_task_of_T()
+        public void Should_handle_special_case_of_return_type_being_a_Task_of_T()
         {
             // Given
             string source = @"
@@ -147,6 +147,41 @@ namespace MockGen.Tests
             generator.TypesToMock[0].Methods.Should().HaveCount(1);
             generator.TypesToMock[0].Methods[0].ReturnType.TaskInfo.Should().Be(TaskInfo.Task);
             generator.TypesToMock[0].Methods[0].ReturnType.Name.Should().Be("HttpStatusCode"); // And not Task<HttpStatusCode>
+        }
+
+        [Fact]
+        public void Should_handle_special_case_of_return_type_being_a_ValueTask_of_T()
+        {
+            // Given
+            string source = @"
+using System.Net;
+using System.Threading.Tasks;
+namespace MockGen.Tests
+{
+    public interface IDependency 
+    {
+        ValueTask<HttpStatusCode> GetSomeStatusCodeAsync();
+    }
+    public class Generators
+    {
+        public void GenerateMocks()
+        {
+            MockGenerator.Generate<IDependency>();
+        }
+    }
+}";
+            // When
+            var (generator, diagnostics) = CompileSource(source);
+
+            // Then
+            if (diagnostics.Any())
+            {
+                throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
+            }
+            generator.TypesToMock.Should().HaveCount(1);
+            generator.TypesToMock[0].Methods.Should().HaveCount(1);
+            generator.TypesToMock[0].Methods[0].ReturnType.TaskInfo.Should().Be(TaskInfo.ValueTask);
+            generator.TypesToMock[0].Methods[0].ReturnType.Name.Should().Be("HttpStatusCode"); // And not ValueTask<HttpStatusCode>
         }
 
         [Fact]

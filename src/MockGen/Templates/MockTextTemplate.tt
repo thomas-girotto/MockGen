@@ -41,8 +41,10 @@ namespace MockGen
 
 <# } #>
 <# foreach (var method in view.Methods) { #>
-<# if (method.ReturnType.TaskKind == TaskKind.Task) { #>
+<# if (method.ReturnType.TaskInfo == TaskInfo.Task) { #>
         public <#=method.AddOverrideKeywordIfNeeded#>Task<<#=method.ReturnType.Name#>> <#=method.Name#>(<#=method.Parameters.ParametersDeclarationWithOutParameters#>)
+<# } else if (method.ReturnType.TaskInfo == TaskInfo.ValueTask) { #>
+        public <#=method.AddOverrideKeywordIfNeeded#>ValueTask<<#=method.ReturnType.Name#>> <#=method.Name#>(<#=method.Parameters.ParametersDeclarationWithOutParameters#>)
 <# } else { #>
         public <#=method.AddOverrideKeywordIfNeeded#><#=method.ReturnType.Name#> <#=method.Name#>(<#=method.Parameters.ParametersDeclarationWithOutParameters#>)
 <# } #>        
