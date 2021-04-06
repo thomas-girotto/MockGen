@@ -56,6 +56,10 @@ mock.GetAge("Lemmy Kilmister").Throws(new Exception("He's dead :(")); // Will th
 mock.GetSetProperty.Get.Returns(42); // Will always return 42
 mock.GetSetProperty.Set(42).Execute(val => {}); // Execute given action when setting property to 42
 
+// Task or ValueTask
+// Even though GetAgeAsync returns a Task<int> you can configure it directly with an int. Same with ValueTask
+mock.GetAgeAsync(Arg<int>.Any).Returns(1)
+
 // Pass the mock to the sut
 var sut = new MyServiceUnderTest(mock.Build()); // Build() returns the original type setup with mock behavior
 
