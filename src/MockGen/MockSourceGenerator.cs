@@ -30,15 +30,15 @@ namespace MockGen
                 var mockGeneratorTemplate = new MockGeneratorTextTemplate();
                 AddSourceToBuildContext(context, "MockGenerator.cs", mockGeneratorTemplate.TransformText());
 
-                if (!receiver.TypesToMockSyntax.Any())
+                if (!receiver.TypesToMock.Any())
                 {
                     return;
                 }
 
                 // Sanitize types to mock to handle type collision and ensure that we generate a mock only once for each type
                 var sanityzedMocks = SanityzeMocks(
-                    receiver.TypesToMockSyntax
-                        .Select(mockSyntax => MockBuilder.FromSemanticModel(context, context.Compilation, mockSyntax))
+                    receiver.TypesToMock
+                        .Select(mock => MockBuilder.FromSemanticModel(context, context.Compilation, mock))
                         .Where(m => m != null));
 
                 // First inject helper classes that doesn't depend on user's code

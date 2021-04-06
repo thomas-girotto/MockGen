@@ -315,6 +315,29 @@ namespace MockGen.Tests
             diagnostics.Should().HaveCount(1).And.ContainSingle(d => d.Severity == DiagnosticSeverity.Error && d.Id == "MG0002");
         }
 
+        [Fact]
+        public void Should_generate_a_diagnostic_error_When_trying_to_mock_an_unknown_type()
+        {
+            // Given
+            string source = @"
+using MockGen;
+namespace MockGen.Tests
+{
+    public class Generators
+    {
+        public void GenerateMocks()
+        {
+            MockGenerator.Generate<IDependency>(); // IDependency is unknown here
+        }
+    }
+}";
+            // When
+            var (_, diagnostics) = CompileSource(source);
+
+            // Then
+            diagnostics.Should().Contain(d => d.Severity == DiagnosticSeverity.Error && d.Id == "MG0004");
+        }
+
         private (MockSourceGeneratorSpy generator, IEnumerable<Diagnostic> diagnostics) CompileSource(string source)
         {
             var rootNode = CSharpSyntaxTree.ParseText(source).GetRoot();

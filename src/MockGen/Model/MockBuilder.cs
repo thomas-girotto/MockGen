@@ -1,19 +1,23 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using MockGen.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace MockGen.Model
 {
     public class MockBuilder
     {
-        public static Mock FromSemanticModel(GeneratorExecutionContext diagnosticReporter, Compilation compilation, TypeSyntax typeSyntax)
+        public static Mock FromSemanticModel(GeneratorExecutionContext diagnosticReporter, Compilation compilation, MockTypeSyntax mock)
         {
-            var semanticModel = compilation.GetSemanticModel(typeSyntax.SyntaxTree);
-            var symbol = semanticModel.GetSymbolInfo(typeSyntax).Symbol;
+            var semanticModel = compilation.GetSemanticModel(mock.TypeSyntax.SyntaxTree);
+            var symbol = semanticModel.GetSymbolInfo(mock.TypeSyntax).Symbol;
+            if (symbol == null)
+            {
+                diagnosticReporter.ReportDiagnostic(Diagnostic.Create(
+                    DiagnosticResources.UnableToFindType(mock.TypeName), Location.None));
 
+                return null;
+            }
             if (symbol.IsSealed)
             {
                 diagnosticReporter.ReportDiagnostic(Diagnostic.Create(

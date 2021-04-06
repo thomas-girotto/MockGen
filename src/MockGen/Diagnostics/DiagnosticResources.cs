@@ -31,5 +31,13 @@ namespace MockGen.Diagnostics
             DiagnosticCategory,
             DiagnosticSeverity.Error,
             isEnabledByDefault: true);
+
+        public static DiagnosticDescriptor UnableToFindType(string typeName) => new DiagnosticDescriptor(
+            "MG0004",
+            $"{DiagnosticPrefix}: Cannot find the type to mock",
+            $"{DiagnosticPrefix}: {typeName} not found. Did you forget to reference an assembly?",
+            DiagnosticCategory,
+            DiagnosticSeverity.Error,
+            isEnabledByDefault: true);
     }
 }

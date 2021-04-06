@@ -8,10 +8,10 @@ namespace MockGen.Tests
     public class SyntaxReceiverTests
     {
         [Theory]
-        [InlineData("MockGenerator.Generate<IDependency>();")]
-        [InlineData("MockGenerator.Generate<SomeNamespace.IDependency>();")]
-        [InlineData("MockGen.MockGenerator.Generate<IDependency>();")]
-        public void Should_recognize_type_to_mock(string mockGenerationSyntax)
+        [InlineData("MockGenerator.Generate<IDependency>();", "IDependency")]
+        [InlineData("MockGenerator.Generate<SomeNamespace.IDependency>();", "SomeNamespace.IDependency")]
+        [InlineData("MockGen.MockGenerator.Generate<IDependency>();", "IDependency")]
+        public void Should_recognize_type_to_mock(string mockGenerationSyntax, string expectedTypeName)
         {
             // Given
             var rootNode = CSharpSyntaxTree.ParseText(mockGenerationSyntax).GetRoot();
@@ -22,7 +22,8 @@ namespace MockGen.Tests
             syntaxTreeVisitor.Visit(rootNode);
 
             // Then
-            syntaxReceiver.TypesToMockSyntax.Should().HaveCount(1);
+            syntaxReceiver.TypesToMock.Should().HaveCount(1);
+            syntaxReceiver.TypesToMock[0].TypeName.Should().Be(expectedTypeName);
         }
 
         [Fact]
@@ -41,7 +42,9 @@ MockGenerator.Generate<IDependency2>();
             syntaxTreeVisitor.Visit(rootNode);
 
             // Then
-            syntaxReceiver.TypesToMockSyntax.Should().HaveCount(2);
+            syntaxReceiver.TypesToMock.Should().HaveCount(2);
+            syntaxReceiver.TypesToMock[0].TypeName.Should().Be("IDependency1");
+            syntaxReceiver.TypesToMock[1].TypeName.Should().Be("IDependency2");
         }
 
         [Theory]
@@ -61,7 +64,7 @@ MockGenerator.Generate<IDependency2>();
             syntaxTreeVisitor.Visit(rootNode);
 
             // Then
-            syntaxReceiver.TypesToMockSyntax.Should().BeEmpty();
+            syntaxReceiver.TypesToMock.Should().BeEmpty();
         }
     }
 }

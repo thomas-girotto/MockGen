@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using MockGen.Model;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +11,7 @@ namespace MockGen
     /// </summary>
     public class SyntaxReceiver : ISyntaxReceiver
     {
-        public List<TypeSyntax> TypesToMockSyntax = new List<TypeSyntax>();
+        public List<MockTypeSyntax> TypesToMock = new List<MockTypeSyntax>();
 
         /// <summary>
         /// Called for every syntax node in the compilation, we can inspect the nodes and save any information useful for generation
@@ -43,7 +44,10 @@ namespace MockGen
                     && candidateForGenerateMethod.Name is GenericNameSyntax genericNameSyntax
                     && genericNameSyntax.TypeArgumentList.Arguments.Count == 1)
                 {
-                    TypesToMockSyntax.Add(genericNameSyntax.TypeArgumentList.Arguments[0]);
+                    var syntax = genericNameSyntax.TypeArgumentList.Arguments[0];
+                    var typeName = syntax.ToString();
+
+                    TypesToMock.Add(new MockTypeSyntax(typeName, syntax));
                 }
             }
         }
