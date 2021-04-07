@@ -18,6 +18,14 @@ namespace MockGen.Model
         /// </summary>
         public string UniqueName { get; set; }
 
+        /// <summary>
+        /// Is method virtual or abstract
+        /// </summary>
         public bool IsVirtual { get; set; }
+
+        /// <summary>
+        /// Is method protected
+        /// </summary>
+        public bool IsProtected { get; set; }
     }
 }

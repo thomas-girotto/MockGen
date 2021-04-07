@@ -54,5 +54,15 @@ namespace MockGen.Integration.Tests
 
             action.Should().NotThrow();
         }
+
+        [Fact]
+        public void Should_mock_protected_method()
+        {
+            var sources = GetSourceFilesToCompileFromSpecs();
+
+            Action action = () => testRunner.RunTest(sources, nameof(ConcreteClassTests), nameof(Should_mock_protected_method));
+
+            action.Should().NotThrow();
+        }
     }
 }

@@ -46,5 +46,7 @@ namespace MockGen.ViewModel
             };
 
         public string AddOverrideKeywordIfNeeded => method.IsVirtual ? "override " : string.Empty;
+
+        public string Accessibility => method.IsProtected ? "protected" : "public";
     }
 }

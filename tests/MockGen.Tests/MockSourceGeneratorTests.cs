@@ -1,11 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using MockGen.Model;
 using MockGen.Tests.Fixtures;
 using MockGen.Tests.Utils;
-using MockGen.ViewModel;
-using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using Xunit.Sdk;
@@ -20,64 +17,6 @@ namespace MockGen.Tests
         {
             this.metadata = metadata;
         }
-
-        [Fact]
-        public void Should_find_all_namespaces_used_in_a_class()
-        {
-            var source = @"
-using MockGen;
-using MethodParameterNamespace.Model;
-using ReturnNamespace.Model;
-using CtorNamespace.Model;
-
-namespace MethodParameterNamespace.Model
-{
-    public class ParameterModel {}
-}
-namespace ReturnNamespace.Model
-{
-    public class ReturnModel {}
-}
-namespace CtorNamespace.Model
-{
-    public class CtorParameterModel {}
-}
-namespace MyLib.Tests
-{
-    public class SomeDependency 
-    {
-        // We should extract namespace from ctor parameter
-        public SomeDependency(CtorParameterModel model) { }
-
-        // We should extract namespaces MethodParameterNamespace.Model and ReturnNamespace.Model
-        public virtual ReturnModel DoSomething(ParameterModel model) { return new ReturnModel(); }
-    }
-
-    public class Generators
-    {
-        public void Generate()
-        {
-            MockGenerator.Generate<SomeDependency>();
-        }
-    }
-}
-";
-            // When
-            var (generator, diagnostics) = CompileSource(source);
-
-            // Then
-            if (diagnostics.Any())
-            {
-                throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
-            }
-            generator.TypesToMock.Should().HaveCount(1);
-            var view = new MockView(generator.TypesToMock[0]);
-            view.Namespaces.Should().Contain(new string[] 
-            { 
-                "MethodParameterNamespace.Model", "ReturnNamespace.Model", "CtorNamespace.Model", "MyLib.Tests" 
-            });
-        }
-
 
         [Fact]
         public void Should_find_all_namespaces_in_generic_type()
@@ -101,8 +40,8 @@ namespace MockGen.Tests
     }
 }";
             // When
-            var (generator, diagnostics) = CompileSource(source);
-            
+            var (generator, diagnostics) = SourceCompiler.Compile(source, metadata.MetadataReferences);
+
             // Then
             if (diagnostics.Any())
             {
@@ -136,7 +75,7 @@ namespace MockGen.Tests
     }
 }";
             // When
-            var (generator, diagnostics) = CompileSource(source);
+            var (generator, diagnostics) = SourceCompiler.Compile(source, metadata.MetadataReferences);
 
             // Then
             if (diagnostics.Any())
@@ -171,7 +110,7 @@ namespace MockGen.Tests
     }
 }";
             // When
-            var (generator, diagnostics) = CompileSource(source);
+            var (generator, diagnostics) = SourceCompiler.Compile(source, metadata.MetadataReferences);
 
             // Then
             if (diagnostics.Any())
@@ -210,7 +149,7 @@ namespace MyLib.Tests
 }
 ";
             // When
-            var (generator, diagnostics) = CompileSource(source);
+            var (generator, diagnostics) = SourceCompiler.Compile(source, metadata.MetadataReferences);
 
             // Then
             if (diagnostics.Any())
@@ -245,7 +184,7 @@ namespace MockGen.Tests
     }
 }";
             // When
-            var (generator, diagnostics) = CompileSource(source);
+            var (generator, diagnostics) = SourceCompiler.Compile(source, metadata.MetadataReferences);
 
             // Then
             if (diagnostics.Any())
@@ -277,7 +216,7 @@ namespace MockGen.Tests
     }
 }";
             // When
-            var (generator, diagnostics) = CompileSource(source);
+            var (generator, diagnostics) = SourceCompiler.Compile(source, metadata.MetadataReferences);
 
             // Then
             if (diagnostics.Any())
@@ -289,77 +228,6 @@ namespace MockGen.Tests
             generator.TypesToMock[0].Properties.Should().HaveCount(1);
             generator.TypesToMock[0].Properties[0].HasGetter.Should().BeTrue();
             generator.TypesToMock[0].Properties[0].HasSetter.Should().BeFalse();
-        }
-
-        [Fact]
-        public void Should_generate_a_diagnostic_error_When_trying_to_generate_a_mock_for_a_sealed_class()
-        {
-            // Given
-            string source = @"
-using MockGen;
-namespace MockGen.Tests
-{
-    public sealed class SealedClass { }
-    public class Generators
-    {
-        public void GenerateMocks()
-        {
-            MockGenerator.Generate<SealedClass>();
-        }
-    }
-}";
-            // When
-            var (_, diagnostics) = CompileSource(source);
-
-            // Then
-            diagnostics.Should().HaveCount(1).And.ContainSingle(d => d.Severity == DiagnosticSeverity.Error && d.Id == "MG0002");
-        }
-
-        [Fact]
-        public void Should_generate_a_diagnostic_error_When_trying_to_mock_an_unknown_type()
-        {
-            // Given
-            string source = @"
-using MockGen;
-namespace MockGen.Tests
-{
-    public class Generators
-    {
-        public void GenerateMocks()
-        {
-            MockGenerator.Generate<IDependency>(); // IDependency is unknown here
-        }
-    }
-}";
-            // When
-            var (_, diagnostics) = CompileSource(source);
-
-            // Then
-            diagnostics.Should().Contain(d => d.Severity == DiagnosticSeverity.Error && d.Id == "MG0004");
-        }
-
-        private (MockSourceGeneratorSpy generator, IEnumerable<Diagnostic> diagnostics) CompileSource(string source)
-        {
-            var rootNode = CSharpSyntaxTree.ParseText(source).GetRoot();
-            var syntaxReceiver = new SyntaxReceiver();
-            var syntaxTreeVisitor = new MockGeneratorSyntaxWalker(syntaxReceiver);
-            syntaxTreeVisitor.Visit(rootNode);
-            
-            var compilation = CSharpCompilation.Create(
-                    "TestCodeInMemoryAssembly",
-                    new[] { rootNode.SyntaxTree},
-                    metadata.MetadataReferences,
-                    new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-
-            var generator = new MockSourceGeneratorSpy();
-
-            var driver = CSharpGeneratorDriver.Create(generator);
-            driver.RunGeneratorsAndUpdateCompilation(compilation, out var fullCompilation, out var generatorDiagnostics);
-
-            var allDiagnostics = fullCompilation.GetDiagnostics().Where(d => d.Severity == DiagnosticSeverity.Error).ToList();
-            allDiagnostics.AddRange(generatorDiagnostics.ToList());
-
-            return (generator, allDiagnostics);
         }
     }
 }

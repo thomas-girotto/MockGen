@@ -229,7 +229,14 @@ namespace MockGen.Templates
             
             #line default
             #line hidden
-            this.Write("        public ");
+            this.Write("        ");
+            
+            #line 45 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.Accessibility));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
             
             #line 45 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.AddOverrideKeywordIfNeeded));
@@ -264,7 +271,14 @@ namespace MockGen.Templates
             
             #line default
             #line hidden
-            this.Write("        public ");
+            this.Write("        ");
+            
+            #line 47 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.Accessibility));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
             
             #line 47 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.AddOverrideKeywordIfNeeded));
@@ -299,7 +313,14 @@ namespace MockGen.Templates
             
             #line default
             #line hidden
-            this.Write("        public ");
+            this.Write("        ");
+            
+            #line 49 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.Accessibility));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
             
             #line 49 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.AddOverrideKeywordIfNeeded));
