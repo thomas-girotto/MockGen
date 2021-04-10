@@ -11,17 +11,17 @@ namespace MockGen
 
         public ConcreteDependencyMockBuilder(bool callBase)
         {
-            ctor = () => new ConcreteDependencyMock(callBase, methods);
+            ctor = () => new ConcreteDependencyMock(methods, callBase);
         }
 
         public ConcreteDependencyMockBuilder(bool callBase, Model1 model1)
         {
-            ctor = () => new ConcreteDependencyMock(callBase, methods, model1); 
+            ctor = () => new ConcreteDependencyMock(methods, callBase, model1); 
         }
 
         public ConcreteDependencyMockBuilder(bool callBase, Model1 model1, Model2 model2)
         {
-            ctor = () => new ConcreteDependencyMock(callBase, methods, model1, model2);
+            ctor = () => new ConcreteDependencyMock(methods, callBase, model1, model2);
         }
 
         internal IMethodSetupReturn<int> ICanBeMocked()

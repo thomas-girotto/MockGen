@@ -9,13 +9,13 @@ namespace MockGen.ViewModel
         public Mock Mock { get; private set; }
         public List<MethodView> Methods { get; private set; }
         
-        public List<ParametersView> CtorsParameters { get; private set; }
+        public List<CtorParametersView> CtorsParameters { get; private set; }
 
         public MockView(Mock mock)
         {
             Mock = mock;
             Methods = mock.Methods.Select(m => new MethodView(m)).ToList();
-            CtorsParameters = mock.Ctors.Select(c => new ParametersView(c.Parameters)).ToList();
+            CtorsParameters = mock.Ctors.Select(c => new CtorParametersView(mock.IsInterface, mock.TypeToMock.Name, c.Parameters)).ToList();
         }
 
         public IEnumerable<string> Namespaces => Mock.TypeToMock.Namespaces

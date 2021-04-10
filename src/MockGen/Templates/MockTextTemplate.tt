@@ -14,11 +14,17 @@ namespace MockGen
 {
     internal class <#=view.TypeToMock#>Mock : <#=view.Mock.TypeToMockOriginalName#>
     {
+<# if (!view.Mock.IsInterface) { #>
+        private readonly bool callBase;
+<# } #>
         private readonly <#=view.TypeToMock#>MethodsSetup methods;
 
 <# foreach (var ctorParameters in view.CtorsParameters) { #>
-        public <#=view.TypeToMock#>Mock(<#=ctorParameters.ConcatParametersDeclarationWith(view.TypeToMock + "MethodsSetup methods")#>)<#=string.Format(view.CallBaseCtorIfNeeded, ctorParameters.Names)#>
+        public <#=view.TypeToMock#>Mock(<#=ctorParameters.MockConstructorParameterDeclaration#>)<#=string.Format(view.CallBaseCtorIfNeeded, ctorParameters.Names)#>
         {
+<# if (!view.Mock.IsInterface) { #>
+            this.callBase = callBase;
+<# } #>
             this.methods = methods;
         }
 <# } #>
@@ -53,9 +59,22 @@ namespace MockGen
             <#=method.Parameters.OutParameterNames#> = methods.<#=method.UniqueName#>OutParameterSetup(<#=method.Parameters.Names#>); 
 <# } #>
 <# if (!method.ReturnsVoid) { #>
+<# if (!view.Mock.IsInterface) { #>
+            if (callBase)
+            {
+                methods.<#=method.UniqueName#>Setup.ExecuteSetup(<#=method.Parameters.Names#>);
+                return base.<#=method.Name#>(<#=method.Parameters.Names#>);
+            }
+<# } #>
             return methods.<#=method.UniqueName#>Setup.ExecuteSetup(<#=method.Parameters.Names#>);
 <# } else { #>
             methods.<#=method.UniqueName#>Setup.ExecuteSetup(<#=method.Parameters.Names#>);
+<# if (!view.Mock.IsInterface) { #>
+            if (callBase)
+            {
+                base.<#=method.Name#>(<#=method.Parameters.Names#>);
+            }
+<# } #>
 <# } #>
         }
 

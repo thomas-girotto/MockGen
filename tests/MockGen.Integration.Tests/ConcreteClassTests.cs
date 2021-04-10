@@ -64,5 +64,15 @@ namespace MockGen.Integration.Tests
 
             action.Should().NotThrow();
         }
+
+        [Fact]
+        public void Should_call_base_method_When_configured_to_do_so()
+        {
+            var sources = GetSourceFilesToCompileFromSpecs();
+
+            Action action = () => testRunner.RunTest(sources, nameof(ConcreteClassTests), nameof(Should_call_base_method_When_configured_to_do_so));
+
+            action.Should().NotThrow();
+        }
     }
 }

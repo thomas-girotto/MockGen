@@ -47,16 +47,6 @@ namespace MockGen.ViewModel
 
         public string OutParameterTypesDefault => outParameters.Count == 1 ? outParameters.First().Type.Name : $"({OutParameterTypes})";
 
-        public string ConcatParametersDeclarationWith(string firstParameter) =>
-            string.Join(", ", new List<string> { firstParameter }
-                .Concat(classicParameters.Select(p => $"{p.Type.Name} {p.Name}"))
-                .Where(s => !string.IsNullOrEmpty(s)));
-
-        public string ConcatParametersNameWith(string firstParameter) =>
-            string.Join(", ", new List<string> { firstParameter }
-                .Concat(classicParameters.Select(p => $"{p.Name}"))
-                .Where(s => !string.IsNullOrEmpty(s)));
-
         public string OutParameterSetupFunc =>
             (classicParameters.Count, outParameters.Count) switch
             {

@@ -94,7 +94,7 @@ namespace MockGen.Templates
             this.Write("MockBuilder(");
             
             #line 20 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ctorParameters.TypesAndNames));
+            this.Write(this.ToStringHelper.ToStringWithCulture(ctorParameters.MockBuilderConstructorParameterDeclaration));
             
             #line default
             #line hidden
@@ -108,7 +108,7 @@ namespace MockGen.Templates
             this.Write("Mock(");
             
             #line 22 "D:\Dev\MockGen\src\MockGen\Templates\MockBuilderTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ctorParameters.ConcatParametersNameWith("methods")));
+            this.Write(this.ToStringHelper.ToStringWithCulture(ctorParameters.MockConstructorParameterNames));
             
             #line default
             #line hidden

@@ -7,19 +7,19 @@ namespace MockGen
         private readonly bool callBase;
         private readonly ConcreteDependencyMethodsSetup methods;
 
-        public ConcreteDependencyMock(bool callBase, ConcreteDependencyMethodsSetup methods)
+        public ConcreteDependencyMock(ConcreteDependencyMethodsSetup methods, bool callBase)
         {
             this.callBase = callBase;
             this.methods = methods;
         }
 
-        public ConcreteDependencyMock(bool callBase, ConcreteDependencyMethodsSetup methods, Model1 model1) : base(model1) 
+        public ConcreteDependencyMock(ConcreteDependencyMethodsSetup methods, bool callBase, Model1 model1) : base(model1) 
         {
             this.callBase = callBase;
             this.methods = methods;
         }
 
-        public ConcreteDependencyMock(bool callBase, ConcreteDependencyMethodsSetup methods, Model1 model1, Model2 model2) : base(model1, model2)
+        public ConcreteDependencyMock(ConcreteDependencyMethodsSetup methods, bool callBase, Model1 model1, Model2 model2) : base(model1, model2)
         {
             this.callBase = callBase;
             this.methods = methods;

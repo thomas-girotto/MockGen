@@ -22,8 +22,16 @@ namespace MockGen
 <# foreach(var ctorParameters in mock.CtorsParameters) { #>
         internal static <#=mock.TypeToMock#>MockBuilder <#=mock.TypeToMock#>(<#=ctorParameters.TypesAndNames#>)
         {
-            return new <#=mock.TypeToMock#>MockBuilder(<#=ctorParameters.Names#>);
+            return new <#=mock.TypeToMock#>MockBuilder(<#=ctorParameters.MockBuilderConstructorParameterNamesWithDefaultCallBaseValue#>);
         }
+
+<# if (!mock.Mock.IsInterface) { #>
+        internal static <#=mock.TypeToMock#>MockBuilder <#=mock.TypeToMock#>(<#=ctorParameters.MockBuilderConstructorParameterDeclaration#>)
+        {
+            return new <#=mock.TypeToMock#>MockBuilder(<#=ctorParameters.MockBuilderConstructorParameterNames#>);
+        }
+
+<# } #>
 
 <# } #>
 <# } #>

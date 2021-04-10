@@ -69,5 +69,28 @@ namespace MockGen.Tests.ViewModel
             // Then
             namespaces.Should().HaveCount(1).And.Contain(typeToMockNamespace);
         }
+
+        [Fact]
+        public void Should_add_callBase_parameter_to_all_constructors_When_mocking_a_concrete_class()
+        {
+            var mock = new MockView(new Mock
+            {
+                IsInterface = false,
+                TypeToMock = new Type("SomeType"),
+                Ctors = new List<Ctor>
+                {
+                    new Ctor(),
+                    new Ctor { Parameters = new List<Parameter> { new Parameter(new Type("int"), "param1", false) } },
+                }
+            });
+
+            mock.CtorsParameters.Should().HaveCount(2);
+            mock.CtorsParameters[0].MockConstructorParameterNames.Should().Be("methods, callBase");
+            mock.CtorsParameters[0].MockConstructorParameterDeclaration.Should().Be("SomeTypeMethodsSetup methods, bool callBase");
+            mock.CtorsParameters[0].MockBuilderConstructorParameterDeclaration.Should().Be("bool callBase");
+            mock.CtorsParameters[1].MockConstructorParameterNames.Should().Be("methods, callBase, param1");
+            mock.CtorsParameters[1].MockConstructorParameterDeclaration.Should().Be("SomeTypeMethodsSetup methods, bool callBase, int param1");
+            mock.CtorsParameters[1].MockBuilderConstructorParameterDeclaration.Should().Be("bool callBase, int param1");
+        }
     }
 }

@@ -17,9 +17,9 @@ namespace MockGen
         private readonly Func<<#=view.TypeToMock#>Mock> ctor;
 
 <# foreach (var ctorParameters in view.CtorsParameters) {#>
-        internal <#=view.TypeToMock#>MockBuilder(<#=ctorParameters.TypesAndNames#>)
+        internal <#=view.TypeToMock#>MockBuilder(<#=ctorParameters.MockBuilderConstructorParameterDeclaration#>)
         {
-            ctor = () => new <#=view.TypeToMock#>Mock(<#=ctorParameters.ConcatParametersNameWith("methods")#>);
+            ctor = () => new <#=view.TypeToMock#>Mock(<#=ctorParameters.MockConstructorParameterNames#>);
         }
 <#}#>
 

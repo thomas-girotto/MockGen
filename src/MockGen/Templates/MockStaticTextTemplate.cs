@@ -126,25 +126,74 @@ namespace MockGen.Templates
             this.Write("MockBuilder(");
             
             #line 25 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ctorParameters.Names));
+            this.Write(this.ToStringHelper.ToStringWithCulture(ctorParameters.MockBuilderConstructorParameterNamesWithDefaultCallBaseValue));
             
             #line default
             #line hidden
             this.Write(");\r\n        }\r\n\r\n");
             
             #line 28 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
- } 
+ if (!mock.Mock.IsInterface) { 
             
             #line default
             #line hidden
+            this.Write("        internal static ");
             
             #line 29 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
+            
+            #line default
+            #line hidden
+            this.Write("MockBuilder ");
+            
+            #line 29 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
+            
+            #line default
+            #line hidden
+            this.Write("(");
+            
+            #line 29 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ctorParameters.MockBuilderConstructorParameterDeclaration));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n        {\r\n            return new ");
+            
+            #line 31 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
+            
+            #line default
+            #line hidden
+            this.Write("MockBuilder(");
+            
+            #line 31 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ctorParameters.MockBuilderConstructorParameterNames));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n        }\r\n\r\n");
+            
+            #line 34 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 36 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 30 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 37 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            
+            #line 38 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
  } 
             
             #line default
