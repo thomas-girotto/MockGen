@@ -41,6 +41,11 @@ namespace MockGen.Specs.Sut
             return m1?.Id ?? 0;
         }
 
+        public virtual void ICallProtectedMethod(string firstName)
+        {
+            SaveFullName(firstName + " Lastname");
+        }
+
         public void AddLastNameAndSave(string firstname)
         {
             SaveFullName(firstname + " Lastname");

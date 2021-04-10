@@ -58,5 +58,16 @@ namespace MockGen.Specs
             // Then
             mockBuilder.SaveFullName("Firstname Lastname").NumberOfCalls.Should().Be(1);
         }
+
+        [Fact]
+        public void Should_call_base_method_When_configured_to_do_so()
+        {
+            var mockBuilder = Mock.ConcreteDependency(true);
+            var mock = mockBuilder.Build();
+
+            mock.ICallProtectedMethod("Firstname");
+
+            mockBuilder.SaveFullName(Arg<string>.Any).NumberOfCalls.Should().Be(1);
+        }
     }
 }
