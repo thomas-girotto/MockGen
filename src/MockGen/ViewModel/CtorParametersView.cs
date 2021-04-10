@@ -17,23 +17,22 @@ namespace MockGen.ViewModel
 
         public string MockBuilderConstructorParameterDeclaration => isTypeToMockAnInterface
             ? TypesAndNames
-            : string.Join(", ", new string[] { "bool callBase", TypesAndNames }.Where(s => !string.IsNullOrEmpty(s)));
+            : new string[] { "bool callBase", TypesAndNames }.JoinAsParameters();
 
         public string MockBuilderConstructorParameterNames => isTypeToMockAnInterface
             ? Names
-            : string.Join(", ", new string[] { "callBase", Names }.Where(s => !string.IsNullOrEmpty(s)));
+            : new string[] { "callBase", Names }.JoinAsParameters();
 
         public string MockBuilderConstructorParameterNamesWithDefaultCallBaseValue => isTypeToMockAnInterface
             ? Names
-            : string.Join(", ", new string[] { "false", Names }.Where(s => !string.IsNullOrEmpty(s)));
+            : new string[] { "false", Names }.JoinAsParameters();
 
         public string MockConstructorParameterDeclaration => isTypeToMockAnInterface
-            ? string.Join(", ", new string[] { $"{typeToMock}MethodsSetup methods", TypesAndNames }.Where(s => !string.IsNullOrEmpty(s)))
-            : string.Join(", ", new string[] { $"{typeToMock}MethodsSetup methods", "bool callBase", TypesAndNames }.Where(s => !string.IsNullOrEmpty(s)));
+            ? new string[] { $"{typeToMock}MethodsSetup methods", TypesAndNames }.JoinAsParameters()
+            : new string[] { $"{typeToMock}MethodsSetup methods", "bool callBase", TypesAndNames }.JoinAsParameters();
 
         public string MockConstructorParameterNames => isTypeToMockAnInterface
-            ? string.Join(", ", new string[] { "methods", Names }.Where(s => !string.IsNullOrEmpty(s)))
-            : string.Join(", ", new string[] { "methods", "callBase", Names }.Where(s => !string.IsNullOrEmpty(s)));
-
+            ? new string[] { "methods", Names }.JoinAsParameters()
+            : new string[] { "methods", "callBase", Names }.JoinAsParameters();
     }
 }
