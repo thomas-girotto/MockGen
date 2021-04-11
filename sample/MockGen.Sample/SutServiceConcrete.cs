@@ -18,9 +18,14 @@ namespace MockGen.Sample
             dependency.SaveModel(model);
         }
 
-        public void DoSomethingAndCallProtectedMethod(SomeModel model)
+        public void DoSomethingAndCallProtectedMethodFromNonMockedMethod(SomeModel model)
         {
-            dependency.CallProtectedMethod(model);
+            dependency.CallProtectedMethodFromNonMockedMethod(model);
+        }
+
+        public void DoSomethingAndCallProtectedMethodFromMockedMethod(SomeModel model)
+        {
+            dependency.CallProtectedMethodFromMockedMethod(model);
         }
     }
 }

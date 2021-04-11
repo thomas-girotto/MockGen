@@ -9,7 +9,7 @@ namespace MockGen.Sample.Tests
         public void Mock_should_respect_constructor_signature()
         {
             var mock = Mock.ConcreteDependency("foo").Build();
-            mock.ConstructorParam.Should().Be("foo");
+            Assert.Equal("foo", mock.ConstructorParam);
         }
 
         [Fact]
@@ -25,8 +25,8 @@ namespace MockGen.Sample.Tests
             sut.DoSomethingAndSave(new SomeModel());
 
             // Then
-            wasCalled.Should().BeTrue();
-            mock.SaveModel(Arg<SomeModel>.Any).NumberOfCalls.Should().Be(1);
+            Assert.True(wasCalled);
+            Assert.Equal(1, mock.SaveModel(Arg<SomeModel>.Any).NumberOfCalls);
         }
 
         [Fact]
@@ -39,11 +39,30 @@ namespace MockGen.Sample.Tests
             var sut = new SutServiceConcrete(mock.Build());
 
             // When
-            sut.DoSomethingAndCallProtectedMethod(new SomeModel());
+            sut.DoSomethingAndCallProtectedMethodFromNonMockedMethod(new SomeModel());
 
             // Then
-            wasCalled.Should().BeTrue();
-            mock.DoSomethingProtected(Arg<SomeModel>.Any).NumberOfCalls.Should().Be(1);
+            Assert.True(wasCalled);
+            Assert.Equal(1, mock.DoSomethingProtected(Arg<SomeModel>.Any).NumberOfCalls);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void Can_configure_mock_to_call_base_class(bool callBase)
+        {
+            var mock = Mock.ConcreteDependency(callBase, "foo");
+            var wasCalled = false;
+            mock.DoSomethingProtected(Arg<SomeModel>.Any).Execute(_ => wasCalled = true);
+            var sut = new SutServiceConcrete(mock.Build());
+            var model = new SomeModel();
+
+            // When
+            sut.DoSomethingAndCallProtectedMethodFromMockedMethod(model);
+
+            // Then
+            // The protected method is called only when the mock is configured to call base class (i.e. the real class) 
+            Assert.Equal(callBase, wasCalled);
         }
     }
 }
