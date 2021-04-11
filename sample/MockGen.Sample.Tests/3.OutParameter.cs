@@ -10,7 +10,7 @@ namespace MockGen.Sample.Tests
             // Given
             var mock = Mock.IDependencyOutParams();
             // By not passing a Func that returns a value for SomeModel as a second parameter, we'll have the
-            // out parameter assigned default(SomeModel)
+            // out parameter assigned to default(SomeModel)
             mock.TryGetById(Arg<int>.Any).Returns(true);
             var sut = new SutServiceOutParams(mock.Build());
 
@@ -24,7 +24,7 @@ namespace MockGen.Sample.Tests
         }
 
         [Fact]
-        public void OutParameter_Exemple()
+        public void OutParameter_SetupOutParameterFromFunc_Exemple()
         {
             // Given
             var mock = Mock.IDependencyOutParams();
@@ -43,7 +43,7 @@ namespace MockGen.Sample.Tests
         }
 
         [Fact]
-        public void SeveralOutParameters_Exemple()
+        public void OutParameter_SetupSeveralOutParameters_Exemple()
         {
             // Given
             var mock = Mock.IDependencyOutParams();

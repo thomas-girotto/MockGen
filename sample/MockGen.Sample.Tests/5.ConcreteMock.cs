@@ -1,5 +1,4 @@
-﻿using FluentAssertions;
-using Xunit;
+﻿using Xunit;
 
 namespace MockGen.Sample.Tests
 {

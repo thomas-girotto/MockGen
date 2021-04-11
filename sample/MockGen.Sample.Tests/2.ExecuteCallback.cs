@@ -40,7 +40,7 @@ namespace MockGen.Sample.Tests
         }
 
         [Fact]
-        public void ExecuteCallback_WithAccessToParameter_Exemple()
+        public void ExecuteCallback_AndUseTheGivenParameter_Exemple()
         {
             // Given
             var mock = Mock.IDependency();
