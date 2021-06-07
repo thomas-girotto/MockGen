@@ -19,7 +19,7 @@ namespace MockGen
         public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
         {
             if (syntaxNode is IdentifierNameSyntax maybeMockGenerator
-                && maybeMockGenerator.Identifier.ValueText == "MockGenerator"
+                && maybeMockGenerator.Identifier.ValueText == "MockG"
                 && maybeMockGenerator.Parent is MemberAccessExpressionSyntax mockGeneratorParent)
             {
                 // Parent of MockGenerator identifier can be either directly the call to Generate method

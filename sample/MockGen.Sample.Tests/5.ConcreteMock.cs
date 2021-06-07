@@ -7,7 +7,7 @@ namespace MockGen.Sample.Tests
         [Fact]
         public void Mock_should_respect_constructor_signature()
         {
-            var mock = Mock.ConcreteDependency("foo").Build();
+            var mock = MockG.Generate<ConcreteDependency>().New("foo").Build();
             Assert.Equal("foo", mock.ConstructorParam);
         }
 
@@ -15,7 +15,7 @@ namespace MockGen.Sample.Tests
         public void Can_mock_public_virtual_method_as_any_other_interface_method()
         {
             // Given
-            var mock = Mock.ConcreteDependency("foo");
+            var mock = MockG.Generate<ConcreteDependency>().New("foo");
             bool wasCalled = false;
             mock.SaveModel(Arg<SomeModel>.Any).Execute(_ => wasCalled = true);
             var sut = new SutServiceConcrete(mock.Build());
@@ -32,7 +32,7 @@ namespace MockGen.Sample.Tests
         public void Can_mock_protected_virtual_method_as_any_other_method()
         {
             // Given
-            var mock = Mock.ConcreteDependency("foo");
+            var mock = MockG.Generate<ConcreteDependency>().New("foo");
             bool wasCalled = false;
             mock.DoSomethingProtected(Arg<SomeModel>.Any).Execute(_ => wasCalled = true);
             var sut = new SutServiceConcrete(mock.Build());
@@ -50,7 +50,7 @@ namespace MockGen.Sample.Tests
         [InlineData(false)]
         public void Can_configure_mock_to_call_base_class(bool callBase)
         {
-            var mock = Mock.ConcreteDependency(callBase, "foo");
+            var mock = MockG.Generate<ConcreteDependency>().New(callBase, "foo");
             var wasCalled = false;
             mock.DoSomethingProtected(Arg<SomeModel>.Any).Execute(_ => wasCalled = true);
             var sut = new SutServiceConcrete(mock.Build());

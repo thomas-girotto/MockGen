@@ -8,7 +8,7 @@ namespace MockGen.Sample.Tests
         public void ExecuteCallback_Exemple()
         {
             // Given
-            var mock = Mock.IDependency();
+            var mock = MockG.Generate<IDependency>().New();
             var count = 0;
             mock.DoSomething().Execute(() => count++);
             var sut = new SutService(mock.Build());
@@ -25,7 +25,7 @@ namespace MockGen.Sample.Tests
         public void ExecuteCallback_DependingOnParameter_Exemple()
         {
             // Given
-            var mock = Mock.IDependency();
+            var mock = MockG.Generate<IDependency>().New();
             var count = 0;
             mock.DoSomethingWithParam(Arg<SomeModel>.When(m => m.Id >= 5)).Execute((_) => count++);
             var sut = new SutService(mock.Build());
@@ -43,7 +43,7 @@ namespace MockGen.Sample.Tests
         public void ExecuteCallback_AndUseTheGivenParameter_Exemple()
         {
             // Given
-            var mock = Mock.IDependency();
+            var mock = MockG.Generate<IDependency>().New();
             var count = 0;
             mock.DoSomethingWithParam(Arg<SomeModel>.Any).Execute(m => count+= m.Id); // use the given parameter in your callback
             var sut = new SutService(mock.Build());

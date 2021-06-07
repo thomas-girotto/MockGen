@@ -12,15 +12,13 @@ That allow the following capabilities :
  - Exposing an API that really embrace the types you want to mock (no more object[] that are still present here and there in other libs, like in constructors argument when you want to mock a class and not an interface)
  - Navigate and setup a breakpoint inside the generated sources, which can be handy to understand why some calls didn't work as expected
  - Expose directly the calls with their parameters that were made on your mocked methods (reprensented as a list of tuples), and let you use your favorite assertion library to check them, instead of having assertions being part of the mocking library
- - Mock protected method (that's still a TODO :))
+ - Mock protected method
  - Have a nice API like nsubstitute (which i prefer compared to moq), but without the downsize of having all those extensions methods on object, which pop in your intellisense every time you enter a dot :)
  - It's a lot faster at runtime: See [Benchmark.md](Benchmark.md)
 
 ## Warning
 
-You need at least Visual Studio 16.9.2 for a smoother developer experience, although there are still some [issues](https://github.com/dotnet/roslyn/issues/50451).
-
-For the moment, newly generated types are not seen in intellisense and you need to restart Visual Studio to see them. 
+You need at least Visual Studio 16.10.0 for a smoother developer experience, although there are still some [issues](https://github.com/dotnet/roslyn/issues/50451). 
 
 ## Install It
 
@@ -32,14 +30,11 @@ Reference MockGen in your csproj like this. It should be referenced as an analyz
 ## Quick look
 
 ```csharp
-// Tell the compiler you want to generate a mock for IDependency. You can do that only once per type, 
-// and put them all in a Generators.cs class for instance
-MockGenerator.Mock<IDependency>();
-
+// MockG.Generate<IDependency>() Tell the compiler you want to generate a mock for IDependency.
 // Once the compiler have detected that you're interested in mocking IDependency type, it generates 
-// IDependency method on Mock static class, plus all the needed helper class that allow you to configure 
-// your mock. 
-var mock = Mock.IDependency();
+// an extension method New on the type returned by Generate<T> method, plus all the needed helper class 
+// that allow you to configure your mock. 
+var mock = MockG.Generate<IDependency>().New();
 
 // Returns
 mock.GetAge(Arg<string>.Any).Returns(42); // Will return 42 for any parameter
@@ -69,7 +64,7 @@ Assert.Equal(1, mock.GetAge("My Daughter").NumberOfCalls); // Number of calls to
 Assert.Equal(1, mock.GetAge(Arg<string>.When(s => s.StartsWith("foo")).NumberOfCalls)); // Number of calls matching predicate
 
 // Concrete class: you have access to constructor overloads and not only a params object[]
-var mock = Mock.ConcreteClass(ctorParam1, ctorParam2);
+var mock = MockG.Generate<ConcreteClass>().New(ctorParam1, ctorParam2);
 
 // Out Parameters
 // method we're mocking: 
@@ -87,7 +82,5 @@ Check the [sample project](https://github.com/thomas-girotto/MockGen/tree/master
 
 ## What features are coming next
 
-- Mock protected methods
 - Respect nullable types in generated code when user's lib have them 
-- Returns from Func
-- ? 
+- Add possibility to setup return value from Func ?

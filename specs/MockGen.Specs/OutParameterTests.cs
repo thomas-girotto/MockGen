@@ -10,7 +10,7 @@ namespace MockGen.Specs
         public void Should_default_out_parameter_When_not_explicitly_setup()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             mockBuilder.TryGetById(Arg<int>.Any).Returns(true);
             var mock = mockBuilder.Build();
 
@@ -26,7 +26,7 @@ namespace MockGen.Specs
         public void Should_setup_out_parameter_depending_on_input_parameter()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var model1 = new Model1 { Id = 1 };
             var model2 = new Model1 { Id = 2 };
             mockBuilder.TryGetById(Arg<int>.Any, (id) => id == 1 ? model1 : model2).Returns(true);
@@ -47,7 +47,7 @@ namespace MockGen.Specs
         public void Should_setup_out_parameters_as_tuple_When_several_out_parameters()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var model1 = new Model1 { Id = 1 };
             var model2 = new Model2 { Name = "foo" };
             mockBuilder.TryGetById(Arg<int>.Any, (_) => (model1, model2)).Returns(true);

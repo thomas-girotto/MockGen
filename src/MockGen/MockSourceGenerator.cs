@@ -26,9 +26,11 @@ namespace MockGen
                     return;
                 }
 
-                // Generate MockGenerator class even when no type to mock yet
-                var mockGeneratorTemplate = new MockGeneratorTextTemplate();
-                AddSourceToBuildContext(context, "MockGenerator.cs", mockGeneratorTemplate.TransformText());
+                // Generate MockG class even when no type to mock yet
+                var mockGTemplate = new MockGTextTemplate();
+                AddSourceToBuildContext(context, "MockG.cs", mockGTemplate.TransformText());
+                var generateTemplate = new GenerateTextTemplate();
+                AddSourceToBuildContext(context, "Generate.cs", generateTemplate.TransformText());
 
                 if (!receiver.TypesToMock.Any())
                 {
@@ -86,8 +88,8 @@ namespace MockGen
                     AddSourceToBuildContext(context, $"{mock.TypeToMock.Name}Mock.cs", mockTemplate.TransformText());
                 }
 
-                var mockStaticTemplate = new MockStaticTextTemplate(sanityzedMocks);
-                AddSourceToBuildContext(context, "Mock.cs", mockStaticTemplate.TransformText());
+                var generateExtensionsTemplate = new GenerateExtensionsTextTemplate(sanityzedMocks);
+                AddSourceToBuildContext(context, "GenerateExtensions.cs", generateExtensionsTemplate.TransformText());
 
                 // Finally classes that only depend on the number of generic types in methods that we would mock
                 foreach (var methodsInfo in sanityzedMocks.GetAllMethodsGroupedByTypeParameter())

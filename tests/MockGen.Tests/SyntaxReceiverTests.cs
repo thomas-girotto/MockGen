@@ -8,9 +8,9 @@ namespace MockGen.Tests
     public class SyntaxReceiverTests
     {
         [Theory]
-        [InlineData("MockGenerator.Generate<IDependency>();", "IDependency")]
-        [InlineData("MockGenerator.Generate<SomeNamespace.IDependency>();", "SomeNamespace.IDependency")]
-        [InlineData("MockGen.MockGenerator.Generate<IDependency>();", "IDependency")]
+        [InlineData("MockG.Generate<IDependency>();", "IDependency")]
+        [InlineData("MockG.Generate<SomeNamespace.IDependency>();", "SomeNamespace.IDependency")]
+        [InlineData("MockGen.MockG.Generate<IDependency>();", "IDependency")]
         public void Should_recognize_type_to_mock(string mockGenerationSyntax, string expectedTypeName)
         {
             // Given
@@ -31,8 +31,8 @@ namespace MockGen.Tests
         {
             // Given
             var source = @"
-MockGenerator.Generate<IDependency1>();
-MockGenerator.Generate<IDependency2>();
+MockG.Generate<IDependency1>();
+MockG.Generate<IDependency2>();
 ";
             var rootNode = CSharpSyntaxTree.ParseText(source).GetRoot();
             var syntaxReceiver = new SyntaxReceiver();
@@ -48,11 +48,11 @@ MockGenerator.Generate<IDependency2>();
         }
 
         [Theory]
-        [InlineData("MockGenerator.Generate<IDependency>")]
-        [InlineData("MockGenerator.Generate<IDependency>(1)")]
-        [InlineData("MockGenerator.WrongName<IDependency>()")]
+        [InlineData("MockG.Generate<IDependency>")]
+        [InlineData("MockG.Generate<IDependency>(1)")]
+        [InlineData("MockG.WrongName<IDependency>()")]
         [InlineData("WrongClass.Generate<IDependency>()")]
-        [InlineData("// MockGenerator.Generate<IDependency>()")]
+        [InlineData("// MockG.Generate<IDependency>()")]
         public void Should_not_find_type_to_mock_When_syntax_is_wrong(string source)
         {
             // Given

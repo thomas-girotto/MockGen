@@ -18,9 +18,9 @@ namespace MockGen.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+    #line 1 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public partial class MockStaticTextTemplate : MockStaticTextTemplateBase
+    public partial class GenerateExtensionsTextTemplate : GenerateExtensionsTextTemplateBase
     {
 #line hidden
         /// <summary>
@@ -29,176 +29,189 @@ namespace MockGen.Templates
         public virtual string TransformText()
         {
             
-            #line 6 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 6 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
  foreach (var ns in Namespaces) { 
             
             #line default
             #line hidden
             this.Write(" \r\nusing ");
             
-            #line 7 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 7 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ns));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 8 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 8 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("\r\nnamespace MockGen\r\n{\r\n    internal class Mock\r\n    {\r\n");
+            this.Write("\r\nnamespace MockGen\r\n{\r\n    internal static class GenerateExtensions\r\n    {\r\n");
             
-            #line 14 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 14 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
  foreach(var mock in Mocks) { 
             
             #line default
             #line hidden
             
-            #line 15 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 15 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
  if (mock.Mock.IsInterface) { 
             
             #line default
             #line hidden
             this.Write("        internal static ");
             
-            #line 16 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 16 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
             
             #line default
             #line hidden
-            this.Write("MockBuilder ");
+            this.Write("MockBuilder New(this Generate<");
             
-            #line 16 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 16 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMockFullName));
+            
+            #line default
+            #line hidden
+            this.Write("> _) => new ");
+            
+            #line 16 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
             
             #line default
             #line hidden
-            this.Write("()\r\n        {\r\n            return new ");
+            this.Write("MockBuilder();\r\n\r\n");
             
-            #line 18 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
-            
-            #line default
-            #line hidden
-            this.Write("MockBuilder();\r\n        }\r\n\r\n");
-            
-            #line 21 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 18 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
  } else { 
             
             #line default
             #line hidden
             
-            #line 22 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 19 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
  foreach(var ctorParameters in mock.CtorsParameters) { 
             
             #line default
             #line hidden
             this.Write("        internal static ");
             
-            #line 23 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 20 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
             
             #line default
             #line hidden
-            this.Write("MockBuilder ");
+            this.Write("MockBuilder New(this Generate<");
             
-            #line 23 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 20 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
             
             #line default
             #line hidden
-            this.Write("(");
+            this.Write("> _");
             
-            #line 23 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 20 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
+ if (ctorParameters.HasClassicParameter) { 
+            
+            #line default
+            #line hidden
+            this.Write(", ");
+            
+            #line 20 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ctorParameters.TypesAndNames));
             
             #line default
             #line hidden
-            this.Write(")\r\n        {\r\n            return new ");
             
-            #line 25 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 20 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n            => new ");
+            
+            #line 21 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
             
             #line default
             #line hidden
             this.Write("MockBuilder(");
             
-            #line 25 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 21 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ctorParameters.MockBuilderConstructorParameterNamesWithDefaultCallBaseValue));
             
             #line default
             #line hidden
-            this.Write(");\r\n        }\r\n\r\n");
+            this.Write(");\r\n\r\n");
             
-            #line 28 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 23 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
  if (!mock.Mock.IsInterface) { 
             
             #line default
             #line hidden
             this.Write("        internal static ");
             
-            #line 29 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 24 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
             
             #line default
             #line hidden
-            this.Write("MockBuilder ");
+            this.Write("MockBuilder New(this Generate<");
             
-            #line 29 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 24 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
             
             #line default
             #line hidden
-            this.Write("(");
+            this.Write("> _, ");
             
-            #line 29 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 24 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ctorParameters.MockBuilderConstructorParameterDeclaration));
             
             #line default
             #line hidden
-            this.Write(")\r\n        {\r\n            return new ");
+            this.Write(")\r\n            => new ");
             
-            #line 31 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 25 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mock.TypeToMock));
             
             #line default
             #line hidden
             this.Write("MockBuilder(");
             
-            #line 31 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 25 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ctorParameters.MockBuilderConstructorParameterNames));
             
             #line default
             #line hidden
-            this.Write(");\r\n        }\r\n\r\n");
+            this.Write(");\r\n\r\n");
             
-            #line 34 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 27 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 36 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 29 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 37 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 30 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 38 "D:\Dev\MockGen\src\MockGen\Templates\MockStaticTextTemplate.tt"
+            #line 31 "D:\Dev\MockGen\src\MockGen\Templates\GenerateExtensionsTextTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("    }\r\n}");
+            this.Write("        \r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -210,7 +223,7 @@ namespace MockGen.Templates
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public class MockStaticTextTemplateBase
+    public class GenerateExtensionsTextTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

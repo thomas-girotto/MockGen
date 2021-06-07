@@ -30,13 +30,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Templates\MethodsSetupTextTemplate.tt">
+    <None Update="Templates\GenerateExtensionsTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>GenerateExtensionsTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\GenerateTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>GenerateTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Templates\MethodsSetupTextTemplate.tt">
       <LastGenOutput>MethodsSetupTextTemplate.cs</LastGenOutput>
+      <Generator>TextTemplatingFilePreprocessor</Generator>
     </None>
     <None Update="Templates\MockGeneratorTextTemplate.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MockGeneratorTextTemplate.cs</LastGenOutput>
+      <LastGenOutput>GenerateTextTemplate.cs</LastGenOutput>
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+    </None>
+    <None Update="Templates\MockGTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MockGTextTemplate.cs</LastGenOutput>
     </None>
     <None Update="Templates\Setup\ActionConfigurationBaseTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
@@ -126,6 +139,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Templates\GenerateExtensionsTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GenerateExtensionsTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\GenerateTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GenerateTextTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Update="Templates\MethodsSetupTextTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -135,6 +158,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MockGeneratorTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Templates\MockGTextTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MockGTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Update="Templates\Setup\ActionConfigurationBaseTextTemplate.cs">
       <DesignTime>True</DesignTime>

@@ -35,7 +35,7 @@ namespace MockGen.Tests
     {
         public void GenerateMocks()
         {
-            MockGenerator.Generate<IDependency>();
+            MockG.Generate<IDependency>();
         }
     }
 }";
@@ -70,7 +70,7 @@ namespace MockGen.Tests
     {
         public void GenerateMocks()
         {
-            MockGenerator.Generate<IDependency>();
+            MockG.Generate<IDependency>();
         }
     }
 }";
@@ -105,7 +105,7 @@ namespace MockGen.Tests
     {
         public void GenerateMocks()
         {
-            MockGenerator.Generate<IDependency>();
+            MockG.Generate<IDependency>();
         }
     }
 }";
@@ -142,8 +142,8 @@ namespace MyLib.Tests
     {
         public void Generate()
         {
-            MockGenerator.Generate<Sut.Namespace1.IDependency>();
-            MockGenerator.Generate<Sut.Namespace2.IDependency>();
+            MockG.Generate<Sut.Namespace1.IDependency>();
+            MockG.Generate<Sut.Namespace2.IDependency>();
         }
     }
 }
@@ -179,7 +179,7 @@ namespace MockGen.Tests
     {
         public void GenerateMocks()
         {
-            MockGenerator.Generate<IDependency>();
+            MockG.Generate<IDependency>();
         }
     }
 }";
@@ -211,7 +211,7 @@ namespace MockGen.Tests
     {
         public void GenerateMocks()
         {
-            MockGenerator.Generate<IDependency>();
+            MockG.Generate<IDependency>();
         }
     }
 }";

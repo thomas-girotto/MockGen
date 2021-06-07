@@ -33,7 +33,7 @@ namespace MockGen.Tests
     {
         public void GenerateMocks()
         {
-            MockGenerator.Generate<SealedClass>();
+            MockG.Generate<SealedClass>();
         }
     }
 }";
@@ -56,7 +56,7 @@ namespace MockGen.Tests
     {
         public void GenerateMocks()
         {
-            MockGenerator.Generate<IDependency>(); // IDependency is unknown here
+            MockG.Generate<IDependency>(); // IDependency is unknown here
         }
     }
 }";

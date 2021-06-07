@@ -1,11 +1,14 @@
-﻿namespace MockGen
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("MockGen.Benchmark")]
+namespace MockGen
 {
-    public class MockGenerator
+    internal class MockG
     {
         /// <summary>
         /// Gives type information to the compiler so that MockGen can generate a mock for T
         /// </summary>
         /// <typeparam name="T">Type for which we want to generate a mock</typeparam>
-        public static void Generate<T>() { }
+        internal static Generate<T> Generate<T>() => new Generate<T>();
     }
 }

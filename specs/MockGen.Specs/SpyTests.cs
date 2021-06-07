@@ -11,7 +11,7 @@ namespace MockGen.Specs
         public void Should_support_Any_parameter_filter()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var mock = mockBuilder.Build();
             mock.DoSomethingWithTwoParameters(new Model1 { Id = 1 }, new Model2 { Name = "toto" });
             mock.DoSomethingWithTwoParameters(new Model1 { Id = 2 }, new Model2 { Name = "toto" });
@@ -28,7 +28,7 @@ namespace MockGen.Specs
         public void Should_support_Equality_parameter_filter()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var mock = mockBuilder.Build();
             var model2 = new Model2 { Name = "toto" };
             mock.DoSomethingWithTwoParameters(new Model1 { Id = 1 }, new Model2 { Name = "toto" });
@@ -48,7 +48,7 @@ namespace MockGen.Specs
         public void Should_support_Predicate_parameter_filter()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var mock = mockBuilder.Build();
             var model2 = new Model2 { Name = "toto" };
             mock.DoSomethingWithTwoParameters(new Model1 { Id = 1 }, new Model2 { Name = "toto" });
@@ -68,7 +68,7 @@ namespace MockGen.Specs
         public void Should_intersect_all_parameters_criteria()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var mock = mockBuilder.Build();
             var model2 = new Model2 { Name = "toto" };
             mock.DoSomethingWithTwoParameters(new Model1 { Id = 1 }, new Model2 { Name = "toto" });
@@ -89,7 +89,7 @@ namespace MockGen.Specs
         public void Should_throw_When_mock_has_not_been_built()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
 
             // When
             Func<int> spyAction1 = () => mockBuilder.DoSomething().NumberOfCalls;

@@ -9,7 +9,7 @@ namespace MockGen.Sample.Tests
         public async Task ReturnTask_Exemple()
         {
             // Given
-            var mock = Mock.ITaskDependency();
+            var mock = MockG.Generate<ITaskDependency>().New();
             // No need to return a Task<SomeModel>, you can directly returns a SomeModel instance
             var expected = new SomeModel();
             mock.GetSomeModelTaskAsync(Arg<int>.Any).Returns(expected);
@@ -26,7 +26,7 @@ namespace MockGen.Sample.Tests
         public async Task ReturnValueTask_Exemple()
         {
             // Given
-            var mock = Mock.ITaskDependency();
+            var mock = MockG.Generate<ITaskDependency>().New();
             var expected = new SomeModel();
             mock.GetSomeModelValueTaskAsync(Arg<int>.Any).Returns(expected);
             var sut = new SutServiceAsync(mock.Build());

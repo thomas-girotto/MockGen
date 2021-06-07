@@ -7,6 +7,7 @@ namespace MockGen.ViewModel
     public class MockView
     {
         public Mock Mock { get; private set; }
+        
         public List<MethodView> Methods { get; private set; }
         
         public List<CtorParametersView> CtorsParameters { get; private set; }
@@ -28,6 +29,8 @@ namespace MockGen.ViewModel
         public IEnumerable<MethodView> MethodsWithOutParameters => Methods.Where(m => m.Parameters.HasOutParameter);
 
         public string TypeToMock => Mock.TypeToMock.Name;
+
+        public string TypeToMockFullName => Mock.TypeToMock.FullName;
 
         public string CallBaseCtorIfNeeded => Mock.IsInterface ? "" : " : base({0})";
     }

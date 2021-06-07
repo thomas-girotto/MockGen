@@ -2,7 +2,6 @@
 using Microsoft.CodeAnalysis;
 using MockGen.Tests.Fixtures;
 using MockGen.Tests.Utils;
-using MockGen.ViewModel;
 using System.Linq;
 using Xunit;
 using Xunit.Sdk;
@@ -34,7 +33,7 @@ namespace MyLib.Tests
     {
         public void Generate()
         {
-            MockGenerator.Generate<SomeDependency>();
+            MockG.Generate<SomeDependency>();
         }
     }
 }
@@ -67,7 +66,7 @@ namespace MyLib.Tests
     {
         public void Generate()
         {
-            MockGenerator.Generate<SomeDependency>();
+            MockG.Generate<SomeDependency>();
         }
     }
 }

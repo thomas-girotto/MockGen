@@ -10,7 +10,7 @@ namespace MockGen.Specs
         public void Should_mock_return_value_for_get_only_property()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var propertyValue = new Model1 { Id = 1 };
             mockBuilder.GetOnlyProperty.Get.Returns(propertyValue);
             var mock = mockBuilder.Build();
@@ -26,7 +26,7 @@ namespace MockGen.Specs
         public void Should_execute_callback_When_get_only_property_accessed()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var propertyValue = new Model1 { Id = 1 };
             var wasCalled = false;
             mockBuilder.GetOnlyProperty.Get.Execute(() => wasCalled = true);
@@ -43,7 +43,7 @@ namespace MockGen.Specs
         public void Should_count_number_of_calls_to_get_only_property()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var mock = mockBuilder.Build();
 
             // When
@@ -58,7 +58,7 @@ namespace MockGen.Specs
         public void Should_execute_callback_When_set_only_property_accessed()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var wasCalled = false;
             mockBuilder.SetOnlyProperty.Set(Arg<Model1>.Any).Execute(_ => wasCalled = true);
             var mock = mockBuilder.Build();
@@ -74,7 +74,7 @@ namespace MockGen.Specs
         public void Should_count_number_of_calls_to_set_only_property()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var mock = mockBuilder.Build();
             var model = new Model1 { Id = 1 };
 
@@ -90,7 +90,7 @@ namespace MockGen.Specs
         public void Should_mock_return_value_for_get_set_property()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var propertyValue = new Model1 { Id = 1 };
             mockBuilder.GetSetProperty.Get.Returns(propertyValue);
             var mock = mockBuilder.Build();
@@ -106,7 +106,7 @@ namespace MockGen.Specs
         public void Should_execute_callback_When_get_set_property_accessed()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var propertyValue = new Model1 { Id = 1 };
             var getWasCalled = false;
             var setWasCalled = false;
@@ -127,7 +127,7 @@ namespace MockGen.Specs
         public void Should_count_number_of_calls_to_get_set_property()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var mock = mockBuilder.Build();
 
             // When

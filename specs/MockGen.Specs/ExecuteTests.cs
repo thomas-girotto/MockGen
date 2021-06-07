@@ -11,7 +11,7 @@ namespace MockGen.Specs
         public void Should_execute_callback()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var wasCallbackExecuted = false;
             mockBuilder.DoSomething().Execute(() => wasCallbackExecuted = true);
             var mock = mockBuilder.Build();
@@ -27,7 +27,7 @@ namespace MockGen.Specs
         public void Should_execute_callback_When_chained_after_returns_method()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             Model1 param1 = new Model1 { Id = 1 };
             Model2 param2 = new Model2 { Name = "foo" };
             Model1? callbackParam1 = null;
@@ -51,7 +51,7 @@ namespace MockGen.Specs
         public void Should_throw_When_called_after_mock_has_been_built()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var mock = mockBuilder.Build();
 
             // When

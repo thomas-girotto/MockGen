@@ -5,12 +5,12 @@
 <#@ import namespace="System.Collections.Generic" #>
 namespace MockGen
 {
-    public class MockGenerator
+    internal static class MockG
     {
         /// <summary>
-        /// Gives type information to the compiler so that MockGen can generate a mock for T
+        /// Gives type information to the compiler so that MockGen can generate a mock for T.
         /// </summary>
         /// <typeparam name="T">Type for which we want to generate a mock</typeparam>
-        public static void Generate<T>() { }
+        internal static Generate<T> Generate<T>() => new Generate<T>();
     }
 }

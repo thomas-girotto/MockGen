@@ -18,7 +18,7 @@ namespace MockGen.Benchmark
         [Benchmark(Baseline = true, Description = "MockGen"), BenchmarkCategory("Returns")]
         public int MockGenReturnsBench()
         {
-            var mockGen = Mock.IDependency();
+            var mockGen = MockG.Generate<IDependency>().New();
             mockGen.GetSomeNumber().Returns(2);
             var mock = mockGen.Build();
             return mock.GetSomeNumber();
@@ -48,7 +48,7 @@ namespace MockGen.Benchmark
         [GlobalSetup(Target = nameof(MockGenAssertBench))]
         public void MockGenAssertOnOneCallSetup()
         {
-            mockGen = Mock.IDependency();
+            mockGen = MockG.Generate<IDependency>().New();
             mockGen.GetSomeNumberWithParameter(1).Returns(2);
             var mock = mockGen.Build();
             for (int i = 0; i < 1000; i++)

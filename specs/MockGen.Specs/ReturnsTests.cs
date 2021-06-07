@@ -12,7 +12,7 @@ namespace MockGen.Specs
         public void Should_return_default_value_When_nothing_configured()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var mock = mockBuilder.Build();
 
             // When
@@ -26,7 +26,7 @@ namespace MockGen.Specs
         public void Should_always_return_mocked_value_When_no_parameters_in_mocked_method()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             mockBuilder.GetSomeNumber().Returns(2);
             var mock = mockBuilder.Build();
 
@@ -41,7 +41,7 @@ namespace MockGen.Specs
         public void Should_return_per_parameter_mocked_value_When_parameter_match_value()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             mockBuilder.GetSomeNumberWithParameter(1).Returns(2);
             mockBuilder.GetSomeNumberWithParameter(3).Returns(4);
             var mock = mockBuilder.Build();
@@ -59,7 +59,7 @@ namespace MockGen.Specs
         public void Should_return_mocked_value_When_configured_for_null()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             mockBuilder.GetSomeNumberWithReferenceTypeParameter(null).Returns(2);
             var mock = mockBuilder.Build();
 
@@ -76,7 +76,7 @@ namespace MockGen.Specs
         public void Should_return_per_parameter_mocked_value_When_parameter_match_predicate()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             mockBuilder.GetSomeNumberWithReferenceTypeParameter(Arg<Model1>.When(m => m.Id == 1)).Returns(2);
             var mock = mockBuilder.Build();
 
@@ -91,7 +91,7 @@ namespace MockGen.Specs
         public void Should_return_per_parameter_mocked_value_When_parameter_match_equality_by_reference()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var model = new Model1 { Id = 1 };
             var anotherInstance = new Model1 { Id = 1 };
             mockBuilder.GetSomeNumberWithReferenceTypeParameter(model).Returns(2);
@@ -110,7 +110,7 @@ namespace MockGen.Specs
         public void Should_fallback_to_mocked_value_for_Any_When_parameter_doesnt_match_anything_else()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var mockedForAny = 1;
             var mockedFor10Only = 11;
             mockBuilder.GetSomeNumberWithParameter(Arg<int>.Any).Returns(mockedForAny); // The default returned value
@@ -132,7 +132,7 @@ namespace MockGen.Specs
         public void Should_fallback_to_default_When_parameter_doesnt_match_anything_and_no_Any_configured()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var mockedFor10Only = 11;
             mockBuilder.GetSomeNumberWithParameter(10).Returns(mockedFor10Only); // 11 only if given param is 10
             var mock = mockBuilder.Build();
@@ -150,7 +150,7 @@ namespace MockGen.Specs
         public void Should_return_value_based_on_arguments_match()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var model1 = new Model1 { Id = 1 };
             var model2 = new Model2 { Name = "test" };
             mockBuilder.GetSomeNumberWithTwoParameters(model1, model2).Returns(10);
@@ -176,7 +176,7 @@ namespace MockGen.Specs
         public void Should_throw_When_called_after_mock_has_been_built()
         {
             // Given
-            var mockBuilder = Mock.IDependency();
+            var mockBuilder = MockG.Generate<IDependency>().New();
             var mock = mockBuilder.Build();
 
             // When

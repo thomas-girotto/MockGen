@@ -8,7 +8,7 @@ namespace MockGen.Sample.Tests
         public void OutParameter_default_Exemple()
         {
             // Given
-            var mock = Mock.IDependencyOutParams();
+            var mock = MockG.Generate<IDependencyOutParams>().New();
             // By not passing a Func that returns a value for SomeModel as a second parameter, we'll have the
             // out parameter assigned to default(SomeModel)
             mock.TryGetById(Arg<int>.Any).Returns(true);
@@ -27,7 +27,7 @@ namespace MockGen.Sample.Tests
         public void OutParameter_SetupOutParameterFromFunc_Exemple()
         {
             // Given
-            var mock = Mock.IDependencyOutParams();
+            var mock = MockG.Generate<IDependencyOutParams>().New();
             var expectedModel = new SomeModel();
             // The out parameter will be assigned the result of the Func as second parameter
             mock.TryGetById(Arg<int>.Any, (_) => expectedModel).Returns(true);
@@ -46,7 +46,7 @@ namespace MockGen.Sample.Tests
         public void OutParameter_SetupSeveralOutParameters_Exemple()
         {
             // Given
-            var mock = Mock.IDependencyOutParams();
+            var mock = MockG.Generate<IDependencyOutParams>().New();
             var expectedOutParam1 = new SomeModel();
             var expectedOutParam2 = new SomeModel();
             // When several out parameters, Func should return a tuple of all out parameters

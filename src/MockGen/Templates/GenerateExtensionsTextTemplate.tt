@@ -1,0 +1,33 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<# foreach (var ns in Namespaces) { #> 
+using <#=ns#>;
+<# } #>
+
+namespace MockGen
+{
+    internal static class GenerateExtensions
+    {
+<# foreach(var mock in Mocks) { #>
+<# if (mock.Mock.IsInterface) { #>
+        internal static <#=mock.TypeToMock#>MockBuilder New(this Generate<<#=mock.TypeToMockFullName#>> _) => new <#=mock.TypeToMock#>MockBuilder();
+
+<# } else { #>
+<# foreach(var ctorParameters in mock.CtorsParameters) { #>
+        internal static <#=mock.TypeToMock#>MockBuilder New(this Generate<<#=mock.TypeToMock#>> _<# if (ctorParameters.HasClassicParameter) { #>, <#=ctorParameters.TypesAndNames#><# } #>)
+            => new <#=mock.TypeToMock#>MockBuilder(<#=ctorParameters.MockBuilderConstructorParameterNamesWithDefaultCallBaseValue#>);
+
+<# if (!mock.Mock.IsInterface) { #>
+        internal static <#=mock.TypeToMock#>MockBuilder New(this Generate<<#=mock.TypeToMock#>> _, <#=ctorParameters.MockBuilderConstructorParameterDeclaration#>)
+            => new <#=mock.TypeToMock#>MockBuilder(<#=ctorParameters.MockBuilderConstructorParameterNames#>);
+
+<# } #>
+
+<# } #>
+<# } #>
+<# } #>        
+    }
+}

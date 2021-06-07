@@ -18,9 +18,9 @@ namespace MockGen.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Dev\MockGen\MockGen\Templates\MockGeneratorTextTemplate.tt"
+    #line 1 "D:\Dev\MockGen\src\MockGen\Templates\GenerateTextTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public partial class MockGeneratorTextTemplate : MockGeneratorTextTemplateBase
+    public partial class GenerateTextTemplate : GenerateTextTemplateBase
     {
 #line hidden
         /// <summary>
@@ -28,17 +28,9 @@ namespace MockGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write(@"namespace MockGen
-{
-    public class MockGenerator
-    {
-        /// <summary>
-        /// Gives type information to the compiler so that MockGen can generate a mock for T
-        /// </summary>
-        /// <typeparam name=""T"">Type for which we want to generate a mock</typeparam>
-        public static void Generate<T>() { }
-    }
-}");
+            this.Write("namespace MockGen\r\n{\r\n    /// <summary>\r\n    /// Just a class that allow to build" +
+                    " static extensions methods on specific T. <see cref=\"GenerateExtensions\"/>\r\n    " +
+                    "/// </summary>\r\n    internal class Generate<T>\r\n    {\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -50,7 +42,7 @@ namespace MockGen.Templates
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public class MockGeneratorTextTemplateBase
+    public class GenerateTextTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

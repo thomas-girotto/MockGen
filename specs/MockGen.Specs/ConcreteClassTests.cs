@@ -10,7 +10,7 @@ namespace MockGen.Specs
         public void Should_mock_virtual_method_from_concrete_class()
         {
             // Given
-            var mockBuilder = Mock.ConcreteDependency();
+            var mockBuilder = MockG.Generate<ConcreteDependency>().New();
             mockBuilder.ICanBeMocked().Returns(2);
             var mock = mockBuilder.Build();
 
@@ -28,9 +28,9 @@ namespace MockGen.Specs
             // Given
             Model1 model1 = new Model1 { Id = 1 };
             Model2 model2 = new Model2 { Name = "John" };
-            var mockBuilder1 = Mock.ConcreteDependency();
-            var mockBuilder2 = Mock.ConcreteDependency(model1);
-            var mockBuilder3 = Mock.ConcreteDependency(model1, model2);
+            var mockBuilder1 = MockG.Generate<ConcreteDependency>().New();
+            var mockBuilder2 = MockG.Generate<ConcreteDependency>().New(model1);
+            var mockBuilder3 = MockG.Generate<ConcreteDependency>().New(model1, model2);
 
             // When
             var mock1 = mockBuilder1.Build();
@@ -49,7 +49,7 @@ namespace MockGen.Specs
         [Fact]
         public void Should_mock_protected_method()
         {
-            var mockBuilder = Mock.ConcreteDependency();
+            var mockBuilder = MockG.Generate<ConcreteDependency>().New();
             var mock = mockBuilder.Build();
 
             // When
@@ -62,12 +62,20 @@ namespace MockGen.Specs
         [Fact]
         public void Should_call_base_method_When_configured_to_do_so()
         {
-            var mockBuilder = Mock.ConcreteDependency(true);
+            var mockBuilder = MockG.Generate<ConcreteDependency>().New(true);
             var mock = mockBuilder.Build();
 
             mock.ICallProtectedMethod("Firstname");
 
             mockBuilder.SaveFullName(Arg<string>.Any).NumberOfCalls.Should().Be(1);
+        }
+
+        [Fact]
+        public void Should_call_base_asyncmethod_When_configured_to_do_so()
+        {
+            var mockBuilder = MockG.Generate<ConcreteDependency>().New(true);
+            var mock = mockBuilder.Build();
+
         }
     }
 }

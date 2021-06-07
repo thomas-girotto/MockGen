@@ -8,7 +8,7 @@ namespace MockGen.Sample.Tests
         public void Assert_on_number_of_calls_example()
         {
             // Given
-            var mock = Mock.IDependency();
+            var mock = MockG.Generate<IDependency>().New();
             var sut = new SutService(mock.Build());
             var model = new SomeModel { Id = 1 };
 
@@ -29,7 +29,7 @@ namespace MockGen.Sample.Tests
         {
             // Given
             var someModel = new SomeModel { Id = 1 };
-            var mock = Mock.IDependency();
+            var mock = MockG.Generate<IDependency>().New();
             mock.ReturnSomeInt().Returns(42);
             mock.ReturnSomeIntWithParam(someModel).Returns(1);
             mock.ReturnSomeIntWithParam(Arg<SomeModel>.When(m => m.Id == 2)).Returns(2);
