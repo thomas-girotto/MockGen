@@ -14,10 +14,12 @@
     <PackageProjectUrl>https://github.com/thomas-girotto/MockGen</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <IncludeBuildOutput>false</IncludeBuildOutput>
+    <PackageIcon>icon/mockgen-128.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="../../mockgen-128.png" Pack="true" PackagePath="icon"/>
   </ItemGroup>
 
   <ItemGroup>
