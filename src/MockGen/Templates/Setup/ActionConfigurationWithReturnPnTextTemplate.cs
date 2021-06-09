@@ -52,8 +52,21 @@ namespace MockGen.Templates.Setup
             #line default
             #line hidden
             this.Write(" baseConfiguration)\r\n        {\r\n            this.baseConfiguration = baseConfigur" +
-                    "ation;\r\n        }\r\n\r\n        internal Func<TReturn> ReturnAction { private get; " +
-                    "set; } = () => default(TReturn);\r\n\r\n");
+                    "ation;\r\n        }\r\n\r\n        internal Func");
+            
+            #line 19 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypesWithTReturn));
+            
+            #line default
+            #line hidden
+            this.Write(" ReturnAction { private get; set; } = ");
+            
+            #line 19 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.DiscardParameters));
+            
+            #line default
+            #line hidden
+            this.Write(" => default(TReturn);\r\n\r\n");
             
             #line 21 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
  if (view.NumberOfTypes > 0) { 
@@ -95,7 +108,14 @@ namespace MockGen.Templates.Setup
             
             #line default
             #line hidden
-            this.Write(");\r\n            return ReturnAction();\r\n        }\r\n    }\r\n}\r\n");
+            this.Write(");\r\n            return ReturnAction(");
+            
+            #line 28 "D:\Dev\MockGen\src\MockGen\Templates\Setup\ActionConfigurationWithReturnPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.ConcatParameters("param")));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n        }\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

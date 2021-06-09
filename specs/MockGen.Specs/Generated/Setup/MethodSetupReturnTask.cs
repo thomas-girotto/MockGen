@@ -22,6 +22,13 @@ namespace MockGen.Setup
             return this;
         }
 
+        public IReturnContinuation Returns(Func<TReturn> returnFunc)
+        {
+            EnsureConfigurationMethodsAreAllowed(nameof(Returns));
+            currentConfiguration.ReturnAction = () => Task.FromResult(returnFunc());
+            return this;
+        }
+
         public void AndExecute(Action callback)
         {
             base.Execute(callback);

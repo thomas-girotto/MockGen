@@ -10,6 +10,7 @@ namespace MockGen.Setup
     internal interface IMethodSetupReturn<#=view.GenericTypesWithTReturn#> : IMethodSetup<#=view.GenericTypes#> 
     {
         IReturnContinuation<#=view.GenericTypes#> Returns(TReturn value);
+        IReturnContinuation<#=view.GenericTypes#> Returns(Func<#=view.GenericTypesWithTReturn#> returnFunc);
     }
 
     internal interface IReturnContinuation<#=view.GenericTypes#>

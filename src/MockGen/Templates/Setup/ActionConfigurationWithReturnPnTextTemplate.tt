@@ -16,7 +16,7 @@ namespace MockGen.Setup
             this.baseConfiguration = baseConfiguration;
         }
 
-        internal Func<TReturn> ReturnAction { private get; set; } = () => default(TReturn);
+        internal Func<#=view.GenericTypesWithTReturn#> ReturnAction { private get; set; } = <#=view.DiscardParameters#> => default(TReturn);
 
 <# if (view.NumberOfTypes > 0) { #>
         internal bool Match(<#=view.ParametersTypesWithName#>) => baseConfiguration.Match(<#=view.ConcatParameters("param")#>);
@@ -25,7 +25,7 @@ namespace MockGen.Setup
         internal TReturn RunActions(<#=view.ParametersTypesWithName#>)
         {
             baseConfiguration.RunActions(<#=view.ConcatParameters("param")#>);
-            return ReturnAction();
+            return ReturnAction(<#=view.ConcatParameters("param")#>);
         }
     }
 }

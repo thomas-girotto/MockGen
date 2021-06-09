@@ -13,12 +13,12 @@ namespace MockGen.Setup
 
         internal bool Match(TParam1 param1, TParam2 param2) => baseConfiguration.Match(param1, param2);
 
-        internal Func<TReturn> ReturnAction { private get; set; } = () => default(TReturn);
+        internal Func<TParam1, TParam2, TReturn> ReturnAction { private get; set; } = (_, _) => default(TReturn);
 
         internal TReturn RunActions(TParam1 param1, TParam2 param2)
         {
             baseConfiguration.RunActions(param1, param2);
-            return ReturnAction();
+            return ReturnAction(param1, param2);
         }
     }
 }

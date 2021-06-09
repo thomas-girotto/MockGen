@@ -26,7 +26,14 @@ namespace MockGen.Setup
         public IReturnContinuation<TParam1, TParam2> Returns(TReturn value)
         {
             EnsureConfigurationMethodsAreAllowed(nameof(Returns));
-            currentConfiguration.ReturnAction = () => value;
+            currentConfiguration.ReturnAction = (_, _) => value;
+            return this;
+        }
+
+        public IReturnContinuation<TParam1, TParam2> Returns(Func<TParam1, TParam2, TReturn> returnFunc)
+        {
+            EnsureConfigurationMethodsAreAllowed(nameof(Returns));
+            currentConfiguration.ReturnAction = returnFunc;
             return this;
         }
 

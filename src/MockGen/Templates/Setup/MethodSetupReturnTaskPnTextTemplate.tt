@@ -43,7 +43,14 @@ namespace MockGen.Setup
         public IReturnContinuation<#=view.GenericTypes#> Returns(TReturn value)
         {
             EnsureConfigurationMethodsAreAllowed(nameof(Returns));
-            currentConfiguration.ReturnAction = () => <#=taskContext.ToString()#>.FromResult(value);
+            currentConfiguration.ReturnAction = <#=view.DiscardParameters#> => <#=taskContext.ToString()#>.FromResult(value);
+            return this;
+        }
+
+        public IReturnContinuation<#=view.GenericTypes#> Returns(Func<#=view.GenericTypesWithTReturn#> returnFunc)
+        {
+            EnsureConfigurationMethodsAreAllowed(nameof(Returns));
+            currentConfiguration.ReturnAction = (<#=view.ConcatParameters("param")#>) => <#=taskContext.ToString()#>.FromResult(returnFunc(<#=view.ConcatParameters("param")#>));
             return this;
         }
 

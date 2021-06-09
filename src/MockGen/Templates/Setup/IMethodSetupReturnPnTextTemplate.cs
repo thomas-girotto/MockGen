@@ -50,16 +50,30 @@ namespace MockGen.Templates.Setup
             
             #line default
             #line hidden
-            this.Write(" Returns(TReturn value);\r\n    }\r\n\r\n    internal interface IReturnContinuation");
+            this.Write(" Returns(TReturn value);\r\n        IReturnContinuation");
             
-            #line 15 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
+            #line 13 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
+            
+            #line default
+            #line hidden
+            this.Write(" Returns(Func");
+            
+            #line 13 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypesWithTReturn));
+            
+            #line default
+            #line hidden
+            this.Write(" returnFunc);\r\n    }\r\n\r\n    internal interface IReturnContinuation");
+            
+            #line 16 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n        void AndExecute(Action");
             
-            #line 17 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
+            #line 18 "D:\Dev\MockGen\src\MockGen\Templates\Setup\IMethodSetupReturnPnTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(view.GenericTypes));
             
             #line default
