@@ -46,7 +46,7 @@ namespace MockGen.Model
                 var methods = namedTypeSymbol.GetMembers()
                     .OfType<IMethodSymbol>()
                     .Where(m => 
-                        (m.IsAbstract || m.IsVirtual) 
+                        (m.IsAbstract || m.IsVirtual || m.IsOverride) 
                         && m.MethodKind != MethodKind.PropertyGet 
                         && m.MethodKind != MethodKind.PropertySet)
                     .Select(m => new Method
@@ -56,7 +56,7 @@ namespace MockGen.Model
                         Parameters = m.Parameters
                             .Select(p => new Parameter(GetType(p.Type), p.Name, p.RefKind == RefKind.Out))
                             .ToList(),
-                        IsVirtual = namedTypeSymbol.TypeKind == TypeKind.Class && (m.IsVirtual || m.IsAbstract),
+                        IsVirtual = namedTypeSymbol.TypeKind == TypeKind.Class && (m.IsVirtual || m.IsAbstract || m.IsOverride),
                         IsProtected = m.DeclaredAccessibility == Accessibility.Protected,
                     });
 

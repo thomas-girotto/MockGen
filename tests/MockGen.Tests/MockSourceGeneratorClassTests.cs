@@ -83,5 +83,39 @@ namespace MyLib.Tests
             var mock = generator.TypesToMock[0];
             mock.Methods.Should().ContainSingle(m => m.Name == "DoSomething" && m.IsVirtual && m.IsProtected);
         }
+
+        [Fact]
+        public void Should_mock_protected_override_methods()
+        {
+            var source = @"
+using MockGen;
+namespace MyLib.Tests
+{
+    public abstract class SomeBaseClass { protected abstract void DoSomething(); }
+    public class SomeDependency : SomeBaseClass
+    {
+        protected override void DoSomething() { }
+    }
+    public class Generators
+    {
+        public void Generate()
+        {
+            MockG.Generate<SomeDependency>();
+        }
+    }
+}
+";
+            // When
+            var (generator, diagnostics) = SourceCompiler.Compile(source, metadata.MetadataReferences);
+
+            // Then
+            if (diagnostics.Any())
+            {
+                throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
+            }
+            generator.TypesToMock.Should().HaveCount(1);
+            var mock = generator.TypesToMock[0];
+            mock.Methods.Should().ContainSingle(m => m.Name == "DoSomething");
+        }
     }
 }
