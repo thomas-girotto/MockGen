@@ -20,6 +20,8 @@ That allow the following capabilities :
 
 You need at least Visual Studio 16.9.2 (but later is better as source generators are regularly improved within Visual Studio) for a smoother developer experience, although there are still some [issues](https://github.com/dotnet/roslyn/issues/50451). For the moment, newly generated types are not seen right after the compilation in intellisense and you need to restart Visual Studio to see them, which is really frustrating. Hopefully it will be fixed in a future release.
 
+Rider doesn't have this issue and updates correctly intellisense.
+
 ## Install It
 
 Reference MockGen in your csproj like this. It should be referenced as an analyzer.
