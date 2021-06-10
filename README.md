@@ -16,9 +16,9 @@ That allow the following capabilities :
  - Have a nice API like nsubstitute (which i prefer compared to moq), but without the downsize of having all those extensions methods on object, which pop in your intellisense every time you enter a dot :)
  - It's a lot faster at runtime: See [Benchmark.md](Benchmark.md)
 
-## Warning
+## Known Issues
 
-You need at least Visual Studio 16.10.0 for a smoother developer experience, although there are still some [issues](https://github.com/dotnet/roslyn/issues/50451). 
+You need at least Visual Studio 16.9.2 (but later is better as source generators are regularly improved within Visual Studio) for a smoother developer experience, although there are still some [issues](https://github.com/dotnet/roslyn/issues/50451). For the moment, newly generated types are not seen right after the compilation in intellisense and you need to restart Visual Studio to see them, which is really frustrating. Hopefully it will be fixed in a future release.
 
 ## Install It
 
@@ -31,9 +31,11 @@ Reference MockGen in your csproj like this. It should be referenced as an analyz
 
 ```csharp
 // MockG.Generate<IDependency>() Tell the compiler you want to generate a mock for IDependency.
-// Once the compiler have detected that you're interested in mocking IDependency type, it generates 
-// an extension method New on the type returned by Generate<T> method, plus all the needed helper class 
-// that allow you to configure your mock. 
+// It returns an instance of Generate<IDependency> type.
+// The compiler will generate an extension method 'New' on Generate<IDepedency> type that will give you 
+// the appropriate mock, and all the helper classes used under the hood.
+// The known issue here is annoying as for the moment you may have to restart Visual Studio to be able to
+// see the New method in your intellisense if it's the first time you're generating a mock for IDependency
 var mock = MockG.Generate<IDependency>().New();
 
 // Returns
@@ -80,7 +82,8 @@ mock.TryGetById(Arg<int>.Any, (id) => new Model()).Returns(true); // will return
 Check the [sample project](https://github.com/thomas-girotto/MockGen/tree/master/sample/MockGen.Sample.Tests) for more details in how to use this lib. 
 
 
-## What features are coming next
+## Future improvements
 
-- Respect nullable types in generated code when user's lib have them 
-- Add possibility to setup return value from Func ?
+- Respect nullable types in generated code when user's lib have them
+- Generate documentation
+- If you have other ideas, please fill an issue :)
