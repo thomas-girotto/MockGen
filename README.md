@@ -24,7 +24,7 @@ You need at least Visual Studio 16.9.2 (but later is better as source generators
 
 Reference MockGen in your csproj like this. It should be referenced as an analyzer.
 ```xml
-<PackageReference Include="MockGen" Version="0.*" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+<PackageReference Include="MockGen" Version="1.*" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
 ```
 
 ## Quick look
