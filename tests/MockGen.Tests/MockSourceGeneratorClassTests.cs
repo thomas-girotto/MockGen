@@ -42,10 +42,7 @@ namespace MyLib.Tests
             var (generator, diagnostics) = SourceCompiler.Compile(source, metadata.MetadataReferences);
 
             // Then
-            if (diagnostics.Any())
-            {
-                throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
-            }
+            CompilationCheck.NoError(diagnostics);
             generator.TypesToMock.Should().HaveCount(1);
             var mock = generator.TypesToMock[0];
             mock.Methods.Should().BeEmpty();
@@ -75,10 +72,7 @@ namespace MyLib.Tests
             var (generator, diagnostics) = SourceCompiler.Compile(source, metadata.MetadataReferences);
 
             // Then
-            if (diagnostics.Any())
-            {
-                throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
-            }
+            CompilationCheck.NoError(diagnostics);
             generator.TypesToMock.Should().HaveCount(1);
             var mock = generator.TypesToMock[0];
             mock.Methods.Should().ContainSingle(m => m.Name == "DoSomething" && m.IsVirtual && m.IsProtected);
@@ -109,10 +103,7 @@ namespace MyLib.Tests
             var (generator, diagnostics) = SourceCompiler.Compile(source, metadata.MetadataReferences);
 
             // Then
-            if (diagnostics.Any())
-            {
-                throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
-            }
+            CompilationCheck.NoError(diagnostics);
             generator.TypesToMock.Should().HaveCount(1);
             var mock = generator.TypesToMock[0];
             mock.Methods.Should().ContainSingle(m => m.Name == "DoSomething");

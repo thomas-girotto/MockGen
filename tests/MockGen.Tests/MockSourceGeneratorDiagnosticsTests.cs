@@ -1,12 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using MockGen.Model;
 using MockGen.Tests.Fixtures;
 using MockGen.Tests.Utils;
-using MockGen.ViewModel;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace MockGen.Tests

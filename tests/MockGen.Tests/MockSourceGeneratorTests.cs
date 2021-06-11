@@ -43,10 +43,7 @@ namespace MockGen.Tests
             var (generator, diagnostics) = SourceCompiler.Compile(source, metadata.MetadataReferences);
 
             // Then
-            if (diagnostics.Any())
-            {
-                throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
-            }
+            CompilationCheck.NoError(diagnostics);
             generator.TypesToMock.Should().HaveCount(1);
             generator.TypesToMock[0].Methods.Should().HaveCount(1);
             generator.TypesToMock[0].Methods[0].ReturnType.Name.Should().Be("List<HttpStatusCode>");
@@ -78,10 +75,7 @@ namespace MockGen.Tests
             var (generator, diagnostics) = SourceCompiler.Compile(source, metadata.MetadataReferences);
 
             // Then
-            if (diagnostics.Any())
-            {
-                throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
-            }
+            CompilationCheck.NoError(diagnostics);
             generator.TypesToMock.Should().HaveCount(1);
             generator.TypesToMock[0].Methods.Should().HaveCount(1);
             generator.TypesToMock[0].Methods[0].ReturnType.TaskInfo.Should().Be(TaskInfo.Task);
@@ -113,10 +107,7 @@ namespace MockGen.Tests
             var (generator, diagnostics) = SourceCompiler.Compile(source, metadata.MetadataReferences);
 
             // Then
-            if (diagnostics.Any())
-            {
-                throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
-            }
+            CompilationCheck.NoError(diagnostics);
             generator.TypesToMock.Should().HaveCount(1);
             generator.TypesToMock[0].Methods.Should().HaveCount(1);
             generator.TypesToMock[0].Methods[0].ReturnType.TaskInfo.Should().Be(TaskInfo.ValueTask);
@@ -152,10 +143,7 @@ namespace MyLib.Tests
             var (generator, diagnostics) = SourceCompiler.Compile(source, metadata.MetadataReferences);
 
             // Then
-            if (diagnostics.Any())
-            {
-                throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
-            }
+            CompilationCheck.NoError(diagnostics);
             generator.TypesToMock.Should().HaveCount(2);
             generator.TypesToMock[0].Properties.Should().BeEmpty();
             generator.TypesToMock[0].TypeToMock.Name.Should().Be("IDependencyNamespace1");
@@ -187,10 +175,7 @@ namespace MockGen.Tests
             var (generator, diagnostics) = SourceCompiler.Compile(source, metadata.MetadataReferences);
 
             // Then
-            if (diagnostics.Any())
-            {
-                throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
-            }
+            CompilationCheck.NoError(diagnostics);
             generator.TypesToMock.Should().HaveCount(1);
             generator.TypesToMock[0].Methods.Should().HaveCount(2);
         }
@@ -219,10 +204,7 @@ namespace MockGen.Tests
             var (generator, diagnostics) = SourceCompiler.Compile(source, metadata.MetadataReferences);
 
             // Then
-            if (diagnostics.Any())
-            {
-                throw new XunitException($"Compilation error happened, check diagnostic message: {diagnostics.First().Descriptor.Description}");
-            }
+            CompilationCheck.NoError(diagnostics);
             generator.TypesToMock.Should().HaveCount(1);
             generator.TypesToMock[0].Methods.Should().BeEmpty();
             generator.TypesToMock[0].Properties.Should().HaveCount(1);
