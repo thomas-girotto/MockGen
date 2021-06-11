@@ -16,7 +16,7 @@ namespace MockGen.ViewModel
         {
             Mock = mock;
             Methods = mock.Methods.Select(m => new MethodView(m)).ToList();
-            CtorsParameters = mock.Ctors.Select(c => new CtorParametersView(mock.IsInterface, mock.TypeToMock.Name, c.Parameters)).ToList();
+            CtorsParameters = mock.Ctors.Select(c => new CtorParametersView(mock.IsInterface, mock.TypeToMock.SanitizedName, c.Parameters)).ToList();
         }
 
         public IEnumerable<string> Namespaces => Mock.TypeToMock.Namespaces
@@ -29,6 +29,8 @@ namespace MockGen.ViewModel
         public IEnumerable<MethodView> MethodsWithOutParameters => Methods.Where(m => m.Parameters.HasOutParameter);
 
         public string TypeToMock => Mock.TypeToMock.Name;
+
+        public string SanitizedTypeToMock => Mock.TypeToMock.SanitizedName;
 
         public string TypeToMockFullName => Mock.TypeToMock.FullName;
 

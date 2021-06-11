@@ -52,7 +52,7 @@ foreach (var ns in view.Namespaces) {
             this.Write("\r\nnamespace MockGen\r\n{\r\n\tinternal class ");
             
             #line 14 "D:\Dev\MockGen\src\MockGen\Templates\MethodsSetupTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(view.TypeToMock));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.SanitizedTypeToMock));
             
             #line default
             #line hidden

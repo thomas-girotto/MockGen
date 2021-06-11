@@ -11,15 +11,15 @@ using <#=ns#>;
 
 namespace MockGen
 {
-    internal class <#=view.TypeToMock#>MockBuilder
+    internal class <#=view.SanitizedTypeToMock#>MockBuilder
     {
-        private readonly <#=view.TypeToMock#>MethodsSetup methods = new <#=view.TypeToMock#>MethodsSetup();
-        private readonly Func<<#=view.TypeToMock#>Mock> ctor;
+        private readonly <#=view.SanitizedTypeToMock#>MethodsSetup methods = new <#=view.SanitizedTypeToMock#>MethodsSetup();
+        private readonly Func<<#=view.SanitizedTypeToMock#>Mock> ctor;
 
 <# foreach (var ctorParameters in view.CtorsParameters) {#>
-        internal <#=view.TypeToMock#>MockBuilder(<#=ctorParameters.MockBuilderConstructorParameterDeclaration#>)
+        internal <#=view.SanitizedTypeToMock#>MockBuilder(<#=ctorParameters.MockBuilderConstructorParameterDeclaration#>)
         {
-            ctor = () => new <#=view.TypeToMock#>Mock(<#=ctorParameters.MockConstructorParameterNames#>);
+            ctor = () => new <#=view.SanitizedTypeToMock#>Mock(<#=ctorParameters.MockConstructorParameterNames#>);
         }
 <#}#>
 

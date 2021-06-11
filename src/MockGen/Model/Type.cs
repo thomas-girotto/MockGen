@@ -19,6 +19,10 @@ namespace MockGen.Model
         /// </summary>
         public string Name { get; set; }
         /// <summary>
+        /// Sanitize Name so that it can be used as file name or class name
+        /// </summary>
+        public string SanitizedName => Name.Replace('<', '_').Replace('>', '_');
+        /// <summary>
         /// Long name of the type (including namespace)
         /// </summary>
         public string FullName { get; }

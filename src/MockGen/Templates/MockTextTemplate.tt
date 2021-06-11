@@ -12,15 +12,15 @@ using <#=ns#>;
 
 namespace MockGen
 {
-    internal class <#=view.TypeToMock#>Mock : <#=view.Mock.TypeToMockOriginalName#>
+    internal class <#=view.SanitizedTypeToMock#>Mock : <#=view.Mock.TypeToMockOriginalName#>
     {
 <# if (!view.Mock.IsInterface) { #>
         private readonly bool callBase;
 <# } #>
-        private readonly <#=view.TypeToMock#>MethodsSetup methods;
+        private readonly <#=view.SanitizedTypeToMock#>MethodsSetup methods;
 
 <# foreach (var ctorParameters in view.CtorsParameters) { #>
-        public <#=view.TypeToMock#>Mock(<#=ctorParameters.MockConstructorParameterDeclaration#>)<#=string.Format(view.CallBaseCtorIfNeeded, ctorParameters.Names)#>
+        public <#=view.SanitizedTypeToMock#>Mock(<#=ctorParameters.MockConstructorParameterDeclaration#>)<#=string.Format(view.CallBaseCtorIfNeeded, ctorParameters.Names)#>
         {
 <# if (!view.Mock.IsInterface) { #>
             this.callBase = callBase;

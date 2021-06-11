@@ -211,5 +211,34 @@ namespace MockGen.Tests
             generator.TypesToMock[0].Properties[0].HasGetter.Should().BeTrue();
             generator.TypesToMock[0].Properties[0].HasSetter.Should().BeFalse();
         }
+
+        [Fact]
+        public void Should_handle_T_being_a_generic_itself()
+        {
+            // Given
+            string source = @"
+using MockGen;
+namespace MockGen.Tests
+{
+    public interface IDependency<T>
+    {
+        void DoSomething(T input);
+    }
+    public class Generators
+    {
+        public void GenerateMocks()
+        {
+            MockG.Generate<IDependency<string>>();
+        }
+    }
+}";
+            // When
+            var (generator, diagnostics) = SourceCompiler.Compile(source, metadata.MetadataReferences);
+
+            // Then
+            CompilationCheck.NoError(diagnostics);
+            generator.TypesToMock.Should().HaveCount(1);
+            generator.TypesToMock[0].Methods.Should().HaveCount(1);
+        }
     }
 }

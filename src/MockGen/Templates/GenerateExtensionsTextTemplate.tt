@@ -13,19 +13,17 @@ namespace MockGen
     {
 <# foreach(var mock in Mocks) { #>
 <# if (mock.Mock.IsInterface) { #>
-        internal static <#=mock.TypeToMock#>MockBuilder New(this Generate<<#=mock.TypeToMockFullName#>> _) => new <#=mock.TypeToMock#>MockBuilder();
-
+        internal static <#=mock.SanitizedTypeToMock#>MockBuilder New(this Generate<<#=mock.TypeToMockFullName#>> _) => new <#=mock.SanitizedTypeToMock#>MockBuilder();
 <# } else { #>
 <# foreach(var ctorParameters in mock.CtorsParameters) { #>
-        internal static <#=mock.TypeToMock#>MockBuilder New(this Generate<<#=mock.TypeToMock#>> _<# if (ctorParameters.HasClassicParameter) { #>, <#=ctorParameters.TypesAndNames#><# } #>)
-            => new <#=mock.TypeToMock#>MockBuilder(<#=ctorParameters.MockBuilderConstructorParameterNamesWithDefaultCallBaseValue#>);
+        internal static <#=mock.SanitizedTypeToMock#>MockBuilder New(this Generate<<#=mock.TypeToMock#>> _<# if (ctorParameters.HasClassicParameter) { #>, <#=ctorParameters.TypesAndNames#><# } #>)
+            => new <#=mock.SanitizedTypeToMock#>MockBuilder(<#=ctorParameters.MockBuilderConstructorParameterNamesWithDefaultCallBaseValue#>);
 
 <# if (!mock.Mock.IsInterface) { #>
-        internal static <#=mock.TypeToMock#>MockBuilder New(this Generate<<#=mock.TypeToMock#>> _, <#=ctorParameters.MockBuilderConstructorParameterDeclaration#>)
-            => new <#=mock.TypeToMock#>MockBuilder(<#=ctorParameters.MockBuilderConstructorParameterNames#>);
+        internal static <#=mock.SanitizedTypeToMock#>MockBuilder New(this Generate<<#=mock.TypeToMock#>> _, <#=ctorParameters.MockBuilderConstructorParameterDeclaration#>)
+            => new <#=mock.SanitizedTypeToMock#>MockBuilder(<#=ctorParameters.MockBuilderConstructorParameterNames#>);
 
 <# } #>
-
 <# } #>
 <# } #>
 <# } #>        

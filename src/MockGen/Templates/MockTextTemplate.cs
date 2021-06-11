@@ -53,7 +53,7 @@ namespace MockGen.Templates
             this.Write("\r\nnamespace MockGen\r\n{\r\n    internal class ");
             
             #line 15 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(view.TypeToMock));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.SanitizedTypeToMock));
             
             #line default
             #line hidden
@@ -81,7 +81,7 @@ namespace MockGen.Templates
             this.Write("        private readonly ");
             
             #line 20 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(view.TypeToMock));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.SanitizedTypeToMock));
             
             #line default
             #line hidden
@@ -95,7 +95,7 @@ namespace MockGen.Templates
             this.Write("        public ");
             
             #line 23 "D:\Dev\MockGen\src\MockGen\Templates\MockTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(view.TypeToMock));
+            this.Write(this.ToStringHelper.ToStringWithCulture(view.SanitizedTypeToMock));
             
             #line default
             #line hidden
