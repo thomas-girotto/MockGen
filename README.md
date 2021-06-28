@@ -18,9 +18,13 @@ That allow the following capabilities :
 
 ## Known Issues
 
-You need at least Visual Studio 16.9.2 (but later is better as source generators are regularly improved within Visual Studio) for a smoother developer experience, although there are still some [issues](https://github.com/dotnet/roslyn/issues/50451). For the moment, newly generated types are not seen right after the compilation in intellisense and you need to restart Visual Studio to see them, which is really frustrating. Hopefully it will be fixed in a future release.
+### You need at least Visual Studio 16.9.2 
+But later is better as source generators are regularly improved within Visual Studio. Although there are still some [issues](https://github.com/dotnet/roslyn/issues/50451). For the moment, newly generated types are not seen right after the compilation in intellisense and you need to restart Visual Studio to see them, which is really frustrating. Hopefully it will be fixed in a future release.
 
 Rider doesn't have this issue and updates correctly intellisense.
+
+### Lack support for generic methods
+Yes, it's a shame and make this lib pretty useless, just forgot that use case while developing and i'm realizing now that it's a huge work to support them... Working on it :)
 
 ## Install It
 
