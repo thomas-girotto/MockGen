@@ -1,5 +1,8 @@
 # MockGen
-MockGen is a .NET mock library based on source generators. It aims to be the best mocking library in .net world by using source generators to offer the most powerful and straightforward API.
+MockGen was a try to build a .NET mock library based on source generators. It aims was to be the best mocking library in .net world by using source generators to offer the most powerful and straightforward API.
+
+I was pretty happy with the syntax i came up with, until i realized that i cannot support mocking generic methods with the way i designed this lib, which makes it pretty useless! That was still fun though, if some people are curious or find a way to support generic methods i'd be glad to hear from you.
+
 
 [![thomas-girotto](https://circleci.com/gh/thomas-girotto/MockGen.svg?style=svg)](https://app.circleci.com/pipelines/github/thomas-girotto/MockGen)
 
@@ -18,13 +21,8 @@ That allow the following capabilities :
 
 ## Known Issues
 
-### You need at least Visual Studio 16.9.2 
-But later is better as source generators are regularly improved within Visual Studio. Although there are still some [issues](https://github.com/dotnet/roslyn/issues/50451). For the moment, newly generated types are not seen right after the compilation in intellisense and you need to restart Visual Studio to see them, which is really frustrating. Hopefully it will be fixed in a future release.
-
-Rider doesn't have this issue and updates correctly intellisense.
-
 ### Lack support for generic methods
-Yes, it's a shame and make this lib pretty useless, just forgot that use case while developing and i'm realizing now that it's a huge work to support them... Working on it :)
+Yes, it's a shame and make this lib useless. I can't find a way to keep the syntax that i wanted in the first place and also include support for generic methods... I gave up :). 
 
 ## Install It
 
@@ -87,9 +85,3 @@ mock.TryGetById(Arg<int>.Any, (id) => new Model()).Returns(true); // will return
 
 Check the [sample project](https://github.com/thomas-girotto/MockGen/tree/master/sample/MockGen.Sample.Tests) for more details in how to use this lib. 
 
-
-## Future improvements
-
-- Respect nullable types in generated code when user's lib have them
-- Generate documentation
-- If you have other ideas, please fill an issue :)
